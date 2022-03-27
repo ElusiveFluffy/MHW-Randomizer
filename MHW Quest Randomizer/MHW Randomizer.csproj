@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4FD36162-6625-4896-B731-2F72ED3F5586}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MHW_Randomizer</RootNamespace>
+    <AssemblyName>MHW Randomizer</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BetterFolderBrowser, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BetterFolderBrowser.1.2.0\lib\BetterFolderBrowser.dll</HintPath>
+    </Reference>
+    <Reference Include="Crc32.NET, Version=1.0.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\Crc32.NET.1.2.0\lib\net20\Crc32.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=1.52.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.1.52.1\lib\netstandard10\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Troschuetz.Random, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Troschuetz.Random.5.0.1\lib\net472\Troschuetz.Random.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Chunk\ChunkOTF.cs" />
+    <Compile Include="Chunk\Utils.cs" />
+    <Compile Include="Controls\Armour.xaml.cs">
+      <DependentUpon>Armour.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Colours.xaml.cs">
+      <DependentUpon>Colours.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Misc.xaml.cs">
+      <DependentUpon>Misc.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Quest.xaml.cs">
+      <DependentUpon>Quest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Shop.xaml.cs">
+      <DependentUpon>Shop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Weapon.xaml.cs">
+      <DependentUpon>Weapon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ItemData.cs" />
+    <Compile Include="Data\Quest\StoryQuestData.cs" />
+    <Compile Include="Data\Structs.cs" />
+    <Compile Include="GMD %28Cirilla%29\Endianness.cs" />
+    <Compile Include="GMD %28Cirilla%29\Extentions\BinaryReaderExtensions.cs" />
+    <Compile Include="GMD %28Cirilla%29\Extentions\ByteArrayExtensions.cs" />
+    <Compile Include="GMD %28Cirilla%29\EmLanguage.cs" />
+    <Compile Include="GMD %28Cirilla%29\ExEncoding.cs" />
+    <Compile Include="GMD %28Cirilla%29\FileTypeBase.cs" />
+    <Compile Include="GMD %28Cirilla%29\GMD.cs" />
+    <Compile Include="GMD %28Cirilla%29\Extentions\StringExtensions.cs" />
+    <Compile Include="GMD %28Cirilla%29\Extentions\StructExtensions.cs" />
+    <Compile Include="GMD %28Cirilla%29\Structs\GMD.cs" />
+    <Compile Include="IoC.cs" />
+    <Compile Include="MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Quest\QuestData.cs" />
+    <Compile Include="Data\StructTools.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="src\Blowfish.cs" />
+    <Compile Include="src\Cipher.cs" />
+    <Compile Include="src\Utility\ArraySegmentWrapper.cs" />
+    <Compile Include="src\Utility\BoyerMoore.cs" />
+    <Compile Include="src\Utility\Utility.cs" />
+    <Compile Include="ValueConverters\BaseValueConverter.cs" />
+    <Compile Include="ValueConverters\InverseBooleanConverter.cs" />
+    <Compile Include="Viewmodels\Base\RelayCommand.cs" />
+    <Compile Include="Viewmodels\Base\RelayCommandWithInputParam.cs" />
+    <Compile Include="Viewmodels\MiscRandomizer.cs" />
+    <Compile Include="Viewmodels\QuestRandomizer.cs" />
+    <Compile Include="Viewmodels\RandomizerViewModel.cs" />
+    <Compile Include="Viewmodels\RandomizerSettings.cs" />
+    <Compile Include="Viewmodels\RecipeRandomizer.cs" />
+    <Compile Include="Viewmodels\ShopRandomizer.cs" />
+    <Page Include="Controls\Armour.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Colours.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Misc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Quest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Shop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Weapon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Viewmodels\Base\BaseViewModel.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MessageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CheckBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Chunk\keyseq.key" />
+    <None Include="Data\Armour\Arms.json" />
+    <None Include="Data\Armour\Chest.json" />
+    <None Include="Data\Armour\Head.json" />
+    <None Include="Data\Armour\Legs.json" />
+    <None Include="Data\Armour\Waist.json" />
+    <None Include="Data\eng_armorData.json" />
+    <None Include="Data\eng_insectData.json" />
+    <None Include="Data\eng_itemData.json" />
+    <None Include="Data\eng_skillData.json" />
+    <None Include="Data\Item Shop\Gear\ShopBow.json" />
+    <None Include="Data\Item Shop\Gear\ShopCharge_Blade.json" />
+    <None Include="Data\Item Shop\Gear\ShopDual_Blades.json" />
+    <None Include="Data\Item Shop\Furnature.json" />
+    <None Include="Data\Item Shop\Gear\ShopGreatsword.json" />
+    <None Include="Data\Item Shop\Gear\ShopGunlance.json" />
+    <None Include="Data\Item Shop\Gear\ShopHammer.json" />
+    <None Include="Data\Item Shop\Gear\ShopHeavy_Bowgun.json" />
+    <None Include="Data\Item Shop\Gear\ShopHunting_Horn.json" />
+    <None Include="Data\Item Shop\Gear\ShopInsect_Glaive.json" />
+    <None Include="Data\Item Shop\ItemsForShopData.json" />
+    <None Include="Data\Item Shop\JewelsForShop.json" />
+    <None Include="Data\Item Shop\Gear\ShopLance.json" />
+    <None Include="Data\Item Shop\Gear\ShopLight_Bowgun.json" />
+    <None Include="Data\Item Shop\Gear\ShopLongsword.json" />
+    <None Include="Data\Item Shop\MaterialsForShopData.json" />
+    <None Include="Data\Item Shop\SupplyItems.json" />
+    <None Include="Data\Item Shop\Gear\ShopSwitch_Axe.json" />
+    <None Include="Data\Item Shop\Gear\ShopSword_and_Shield.json" />
+    <None Include="Data\Palico\otomo_armourData.json" />
+    <None Include="Data\Palico\otomo_weaponData.json" />
+    <None Include="Data\Settings.json" />
+    <None Include="Data\Weapons\Bow.json" />
+    <None Include="Data\Weapons\Charge_Blade.json" />
+    <None Include="Data\Weapons\Dual_Blades.json" />
+    <None Include="Data\Weapons\Greatsword.json" />
+    <None Include="Data\Weapons\Gunlance.json" />
+    <None Include="Data\Weapons\Hammer.json" />
+    <None Include="Data\Weapons\Heavy_Bowgun.json" />
+    <None Include="Data\Weapons\Hunting_Horn.json" />
+    <None Include="Data\Weapons\Insect_Glaive.json" />
+    <None Include="Data\Weapons\Lance.json" />
+    <None Include="Data\Weapons\Light_Bowgun.json" />
+    <None Include="Data\Weapons\Longsword.json" />
+    <None Include="Data\Weapons\Switch_Axe.json" />
+    <None Include="Data\Weapons\Sword_and_Shield.json" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Monster Icons\MHW_Great_Jagras_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Monster Icons\MHW_Anjanath_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Monster Icons\MHWI_Ruiner_Nergigante_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Monster Icons\MHWI_Acidic_Glavenus_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Anteka_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Banbaro_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Barioth_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Beotodus_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Blackveil_Vaal_Hazak_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Brachydios_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Brute_Tigrex_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Coral_Pukei-Pukei_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Ebony_Odogaron_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Fulgur_Anjanath_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Glavenus_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Namielle_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Nargacuga_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Nightshade_Paolumu_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Popo_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Rajang_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Savage_Deviljho_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Seething_Bazelgeuse_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Shara_Ishvalda_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Shrieking_Legiana_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Tigrex_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Velkhana_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Viper_Tobi-Kadachi_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Wulg_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Yian_Garuga_Icon.png" />
+    <Resource Include="Monster Icons\MHWI_Zinogre_Icon..png" />
+    <Resource Include="Monster Icons\MHW_Apceros_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Aptonoth_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Azure_Rathalos_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Barnos_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Barroth_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Bazelgeuse_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Behemoth_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Black_Diablos_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Deviljho_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Diablos_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Dodogama_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Gajalaka_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Gajau_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Gastodon_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Girros_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Great_Girros_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Hornetaur_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Jagras_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Jyuratodus_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Kelbi_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Kestodon_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Kirin_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Kulu-Ya-Ku_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Kulve_Taroth_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Kushala_Daora_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Lavasioth_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Legiana_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Leshen_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Lunastra_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Mernos_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Mosswine_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Nergigante_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Noios_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Odogaron_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Paolumu_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Pink_Rathian_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Pukei-Pukei_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Radobaan_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Raphinos_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Rathalos_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Rathian_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Shamos_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Teostra_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Tobi-Kadachi_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Tzitzi-Ya-Ku_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Uragaan_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Vaal_Hazak_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Vespoid_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Xeno%27jiiva_Icon.png" />
+    <Resource Include="Monster Icons\MHW_Zorah_Magdaros_Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Monster Icons\MHW_Ancient_Leshen_Icon.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.1.29.2\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.2\build\dotnet\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.1.29.2\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.29.2\build\dotnet\Fody.targets'))" />
+  </Target>
+</Project>

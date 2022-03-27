@@ -1,0 +1,282 @@
+﻿using System;
+using System.Runtime.InteropServices;
+
+namespace MHW_Randomizer
+{
+    public static class RecipeStructs
+    {
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class Armour
+        {
+            public byte Equipment_Category_Raw;
+            public UInt16 Equipment_Index_Raw;
+            public UInt16 Needed_Item_Id_to_Unlock;
+            public int Monster_Unlock;
+            public uint Story_Unlock;
+            public uint Unknown_uint32_;
+            public uint Item_Rank;
+            public UInt16 Mat_1_Id;
+            public byte Mat_1_Count;
+            public UInt16 Mat_2_Id;
+            public byte Mat_2_Count;
+            public UInt16 Mat_3_Id;
+            public byte Mat_3_Count;
+            public UInt16 Mat_4_Id;
+            public byte Mat_4_Count;
+            public byte Unknown_uint8_1;
+            public byte Unknown_uint8_2;
+            public byte Unknown_uint8_3;
+            public byte Unknown_uint8_4;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class ArmourDat
+        {
+            public uint Index;
+            public ushort Order;
+            public byte Variant;
+            public ushort Set_Layered_Id;
+            public byte Type;
+            public byte Equip_Slot;
+            public ushort Defense;
+            public ushort Model_Id_1;
+            public ushort Model_Id_2;
+            public ushort Icon_Color;
+            public byte Icon_Effect;
+            public byte Rarity;
+            public uint Cost;
+            public byte Fire_Res;
+            public byte Water_Res;
+            public byte Ice_Res;
+            public byte Thunder_Res;
+            public byte Dragon_Res;
+            public byte Slot_Count;
+            public byte Slot_1_Size;
+            public byte Slot_2_Size;
+            public byte Slot_3_Size;
+            public ushort Set_Skill_1;
+            public byte Set_Skill_1_Level;
+            public ushort Hidden_Skill;
+            public byte Hidden_Skill_Level;
+            public ushort Skill_1;
+            public byte Skill_1_Level;
+            public ushort Skill_2;
+            public byte Skill_2_Level;
+            public ushort Skill_3;
+            public byte Skill_3_Level;
+            public uint Gender;
+            public ushort Set_Group;
+            public ushort GMD_Name_Index;
+            public ushort GMD_Description_Index;
+            public byte Is_Permanent;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class Weapon
+        {
+            public byte Equipment_Category_Raw;
+            public ushort Equipment_Index_Raw;
+            public ushort Needed_Item_Id_to_Unlock;
+            public int Monster_Unlock;
+            public uint Story_Unlock;
+            public uint Item_Rank;
+            public ushort Mat_1_Id;
+            public byte Mat_1_Count;
+            public ushort Mat_2_Id;
+            public byte Mat_2_Count;
+            public ushort Mat_3_Id;
+            public byte Mat_3_Count;
+            public ushort Mat_4_Id;
+            public byte Mat_4_Count;
+            public ushort Child_index_1;
+            public ushort Child_index_2;
+            public ushort Child_index_3;
+            public ushort Child_index_4;
+            public byte Unk_1;
+            public byte Unk_2;
+            public byte Unk_3;
+            public byte Unk_4;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class WeaponTree
+        {
+            public uint Index;
+            public short Unk1;
+            public short Base_Model_Id;
+            public short Part_1_Id;
+            public short Part_2_Id;
+            public byte Unk_1;
+            public byte Color;
+            public byte Tree_Id;
+            public byte Is_Fixed_Upgrade;
+            public uint Cost;
+            public byte Rarity;
+            public byte Sharpness_kire_Id;
+            public byte Sharpness_Amount;
+            public ushort Damage;
+            public ushort Defense;
+            public byte Affinity;
+            public byte Element;
+            /// <summary>
+            /// Value * 10 = final shown value
+            /// </summary>
+            public ushort Element_Damage;
+            public byte Element_Hidden;
+            /// <summary>
+            /// Value * 10 = final shown value
+            /// </summary>
+            public ushort Element_Hidden_Damage;
+            public byte Elderseal;
+            public byte Slot_Count;
+            public byte Slot_1_Size;
+            public byte Slot_2_Size;
+            public byte Slot_3_Size;
+            public ushort Special_Ability_1_ID;
+            public ushort Special_Ability_2_ID;
+            public uint Unk_2;
+            public uint Unk_3;
+            public uint Unk_4;
+            public byte Tree_Position;
+            public ushort Id;
+            public ushort GMD_Name_Index;
+            public ushort GMD_Description_Index;
+            public ushort Skill;
+            public ushort Unk_5;
+        }
+        
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class RangedWeaponTree
+        {
+            public uint Index;
+            public short Unk_1;
+            public short Base_Model_Id;
+            public short Part_1_Id;
+            public short Part_2_Id;
+            public byte Unk_2;
+            public byte Color;
+            public byte Tree_Id;
+            public byte Is_Fixed_Upgrade;
+            public byte Muzzle_Type;
+            public byte Barrel_Type;
+            public byte Magazine_Type;
+            public byte Scope_Type;
+            public uint Cost;
+            public byte Rarity;
+            public ushort Damage;
+            public ushort Defense;
+            public byte Affinity;
+            public byte Element;
+            /// <summary>
+            /// Value * 10 = final shown value
+            /// </summary>
+            public ushort Element_Damage;
+            public byte Element_Hidden_;
+            /// <summary>
+            /// Value * 10 = final shown value
+            /// </summary>
+            public ushort Element_Hidden_Damage;
+            public byte Elderseal;
+            public byte Shell_Type_Id;
+            public byte Unk_3;
+            public byte Deviation;
+            public byte Slot_Count;
+            public byte Slot_1_Size;
+            public byte Slot_2_Size;
+            public byte Slot_3_Size;
+            public uint Unk_4;
+            public uint Unk_5;
+            public uint Unk_7;
+            public byte Unk_8;
+            public byte Special_Ammo_Type;
+            public byte Tree_Position;
+            public ushort Id;
+            public ushort GMD_Name_Index;
+            public ushort GMD_Description_Index;
+            public ushort Skill;
+            public ushort Unk_6;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class KinsectTree
+        {
+            public uint Index;
+            public byte Attack_Type;
+            public byte Id;
+            public byte Tree_Position_Id;
+            public ushort Base_Model_Id;
+            public byte Tree_Id;
+            public uint Craft_Cost;
+            public byte Rarity;
+            public ushort Power;
+            public ushort Speed;
+            public ushort Heal;
+            public ushort Element;
+            public ushort Dust_Effect;
+            public byte Tree_Position;
+            public ushort Equip_Id;
+        }
+
+    }
+
+    public static class ShopStructs
+    {
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class ArmourShop
+        {
+            public uint Equip_Type;
+            public uint Equip_Id;
+            public uint Story_Unlock;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class ItemShop
+        {
+            public uint Index;
+            public uint Item_Id;
+            public uint Story_Unlock;
+            public ushort Sort_Order;
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class PalicoWeapon
+    {
+        public uint Index;
+        public ushort Set_Id;
+        public byte Element;
+        public ushort Attack_Type;
+        public ushort Melee_Damage;
+        public ushort Ranged_Damage;
+        public ushort Elemental_Damage;
+        public short Affinity;
+        public ushort Defense;
+        public byte Elderseal;
+        public byte Rarity;
+        public ushort Order;
+        public uint Model_Id;
+        public uint Cost;
+        public byte Unknown_byte_1;
+        public ushort Id;
+        public ushort GMD_Name_Index;
+        public ushort GMD_Description_Index;
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class ItemDataFile
+    {
+        public uint Id;
+        public byte Sub_Type;
+        public uint Type;
+        public byte Rarity;
+        public byte Carry_Limit;
+        public byte Unknown;
+        public ushort Sort_Order;
+        public uint Flags_Raw;
+        public uint Icon_Id;
+        public ushort Icon_Color_Id;
+        public uint Sell_Price;
+        public uint Buy_Price;
+    }
+}

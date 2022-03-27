@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="MHW_Randomizer.Controls.Colours"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MHW_Randomizer.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400">
+    <Grid>
+        <WrapPanel>
+            <Border Background="#d7f170" Width="50" Height="50"/>
+            <Border Background="#219400" Width="50" Height="50"/>
+            <Border Background="#81EE35" Width="50" Height="50"/>
+            <Border Background="#46D67C" Width="50" Height="50"/>
+            <Border Background="#B6FFF8" Width="50" Height="50"/>
+            <Border Background="#26CEE3" Width="50" Height="50"/>
+            <Border Background="#2657E3" Width="50" Height="50"/>
+            <Border Background="#223780" Width="50" Height="50"/>
+            <Border Background="#9347d5" Width="50" Height="50"/>
+            <Border Background="#B4277D" Width="50" Height="50"/>
+            <Border Background="#E326BE" Width="50" Height="50"/>
+            <Border Background="#A90021" Width="50" Height="50"/>
+            <Border Background="#E32615" Width="50" Height="50"/>
+            <Border Background="#da7f12" Width="50" Height="50"/>
+            <Border Background="#E3A026" Width="50" Height="50"/>
+            <Border Background="#FFBE7B" Width="50" Height="50"/>
+            <Border Background="#FEE715" Width="50" Height="50"/>
+        </WrapPanel>   
+    </Grid>
+</UserControl>

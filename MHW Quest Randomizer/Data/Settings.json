@@ -1,0 +1,6 @@
+{
+  "MonsterMinSize": 75,
+  "MonsterMaxSize": 150,
+  "ShuffleCharms": true,
+  "RandomShopWepArmour": true
+}

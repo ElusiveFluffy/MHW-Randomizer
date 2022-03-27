@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="MHW_Randomizer.Shop"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MHW_Randomizer"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="600">
+    <Grid VerticalAlignment="Top">
+        <TextBlock Text="Shop"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+        <Border BorderBrush="Gray"
+                BorderThickness="1"
+                Margin="5">
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 10">
+                <StackPanel>
+                    <CheckBox Content="Random Shop Items"
+                              IsChecked="{Binding RandomShopItems, Source={x:Static local:IoC.Settings}}"
+                              Margin="5, 4"
+                              ToolTip="Randomizes all the items in the item shop (115 possible items)"/>
+                    <CheckBox Content="Include Materials"
+                              IsChecked="{Binding ShopIncludeMaterials, Source={x:Static local:IoC.Settings}}"
+                              Margin="12, 2"
+                              IsEnabled="{Binding RandomShopItems, Source={x:Static local:IoC.Settings}}"
+                              ToolTip="Adds materials as a possible item to randomize in the shop (Adds 1286 possible items)"/>
+                    <CheckBox Content="Include Jewels/Decorations"
+                              IsChecked="{Binding ShopIncludeJewels, Source={x:Static local:IoC.Settings}}"
+                              Margin="12, 2"
+                              IsEnabled="{Binding RandomShopItems, Source={x:Static local:IoC.Settings}}"
+                              ToolTip="Adds jewels/decorations as a possible item to randomize in the shop (Adds 406 possible items)"/>
+                    <CheckBox Content="Include Supply Items"
+                              IsChecked="{Binding ShopIncludeSupplyItems, Source={x:Static local:IoC.Settings}}"
+                              Margin="12, 2"
+                              IsEnabled="{Binding RandomShopItems, Source={x:Static local:IoC.Settings}}"
+                              ToolTip="Adds supply items as a possible item to randomize in the shop (Adds 21 possible items)(really cheap but they will disappear from your inventory when returning from a quest)"
+                              ToolTipService.ShowDuration="10000"/>
+                    <CheckBox Content="Include House Items"
+                              IsChecked="{Binding ShopIncludeHousingItems, Source={x:Static local:IoC.Settings}}"
+                              Margin="12, 2"
+                              IsEnabled="{Binding RandomShopItems, Source={x:Static local:IoC.Settings}}"
+                              ToolTip="Adds items used in your house as a possible item to randomize in the shop (Add 640 possible items)"/>
+                    <TextBlock Text="Amount of Shop Items"
+                               FontSize="12"
+                               Margin="12, 2"/>
+                    <TextBox Margin="12, 2, 12, 8"
+                             Text="{Binding AmountOfShopItems, Source={x:Static local:IoC.Settings}}"
+                             Width="100"
+                             HorizontalAlignment="Left"
+                             PreviewTextInput="NumberValidationTextBox"
+                             IsKeyboardFocusedChanged="TBItems_IsKeyboardFocusedChanged"
+                             x:Name="TBItems"
+                             IsEnabled="{Binding RandomShopItems, Source={x:Static local:IoC.Settings}}"
+                             ToolTip="How many items are in the shop (Default of 56, max of 255 (game doesn't allow more than 255))"
+                             KeyDown="EnterKeyRemoveFocus"/>
+                </StackPanel>
+                <StackPanel Margin="40 0">
+                    <CheckBox Content="Random Gear Shop Items"
+                              IsChecked="{Binding RandomShopWepArmour, Source={x:Static local:IoC.Settings}}"
+                              Margin="5, 4"
+                              Unchecked="RandomShopGear_Unchecked"
+                              ToolTip="Randomizes all the shop weapon and armour, weapon and armour types and amount of that type remain the same"/>
+                    <CheckBox Content="Random Gear Types"
+                              IsChecked="{Binding RandomShopWepArmourType, Source={x:Static local:IoC.Settings}}"
+                              Margin="12, 4"
+                              x:Name="RandomShopType"
+                              IsEnabled="{Binding RandomShopWepArmour, Source={x:Static local:IoC.Settings}}"
+                              ToolTip="Makes it so the randomized weapon or armour doesn't have to be the same type, eg. a greatsword in the shop could become a random dual blades. (Guaranties 1 of each type)"/>
+                    <TextBlock Text="Amount of Gear Shop Items"
+                               FontSize="12"
+                               Margin="12, 2"/>
+                    <TextBox Margin="12, 2, 12, 4"
+                             Text="{Binding AmountOfGearShopItems, Source={x:Static local:IoC.Settings}}"
+                             Width="100"
+                             HorizontalAlignment="Left"
+                             PreviewTextInput="NumberValidationTextBox"
+                             IsKeyboardFocusedChanged="TBArmItems_IsKeyboardFocusedChanged"
+                             x:Name="TBArmItems"
+                             IsEnabled="{Binding RandomShopWepArmourType, Source={x:Static local:IoC.Settings}}"
+                             ToolTip="How many items are in the shop (Default of 97, max of 4259 items)"
+                             KeyDown="EnterKeyRemoveFocus"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

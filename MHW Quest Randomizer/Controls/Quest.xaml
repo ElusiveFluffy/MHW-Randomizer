@@ -1,0 +1,231 @@
+﻿<UserControl x:Class="MHW_Randomizer.Quest"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MHW_Randomizer"
+             mc:Ignorable="d" 
+             d:DesignHeight="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Left">
+                <Grid>
+                    <TextBlock Text="Quests"
+                               Margin="15 -4 0 0"
+                               Background="White"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Panel.ZIndex="1"
+                               FontWeight="Bold"
+                               Height="16"/>
+                    <Border BorderBrush="Gray" 
+                            BorderThickness="1"
+                            Margin="5">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <StackPanel>
+                                <CheckBox Content="Randomize Multi-Objective"
+                                              IsChecked="{Binding RandomizeMultiObj, Source={x:Static local:IoC.Settings}}"
+                                              Margin="5 4"
+                                              ToolTip="Randomizes quests that have 2 different monsters to hunt/slay (can have different objectives)"/>
+                                <CheckBox Content="Randomize Multi-Monster"
+                                              IsChecked="{Binding RandomizeMultiMon, Source={x:Static local:IoC.Settings}}"
+                                              Margin="5, 4"
+                                              ToolTip="Randomize quests with 2-5 monsters"/>
+                                <CheckBox Content="Randomize Same Monster"
+                                              IsChecked="{Binding RandomizeDuplicate, Source={x:Static local:IoC.Settings}}"
+                                              Margin="5, 4"
+                                              ToolTip="Randomize quests with where you have to hunt 2 of the same monster"/>
+                            </StackPanel>
+                            <StackPanel Margin="40 0 0 0"
+                                        VerticalAlignment="Center">
+                                <CheckBox Content="Don't Randomize Slay"
+                                              IsChecked="{Binding DontRandomizeSlay, Source={x:Static local:IoC.Settings}}"
+                                              Margin="5, 4"
+                                              ToolTip="Won't randomize big monster slay quests"/>
+                                <CheckBox Content="Don't Randomize Capture"
+                                              IsChecked="{Binding DontRandomizeCapture, Source={x:Static local:IoC.Settings}}"
+                                              Margin="5, 4"
+                                              ToolTip="Won't randomize big monster capture quests"/>
+                            </StackPanel>
+                            <StackPanel VerticalAlignment="Center"
+                                        Margin="40 0 0 0">
+                                <CheckBox Content="Randomize Maps"
+                                              IsChecked="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
+                                              Margin="5, 4"
+                                              ToolTip="Randomize the map the quest will happen on (will use random sobjs for the map)"
+                                              Checked="MapOption_Checked"
+                                              Unchecked="MapOption_Unchecked"/>
+                                <CheckBox Content="Random Quest Icons"
+                                              IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
+                                              Margin="5, 4"
+                                              ToolTip="Makes it more of a surprise of what the monster will be before starting the quest (Also changes the monster in the quest objective text to ???) (Hasn't been tested without iceborne)"
+                                              ToolTipService.ShowDuration="10000"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid>
+                    <TextBlock Text="Monsters"
+                               Margin="15 -3 0 0"
+                               Background="White"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Panel.ZIndex="1"
+                               FontWeight="Bold"/>
+                    <Border BorderBrush="Gray" 
+                            BorderThickness="1"
+                            Margin="5">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <StackPanel VerticalAlignment="Center">
+                                <CheckBox Content="Duplicate Monsters in a Quest"
+                                          IsChecked="{Binding DuplicateMonster, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Allow for there to be a chance to randomize multiple of the same monster in the same quest"/>
+
+                                <CheckBox Content="Every Quest a 2 Monster Quest"
+                                          Margin="5, 4"
+                                          IsChecked="{Binding TwoMonsterQuests, Source={x:Static local:IoC.Settings}}"
+                                          ToolTip="Makes it so every quest you need to hunt/slay/capture 2 monsters (same objective as the first monster)"/>
+                                <CheckBox Content="Use Random sobj File"
+                                          Margin="5, 4"
+                                          x:Name="Rsobj"
+                                          IsChecked="{Binding RandomSobj, Source={x:Static local:IoC.Settings}}"
+                                          ToolTip="The sobj file affects where the monster wander around and where they spawn"
+                                          IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}, Converter={local:InverseBooleanConverter}}"/>
+                                <!-- <CheckBox Content="Shuffle Quest Names"
+                                                  Margin="5"
+                                                  ToolTip="Shuffle the quest names between each other (won't use same name twice)"/> -->
+                            </StackPanel>
+                            <StackPanel Margin="19 0"
+                                        VerticalAlignment="Center">
+                                <CheckBox Content="Include Leshen"
+                                          IsChecked="{Binding IncludeLeshen, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Leshen has a fair amount of health so could be a bit hard if included in possible random monster"/>
+                                <!--<CheckBox Content="Include Xeno'jiiva"
+                                          IsChecked="{Binding IncludeXenojiiva, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Xeno'jiiva can get stuck in some spots due to their size and has a fair amount of health so could be a bit hard if included in possible random monster"/>
+                                --><CheckBox Content="Include Behemoth"
+                                          IsChecked="{Binding IncludeBehemoth, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Behemoth could get stuck in some spots due to their size &#xA;(hasn't really been tested) and has alot of health so could be hard if included in possible random monster"
+                                          ToolTipService.ShowDuration="10000"/>
+                            </StackPanel>
+                            <StackPanel Margin="15 -4 0 0"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Min Size Percent"
+                                           FontSize="12"
+                                           Margin="5 2"/>
+                                <TextBox Margin="5 2"
+                                         Text="{Binding MonsterMinSize, Source={x:Static local:IoC.Settings}}"
+                                         Width="100"
+                                         HorizontalAlignment="Left"
+                                         PreviewTextInput="NumberValidationTextBox"
+                                         IsKeyboardFocusedChanged="TBMin_TextChanged"
+                                         KeyDown="EnterKeyRemoveFocus"
+                                         Tag="Min"
+                                         x:Name="TBMin"
+                                         ToolTip="Randomly picks a size between the min and max for the monster (uses default sizing if both min and max is 100)"/>
+                                <TextBlock Text="Max Size Percent"
+                                           FontSize="12"
+                                           Margin="5 2"/>
+                                <TextBox Margin="5 2"
+                                         Text="{Binding MonsterMaxSize, Source={x:Static local:IoC.Settings}}"
+                                         Width="100"
+                                         HorizontalAlignment="Left"
+                                         PreviewTextInput="NumberValidationTextBox"
+                                         IsKeyboardFocusedChanged="TBMax_TextChanged"
+                                         KeyDown="EnterKeyRemoveFocus"
+                                         Tag="Max"
+                                         x:Name="TBMax"
+                                         ToolTip="Randomly picks a size between the min and max for the monster (uses default sizing if both min and max is 100)"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <!--
+                            <CheckBox Content="Every Monster Tempered"
+                                      IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
+                                      Margin="5"
+                                      ToolTip="Every Monster Becomes Tempered Versions"/>
+                            <CheckBox Content="Every Monster Arch-Tempered"
+                                      IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
+                                      Margin="5"
+                                      ToolTip="Every Monster Becomes Arch-Tempered Versions"/>
+                            -->
+                <!-- <CheckBox Content="Randomize Music"
+                                      Margin="5"/> -->
+            </StackPanel>
+        </DockPanel>
+        <Border BorderBrush="Gray"
+                BorderThickness="1"
+                Margin="5"
+                Grid.Row="1">
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 0 0 5">
+                <StackPanel>
+                    <TextBlock Text="Iceborne (Need Iceborne Installed)"
+                                       Margin="10 -10 0 0"
+                                       Background="White"
+                                       HorizontalAlignment="Left"
+                                       FontWeight="Bold"/>
+                    <TextBlock Text="Options Above Apply to Iceborne Quests too"
+                                   TextWrapping="Wrap"
+                                   FontWeight="SemiBold"
+                                   Margin="5 0 5 4"/>
+                    <CheckBox Content="Randomize Iceborne Quests"
+                                  IsChecked="{Binding RandomizeIBQuests, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  ToolTip="Does exactly what it says"/>
+
+                    <TextBlock Text="Iceborne Monsters"
+                               Margin="5 10 5 2"
+                               FontSize="11"
+                               FontWeight="SemiBold"/>
+                    <CheckBox Content="Monsters Found in Iceborne Quests"
+                                  IsChecked="{Binding MonstersFoundInIB, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  x:Name="MonstersFoundInIB"
+                                  Checked="MonstersFoundInIB_Checked"
+                                  ToolTip="Randomizes monsters that appear in iceborne quests"
+                              Style="{StaticResource Circle}"
+                              Unchecked="MonstersFoundInIB_Unchecked"/>
+                    <CheckBox Content="Only Monsters Added in Iceborne"
+                                  IsChecked="{Binding IceborneOnlyMonsters, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  x:Name="OnlyIBMonsters"
+                                  Checked="OnlyIBMonsters_Checked"
+                              Unchecked="OnlyIBMonsters_Unchecked"
+                                  ToolTip="Only randomizes monsters added in iceborne for iceborne quests"
+                              Style="{StaticResource Circle}"/>
+                    <CheckBox Content="Include Non-Iceborne Monsters"
+                                  IsChecked="{Binding IncludeHighRankOnly, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  x:Name="NonIBMonsters"
+                                  Checked="NonIBMonsters_Checked"
+                              Unchecked="NonIBMonsters_Unchecked"
+                                  ToolTip="Includes monster that don't appear in any iceborne quests. Use with caution, will progress the research bar in hunters note when hunting high rank only monsters, it doesn't seem to have any negative consequences yet though."
+                                  ToolTipService.ShowDuration="10000"
+                              Style="{StaticResource Circle}"/>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Center"
+                            Margin="0 31 0 0">
+                    <CheckBox Content="Include Fatalis"
+                                  IsChecked="{Binding IncludeFatalis, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  Foreground="Red"
+                                  ToolTip="Good luck (WARNING: They are a bit buggy and the attack where meant to go behind a gate, that doesn't exist in any other stage, will one shot you)"
+                                  ToolTipService.ShowDuration="10000"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
