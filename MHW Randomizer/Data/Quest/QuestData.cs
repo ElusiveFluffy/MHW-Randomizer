@@ -555,7 +555,7 @@ namespace MHW_Randomizer
         //======================
         //  Story Hunt Quests
         //======================
-        //00201 is a expedtion quest also has quest if return from expedition
+        //00201 is a expedtion, this is the quest if return from expedition
         /// <summary>
         /// <para>The key is the quest ID and the value data about what to change (Don't randomize map with these, probably breaks story sequences)</para>
         /// <para>00401 and 00504 zorah magdaros quest (try randomizing the second monster (first is zorah, second is nergigante))</para>

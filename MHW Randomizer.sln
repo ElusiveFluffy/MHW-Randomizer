@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MHW Randomizer", "MHW Quest Randomizer\MHW Randomizer.csproj", "{4FD36162-6625-4896-B731-2F72ED3F5586}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MHW Randomizer", "MHW Randomizer\MHW Randomizer.csproj", "{4FD36162-6625-4896-B731-2F72ED3F5586}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
