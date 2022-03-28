@@ -573,7 +573,7 @@ namespace MHW_Randomizer
 
                     bool changeText = true;
                     if (dlc == -1)
-                        changeText = storyQuests[questNumber].ChangeObjectiveText;
+                        changeText = storyQuests[questNumber].ChangeQuestBookObjText;
 
                     #region GMD
                     if (!(QuestData.HuntMultiMonster.Contains(questNumber) || QuestData.HuntMultiObjective.Contains(questNumber) || QuestData.IBHuntMultiMonster.Contains(questNumber) || QuestData.IBHuntMultiObjective.Contains(questNumber) ||

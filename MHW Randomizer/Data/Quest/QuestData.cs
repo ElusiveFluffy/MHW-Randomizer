@@ -563,31 +563,55 @@ namespace MHW_Randomizer
         public static Dictionary<string, StoryQuestData> StoryHuntQuest = new Dictionary<string, StoryQuestData>()
         {
             { "00102", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 165 } } }, //A Kestodon Kerfuffle
-            { "00103", new StoryQuestData { ChangeQuestIcon = true, ChangeObjective = true, ChangeObjectiveText = true, QuestObjTextIndexs = new int[] { 168 } } }, //The Great Jagras Hunt
-            { "00201", new StoryQuestData { ChangeQuestIcon = true, ChangeObjectiveText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 143 } } }, //Bird-Brained Bandit
+            { "00103", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 168 } } }, //The Great Jagras Hunt
+            { "00201", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 143 } } }, //Bird-Brained Bandit
+            { "00205", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 171 } } }, //Urgent: Pukei-Pukei Hunt
             { "00301", new StoryQuestData { QuestObjTextIndexs = new int[] { 147 } } }, //The Best Kind of Quest
             { "00302", new StoryQuestData { QuestObjTextIndexs = new int[] { 175 }, CanRandomizeMap = true } }, //Sinister Shadows in the Swamp
+            { "00305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 178 } } }, //Flying Sparks: Tobi-Kadachi
+            { "00306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 181 } } }, //The Encroaching Anjanath
             { "00401", new StoryQuestData() }, //One for the History Books
+            { "00405", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 191 } } }, //Ballooning Problems
+            { "00407", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 199 } } }, //Radobaan Roadblock
+            { "00408", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 202 } } }, //Legiana: Embodiment of Elegance
             { "00501", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 207 } } }, //Into the Bowels of the Vale
-            { "00504", new StoryQuestData{ QuestObjTextIndexs = new int[] { 219 } } }, //A Colossal Task
-            { "00607", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 233 } } } //Old World Monster in the New World
+            { "00502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 213 } } }, //A Fiery Throne Atop the Forest
+            { "00503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 216 } } }, //Horned Tyrant Below the Sands
+            { "00504", new StoryQuestData { QuestObjTextIndexs = new int[] { 219 } } }, //A Colossal Task
+            { "00601", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 227 } } }, //Invader in the Waste
+            { "00605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 230 } } }, //Tickled Pink
+            { "00607", new StoryQuestData { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 233 } } }, //Old World Monster in the New World
+            { "00805", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 259 }, DuplicateMonsterHunt = true } }, //Beyond the Blasting Scales
+
+            //Special Assignments
+            { "50701", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 305 } } }, //The Food Chain Dominator
         };
 
-        //May need some testing //May need special text case for 50802
+        //May need some testing for 00804, 50601, 50802, and 50906 //May need special text case for 50802
         public static Dictionary<string, StoryQuestData> StorySlayQuest = new Dictionary<string, StoryQuestData>()
         {
+            { "00701", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 245 } } }, //A Wound and a Thirst
+            { "00801", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 248 } } }, //Kushala Daora, Dragon of Steel
+            { "00802", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 251 } } }, //Teostra the Infernal
+            { "00803", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 254 } } }, //Hellish Fiend Vaal Hazak
             { "00804", new StoryQuestData { ChangeObjective = true } }, //Land of Convergence
-            { "50601", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 317 } } }, //A Visitor from Another World
+            { "00806", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 261 } } }, //Thunderous Rumble in the Highlands
             { "50802", new StoryQuestData { ChangeObjective = true } }, //Pandora's Arena
-            { "50910", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 338 } } } //Contract: Trouble in the Ancient Forest
+
+            //Special Assignments
+            { "50801", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 307 } } }, //The Blazing Sun
+            { "50803", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 312, 313 }, MultiMonsterHunt = true } }, //No Remorse, No Surrender
+            { "50601", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 317 } } }, //A Visitor from Another World
+            { "50906", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 322 } } }, //He Taketh It with His Eyes
+            { "50910", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 338 } } }, //Contract: Trouble in the Ancient Forest
         };
 
         //================
         //  Hunt Quests
         //================
-        public static string[] BigMonsterHuntQuests = { "00205", "00251", "00252", "00305", "00306", "00331", "00332", "00333", "00351", "00352", "00361", "00362", "00405", "00407", "00408", "00431", "00432", "00433", "00434", "00451", "00461", "00472", "00473", "00482", "00483", "00502", "00503",
-            "00531", "00532", "00533", "00534", "00551", "00561", "00571", "00581", "00601", "00605", "00631", "00632", "00633", "00634", "00635", "00636", "00637", "00651", "00652", "00653", "00654", "00655", "00661", "00662", "00663", "00665", "00666", "00667", "00671", "00672",
-            "00681", "00682", "00693", "00731", "00732", "00733", "00734", "00735", "00736", "00737", "00738", "00751", "00752", "00761", "00762", "00763", "00771", "00772", "00773", "00781", "00791", "00792", "00793", "00794", "50701", "50751", "61606", "61607", "62515", "65603", "66609" };
+        public static string[] BigMonsterHuntQuests = { "00251", "00252", "00331", "00332", "00333", "00351", "00352", "00361", "00362", "00431", "00432", "00433", "00434", "00451", "00461", "00472", "00473", "00482", "00483", "00531", "00532", "00533", "00534", "00551", "00561", 
+            "00571", "00581", "00631", "00632", "00633", "00634", "00635", "00636", "00637", "00651", "00652", "00653", "00654", "00655", "00661", "00662", "00663", "00665", "00666", "00667", "00671", "00672", "00681", "00682", "00693", "00731", "00732", "00733", "00734", "00735", 
+            "00736", "00737", "00738", "00751", "00752", "00761", "00762", "00763", "00771", "00772", "00773", "00781", "00791", "00792", "00793", "00794", "50751", "61606", "61607", "62515", "65603", "66609" };
 
         //Hunt 2 monsters (998 first moster is slay)
         public static string[] HuntMultiObjective = { "00552", "00753", "00764", "00774", "00795", "00996", "00997", "00998", "61103", "61105", "61603", "61604", "66102", "66103", "66606", "66607", "66608", "67604" };
@@ -597,15 +621,15 @@ namespace MHW_Randomizer
         public static string[] HuntMultiMonster = { "00992", "64101", "65605", "66105", "66106", "66601", "66602", "66603", "66604", "66605", "67103", "67605", "67608" };
 
         //05003 (hunt 2 of the same monster), 61104 (hunt 2 of the same monster), 64601 (hunt 2 of the same monster), 65602 (hunt 3 of the same monster), 66101 (2 of the same), 67106 (3 of same)
-        public static string[] HuntDuplicate = { "00805", "00961", "05003", "61104", "64601", "65602", "66101", "67106" };
+        public static string[] HuntDuplicate = { "00961", "05003", "61104", "64601", "65602", "66101", "67106" };
 
         //================
         //  Slay Quests
         //================
-        public static string[] BigMonsterSlayQuests = { "00572", "00701", "00801", "00802", "00803", "00806", "00851", "00861", "00871", "00881", "00891", "00892", "00893", "00894", "00895", "00896", "00971", "00991", "03001", "03002", "03031", "03032", "03033", "03034", "03101", "50801", "62502", "62503", "62504", "62505",
+        public static string[] BigMonsterSlayQuests = { "00572", "00851", "00861", "00871", "00881", "00891", "00892", "00893", "00894", "00895", "00896", "00971", "00991", "03001", "03002", "03031", "03032", "03033", "03034", "03101", "62502", "62503", "62504", "62505",
             "62506", "62511", "62607", "62609", "63038", "63039", "63052", "63101", "63102", "63103", "63107", "63108", "63130", "63131", "67606", "67610",  };
 
-        public static string[] SlayMultiObjective = { "03051", "03052", "50803", "50861", "50891", "50892", "50906", "50991", "63002", "63031", "63051" };
+        public static string[] SlayMultiObjective = { "03051", "03052", "50861", "50891", "50892", "50906", "50991", "63002", "63031", "63051" };
 
         //"00995 (Multi Monster (3 monsters))", 63001 (multimonster (2 monsters)), 63104 (multimonster (2 monsters)), 63105 (multimonster (2 monsters)), 63106 (multimonster (2 monsters)), 63109 (multimonster (3 monsters)), 63110 (multimonster (3 monsters)), 66610 (multimonster (3 monsters))
         public static string[] SlayMultiMonster = { "00995", "63001", "63104", "63105", "63106", "63109", "63110", "66610" };
@@ -635,26 +659,56 @@ namespace MHW_Randomizer
         /// </summary>
         public static Dictionary<string, StoryQuestData> IBStoryHuntQuest = new Dictionary<string, StoryQuestData>()
         {
-            { "51603", new StoryQuestData() { ChangeObjective = true } }, //Across the Lost Path
-            { "51604", new StoryQuestData() { ChangeObjective = true } } //Point of No Return
+            { "01101", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 494 } } }, //Baptism by Ice
+            { "01102", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 501 } } }, //Banbaro Blockade
+            { "01201", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 508 } } }, //Ready to Strike
+            { "01202", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 512 } } }, //No Time for Naps
+            { "01203", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 515 } } }, //Play Both Ends
+            { "01301", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 519 } } }, //Blizzard Blitz
+            { "01302", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 524 } } }, //Ever-present Shadow
+            { "01303", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 526, 527 } } }, //The Scorching Blade
+            { "01304", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 530, 531 } } }, //Absolute Power
+            { "01305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 533, 534 } } }, //A Smashing Cross Counter
+            { "01306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 537, 538 } } }, //A Tale of Ice and Fire (Need to test this quest, repel velkhana quest)
+            { "01401", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 545 } } }, //When the Mist Taketh You
+            { "01402", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 552 } } }, //The Disintegrating Blade
+            { "01403", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 555 } } }, //Bad Friends, Great Enemies
+            { "01405", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 548 } } }, //The Thunderous Troublemaker!
+            { "01502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 571 } } }, //The Second Coming
+
+            //Special Assignments
+            { "51603", new StoryQuestData() { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 641 } } }, //Across the Lost Path
+            { "51604", new StoryQuestData() { ChangeObjective = true } }, //Point of No Return
+            { "51607", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 654 } } }, //The Fury Remains
         };
 
         //May need some testing
         public static Dictionary<string, StoryQuestData> IBStorySlayQuest = new Dictionary<string, StoryQuestData>()
         {
-            { "01404", new StoryQuestData() { ChangeObjective = true } }, //The Defense of Seliana
-            { "01601", new StoryQuestData() { ChangeObjective = true } }, //To The Guided, A Paean
-            { "01602", new StoryQuestData() { ChangeObjective = true } } //Paean of Guidance
+            { "01404", new StoryQuestData() { ChangeObjective = true } }, //The Defense of Seliana (Need to test)
+            { "01501", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 563, 564 } } }, //The Iceborne Wyvern
+            { "01503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 574, 575 } } }, //Under the Veil of Death
+            { "01504", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //A Light From The Abyss
+            { "01601", new StoryQuestData() { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 583 } } }, //To The Guided, A Paean
+            { "01602", new StoryQuestData() { ChangeObjective = true } }, //Paean of Guidance
+            { "01605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //To the Very Ends with You
+
+            //Special Assignments
+            { "51601", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 633 } } }, //Reveal Thyself, Destroyer
+            { "51602", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 628 } } }, //Sterling Pride
+            { "51606", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 651 } } }, //...And My Rage for All
+            { "51611", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 662 } } }, //Blazing Black Twilight
+            { "51612", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 673 } } }, //The Black Dragon (Fatalis)
+            { "51613", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 670 } } }, //Dawn's Triumph
         };
 
         //================
         //  Hunt Quests
         //================
-        public static string[] IBBigMonsterHuntQuests = { "01101", "01102", "01121", "01122", "01131", "01132", "01133", "01134", "01151", "01152", "01153", "01154", "01161", "01162", "01163", "01164", "01171", "01181", "01191", "01192", "01201", "01202", "01203", "01221", "01224", "01225", "01231", "01232", "01233",
-           "01234", "01235", "01236", "01237", "01238", "01251", "01252", "01261", "01262", "01263", "01271", "01272", "01273", "01274", "01281", "01301", "01302", "01303", "01304", "01305", "01321", "01323", "01331", "01332", "01333", "01334", "01335", "01336", "01337", "01338", "01339", "01340", "01351",
-           "01352", "01353", "01361", "01362", "01371", "01372", "01373", "01381", "01382", "01391", "01392", "01393", "01401", "01402", "01403", "01405", "01421", "01422", "01431", "01432", "01433", "01434", "01435", "01451", "01452", "01461", "01462", "01471", "01481", "01491", "01502", "01562", "01593", "01606",
-           "01632", "01633", "01634", "01635", "01636", "51621", "51607", "51623", "61806", "61809", "61813", "64802", "66817", "66818", "66819", "66820", "66821", "66822", "66824", "66825", "66832", "66835", "66859", "66860", "67807", "66846", "66854", "66855", "66856", "66857", "66861", "66867",
-           "67809", "66865", "66866" };
+        public static string[] IBBigMonsterHuntQuests = { "01121", "01122", "01131", "01132", "01133", "01134", "01151", "01152", "01153", "01154", "01161", "01162", "01163", "01164", "01171", "01181", "01191", "01192", "01221", "01224", "01225", "01231", "01232", "01233", "01234", "01235", 
+            "01236", "01237", "01238", "01251", "01252", "01261", "01262", "01263", "01271", "01272", "01273", "01274", "01281", "01321", "01323", "01331", "01332", "01333", "01334", "01335", "01336", "01337", "01338", "01339", "01340", "01351", "01352", "01353", "01361", "01362", "01371", 
+            "01372", "01373", "01381", "01382", "01391", "01392", "01393", "01421", "01422", "01431", "01432", "01433", "01434", "01435", "01451", "01452", "01461", "01462", "01471", "01481", "01491", "01562", "01593", "01606", "01632", "01633", "01634", "01635", "01636", "51621", "51623", 
+            "61806", "61809", "61813", "64802", "66817", "66818", "66819", "66820", "66821", "66822", "66824", "66825", "66832", "66835", "66859", "66860", "67807", "66846", "66854", "66855", "66856", "66857", "66861", "66867", "67809", "66865", "66866" };
 
         public static string[] IBHuntMultiObjective = { "01264", "01354", "01363", "01383", "01395", "01423", "01483", "01603", "01604", "61802", "61812", "64801", "66805", "66807", "66808", "66809", "66810", "66811", "66812", "66813", "66814", "66862" };
 
@@ -668,7 +722,7 @@ namespace MHW_Randomizer
         //================
         //  Slay Quests
         //================
-        public static string[] IBBigMonsterSlayQuests = { "01501", "01503", "01504", "01521", "01551", "01552", "01561", "01571", "01572", "01581", "01591", "01592", "01605", "01641", "01661", "01691", "03071", "03072", "03073", "03091", "03171", "51605", "51606", "51622", "63073", "63074", "63143", "63150", "66836", "67801",
+        public static string[] IBBigMonsterSlayQuests = { "01521", "01551", "01552", "01561", "01571", "01572", "01581", "01591", "01592", "01641", "01661", "01691", "03071", "03072", "03073", "03091", "03171", "51605", "51622", "63073", "63074", "63143", "63150", "66836", "67801",
            "66847", "66840", "66841", "66842", "66843", "66844", "66845", "66850", "66858", "66863", "67806" };
 
         //66815 (multimonster (3 monsters)), 66816 (multimonster (2 monsters)), 01651 (multimonster (2 monsters)), 01671 (multimonster (2 monsters)), 01692 (multimonster (4 monsters)), 03092 (multimonster (2 monsters)), 61807 (multimonster (2 monsters)), 63071 (mulitmonster (2 monsters)), 63072 (multimonster (2 monsters))

@@ -6,9 +6,14 @@ namespace MHW_Randomizer
     {
         public bool ChangeQuestIcon;
         public bool ChangeObjective;
-        public bool ChangeObjectiveText;
+        public bool ChangeQuestBookObjText;
         public bool CanRandomizeMap;
+        public bool DuplicateMonsterHunt;
+        public bool MultiMonsterHunt;
 
+        /// <summary>
+        /// The text indexes for the hunt text in the story target file
+        /// </summary>
         public int[] QuestObjTextIndexs;
     }
 }
