@@ -245,34 +245,6 @@ namespace MHW_Randomizer
         {
             Seed = TMath.Seed();
 
-            //Dictionary<int, string> armourNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_otomo_weaponData));
-            //Dictionary<int, string> armour = new Dictionary<int, string>();
-            //int index = 0;
-            //string previous = "";
-            //for (int i = 0; i < armourNames.Count; i++)
-            //{
-            //    if (armourNames.ElementAt(i).Value.Length < 40 && armourNames.ElementAt(i).Value != previous)
-            //    {
-            //        armour[index] = armourNames.ElementAt(i).Value;
-            //        previous = armourNames.ElementAt(i).Value;
-            //        index++;
-            //    }
-            //    else
-            //    {
-            //        previous = "";
-            //    }
-            //}
-            //using (StreamWriter file = File.CreateText(IoC.Settings.ChunkFolderPath + @"\randomized\otomo_weapon_Data.json"))
-            //{
-            //    JsonSerializer serializer = new JsonSerializer
-            //    {
-            //        Formatting = Formatting.Indented,
-            //        DefaultValueHandling = DefaultValueHandling.Ignore
-            //    };
-            //    //serialize objects directly into file stream
-            //    serializer.Serialize(file, armour);
-            //}
-
             if (!string.IsNullOrWhiteSpace(IoC.Settings.UserSeed))
             {
                 if (uint.TryParse(IoC.Settings.UserSeed, out _))

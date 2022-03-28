@@ -12,7 +12,7 @@ namespace MHW_Randomizer
         public static byte[] ObjectiveIDs = { 0x00, 0x01, 0x02, 0x11, 0x21, 0x31 };
         public static byte[] QuestTypeIDs = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 };
 
-        public static int[] ValidMapIDs = { 101, 102, 103, 104, 105, 108, 109 };
+        public static int[] ValidMapIndexes = { 1, 2, 3, 4, 5, 8, 9 };
 
         public static string[] MapNames = {"Infinity of Nothing", "Ancient Forest", "Wildspire Waste", "Coral Highlands", "Rotten Vale", "Elder Recess" , "Great Ravine" , "Great Ravine (Story Map to Coral Highlands)" , "Hoarfrost Reach", "Guiding Lands", "Infinity of Nothing" ,
             "Special Arena" , "Arena (Challenge)" ,"IB Arena (Seliana Supply Cache)",  "Astera" , "Gathering Hub (Astera)" , "Research Base" , "Seliana", "Gathering Hub (Seliana)", "307 Unconfirmed/To Be Tested","311 Unconfirmed/To Be Tested","Crashes game" , "Ancient Forest (Flooded / Intro)" ,
@@ -361,11 +361,16 @@ namespace MHW_Randomizer
             {50906, "He Taketh It with His Eyes"},
             {50910, "Contract: Trouble in the Ancient Forest"},
             {50991, "A Visitor from Eorzea"},
+            {51601, "Reveal Thyself, Destroyer"},
+            {51602, "Sterling Pride"},
             {51603, "Across the Lost Path"},
             {51604, "Point of No Return"},
             {51605, "The Red Dragon"},
             {51606, "...And My Rage for All"},
             {51607, "The Fury Remains"},
+            {51611, "Blazing Black Twilight"},
+            {51612, "The Black Dragon"},
+            {51613, "Dawn's Triumph"},
             {51621, "Special Arena: MR Stygian Zinogre"},
             {51622, "Achy Brachy Heart"},
             {51623, "All That Glitters is Furious"},
@@ -596,11 +601,11 @@ namespace MHW_Randomizer
             { "00803", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 254 } } }, //Hellish Fiend Vaal Hazak
             { "00804", new StoryQuestData { ChangeObjective = true } }, //Land of Convergence
             { "00806", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 261 } } }, //Thunderous Rumble in the Highlands
-            { "50802", new StoryQuestData { ChangeObjective = true } }, //Pandora's Arena
 
             //Special Assignments
             { "50801", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 307 } } }, //The Blazing Sun
-            { "50803", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 312, 313 }, MultiMonsterHunt = true } }, //No Remorse, No Surrender
+            { "50802", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 310 } } }, //Pandora's Arena
+            { "50803", new StoryQuestData { ChangeQuestIcon = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 312, 313 }, MultiObjectiveHunt = true } }, //No Remorse, No Surrender
             { "50601", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 317 } } }, //A Visitor from Another World
             { "50906", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 322 } } }, //He Taketh It with His Eyes
             { "50910", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 338 } } }, //Contract: Trouble in the Ancient Forest
@@ -694,7 +699,7 @@ namespace MHW_Randomizer
             { "01605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //To the Very Ends with You
 
             //Special Assignments
-            { "51601", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 633 } } }, //Reveal Thyself, Destroyer
+            { "51601", new StoryQuestData { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 633 } } }, //Reveal Thyself, Destroyer
             { "51602", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 628 } } }, //Sterling Pride
             { "51606", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 651 } } }, //...And My Rage for All
             { "51611", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 662 } } }, //Blazing Black Twilight

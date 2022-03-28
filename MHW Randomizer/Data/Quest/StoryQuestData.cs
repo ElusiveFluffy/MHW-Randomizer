@@ -9,11 +9,11 @@ namespace MHW_Randomizer
         public bool ChangeQuestBookObjText;
         public bool CanRandomizeMap;
         public bool DuplicateMonsterHunt;
-        public bool MultiMonsterHunt;
+        public bool MultiObjectiveHunt;
 
         /// <summary>
         /// The text indexes for the hunt text in the story target file
         /// </summary>
-        public int[] QuestObjTextIndexs;
+        public int[] QuestObjTextIndexs = new int[] { };
     }
 }

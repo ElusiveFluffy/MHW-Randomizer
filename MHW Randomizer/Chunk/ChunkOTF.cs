@@ -105,7 +105,7 @@ namespace MHW_Randomizer
                 {
                     root_node = filelist[0];
                     root_node.FromChunk = ChunkFile;
-                    root_node.FromChunkName = $"({System.IO.Path.GetFileNameWithoutExtension(ChunkFile)})";
+                    root_node.FromChunkName = $"({Path.GetFileNameWithoutExtension(ChunkFile)})";
                 }
                 for (int j = 0; j < CountChildren; j++)
                 {
@@ -141,7 +141,7 @@ namespace MHW_Randomizer
                     }
                     string[] fathernodes = StringNameChild.Split('\\');
                     FileNode child_node = new FileNode(fathernodes[fathernodes.Length - 1], isFile, fileInput);
-                    if (fathernodes[fathernodes.Length - 2] == "trace")
+                    if (fathernodes[fathernodes.Length - 2] == "trace" || (fathernodes[fathernodes.Length - 2] == "text" && fathernodes[fathernodes.Length - 1] == "q51613_eng.gmd"))
                         continue;
 
                     if (fathernodes[fathernodes.Length - 1].Contains(".fsm"))

@@ -325,10 +325,12 @@ namespace MHW_Randomizer
 
             IoC.Randomizer.MissingMIBFiles = new List<string>();
 
+            //Create Non-Story Quest List
             string[] quests = QuestData.BigMonsterHuntQuests;
 
             bool RandomizingIB = false;
 
+            //Add Relevent Quests to the List
             if (!IoC.Settings.DontRandomizeSlay)
                 quests = quests.Concat(QuestData.BigMonsterSlayQuests).ToArray();
             if (!IoC.Settings.DontRandomizeCapture)
@@ -352,6 +354,7 @@ namespace MHW_Randomizer
                     quests = quests.Concat(QuestData.SlayDuplicate).ToArray();
             }
 
+            //Create Story Quest List
             Dictionary<string, StoryQuestData> storyQuests = QuestData.StoryHuntQuest;
             if (!IoC.Settings.DontRandomizeSlay)
             {
@@ -363,7 +366,9 @@ namespace MHW_Randomizer
                 storyQuests = storyQuests.Concat(QuestData.IBStoryHuntQuest).ToDictionary(x => x.Key, x => x.Value);
 
             GMD GMDFile;
-            int MonsterFor00103 = 0;
+            int monsterFor00103 = 0;
+
+            GMD storyTargetText = new GMD(ChunkOTF.files["storyTarget_eng.gmd"].ChunkState.ExtractItem(ChunkOTF.files["storyTarget_eng.gmd"]));
 
             for (int dlc = -1; dlc <= Convert.ToInt32(IoC.Settings.RandomizeIBQuests); dlc++)
             {
@@ -400,7 +405,7 @@ namespace MHW_Randomizer
                     //Pick Random Map
                     if (IoC.Settings.RandomMaps && dlc != -1)
                     {
-                        MapIDIndex = pickMap.Next(5 + Convert.ToInt32(RandomizingIB)) + 1;
+                        MapIDIndex = QuestData.ValidMapIndexes[pickMap.Next(5 + (Convert.ToInt32(RandomizingIB) * 2))];
                     }
 
                     using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\QuestLog.txt"))
@@ -415,6 +420,7 @@ namespace MHW_Randomizer
                         //If there is no monster at that index skip
                         if (MID[m] == 0 && !(IoC.Settings.TwoMonsterQuests && m == 1 && !isDuplicateMonQuest))
                             continue;
+                        //If Zorah Magdaros quest only randomize the second monster (First is Zorah)
                         if ((questNumber == "00401" && m == 0) || (questNumber == "00504" && m == 0))
                             continue;
 
@@ -448,12 +454,12 @@ namespace MHW_Randomizer
                         }
 
                         if (questNumber == "00103")
-                            RandomMonsterIndex = MonsterFor00103;
+                            RandomMonsterIndex = monsterFor00103;
                         
                         MID[m] = monsterIDs[RandomMonsterIndex] + 1;
 
                         if (questNumber == "00102")
-                            MonsterFor00103 = RandomMonsterIndex;
+                            monsterFor00103 = RandomMonsterIndex;
 
                         if (dlc == -1 && !storyQuests[questNumber].ChangeObjective)
                         { }
@@ -477,7 +483,7 @@ namespace MHW_Randomizer
                         byte[] sobj;
 
                         //Pick random sobj
-                        if ((m == 1 && IoC.Settings.TwoMonsterQuests && dlc != -1) || (IoC.Settings.RandomSobj && dlc != -1))
+                        if ((m == 1 && IoC.Settings.TwoMonsterQuests && (dlc != -1 || storyQuests[questNumber].CanRandomizeMap)) || (IoC.Settings.RandomSobj && (dlc != -1 || storyQuests[questNumber].CanRandomizeMap)))
                         {
                             Files[] SobjFiles;
                             if (monsterIDs[RandomMonsterIndex] == 26)
@@ -576,6 +582,22 @@ namespace MHW_Randomizer
                         changeText = storyQuests[questNumber].ChangeQuestBookObjText;
 
                     #region GMD
+
+                    if (dlc == -1)
+                    {
+                        for (int i = 0; i < storyQuests[questNumber].QuestObjTextIndexs.Length; i++)
+                        {
+                            int entryIndex = storyQuests[questNumber].QuestObjTextIndexs[i];
+                            string value = "";
+                            if (storyQuests[questNumber].MultiObjectiveHunt)
+                                value = storyTargetText.Entries[entryIndex].Value.Replace(QuestData.MonsterNames.FirstOrDefault(o => storyTargetText.Entries[entryIndex].Value.Contains(o)), IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[i]]);
+                            else
+                                value = storyTargetText.Entries[entryIndex].Value.Replace(QuestData.MonsterNames.FirstOrDefault(o => storyTargetText.Entries[entryIndex].Value.Contains(o, StringComparison.OrdinalIgnoreCase)), IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
+
+                            storyTargetText.Entries[entryIndex].Value = value;
+                        }
+                    }
+
                     if (!(QuestData.HuntMultiMonster.Contains(questNumber) || QuestData.HuntMultiObjective.Contains(questNumber) || QuestData.IBHuntMultiMonster.Contains(questNumber) || QuestData.IBHuntMultiObjective.Contains(questNumber) ||
                         QuestData.SlayMultiMonster.Contains(questNumber) || QuestData.SlayMultiObjective.Contains(questNumber) || QuestData.IBSlayMultiMonster.Contains(questNumber)) && changeText )
                     {
@@ -957,6 +979,8 @@ namespace MHW_Randomizer
                     RandomizingIB = true;
 
             }
+
+            storyTargetText.Save(IoC.Settings.ChunkFolderPath + @"\randomized\common\text\storyTarget_eng.gmd");
 
             #endregion
         }

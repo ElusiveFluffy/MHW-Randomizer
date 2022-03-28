@@ -139,7 +139,12 @@ namespace MHW_Randomizer
                 return str;
             return str.Substring(0, Math.Min(str.Length, maxLength));
         }
-        
+
+        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        {
+            return source?.IndexOf(toCheck, comp) >= 0;
+        }
+
         public static byte[] ToFixedSizeCharArray(this string str, int maxLength)
         {
             byte[] result = new byte[maxLength];
