@@ -24,10 +24,22 @@
                         Margin="0 5">
                 <StackPanel>
                     <CheckBox Content="Random Scoutfly Colour"
-                            IsChecked="{Binding RandomScoutflyColour, Source={x:Static local:IoC.Settings}}"
-                            Margin="5 4"
-                            ToolTip="Randomizes the scoutfly colour for when tracking a monster, and the monster trace colours &#x0a;(Different colours for normal monster, elder dragon, and tempered)"
-                            ToolTipService.ShowDuration="10000"/>
+                              IsChecked="{Binding RandomScoutflyColour, Source={x:Static local:IoC.Settings}}"
+                              Margin="5 4"
+                              ToolTip="Randomizes the scoutfly colour for when tracking a monster, and the monster trace colours with a colour from a list I made &#x0a;(Different colours for normal monster, elder dragon, and tempered)"
+                              ToolTipService.ShowDuration="10000"/>
+                    <CheckBox Content="Completely Random Scoutfly Colour"
+                              IsChecked="{Binding CompletelyRandomScoutflyColour, Source={x:Static local:IoC.Settings}}"
+                              Margin="12 4"
+                              ToolTip="Make it so the colours aren't picked from the colour list and are completely random"
+                              ToolTipService.ShowDuration="10000"
+                              IsEnabled="{Binding RandomScoutflyColour, Source={x:Static local:IoC.Settings}}"/>
+                    <CheckBox Content="Different Track Colour"
+                              IsChecked="{Binding DifferentTrackScoutflyColour, Source={x:Static local:IoC.Settings}}"
+                              Margin="12 4"
+                              ToolTip="Makes the track colour for monsters different from the scoutfly colour, instead of it being the same as the scoutfly's random colour"
+                              ToolTipService.ShowDuration="10000"
+                              IsEnabled="{Binding RandomScoutflyColour, Source={x:Static local:IoC.Settings}}"/>
                 </StackPanel>
             </StackPanel>
         </Border>

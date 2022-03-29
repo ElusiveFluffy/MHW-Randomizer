@@ -123,7 +123,6 @@ namespace MHW_Randomizer
         //-----------------
         //Add some set colours it randomly picks and make the trace colours the same as the tracking colour
         public bool RandomScoutflyColour { get; set; }
-        //TO DO
         public bool CompletelyRandomScoutflyColour { get; set; }
         public bool DifferentTrackScoutflyColour { get; set; }
 
