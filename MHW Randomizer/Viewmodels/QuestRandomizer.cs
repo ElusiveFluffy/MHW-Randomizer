@@ -403,7 +403,7 @@ namespace MHW_Randomizer
                     OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].ChunkState.ExtractItem(ChunkOTF.files["questData_" + questNumber + ".mib"]));
 
                     //Pick Random Map
-                    if (IoC.Settings.RandomMaps && dlc != -1)
+                    if (IoC.Settings.RandomMaps && (dlc != -1 || storyQuests[questNumber].CanRandomizeMap))
                     {
                         MapIDIndex = QuestData.ValidMapIndexes[pickMap.Next(5 + (Convert.ToInt32(RandomizingIB) * 2))];
                     }
@@ -424,6 +424,7 @@ namespace MHW_Randomizer
                         if ((questNumber == "00401" && m == 0) || (questNumber == "00504" && m == 0))
                             continue;
 
+                        //Get the fsm file if its a story quest
                         byte[] fsm = null;
                         if (ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm") && dlc == -1)
                             fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm"].ChunkState.ExtractItem(ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm"]);
