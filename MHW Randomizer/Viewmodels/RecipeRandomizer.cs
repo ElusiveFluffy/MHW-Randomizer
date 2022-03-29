@@ -23,8 +23,8 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.ShuffleArmourRecipes || IoC.Settings.ShuffleCharms)
             {
-                File.Create(IoC.Settings.ChunkFolderPath + @"\randomized\ArmourLog.txt").Dispose();
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\ArmourLog.txt"))
+                File.Create(IoC.Settings.SaveFolderPath + @"\randomized\Armour Log.txt").Dispose();
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Armour Log.txt"))
                 {
                     file.WriteLine("---------------------------------------------------------------------------");
                     file.WriteLine("                              Armour Recipes                               ");
@@ -293,8 +293,8 @@ namespace MHW_Randomizer
 
                 byte[] randomizedBytes = StructTools.RawSerialize(recipeList);
                 randomizedBytes = header.Concat(randomizedBytes).ToArray();
-                Directory.CreateDirectory(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\");
-                File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\armor.eq_crt", randomizedBytes);
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\");
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\armor.eq_crt", randomizedBytes);
             }
 
             if (IoC.Settings.RandomArmourSkill || IoC.Settings.RandomArmourSkillLevels || IoC.Settings.ShuffleArmourSetBonus || IoC.Settings.RandomArmourDecoSlots || IoC.Settings.RandomDecoSlotSize || IoC.Settings.GiveCharmDecoSlot 
@@ -308,7 +308,7 @@ namespace MHW_Randomizer
 
                 byte[] randomizedDatBytes = StructTools.RawSerialize(datList);
                 Array.Copy(randomizedDatBytes, 0, datBytes, 10, randomizedDatBytes.Length);
-                File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\armor.am_dat", datBytes);
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\armor.am_dat", datBytes);
             }
 
             #endregion
@@ -317,8 +317,8 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.ShuffleWeaponRecipes || IoC.Settings.ShuffleWeaponOrder)
             {
-                File.Create(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt").Dispose();
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                File.Create(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt").Dispose();
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                 {
                     file.Write("---------------------------------------------------------------------------");
                     file.Write("\n                              Weapon Recipes                               ");
@@ -339,14 +339,14 @@ namespace MHW_Randomizer
                 Dictionary<int, string> weaponNames;
                 NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
 
-                Directory.CreateDirectory(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\");
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\");
                 for (int weapons = 0; weapons < 11; weapons++)
                 {
                     switch (weapons)
                     {
                         case 0:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                          Charge Blade Recipes                             ");
@@ -365,13 +365,13 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\c_axe.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\c_axe.wp_dat", treeBytes);
 
                                 break;
                             }
                         case 1:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                           Dual Blades Recipes                             ");
@@ -390,12 +390,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\w_sword.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\w_sword.wp_dat", treeBytes);
                                 break;
                             }
                         case 2:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                           Great Sword Recipes                             ");
@@ -414,12 +414,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\l_sword.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\l_sword.wp_dat", treeBytes);
                                 break;
                             }
                         case 3:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                             GunLance Recipes                              ");
@@ -438,12 +438,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\g_lance.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\g_lance.wp_dat", treeBytes);
                                 break;
                             }
                         case 4:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                             Hammer Recipes                                ");
@@ -462,12 +462,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\hammer.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\hammer.wp_dat", treeBytes);
                                 break;
                             }
                         case 5:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                          Hunting Horn Recipes                             ");
@@ -486,12 +486,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\whistle.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\whistle.wp_dat", treeBytes);
                                 break;
                             }
                         case 6:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                          Insect Glaive Recipes                            ");
@@ -510,12 +510,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\rod.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\rod.wp_dat", treeBytes);
                                 break;
                             }
                         case 7:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                              Lance Recipes                                ");
@@ -534,12 +534,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\lance.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\lance.wp_dat", treeBytes);
                                 break;
                             }
                         case 8:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                            Longsword Recipes                              ");
@@ -558,12 +558,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\tachi.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\tachi.wp_dat", treeBytes);
                                 break;
                             }
                         case 9:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                            Switch Axe Recipes                             ");
@@ -582,12 +582,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\s_axe.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\s_axe.wp_dat", treeBytes);
                                 break;
                             }
                         case 10:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                        Sword and Shield Recipes                           ");
@@ -606,7 +606,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (IoC.Settings.ShuffleWeaponOrder)
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\sword.wp_dat", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\sword.wp_dat", treeBytes);
                                 break;
                             }
                     }
@@ -620,7 +620,7 @@ namespace MHW_Randomizer
                         //Bow
                         case 0:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                               Bow Recipes                                 ");
@@ -639,13 +639,13 @@ namespace MHW_Randomizer
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\bow.wp_dat_g", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\bow.wp_dat_g", treeBytes);
                                 }
                                 break;
                             }
                         case 1:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                           Heavy Bowgun Recipes                            ");
@@ -664,13 +664,13 @@ namespace MHW_Randomizer
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\hbg.wp_dat_g", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\hbg.wp_dat_g", treeBytes);
                                 }
                                 break;
                             }
                         case 2:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                           Light Bowgun Recipes                            ");
@@ -689,7 +689,7 @@ namespace MHW_Randomizer
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
-                                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\lbg.wp_dat_g", treeBytes);
+                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\lbg.wp_dat_g", treeBytes);
                                 }
                                 break;
                             }
@@ -701,8 +701,8 @@ namespace MHW_Randomizer
                 byte[] randomizedCraftBytes = StructTools.RawSerialize(weaponCraft);
                 Array.Copy(randomizedCraftBytes, 0, weaponCraftBytes, 10, randomizedCraftBytes.Length);
 
-                File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\weapon.eq_cus", recipeBytes);
-                File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\weapon.eq_crt", weaponCraftBytes);
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\weapon.eq_cus", recipeBytes);
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\weapon.eq_crt", weaponCraftBytes);
 
             }
 
@@ -712,8 +712,8 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.ShuffleKinsectRecipes || IoC.Settings.ShuffleKinsectOrder || IoC.Settings.RandomKinsectType || IoC.Settings.RandomKinsectDust)
             {
-                File.Create(IoC.Settings.ChunkFolderPath + @"\randomized\KinsectLog.txt").Dispose();
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\KinsectLog.txt"))
+                File.Create(IoC.Settings.SaveFolderPath + @"\randomized\Kinsect Log.txt").Dispose();
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Kinsect Log.txt"))
                 {
                     file.Write("---------------------------------------------------------------------------");
                     file.Write("\n                              Kinsect Recipes                              ");
@@ -830,10 +830,10 @@ namespace MHW_Randomizer
 
                 randomizedTreeBytes = cipher.Encipher(randomizedTreeBytes);
 
-                Directory.CreateDirectory(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\");
-                File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\insect.eq_cus", randomizedBytes);
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\");
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\insect.eq_cus", randomizedBytes);
                 if (IoC.Settings.ShuffleKinsectOrder || IoC.Settings.RandomKinsectType || IoC.Settings.RandomKinsectDust)
-                    File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\rod_insect.rod_inse", randomizedTreeBytes);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\rod_insect.rod_inse", randomizedTreeBytes);
             }
             #endregion
 
@@ -842,7 +842,7 @@ namespace MHW_Randomizer
             Dictionary<int, string> palicoWeaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.otomo_weaponData));
             if (IoC.Settings.ShufflePalicoArmour || IoC.Settings.ShufflePalicoWeapons)
             {
-                File.Create(IoC.Settings.ChunkFolderPath + @"\randomized\PalicoLog.txt").Dispose();
+                File.Create(IoC.Settings.SaveFolderPath + @"\randomized\Palico Log.txt").Dispose();
                 byte[] recipeBytes = ChunkOTF.files["ot_equip.eq_crt"].ChunkState.ExtractItem(ChunkOTF.files["ot_equip.eq_crt"]);
                 List<RecipeStructs.Armour> recipeList = StructTools.RawDeserialize<RecipeStructs.Armour>(recipeBytes, 10);
                 NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
@@ -855,7 +855,7 @@ namespace MHW_Randomizer
                 {
                     int[] badIDs = { 51, 61, 126, 145, 146, 147, 149, 151, 154, 156, 158, 159, 160, 212, 213, 223, 288, 307, 308, 309, 311, 313, 316, 320, 321, 322 };
                     Dictionary<int, string> armourNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.otomo_armourData));
-                    using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\PalicoLog.txt"))
+                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Palico Log.txt"))
                     {
                         file.WriteLine("---------------------------------------------------------------------------");
                         file.WriteLine("                          Palico Armour Recipes                            ");
@@ -896,7 +896,7 @@ namespace MHW_Randomizer
                     validHighRank = new List<RecipeStructs.Armour>();
                     validMasterRank = new List<RecipeStructs.Armour>();
                     int[] badIDs = { 50, 54, 55, 60, 130, 149, 150, 151, 153, 155, 158, 162, 163, 164 };
-                    using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\PalicoLog.txt"))
+                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Palico Log.txt"))
                     {
                         file.WriteLine("---------------------------------------------------------------------------");
                         file.WriteLine("                          Palico Weapon Recipes                            ");
@@ -934,15 +934,15 @@ namespace MHW_Randomizer
                 byte[] randomizedBytes = StructTools.RawSerialize(recipeList);
                 Array.Copy(randomizedBytes, 0, recipeBytes, 10, randomizedBytes.Length);
 
-                File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\ot_equip.eq_crt", recipeBytes);
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\ot_equip.eq_crt", recipeBytes);
             }
 
             if (IoC.Settings.RandomPalicoWeaponElement || IoC.Settings.RandomPalicoWeaponType || IoC.Settings.RandomPalicoWeaponColour)
             {
                 if (!(IoC.Settings.ShufflePalicoArmour || IoC.Settings.ShufflePalicoWeapons))
-                    File.Create(IoC.Settings.ChunkFolderPath + @"\randomized\PalicoLog.txt").Dispose();
+                    File.Create(IoC.Settings.SaveFolderPath + @"\randomized\Palico Log.txt").Dispose();
 
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\PalicoLog.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Palico Log.txt"))
                 {
                     file.WriteLine("---------------------------------------------------------------------------");
                     file.WriteLine("                          Palico Weapon Element                            ");
@@ -971,7 +971,7 @@ namespace MHW_Randomizer
                 //Paralysis = 7
                 //Sleep = 8
                 //Blast = 9
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\PalicoLog.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Palico Log.txt"))
                 {
                     foreach (var weapon in palicoWeapons)
                     {
@@ -1020,7 +1020,7 @@ namespace MHW_Randomizer
                 Array.Copy(randomizedBytes, 0, weaponBytes, 10, randomizedBytes.Length);
                 weaponBytes = cipher.Encipher(weaponBytes);
 
-                File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\equip\otomoWeapon.owp_dat", weaponBytes);
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\otomoWeapon.owp_dat", weaponBytes);
 
             }
 
@@ -1048,7 +1048,7 @@ namespace MHW_Randomizer
                 armourList[j].Equipment_Index_Raw = temp;
 
 
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\PalicoLog.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Palico Log.txt"))
                 {
                     //Log
                     string recipe = armourNames[armourList[c].Equipment_Index_Raw] + " recipe:\t"
@@ -1222,7 +1222,7 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.ShuffleWeaponRecipes)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                 {
                     file.WriteLine("\n");
 
@@ -1247,7 +1247,7 @@ namespace MHW_Randomizer
                 }
             }
 
-            using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
             {
                 file.WriteLine("\n");
                 NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
@@ -1310,7 +1310,7 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.ShuffleWeaponRecipes)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                 {
                     file.WriteLine("\n");
 
@@ -1337,7 +1337,7 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.ShuffleWeaponOrder)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\WeaponLog.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Weapon Log.txt"))
                 {
                     file.WriteLine("\n");
                     for (int p = firstIndex; p < lastIndex + 1; p++)
@@ -1372,7 +1372,7 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.ShuffleKinsectRecipes)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\KinsectLog.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Kinsect Log.txt"))
                 {
                     file.WriteLine("\n");
 
@@ -1399,7 +1399,7 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.ShuffleKinsectOrder)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\KinsectLog.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Kinsect Log.txt"))
                 {
                     file.WriteLine("\n");
                     for (int p = 2; p < recipeList.Count; p++)
@@ -1446,7 +1446,7 @@ namespace MHW_Randomizer
                 recipeList[validIDs[j]].Equipment_Index_Raw = temp;
 
 
-                using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\ArmourLog.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Armour Log.txt"))
                 {
                     //Log
                     string recipe = armourNames[recipeList[validIDs[c]].Equipment_Index_Raw] + " recipe:\t"
@@ -1478,8 +1478,8 @@ namespace MHW_Randomizer
             Dictionary<uint, string> skillNames = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_skillData));
             Dictionary<uint, string> fullArmourList = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_armorData));
 
-            File.Create(IoC.Settings.ChunkFolderPath + @"\randomized\ArmourDataLog.txt").Dispose();
-            using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\ArmourDataLog.txt"))
+            File.Create(IoC.Settings.SaveFolderPath + @"\randomized\Armour Data Log.txt").Dispose();
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Armour Data Log.txt"))
             {
                 file.Write("---------------------------------------------------------------------------");
                 file.Write("\n                              Armour Data                                 ");
@@ -1549,7 +1549,7 @@ namespace MHW_Randomizer
                     ShuffleDat(r, datsMaster);
                 }
             }
-            using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\ArmourDataLog.txt"))
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Armour Data Log.txt"))
             {
                 NR3Generator skillR = new NR3Generator(IoC.Randomizer.Seed);
                 float[] skillWeightTable = { 45, 43.5f, 9.1f, 1.4f, 1 };

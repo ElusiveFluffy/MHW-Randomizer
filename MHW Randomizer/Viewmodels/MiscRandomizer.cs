@@ -56,8 +56,8 @@ namespace MHW_Randomizer
                     scoutflyBytes = scoutflyBytes.RandomColourPicker(248, r);
                 }
 
-                Directory.CreateDirectory(IoC.Settings.ChunkFolderPath + @"\randomized\common\guide_insect\");
-                File.WriteAllBytes(IoC.Settings.ChunkFolderPath + @"\randomized\common\guide_insect\gi_param.gip", scoutflyBytes);
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\common\guide_insect\");
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\guide_insect\gi_param.gip", scoutflyBytes);
 
             }
         }

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace MHW_Randomizer
 {
     public class RandomizerSettings : BaseViewModel
     {
         public string ChunkFolderPath;
+        public string SaveFolderPath;
         public string UserSeed { get; set; }
         //To add:
-        //Chose where to save randomized files
+        //Add nativePC warning of overiding files and make it so can export directly into nativePC if selected
 
         //--------------------
         //  Quest Settings

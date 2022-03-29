@@ -181,6 +181,11 @@ namespace MHW_Randomizer
 
         public void OpenFolder()
         {
+            if (!string.IsNullOrWhiteSpace(IoC.Settings.ChunkFolderPath) && Directory.Exists(IoC.Settings.ChunkFolderPath))
+                FolderBrowser.RootFolder = IoC.Settings.ChunkFolderPath;
+            else
+                FolderBrowser.RootFolder = AppDomain.CurrentDomain.BaseDirectory;
+
             FolderBrowser.Title = "Select Chunks Folder";
             FolderBrowser.Multiselect = false;
 
@@ -243,6 +248,37 @@ namespace MHW_Randomizer
 
         public void Randomize()
         {
+            if (!string.IsNullOrWhiteSpace(IoC.Settings.SaveFolderPath) && Directory.Exists(IoC.Settings.SaveFolderPath))
+                FolderBrowser.RootFolder = IoC.Settings.SaveFolderPath;
+            else
+                FolderBrowser.RootFolder = AppDomain.CurrentDomain.BaseDirectory;
+
+            FolderBrowser.Title = "Select Folder to Output Randomized Files (Will Also Add a Randomized Folder For the Files)";
+            FolderBrowser.Multiselect = false;
+
+            NativeWindow win32Parent = new NativeWindow();
+            win32Parent.AssignHandle(new WindowInteropHelper(MainWindow.window).Handle);
+            DialogResult result = FolderBrowser.ShowDialog(win32Parent);
+
+            if (!(result == DialogResult.OK && Directory.Exists(FolderBrowser.SelectedPath)))
+            {
+                if (!Directory.Exists(FolderBrowser.SelectedPath) && result == DialogResult.OK)
+                {
+                    //Message Window
+                    MessageWindow folderMessage = new MessageWindow("Error: Folder Doesn't Exist");
+
+                    folderMessage.Owner = MainWindow.window;
+                    folderMessage.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+                    folderMessage.ShowDialog();
+                }
+                return;
+            }
+            else
+            {
+                IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized");
+            }
+
             Seed = TMath.Seed();
 
             if (!string.IsNullOrWhiteSpace(IoC.Settings.UserSeed))
@@ -262,10 +298,15 @@ namespace MHW_Randomizer
                     Seed = total;
                 }
             }
-            using (StreamWriter file = File.AppendText(IoC.Settings.ChunkFolderPath + @"\randomized\Seed.txt"))
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Seed.txt"))
             {
                 file.WriteLine("Seed: " + Seed.ToString());
             }
+            if (!File.Exists(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt"))
+                {
+                    file.WriteLine("Put Folders in nativePC in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\", its case sensitive)");
+                }
 
             QuestRandomizer questRandomizer = new QuestRandomizer();
             questRandomizer.Randomize();
