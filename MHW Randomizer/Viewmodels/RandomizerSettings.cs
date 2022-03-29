@@ -13,7 +13,6 @@ namespace MHW_Randomizer
         public string UserSeed { get; set; }
         //To add:
         //Chose where to save randomized files
-        //UI design change (for better aesthetic)
 
         //--------------------
         //  Quest Settings
@@ -137,6 +136,8 @@ namespace MHW_Randomizer
         //Completely random
         public bool RandomItemCraftingRecipes { get; set; }
         public bool RandomStartingItems { get; set; }
+        //eg a great jagras could have a rathian traces
+        public bool RandomMonsterTrace { get; set; }
         ///RandomizeSmallMonsters
         //Need to figure out how to do this
         public bool RandomMonsterAttacks { get; set; }
