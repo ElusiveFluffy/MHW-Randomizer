@@ -307,7 +307,7 @@ namespace MHW_Randomizer
             if (!File.Exists(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt"))
                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt"))
                 {
-                    file.WriteLine("Put Folders in nativePC in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\", its case sensitive)");
+                    file.WriteLine("Put the folders into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");
                 }
 
             if (IoC.Settings.RandomizeQuests)
