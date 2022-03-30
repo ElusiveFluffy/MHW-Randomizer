@@ -28,43 +28,52 @@
                         <StackPanel Orientation="Horizontal"
                                     Margin="0 5">
                             <StackPanel>
+                                <CheckBox Content="Randomize Quests"
+                                          IsChecked="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5 4"
+                                          ToolTip="Randomizes the monster in quests and changes the text to match the randomized monster"/>
                                 <CheckBox Content="Randomize Multi-Objective"
-                                              IsChecked="{Binding RandomizeMultiObj, Source={x:Static local:IoC.Settings}}"
-                                              Margin="5 4"
-                                              ToolTip="Randomizes quests that have 2 different monsters to hunt/slay (can have different objectives)"/>
+                                          IsChecked="{Binding RandomizeMultiObj, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5 4"
+                                          ToolTip="Randomizes quests that have 2 different monsters to hunt/slay (can have different objectives)"
+                                          IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
                                 <CheckBox Content="Randomize Multi-Monster"
-                                              IsChecked="{Binding RandomizeMultiMon, Source={x:Static local:IoC.Settings}}"
-                                              Margin="5, 4"
-                                              ToolTip="Randomize quests with 2-5 monsters"/>
+                                          IsChecked="{Binding RandomizeMultiMon, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Randomize quests with 2-5 monsters"
+                                          IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
                                 <CheckBox Content="Randomize Same Monster"
-                                              IsChecked="{Binding RandomizeDuplicate, Source={x:Static local:IoC.Settings}}"
-                                              Margin="5, 4"
-                                              ToolTip="Randomize quests with where you have to hunt 2 of the same monster"/>
+                                          IsChecked="{Binding RandomizeDuplicate, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Randomize quests with where you have to hunt 2 of the same monster"
+                                          IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
                             </StackPanel>
                             <StackPanel Margin="40 0 0 0"
-                                        VerticalAlignment="Center">
+                                        VerticalAlignment="Center"
+                                        IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
                                 <CheckBox Content="Don't Randomize Slay"
-                                              IsChecked="{Binding DontRandomizeSlay, Source={x:Static local:IoC.Settings}}"
-                                              Margin="5, 4"
-                                              ToolTip="Won't randomize big monster slay quests"/>
+                                          IsChecked="{Binding DontRandomizeSlay, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Won't randomize big monster slay quests"/>
                                 <CheckBox Content="Don't Randomize Capture"
-                                              IsChecked="{Binding DontRandomizeCapture, Source={x:Static local:IoC.Settings}}"
-                                              Margin="5, 4"
-                                              ToolTip="Won't randomize big monster capture quests"/>
+                                          IsChecked="{Binding DontRandomizeCapture, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Won't randomize big monster capture quests"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Center"
-                                        Margin="40 0 0 0">
+                                        Margin="40 0 0 0"
+                                        IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
                                 <CheckBox Content="Randomize Maps"
-                                              IsChecked="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
-                                              Margin="5, 4"
-                                              ToolTip="Randomize the map the quest will happen on (will use random sobjs for the map)"
-                                              Checked="MapOption_Checked"
-                                              Unchecked="MapOption_Unchecked"/>
+                                          IsChecked="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Randomize the map the quest will happen on (will use random sobjs for the map)"
+                                          Checked="MapOption_Checked"
+                                          Unchecked="MapOption_Unchecked"/>
                                 <CheckBox Content="Random Quest Icons"
-                                              IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
-                                              Margin="5, 4"
-                                              ToolTip="Makes it more of a surprise of what the monster will be before starting the quest (Also changes the monster in the quest objective text to ???) (Hasn't been tested without iceborne)"
-                                              ToolTipService.ShowDuration="10000"/>
+                                          IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Makes it more of a surprise of what the monster will be before starting the quest (Also changes the monster in the quest objective text to ???) (Hasn't been tested without iceborne)"
+                                          ToolTipService.ShowDuration="10000"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -82,7 +91,8 @@
                             BorderThickness="1"
                             Margin="5">
                         <StackPanel Orientation="Horizontal"
-                                    Margin="0 5">
+                                    Margin="0 5"
+                                    IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
                             <StackPanel VerticalAlignment="Center">
                                 <CheckBox Content="Duplicate Monsters in a Quest"
                                           IsChecked="{Binding DuplicateMonster, Source={x:Static local:IoC.Settings}}"
@@ -170,7 +180,8 @@
                 Margin="5"
                 Grid.Row="1">
             <StackPanel Orientation="Horizontal"
-                        Margin="0 0 0 5">
+                        Margin="0 0 0 5"
+                        IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
                 <StackPanel>
                     <TextBlock Text="Iceborne (Need Iceborne Installed)"
                                        Margin="10 -10 0 0"

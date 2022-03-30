@@ -15,7 +15,7 @@ namespace MHW_Randomizer
 {
     public class RandomizerViewModel : BaseViewModel
     {
-        public List<string> MissingMIBFiles;
+        public List<string> MissingMIBFiles = new List<string>();
 
         public ICommand OpenCommand { get; set; }
         public ICommand RandomizeCommand { get; set; }
@@ -310,8 +310,11 @@ namespace MHW_Randomizer
                     file.WriteLine("Put Folders in nativePC in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\", its case sensitive)");
                 }
 
-            QuestRandomizer questRandomizer = new QuestRandomizer();
-            questRandomizer.Randomize();
+            if (IoC.Settings.RandomizeQuests)
+            {
+                QuestRandomizer questRandomizer = new QuestRandomizer();
+                questRandomizer.Randomize();
+            }
 
             //Shuffle recipes
             RecipeRandomizer.RandomizeRecipes();
@@ -323,7 +326,7 @@ namespace MHW_Randomizer
             Randomizing = false;
 
             //Message Window
-            MessageWindow message = new MessageWindow("");
+            MessageWindow message;
 
             if (MissingMIBFiles.Count == 0)
                 message = new MessageWindow("Successfully Randomized");

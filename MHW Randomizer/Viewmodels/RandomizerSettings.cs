@@ -15,6 +15,7 @@ namespace MHW_Randomizer
         //--------------------
 
         //General Quest Settings
+        public bool RandomizeQuests { get; set; }
         public bool DuplicateMonster { get; set; }
         public bool IncludeLeshen { get; set; }
         public bool IncludeXenojiiva { get; set; } //Fix Xenojiiva
