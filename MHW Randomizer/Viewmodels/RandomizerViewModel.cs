@@ -1,5 +1,4 @@
-﻿using MHW_Randomizer.Crypto;
-using System;
+﻿using System;
 using System.IO;
 using System.Windows.Input;
 using System.Windows.Forms;
@@ -10,7 +9,6 @@ using Troschuetz.Random;
 using Troschuetz.Random.Generators;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace MHW_Randomizer
@@ -24,6 +22,12 @@ namespace MHW_Randomizer
         public ICommand CreditsCommand { get; set; }
 
         public string MonsterIcon { get; set; }
+
+        public BetterFolderBrowser FolderBrowser = new BetterFolderBrowser();
+        public bool SaveIsEnabled { get; set; }
+        public bool Randomizing { get; set; }
+
+        public uint Seed;
 
 
         public RandomizerViewModel()
@@ -173,12 +177,6 @@ namespace MHW_Randomizer
             message.ShowDialog();
         }
 
-        public BetterFolderBrowser FolderBrowser = new BetterFolderBrowser();
-        public bool SaveIsEnabled { get; set; }
-
-        public uint Seed;
-
-
         public void OpenFolder()
         {
             if (!string.IsNullOrWhiteSpace(IoC.Settings.ChunkFolderPath) && Directory.Exists(IoC.Settings.ChunkFolderPath))
@@ -246,7 +244,7 @@ namespace MHW_Randomizer
         }
 
 
-        public void Randomize()
+        public async void Randomize()
         {
             if (!string.IsNullOrWhiteSpace(IoC.Settings.SaveFolderPath) && Directory.Exists(IoC.Settings.SaveFolderPath))
                 FolderBrowser.RootFolder = IoC.Settings.SaveFolderPath;
@@ -278,6 +276,10 @@ namespace MHW_Randomizer
                 IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized");
             }
+
+            Randomizing = true;
+            //Allow the UI to update instead of freezing
+            await Task.Delay(17);
 
             Seed = TMath.Seed();
 
@@ -317,6 +319,8 @@ namespace MHW_Randomizer
             ShopRandomizer.Randomize();
 
             MiscRandomizer.Randomize();
+
+            Randomizing = false;
 
             //Message Window
             MessageWindow message = new MessageWindow("");

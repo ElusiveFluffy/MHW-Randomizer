@@ -9,58 +9,80 @@
         Title="MHW Randomizer" Height="560" Width="620"
         MinHeight="560"
         MinWidth="620">
-    <DockPanel>
-        <Grid DockPanel.Dock="Top">
-            <Image Source="{Binding MonsterIcon, Source={x:Static local:IoC.Randomizer}}"
-                   Height="100"
-                   HorizontalAlignment="Left"
-                   Margin="80 0 40 -10"/>
-            <Border HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Width="180"
-                    Margin="5 0 5 -25"
-                    Panel.ZIndex="1">
-                <StackPanel Margin="0 4 4 4">
-                    <Button Content="Open Chunk Folder" 
-                            Margin="3"
-                            Command="{Binding OpenCommand, Source={x:Static local:IoC.Randomizer}}"/>
-                    <Button Content="Randomize"
-                            Margin="3"
-                            IsEnabled="{Binding SaveIsEnabled, Source={x:Static local:IoC.Randomizer}}"
-                            Command="{Binding RandomizeCommand, Source={x:Static local:IoC.Randomizer}}"/>
+    <Grid>
+        <Border Background="White"
+                BorderBrush="Gray"
+                BorderThickness="1"
+                Width="150"
+                Height="50"
+                Margin="0 10 0 0"
+                Panel.ZIndex="1"
+                Visibility="{Binding Randomizing, Source={x:Static local:IoC.Randomizer}, 
+                             Converter={local:BooleanToVisibilityConverter}, ConverterParameter=true}">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="3" Opacity="0.5"/>
+            </Border.Effect>
+            <TextBlock Text="Randomizing"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="5"
+                       FontSize="15"
+                       FontWeight="SemiBold"/>
+        </Border>
 
-                    <TextBlock Text="Seed (Blank For Random Seed)" 
-                               FontSize="10"
-                               HorizontalAlignment="Center"/>
-                    <TextBox Text="{Binding UserSeed, Source={x:Static local:IoC.Settings}}"
-                             Margin="3"/>
+        <DockPanel>
+            <Grid DockPanel.Dock="Top">
+                <Image Source="{Binding MonsterIcon, Source={x:Static local:IoC.Randomizer}}"
+                       Height="100"
+                       HorizontalAlignment="Left"
+                       Margin="80 0 40 -10"/>
+                <Border HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Width="180"
+                        Margin="5 0 5 -25"
+                        Panel.ZIndex="1">
+                    <StackPanel Margin="0 4 4 4">
+                        <Button Content="Open Chunk Folder" 
+                                Margin="3"
+                                Command="{Binding OpenCommand, Source={x:Static local:IoC.Randomizer}}"/>
+                        <Button Content="Randomize"
+                                Margin="3"
+                                IsEnabled="{Binding SaveIsEnabled, Source={x:Static local:IoC.Randomizer}}"
+                                Command="{Binding RandomizeCommand, Source={x:Static local:IoC.Randomizer}}"/>
 
-                    <Button Content="Credits"
-                            Margin="3 15 3 0"
-                            Command="{Binding CreditsCommand, Source={x:Static local:IoC.Randomizer}}"/>
-                </StackPanel>
-            </Border>
-        </Grid>
-        <TabControl Margin="5"
-                    Padding="0 4 0 0">
-            <TabItem Header="Quests">
-                <local:Quest/>
-            </TabItem>
-            <TabItem Header="Armour">
-                <local:Armour/>
-            </TabItem>
+                        <TextBlock Text="Seed (Blank For Random Seed)" 
+                                   FontSize="10"
+                                   HorizontalAlignment="Center"/>
+                        <TextBox Text="{Binding UserSeed, Source={x:Static local:IoC.Settings}}"
+                                 Margin="3"/>
 
-            <TabItem Header="Weapon">
-                <local:Weapon/>
-            </TabItem>
-            
-            <TabItem Header="Shop">
-                <local:Shop/>
-            </TabItem>
+                        <Button Content="Credits"
+                                Margin="3 15 3 0"
+                                Command="{Binding CreditsCommand, Source={x:Static local:IoC.Randomizer}}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <TabControl Margin="5"
+                        Padding="0 4 0 0">
+                <TabItem Header="Quests">
+                    <local:Quest/>
+                </TabItem>
+                <TabItem Header="Armour">
+                    <local:Armour/>
+                </TabItem>
 
-            <TabItem Header="Misc">
-                <local:Misc/>
-            </TabItem>
-        </TabControl>
-    </DockPanel>
+                <TabItem Header="Weapon">
+                    <local:Weapon/>
+                </TabItem>
+
+                <TabItem Header="Shop">
+                    <local:Shop/>
+                </TabItem>
+
+                <TabItem Header="Misc">
+                    <local:Misc/>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
 </Window>
