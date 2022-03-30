@@ -358,37 +358,83 @@ namespace MHW_Randomizer
             //Create Story Quest List
             Dictionary<string, StoryQuestData> storyQuests = QuestData.StoryHuntQuest;
             if (!IoC.Settings.DontRandomizeSlay)
-            {
                 storyQuests = storyQuests.Concat(QuestData.StorySlayQuest).ToDictionary(x => x.Key, x => x.Value);
-                if (IoC.Settings.RandomizeIBQuests)
-                    storyQuests = storyQuests.Concat(QuestData.IBStorySlayQuest).ToDictionary(x => x.Key, x => x.Value);
-            }
-            if (IoC.Settings.RandomizeIBQuests)
-                storyQuests = storyQuests.Concat(QuestData.IBStoryHuntQuest).ToDictionary(x => x.Key, x => x.Value);
 
             GMD GMDFile;
             int monsterFor00103 = 0;
 
             GMD storyTargetText = new GMD(ChunkOTF.files["storyTarget_eng.gmd"].ChunkState.ExtractItem(ChunkOTF.files["storyTarget_eng.gmd"]));
 
-            for (int dlc = -1; dlc <= Convert.ToInt32(IoC.Settings.RandomizeIBQuests); dlc++)
+            for (int dlc = -1; dlc <= (Convert.ToInt32(IoC.Settings.RandomizeIBQuests) * 2); dlc++)
             {
                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Quest Log.txt"))
                 {
-                    if (dlc == -1)
+                    switch (dlc)
                     {
-                        file.WriteLine("---------------------------------------------------------------------------");
-                        file.WriteLine("              Tweaked Story Quests (Some IB quests in here)                ");
-                        file.WriteLine("---------------------------------------------------------------------------");
-                    }
-                    if (dlc == 0)
-                    {
-                        file.WriteLine("\n\n---------------------------------------------------------------------------");
-                        file.WriteLine("                           Low/High Rank Quests                            ");
-                        file.WriteLine("---------------------------------------------------------------------------");
+                        case -1:
+                            {
+                                file.WriteLine("---------------------------------------------------------------------------");
+                                file.WriteLine("                               Story Quests                                ");
+                                file.WriteLine("---------------------------------------------------------------------------");
+                                break;
+                            }
+                        case 0:
+                            {
+                                file.WriteLine("\n\n---------------------------------------------------------------------------");
+                                file.WriteLine("                           Low/High Rank Quests                            ");
+                                file.WriteLine("---------------------------------------------------------------------------");
+                                break;
+                            }
+                        case 1:
+                            {
+                                storyQuests = QuestData.IBStoryHuntQuest;
+                                //Refresh lists with iceborne
+                                if (!IoC.Settings.DontRandomizeSlay)
+                                {
+                                    storyQuests = storyQuests.Concat(QuestData.IBStorySlayQuest).ToDictionary(x => x.Key, x => x.Value);
+                                }
+
+                                file.WriteLine("\n\n---------------------------------------------------------------------------");
+                                file.WriteLine("                          Iceborne Story Quests                            ");
+                                file.WriteLine("---------------------------------------------------------------------------");
+                                break;
+                            }
+                        case 2:
+                            {
+                                //Refresh lists with iceborne
+                                quests = QuestData.IBBigMonsterHuntQuests;
+                                if (!IoC.Settings.DontRandomizeSlay)
+                                    quests = quests.Concat(QuestData.IBBigMonsterSlayQuests).ToArray();
+                                if (!IoC.Settings.DontRandomizeCapture)
+                                    quests = quests.Concat(QuestData.IBBigMonsterCaptureQuests).ToArray();
+                                if (IoC.Settings.RandomizeMultiObj)
+                                    quests = quests.Concat(QuestData.IBHuntMultiObjective).ToArray();
+                                if (IoC.Settings.RandomizeMultiMon)
+                                {
+                                    quests = quests.Concat(QuestData.IBHuntMultiMonster).ToArray();
+                                    if (!IoC.Settings.DontRandomizeSlay)
+                                        quests = quests.Concat(QuestData.IBSlayMultiMonster).ToArray();
+                                }
+                                if (IoC.Settings.RandomizeDuplicate)
+                                    quests = quests.Concat(QuestData.IBHuntDuplicate).ToArray();
+
+                                monsterIDs = QuestData.BigMonsterIDsIB;
+                                if (IoC.Settings.IceborneOnlyMonsters)
+                                    monsterIDs = monsterIDs.Where(mon => !QuestData.BigMonsterIDs.Contains(mon)).ToArray();
+                                if (IoC.Settings.IncludeHighRankOnly)
+                                    monsterIDs = monsterIDs.Concat(QuestData.HighRankOnlyMonsters).ToArray();
+                                if (IoC.Settings.IncludeFatalis)
+                                    monsterIDs = monsterIDs.Append(101).ToArray();
+
+
+                                file.WriteLine("\n\n---------------------------------------------------------------------------");
+                                file.WriteLine("                              Iceborne Quests                              ");
+                                file.WriteLine("---------------------------------------------------------------------------");
+                                break;
+                            }
                     }
                 }
-                foreach (string questNumber in dlc == -1 ? storyQuests.Keys.ToArray() : quests)
+                foreach (string questNumber in (dlc == -1 || dlc == 1) ? storyQuests.Keys.ToArray() : quests)
                 {
                     if (!ChunkOTF.files.ContainsKey("questData_" + questNumber + ".mib"))
                     {
@@ -404,7 +450,7 @@ namespace MHW_Randomizer
                     OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].ChunkState.ExtractItem(ChunkOTF.files["questData_" + questNumber + ".mib"]));
 
                     //Pick Random Map
-                    if (IoC.Settings.RandomMaps && (dlc != -1 || storyQuests[questNumber].CanRandomizeMap))
+                    if (IoC.Settings.RandomMaps && ((dlc != -1 || dlc != 1) || storyQuests[questNumber].CanRandomizeMap))
                     {
                         MapIDIndex = QuestData.ValidMapIndexes[pickMap.Next(5 + (Convert.ToInt32(RandomizingIB) * 2))];
                     }
@@ -427,7 +473,7 @@ namespace MHW_Randomizer
 
                         //Get the fsm file if its a story quest
                         byte[] fsm = null;
-                        if (ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm") && dlc == -1)
+                        if (ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm") && (dlc == -1 || dlc == 1))
                             fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm"].ChunkState.ExtractItem(ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm"]);
 
                         //Pick a random size percent between range if both aren't 100
@@ -463,7 +509,7 @@ namespace MHW_Randomizer
                         if (questNumber == "00102")
                             monsterFor00103 = RandomMonsterIndex;
 
-                        if (dlc == -1 && !storyQuests[questNumber].ChangeObjective)
+                        if ((dlc == -1 || dlc == 1) && !storyQuests[questNumber].ChangeObjective)
                         { }
                         else
                         {
@@ -485,7 +531,7 @@ namespace MHW_Randomizer
                         byte[] sobj;
 
                         //Pick random sobj
-                        if ((m == 1 && IoC.Settings.TwoMonsterQuests && (dlc != -1 || storyQuests[questNumber].CanRandomizeMap)) || (IoC.Settings.RandomSobj && (dlc != -1 || storyQuests[questNumber].CanRandomizeMap)))
+                        if ((m == 1 && IoC.Settings.TwoMonsterQuests && ((dlc != -1 || dlc != 1) || storyQuests[questNumber].CanRandomizeMap)) || (IoC.Settings.RandomSobj && ((dlc != -1 || dlc != 1) || storyQuests[questNumber].CanRandomizeMap)))
                         {
                             Files[] SobjFiles;
                             if (monsterIDs[RandomMonsterIndex] == 26)
@@ -540,7 +586,7 @@ namespace MHW_Randomizer
                         QuestData.MonsterMapSobjCount[RandomMonsterIndex, MapIDIndex]++;
 
                         bool changeIcon = true;
-                        if (dlc == -1)
+                        if (dlc == -1 || dlc == 1)
                             changeIcon = storyQuests[questNumber].ChangeQuestIcon;
 
                         if (IoC.Settings.RandomIcons && m < 5 && MonIcons[m] != 127)
@@ -580,12 +626,12 @@ namespace MHW_Randomizer
                     }
 
                     bool changeText = true;
-                    if (dlc == -1)
+                    if (dlc == -1 || dlc == 1)
                         changeText = storyQuests[questNumber].ChangeQuestBookObjText;
 
                     #region GMD
 
-                    if (dlc == -1)
+                    if (dlc == -1 || dlc == 1)
                     {
                         for (int i = 0; i < storyQuests[questNumber].QuestObjTextIndexs.Length; i++)
                         {
@@ -938,42 +984,6 @@ namespace MHW_Randomizer
 
                     #endregion
 
-                }
-
-                //Refresh lists with iceborne
-                if (!RandomizingIB && IoC.Settings.RandomizeIBQuests && dlc != -1)
-                {
-                    quests = QuestData.IBBigMonsterHuntQuests;
-                    if (!IoC.Settings.DontRandomizeSlay)
-                        quests = quests.Concat(QuestData.IBBigMonsterSlayQuests).ToArray();
-                    if (!IoC.Settings.DontRandomizeCapture)
-                        quests = quests.Concat(QuestData.IBBigMonsterCaptureQuests).ToArray();
-                    if (IoC.Settings.RandomizeMultiObj)
-                        quests = quests.Concat(QuestData.IBHuntMultiObjective).ToArray();
-                    if (IoC.Settings.RandomizeMultiMon)
-                    {
-                        quests = quests.Concat(QuestData.IBHuntMultiMonster).ToArray();
-                        if (!IoC.Settings.DontRandomizeSlay)
-                            quests = quests.Concat(QuestData.IBSlayMultiMonster).ToArray();
-                    }
-                    if (IoC.Settings.RandomizeDuplicate)
-                        quests = quests.Concat(QuestData.IBHuntDuplicate).ToArray();
-
-                    monsterIDs = QuestData.BigMonsterIDsIB;
-                    if (IoC.Settings.IceborneOnlyMonsters)
-                        monsterIDs = monsterIDs.Where(mon => !QuestData.BigMonsterIDs.Contains(mon)).ToArray();
-                    if (IoC.Settings.IncludeHighRankOnly)
-                        monsterIDs = monsterIDs.Concat(QuestData.HighRankOnlyMonsters).ToArray();
-                    if (IoC.Settings.IncludeFatalis)
-                        monsterIDs = monsterIDs.Append(101).ToArray();
-
-
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Quest Log.txt"))
-                    {
-                        file.WriteLine("\n\n---------------------------------------------------------------------------");
-                        file.WriteLine("                              Iceborne Quests                              ");
-                        file.WriteLine("---------------------------------------------------------------------------");
-                    }
                 }
                 if (dlc == 0)
                     RandomizingIB = true;
