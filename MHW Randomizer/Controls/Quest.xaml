@@ -45,7 +45,7 @@
                                 <CheckBox Content="Randomize Same Monster"
                                           IsChecked="{Binding RandomizeDuplicate, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
-                                          ToolTip="Randomize quests with where you have to hunt 2 of the same monster"
+                                          ToolTip="Randomize quests where you have to hunt 2 of the same monster (Will randomize there to be 2 of the same monster)"
                                           IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
                             </StackPanel>
                             <StackPanel Margin="40 0 0 0"
