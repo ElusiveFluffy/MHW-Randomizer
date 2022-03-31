@@ -279,7 +279,7 @@ namespace MHW_Randomizer
 
             Randomizing = true;
             //Allow the UI to update instead of freezing
-            await Task.Delay(17);
+            await Task.Delay(20);
 
             Seed = TMath.Seed();
 
