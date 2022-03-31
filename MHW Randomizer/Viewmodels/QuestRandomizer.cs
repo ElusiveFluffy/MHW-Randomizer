@@ -450,7 +450,7 @@ namespace MHW_Randomizer
                     OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].ChunkState.ExtractItem(ChunkOTF.files["questData_" + questNumber + ".mib"]));
 
                     //Pick Random Map
-                    if (IoC.Settings.RandomMaps && ((dlc != -1 || dlc != 1) || storyQuests[questNumber].CanRandomizeMap))
+                    if (IoC.Settings.RandomMaps && ((dlc != -1 && dlc != 1) || storyQuests[questNumber].CanRandomizeMap))
                     {
                         MapIDIndex = QuestData.ValidMapIndexes[pickMap.Next(5 + (Convert.ToInt32(RandomizingIB) * 2))];
                     }
@@ -531,7 +531,7 @@ namespace MHW_Randomizer
                         byte[] sobj;
 
                         //Pick random sobj
-                        if ((m == 1 && IoC.Settings.TwoMonsterQuests && ((dlc != -1 || dlc != 1) || storyQuests[questNumber].CanRandomizeMap)) || (IoC.Settings.RandomSobj && ((dlc != -1 || dlc != 1) || storyQuests[questNumber].CanRandomizeMap)))
+                        if ((m == 1 && IoC.Settings.TwoMonsterQuests && ((dlc != -1 && dlc != 1) || storyQuests[questNumber].CanRandomizeMap)) || (IoC.Settings.RandomSobj && ((dlc != -1 && dlc != 1) || storyQuests[questNumber].CanRandomizeMap)))
                         {
                             Files[] SobjFiles;
                             if (monsterIDs[RandomMonsterIndex] == 26)
