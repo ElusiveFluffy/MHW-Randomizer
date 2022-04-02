@@ -17,6 +17,7 @@ namespace MHW_Randomizer
         //General Quest Settings
         public bool RandomizeQuests { get; set; }
         public bool DuplicateMonster { get; set; }
+        public bool HighRankMonInLowRank { get; set; }
         public bool IncludeLeshen { get; set; }
         public bool IncludeXenojiiva { get; set; } //Fix Xenojiiva
         public bool IncludeBehemoth { get; set; }
@@ -134,7 +135,6 @@ namespace MHW_Randomizer
         public bool RandomStartingItems { get; set; }
         //eg a great jagras could have a rathian traces
         public bool RandomMonsterTrace { get; set; }
-        ///RandomizeSmallMonsters
         //Need to figure out how to do this
         public bool RandomMonsterAttacks { get; set; }
         //I think giving palicos monster moves damages the player, could have a option for it, not sure if it damages monsters, could be chaotic
@@ -144,7 +144,6 @@ namespace MHW_Randomizer
         public bool RandomQuestRewards { get; set; }
         //Not sure if possible
         public bool RandomStartingWeapons { get; set; }
-        ///Change the story monster spawns
 
     }
 }

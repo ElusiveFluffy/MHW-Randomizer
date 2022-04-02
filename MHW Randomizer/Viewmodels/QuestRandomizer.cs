@@ -308,6 +308,7 @@ namespace MHW_Randomizer
 
             #region Quests
 
+            int[] lowRankMonsterIDs = QuestData.LowRankBigMonsterIDs;
             int[] monsterIDs = QuestData.BigMonsterIDs;
             string[] avaliableEmNumbers = QuestData.MonsterEmNumber;
 
@@ -320,6 +321,8 @@ namespace MHW_Randomizer
                 monsterIDs = monsterIDs.Append(26).ToArray();
             if (IoC.Settings.IncludeBehemoth)
                 monsterIDs = monsterIDs.Append(15).ToArray();
+            if (IoC.Settings.HighRankMonInLowRank)
+                lowRankMonsterIDs = monsterIDs;
 
             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\quest\enemy\boss\");
             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\common\text\quest");
@@ -422,7 +425,7 @@ namespace MHW_Randomizer
                                 if (IoC.Settings.IceborneOnlyMonsters)
                                     monsterIDs = monsterIDs.Where(mon => !QuestData.BigMonsterIDs.Contains(mon)).ToArray();
                                 if (IoC.Settings.IncludeHighRankOnly)
-                                    monsterIDs = monsterIDs.Concat(QuestData.HighRankOnlyMonsters).ToArray();
+                                    monsterIDs = monsterIDs.Concat(QuestData.IBHighRankOnlyMonsters).ToArray();
                                 if (IoC.Settings.IncludeFatalis)
                                     monsterIDs = monsterIDs.Append(101).ToArray();
 
@@ -460,18 +463,19 @@ namespace MHW_Randomizer
                         file.WriteLine("\n---------------------- " + "Quest: " + QuestData.QuestName[questNumber == "66859" || questNumber == "66860" ? (questNumber == "66859" ? 64802 : 66835) : int.Parse(questNumber)] + ", Quest ID: " + QIDText + ", Map: " + QuestData.MapNames[MapIDIndex] + " ------------------------------");
                     }
 
-                    bool isDuplicateMonQuest = QuestData.HuntDuplicate.Contains(questNumber) || QuestData.SlayDuplicate.Contains(questNumber) || QuestData.IBHuntDuplicate.Contains(questNumber);
+                    bool isLowRank = RankIndex == 0;
+                    int[] currentRankMonsterIDs = isLowRank ? lowRankMonsterIDs : monsterIDs;
                     //Loop to go through each monster
                     for (int m = 0; m < 7; m++)
                     {
-                        //If there is no monster at that index skip
-                        if (MID[m] == 0 && !(IoC.Settings.TwoMonsterQuests && m == 1 && !isDuplicateMonQuest))
+                        //If there is no monster at that index skip unless the option for two monster quest is true
+                        if (MID[m] == 0 && !(IoC.Settings.TwoMonsterQuests && m == 1))
                             continue;
                         //If Zorah Magdaros quest only randomize the second monster (First is Zorah)
                         if ((questNumber == "00401" && m == 0) || (questNumber == "00504" && m == 0))
                             continue;
 
-                        //Get the fsm file if its a story quest
+                        //Get the old monster fsm file if its a story quest
                         byte[] fsm = null;
                         if (ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm") && (dlc == -1 || dlc == 1))
                             fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm"].ChunkState.ExtractItem(ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm"]);
@@ -480,47 +484,40 @@ namespace MHW_Randomizer
                         if (IoC.Settings.MonsterMinSize != 100 && IoC.Settings.MonsterMaxSize != 100)
                             MonsterSize[m] = pickSize.Next(IoC.Settings.MonsterMinSize, IoC.Settings.MonsterMaxSize + 1);
 
-                        int RandomMonsterIndex = r.Next(monsterIDs.Length);
+                        int RandomMonsterIndex = r.Next(currentRankMonsterIDs.Length);
 
                         int oldMonsterID = MID[m] - 1;
-                        //Pick another monster if the monster is a duplicate to another one in the quest
-                        if (!IoC.Settings.DuplicateMonster)
-                        {
-                            int FoundMonsterIndex = Array.IndexOf(MID, monsterIDs[RandomMonsterIndex] + 1);
-                            while (FoundMonsterIndex != -1 && FoundMonsterIndex < m)
-                            {
-                                RandomMonsterIndex = r.Next(monsterIDs.Length);
-                                FoundMonsterIndex = Array.IndexOf(MID, monsterIDs[RandomMonsterIndex] + 1);
-                            }
-                        }
 
                         //Randomizes it to be the same as the first monster if its a kill duplicate quest and is a low enough monster slot value
                         if (m < int.Parse(MObjC1Text) && m != 0 && (QuestData.HuntDuplicate.Contains(questNumber) || QuestData.SlayDuplicate.Contains(questNumber) || QuestData.IBHuntDuplicate.Contains(questNumber)))
                         {
                             MID[m] = MID[0];
-                            RandomMonsterIndex = Array.IndexOf(monsterIDs, MID[0] - 1);
+                            RandomMonsterIndex = Array.IndexOf(currentRankMonsterIDs, MID[0] - 1);
+                        }
+                        //Pick another monster if the monster is a duplicate to another one in the quest
+                        else if (!IoC.Settings.DuplicateMonster)
+                        {
+                            int FoundMonsterIndex = Array.IndexOf(MID, currentRankMonsterIDs[RandomMonsterIndex] + 1);
+                            while (FoundMonsterIndex != -1 && FoundMonsterIndex < m)
+                            {
+                                RandomMonsterIndex = r.Next(currentRankMonsterIDs.Length);
+                                FoundMonsterIndex = Array.IndexOf(MID, currentRankMonsterIDs[RandomMonsterIndex] + 1);
+                            }
                         }
 
                         if (questNumber == "00103")
                             RandomMonsterIndex = monsterFor00103;
                         
-                        MID[m] = monsterIDs[RandomMonsterIndex] + 1;
+                        //Set the monster to the randomized monster
+                        MID[m] = currentRankMonsterIDs[RandomMonsterIndex] + 1;
 
+                        //For setting quest 00103's monster to the same as 00102 (are linked)
                         if (questNumber == "00102")
                             monsterFor00103 = RandomMonsterIndex;
 
-                        if ((dlc == -1 || dlc == 1) && !storyQuests[questNumber].ChangeObjective)
-                        { }
-                        else
-                        {
-                            if (m == 0)
-                                MObjID1 = monsterIDs[RandomMonsterIndex];
-                            else if (m == 1)
-                                MObjID2 = monsterIDs[RandomMonsterIndex];
-                        }
-
                         if (fsm != null)
                         {
+                            //Create a copy of the fsm file but with the name for the randomized monster
                             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\quest\q" + questNumber + @"\fsm\em\");
                             File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm", fsm);
                         }
@@ -534,7 +531,7 @@ namespace MHW_Randomizer
                         if ((m == 1 && IoC.Settings.TwoMonsterQuests && ((dlc != -1 && dlc != 1) || storyQuests[questNumber].CanRandomizeMap)) || (IoC.Settings.RandomSobj && ((dlc != -1 && dlc != 1) || storyQuests[questNumber].CanRandomizeMap)))
                         {
                             Files[] SobjFiles;
-                            if (monsterIDs[RandomMonsterIndex] == 26)
+                            if (currentRankMonsterIDs[RandomMonsterIndex] == 26)
                                 SobjFiles = SobjFilesBigMCache.Where(o => o.Name.Contains("st" + QuestData.MapIDs[MapIDIndex])).ToArray();
                             else
                                 SobjFiles = SobjFilesCache.Where(o => o.Name.Contains("st" + QuestData.MapIDs[MapIDIndex])).ToArray();
@@ -548,7 +545,7 @@ namespace MHW_Randomizer
                         else
                         {
                             oldMSobj = avaliableEmNumbers[oldMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj";
-                            if (monsterIDs[RandomMonsterIndex] == 26 && oldMSobj.Contains("em101_00_st101"))
+                            if (currentRankMonsterIDs[RandomMonsterIndex] == 26 && oldMSobj.Contains("em101_00_st101"))
                             {
                                 Files[] SobjFiles;
                                 SobjFiles = SobjFilesBigMCache;
@@ -573,13 +570,13 @@ namespace MHW_Randomizer
                             }
                             else if (CDCount > 12)
                             {
-                                sobj[j + 13] = (byte)monsterIDs[RandomMonsterIndex];
+                                sobj[j + 13] = (byte)currentRankMonsterIDs[RandomMonsterIndex];
                                 break;
                             }
                             else
                                 CDCount = 0;
                         }
-                        File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\quest\enemy\boss\" + avaliableEmNumbers[monsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj", sobj);
+                        File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\quest\enemy\boss\" + avaliableEmNumbers[currentRankMonsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj", sobj);
 
                         #endregion
 
@@ -592,14 +589,22 @@ namespace MHW_Randomizer
                         if (IoC.Settings.RandomIcons && m < 5 && MonIcons[m] != 127)
                             MonIcons[m] = pickIcon.Next(QuestData.IconList.Length - 1);
                         else if ((m < 5 && MonIcons[m] != 127 && changeIcon) || (IoC.Settings.TwoMonsterQuests && m == 1))
-                            MonIcons[m] = Array.IndexOf(QuestData.IconList, QuestData.MonsterNames[monsterIDs[RandomMonsterIndex] + 1]);
+                            MonIcons[m] = Array.IndexOf(QuestData.IconList, QuestData.MonsterNames[currentRankMonsterIDs[RandomMonsterIndex] + 1]);
 
                         using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Quest Log.txt"))
                         {
-                            file.WriteLine("Monster " + (m + 1).ToString() + ": " + QuestData.MonsterNames[monsterIDs[RandomMonsterIndex] + 1] + "\tSobj File Name: " + avaliableEmNumbers[monsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj" + "\tOld sobj File Name: " + oldMSobj
+                            file.WriteLine("Monster " + (m + 1).ToString() + ": " + QuestData.MonsterNames[currentRankMonsterIDs[RandomMonsterIndex] + 1] + "\tSobj File Name: " + avaliableEmNumbers[currentRankMonsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj" + "\tOld sobj File Name: " + oldMSobj
                                + (IoC.Settings.RandomIcons && m < 5 && MonIcons[m] != 127 ? "\tIcon: " + QuestData.IconList[MonIcons[m]] : ""));
                         }
 
+                    }
+
+                    if ((dlc != -1 && dlc != 1) || storyQuests[questNumber].ChangeObjective)
+                    {
+                        //Change the quest objective
+                        MObjID1 = MID[0] - 1;
+                        if (MID[1] != 0)
+                            MObjID2 = MID[1] - 1;
                     }
 
                     if (IoC.Settings.TwoMonsterQuests)

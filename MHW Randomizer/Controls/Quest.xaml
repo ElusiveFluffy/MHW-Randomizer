@@ -115,6 +115,11 @@
                             </StackPanel>
                             <StackPanel Margin="19 0"
                                         VerticalAlignment="Center">
+                                <CheckBox Content="High Rank Monsters in Low Rank"
+                                          IsChecked="{Binding HighRankMonInLowRank, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Includes monsters that don't appear in low rank quest, can be challenging &#xA;(they don't have any low rank drops so you will get high rank drops instead)"
+                                          ToolTipService.ShowDuration="10000"/>
                                 <CheckBox Content="Include Leshen"
                                           IsChecked="{Binding IncludeLeshen, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
@@ -129,7 +134,7 @@
                                           ToolTip="Behemoth could get stuck in some spots due to their size &#xA;(hasn't really been tested) and has alot of health so could be hard if included in possible random monster"
                                           ToolTipService.ShowDuration="10000"/>
                             </StackPanel>
-                            <StackPanel Margin="15 -4 0 0"
+                            <StackPanel Margin="13 -4 0 0"
                                         VerticalAlignment="Center">
                                 <TextBlock Text="Min Size Percent"
                                            FontSize="12"

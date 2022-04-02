@@ -648,6 +648,10 @@ namespace MHW_Randomizer
         public static string[] BigMonsterCaptureQuests = { "00261", "00365", "00475", "00582", "00656", "63104" };
 
         public static int[] BigMonsterIDs = { 0, 1, 7, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 39 };
+        public static int[] LowRankBigMonsterIDs = { 0, 1, 7, 9, 12, 14, 21, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35 };
+
+        //15 (behemoth), 23 (leshen), 26 (xeno'jjiva), 51 (ancient leshen)
+        //public static int[] HighRankMonsters = { 10, 11, 13, 16, 17, 18, 19, 20, 22, 25, 36, 37, 39 };
 
 
         //==============================
@@ -740,7 +744,7 @@ namespace MHW_Randomizer
         public static string[] IBBigMonsterCaptureQuests = { "01123", "01155", "01222", "01253", "01322", "01394", "01482", "01492", "01594", "61803" };
 
 
-        public static int[] HighRankOnlyMonsters = { 7, 10, 15, 20, 23, 25, 26, 36, 39, 51 };
+        public static int[] IBHighRankOnlyMonsters = { 7, 10, 15, 20, 23, 25, 26, 36, 39, 51 };
 
         public static int[] BigMonsterIDsIB = { 0, 1, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 99, 100 }; 
 
