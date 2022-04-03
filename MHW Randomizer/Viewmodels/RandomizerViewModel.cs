@@ -129,6 +129,9 @@ namespace MHW_Randomizer
 
         public async void StartUp()
         {
+            if (string.IsNullOrEmpty(IoC.Settings.ChunkFolderPath))
+                return;
+
             if (!Directory.Exists(IoC.Settings.ChunkFolderPath))
             {
                 await Task.Delay(1);
@@ -140,9 +143,6 @@ namespace MHW_Randomizer
                 message.ShowDialog();
                 return;
             }
-
-            if (!string.IsNullOrEmpty(IoC.Settings.ChunkFolderPath))
-                FolderBrowser.RootFolder = IoC.Settings.ChunkFolderPath;
 
             if (Directory.GetFiles(IoC.Settings.ChunkFolderPath, "chunk*.bin", SearchOption.TopDirectoryOnly).ToArray().Length == 10)
             {
@@ -159,6 +159,7 @@ namespace MHW_Randomizer
                 message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
                 message.ShowDialog();
             }
+            FolderBrowser.RootFolder = IoC.Settings.ChunkFolderPath;
         }
 
         public void Credits()
