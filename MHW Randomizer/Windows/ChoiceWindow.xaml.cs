@@ -13,8 +13,14 @@ namespace MHW_Randomizer
             MessageTB.Text = message;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NoButtonClick(object sender, RoutedEventArgs e)
         {
+            Close();
+        }
+
+        private void YesButtonClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
             Close();
         }
     }

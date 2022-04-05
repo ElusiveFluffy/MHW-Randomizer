@@ -14,11 +14,20 @@
                    Margin="3"
                    x:Name="MessageTB"
                    TextWrapping="Wrap"/>
-        <Button HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Content="OK"
-                Margin="10"
-                Width="75"
-                Click="Button_Click"/>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Content="Yes"
+                    Margin="5 10"
+                    Width="75"
+                    Click="YesButtonClick"/>
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Content="No"
+                    Margin="5 10 10 10"
+                    Width="75"
+                    Click="NoButtonClick"/>
+        </StackPanel>
     </Grid>
 </Window>

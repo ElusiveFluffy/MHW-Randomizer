@@ -272,6 +272,19 @@ namespace MHW_Randomizer
                 }
                 return;
             }
+            else if (new DirectoryInfo(FolderBrowser.SelectedPath).Name == "nativePC")
+            {
+                ChoiceWindow warning = new ChoiceWindow("Warning randomizing directly into the nativePC folder will overide any files that get randomized. Are you sure you want to randomize there?")
+                {
+                    Owner = MainWindow.window,
+                    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner,
+                    Width = 450
+                };
+                if ((bool)warning.ShowDialog())
+                    IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
+                else
+                    return;
+            }
             else
             {
                 IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
