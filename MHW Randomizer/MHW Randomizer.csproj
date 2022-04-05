@@ -152,7 +152,10 @@
     <Compile Include="GMD %28Cirilla%29\Extentions\StructExtensions.cs" />
     <Compile Include="GMD %28Cirilla%29\Structs\GMD.cs" />
     <Compile Include="IoC.cs" />
-    <Compile Include="MessageWindow.xaml.cs">
+    <Compile Include="Windows\ChoiceWindow.xaml.cs">
+      <DependentUpon>ChoiceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Quest\QuestData.cs" />
@@ -172,12 +175,12 @@
     <Compile Include="ValueConverters\InverseBooleanConverter.cs" />
     <Compile Include="Viewmodels\Base\RelayCommand.cs" />
     <Compile Include="Viewmodels\Base\RelayCommandWithInputParam.cs" />
-    <Compile Include="Viewmodels\MiscRandomizer.cs" />
-    <Compile Include="Viewmodels\QuestRandomizer.cs" />
+    <Compile Include="Randomizers\MiscRandomizer.cs" />
+    <Compile Include="Randomizers\QuestRandomizer.cs" />
     <Compile Include="Viewmodels\RandomizerViewModel.cs" />
     <Compile Include="Viewmodels\RandomizerSettings.cs" />
-    <Compile Include="Viewmodels\RecipeRandomizer.cs" />
-    <Compile Include="Viewmodels\ShopRandomizer.cs" />
+    <Compile Include="Randomizers\RecipeRandomizer.cs" />
+    <Compile Include="Randomizers\ShopRandomizer.cs" />
     <Page Include="Controls\Armour.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,7 +205,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -211,11 +214,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Viewmodels\Base\BaseViewModel.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MessageWindow.xaml">
+    <Page Include="Windows\ChoiceWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\MessageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
