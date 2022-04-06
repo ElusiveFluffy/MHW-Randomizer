@@ -25,6 +25,7 @@ namespace MHW_Randomizer
 
         public BetterFolderBrowser FolderBrowser = new BetterFolderBrowser();
         public bool SaveIsEnabled { get; set; }
+        public string RandomizeRootFolder { get; set; }
         public bool Randomizing { get; set; }
 
         public uint Seed;
@@ -281,7 +282,10 @@ namespace MHW_Randomizer
                     Width = 450
                 };
                 if ((bool)warning.ShowDialog())
+                {
                     IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
+                    RandomizeRootFolder = "";
+                }
                 else
                     return;
             }
@@ -289,6 +293,7 @@ namespace MHW_Randomizer
             {
                 IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized");
+                RandomizeRootFolder = @"\randomized";
             }
 
             Randomizing = true;
@@ -314,11 +319,11 @@ namespace MHW_Randomizer
                     Seed = total;
                 }
             }
-            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Seed.txt"))
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Seed.txt"))
             {
                 file.WriteLine("Seed: " + Seed.ToString());
             }
-            if (!File.Exists(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt"))
+            if (!string.IsNullOrWhiteSpace(RandomizeRootFolder) && !File.Exists(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt"))
                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt"))
                 {
                     file.WriteLine("Put the quest and/or common folder into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");

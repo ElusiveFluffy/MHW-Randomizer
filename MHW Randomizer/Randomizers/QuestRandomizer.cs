@@ -298,7 +298,7 @@ namespace MHW_Randomizer
             QuestData.MonsterMapSobjCount = new int[69, 43];
             SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !o.Name.Contains("em102_00_st101_61.sobj")).ToArray();
             SobjFilesBigMCache = SobjFilesCache.Where(o => !o.Name.Contains("em101_00_st101")).ToArray();
-            File.Create(IoC.Settings.SaveFolderPath + @"\randomized\Quest Log.txt").Dispose();
+            File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt").Dispose();
 
             NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
             NR3Generator pickSobj = new NR3Generator(IoC.Randomizer.Seed);
@@ -324,8 +324,8 @@ namespace MHW_Randomizer
             if (IoC.Settings.HighRankMonInLowRank)
                 lowRankMonsterIDs = monsterIDs;
 
-            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\quest\enemy\boss\");
-            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\common\text\quest");
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\");
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\quest");
 
             IoC.Randomizer.MissingMIBFiles = new List<string>();
 
@@ -370,7 +370,7 @@ namespace MHW_Randomizer
 
             for (int dlc = -1; dlc <= (Convert.ToInt32(IoC.Settings.RandomizeIBQuests) * 2); dlc++)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Quest Log.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt"))
                 {
                     switch (dlc)
                     {
@@ -458,7 +458,7 @@ namespace MHW_Randomizer
                         MapIDIndex = QuestData.ValidMapIndexes[pickMap.Next(5 + (Convert.ToInt32(RandomizingIB) * 2))];
                     }
 
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Quest Log.txt"))
+                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt"))
                     {
                         file.WriteLine("\n---------------------- " + "Quest: " + QuestData.QuestName[questNumber == "66859" || questNumber == "66860" ? (questNumber == "66859" ? 64802 : 66835) : int.Parse(questNumber)] + ", Quest ID: " + QIDText + ", Map: " + QuestData.MapNames[MapIDIndex] + " ------------------------------");
                     }
@@ -518,8 +518,8 @@ namespace MHW_Randomizer
                         if (fsm != null)
                         {
                             //Create a copy of the fsm file but with the name for the randomized monster
-                            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\quest\q" + questNumber + @"\fsm\em\");
-                            File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm", fsm);
+                            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\");
+                            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm", fsm);
                         }
 
                         #region sobj Randomization
@@ -576,7 +576,7 @@ namespace MHW_Randomizer
                             else
                                 CDCount = 0;
                         }
-                        File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\quest\enemy\boss\" + avaliableEmNumbers[currentRankMonsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj", sobj);
+                        File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + avaliableEmNumbers[currentRankMonsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj", sobj);
 
                         #endregion
 
@@ -591,7 +591,7 @@ namespace MHW_Randomizer
                         else if ((m < 5 && MonIcons[m] != 127 && changeIcon) || (IoC.Settings.TwoMonsterQuests && m == 1))
                             MonIcons[m] = Array.IndexOf(QuestData.IconList, QuestData.MonsterNames[currentRankMonsterIDs[RandomMonsterIndex] + 1]);
 
-                        using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Quest Log.txt"))
+                        using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt"))
                         {
                             file.WriteLine("Monster " + (m + 1).ToString() + ": " + QuestData.MonsterNames[currentRankMonsterIDs[RandomMonsterIndex] + 1] + "\tSobj File Name: " + avaliableEmNumbers[currentRankMonsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj" + "\tOld sobj File Name: " + oldMSobj
                                + (IoC.Settings.RandomIcons && m < 5 && MonIcons[m] != 127 ? "\tIcon: " + QuestData.IconList[MonIcons[m]] : ""));
@@ -662,13 +662,13 @@ namespace MHW_Randomizer
                         else
                             GMDFile.Entries[1].Value = GMDFile.Entries[1].Value.Replace(QuestData.MonsterNames.FirstOrDefault(o => GMDFile.Entries[1].Value.Contains(o)), IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
 
-                        GMDFile.Save(IoC.Settings.SaveFolderPath + @"\randomized\common\text\quest\" + GMDFile.Filename + "_eng.gmd");
+                        GMDFile.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\quest\" + GMDFile.Filename + "_eng.gmd");
                     }
                     else if (questNumber == "67103" || questNumber == "66864")
                     {
                         GMDFile = new GMD(ChunkOTF.files["q" + questNumber + "_eng.gmd"].ChunkState.ExtractItem(ChunkOTF.files["q" + questNumber + "_eng.gmd"]));
                         GMDFile.Entries[1].Value = "Hunt all target monsters";
-                        GMDFile.Save(IoC.Settings.SaveFolderPath + @"\randomized\common\text\quest\" + GMDFile.Filename + "_eng.gmd");
+                        GMDFile.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\quest\" + GMDFile.Filename + "_eng.gmd");
                     }
 
                     #endregion
@@ -985,7 +985,7 @@ namespace MHW_Randomizer
                         WriteData[i] = data3[i - 4];
                     data4 = cipher.Encipher(WriteData);
 
-                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\quest\questData_" + questNumber + ".mib", data4);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\questData_" + questNumber + ".mib", data4);
 
                     #endregion
 
@@ -995,7 +995,7 @@ namespace MHW_Randomizer
 
             }
 
-            storyTargetText.Save(IoC.Settings.SaveFolderPath + @"\randomized\common\text\storyTarget_eng.gmd");
+            storyTargetText.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\storyTarget_eng.gmd");
 
             #endregion
         }

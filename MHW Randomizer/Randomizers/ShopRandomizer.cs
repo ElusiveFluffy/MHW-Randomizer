@@ -15,11 +15,11 @@ namespace MHW_Randomizer
             if (!(IoC.Settings.RandomShopItems || IoC.Settings.RandomShopWepArmour))
                 return;
 
-            File.Create(IoC.Settings.SaveFolderPath + @"\randomized\Shop Log.txt").Dispose();
+            File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt").Dispose();
 
             if (IoC.Settings.RandomShopItems)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Shop Log.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
                 {
                     file.WriteLine("---------------------------------------------------------------------------");
                     file.WriteLine("                                 Shop Items                                ");
@@ -34,7 +34,7 @@ namespace MHW_Randomizer
                 if (IoC.Settings.AmountOfShopItems > itemList.Count)
                 {
                     maxItems = itemList.Count;
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Shop Log.txt"))
+                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
                     {
                         file.WriteLine("[Amount of Shop Items Changed to " + maxItems + " as the Amount Entered is More Than the Amount of Items Avaliable]");
                     }
@@ -64,7 +64,7 @@ namespace MHW_Randomizer
                 {
                     ShopStructs.ItemShop item = shopItemList[i];
                     item.Sort_Order = (ushort)i;
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Shop Log.txt"))
+                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
                     {
                         string text = "Item " + (item.Sort_Order + 1) + ": " + itemList[item.Item_Id];
                         file.WriteLine(text);
@@ -80,13 +80,13 @@ namespace MHW_Randomizer
                 Array.Copy(BitConverter.GetBytes(entryCount), 0, header, 6, 4);
                 shopBytes = header.Concat(randomizedBytes).ToArray();
 
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\common\facility\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\facility\shopList.slt", shopBytes);
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\facility\");
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\facility\shopList.slt", shopBytes);
             }
 
             if (IoC.Settings.RandomShopWepArmour)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Shop Log.txt"))
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
                 {
                     file.WriteLine("---------------------------------------------------------------------------");
                     file.WriteLine("                       Weapon and Armour Shop Items                        ");
@@ -181,8 +181,8 @@ namespace MHW_Randomizer
                 Array.Copy(BitConverter.GetBytes(entryCount), 0, header, 6, 4);
                 shopBytes = header.Concat(randomizedBytes).ToArray();
 
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + @"\randomized\common\equip\shop.sed", shopBytes);
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\shop.sed", shopBytes);
             }
         }
 
@@ -309,7 +309,7 @@ namespace MHW_Randomizer
 
         private static void LogGearShop(List<ShopStructs.ArmourShop> shopItemList, string currentGear, int i)
         {
-            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Shop Log.txt"))
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
             {
                 string text = "";
                 switch (shopItemList[i].Equip_Type)
