@@ -7,8 +7,6 @@ namespace MHW_Randomizer
         public string ChunkFolderPath;
         public string SaveFolderPath;
         public string UserSeed { get; set; }
-        //To add:
-        //Add nativePC warning of overiding files and make it so can export directly into nativePC if selected
 
         //--------------------
         //  Quest Settings
