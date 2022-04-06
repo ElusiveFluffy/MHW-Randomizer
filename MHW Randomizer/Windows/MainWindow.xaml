@@ -31,7 +31,8 @@
         </Border>
 
         <DockPanel>
-            <Grid DockPanel.Dock="Top">
+            <Grid DockPanel.Dock="Top"
+                  Panel.ZIndex="1">
                 <Image Source="{Binding MonsterIcon, Source={x:Static local:IoC.Randomizer}}"
                        Height="100"
                        HorizontalAlignment="Left"
@@ -39,8 +40,7 @@
                 <Border HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Width="180"
-                        Margin="5 0 5 -25"
-                        Panel.ZIndex="1">
+                        Margin="5 0 5 -25">
                     <StackPanel Margin="0 4 4 4">
                         <Button Content="Open Chunk Folder" 
                                 Margin="3"
