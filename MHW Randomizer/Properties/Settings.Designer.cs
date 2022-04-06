@@ -22,17 +22,5 @@ namespace MHW_Randomizer.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UserSettings {
-            get {
-                return ((string)(this["UserSettings"]));
-            }
-            set {
-                this["UserSettings"] = value;
-            }
-        }
     }
 }
