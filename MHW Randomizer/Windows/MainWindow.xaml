@@ -44,6 +44,7 @@
                     <StackPanel Margin="0 4 4 4">
                         <Button Content="Open Chunk Folder" 
                                 Margin="3"
+                                IsEnabled="{Binding OpenFolderIsEnabled, Source={x:Static local:IoC.Randomizer}}"
                                 Command="{Binding OpenCommand, Source={x:Static local:IoC.Randomizer}}"/>
                         <Button Content="Randomize"
                                 Margin="3"

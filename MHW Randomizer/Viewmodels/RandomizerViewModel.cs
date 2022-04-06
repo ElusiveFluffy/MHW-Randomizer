@@ -24,6 +24,7 @@ namespace MHW_Randomizer
         public string MonsterIcon { get; set; }
 
         public BetterFolderBrowser FolderBrowser = new BetterFolderBrowser();
+        public bool OpenFolderIsEnabled { get; set; } = true;
         public bool SaveIsEnabled { get; set; }
         public string RandomizeRootFolder { get; set; }
         public bool Randomizing { get; set; }
@@ -130,6 +131,19 @@ namespace MHW_Randomizer
 
         public async void StartUp()
         {
+            if (!File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}\\oo2core_8_win64.dll"))
+            {
+                OpenFolderIsEnabled = false;
+                await Task.Delay(1);
+                //Message Window
+                MessageWindow message = new MessageWindow("ERROR: oo2core_8_win64.dll is missing. Can't decompress chunk file.");
+                message.Owner = MainWindow.window;
+                message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+                message.ShowDialog();
+
+                return;
+            }
+
             if (string.IsNullOrEmpty(IoC.Settings.ChunkFolderPath))
                 return;
 
