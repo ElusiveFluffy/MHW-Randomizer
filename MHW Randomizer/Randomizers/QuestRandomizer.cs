@@ -59,8 +59,8 @@ namespace MHW_Randomizer
         public bool PSGearIsChecked;
 
         public string QIDText;
-        public string RewardText;
-        public string PenaltyText;
+        public uint RewardMoney;
+        public uint PenaltyMoney;
         public string TimerText;
         public string MObjC1Text;
         public string MObjC2Text;
@@ -176,120 +176,84 @@ namespace MHW_Randomizer
                 data2[i - 4] = ReadData[i];
             Int32 RV = 0;
             #region Common and Objectives
-            QIDText = BitConverter.ToInt32(new byte[] { data2[6], data2[7], data2[8], data2[9] }, 0).ToString();
+            QIDText = BitConverter.ToInt32(data2, 6).ToString();
             StarsIndex = data2[10];
             RankIndex = data2[19];
-            RV = BitConverter.ToInt32(new byte[] { data2[23], data2[24], data2[25], data2[26] }, 0);
-            for (int i = 0; i < QuestData.MapIDs.Length; i++)
-                if (RV == QuestData.MapIDs[i])
-                    MapIDIndex = i;
+            RV = BitConverter.ToInt32(data2, 23);
+            MapIDIndex = Array.IndexOf(QuestData.MapIDs, RV);
             PSpawnIndex = data2[27];
-            if (data2[31] == 0)
-                FSpawnIsChecked = true;
-            else FSpawnIsChecked = false;
+            FSpawnIsChecked = data2[31] == 0;
             TimeIndex = data2[39];
             WeatherIndex = data2[43];
-            RewardText = BitConverter.ToUInt32(new byte[] { data2[51], data2[52], data2[53], data2[54] }, 0).ToString();
-            PenaltyText = BitConverter.ToUInt32(new byte[] { data2[55], data2[56], data2[57], data2[58] }, 0).ToString();
-            TimerText = BitConverter.ToUInt32(new byte[] { data2[63], data2[64], data2[65], data2[66] }, 0).ToString();
+            RewardMoney = BitConverter.ToUInt32(data2, 51);
+            PenaltyMoney = BitConverter.ToUInt32(data2, 55);
+            TimerText = BitConverter.ToUInt32(data2, 63).ToString();
             for (int i = 0; i < 5; i++)
-                MonIcons[i] = BitConverter.ToUInt16(new byte[] { data2[68 + 2 * i], data2[69 + 2 * i] }, 0);
+                MonIcons[i] = BitConverter.ToUInt16(data2, 68 + 2 * i);
             HRReqIndex = data2[78];
-            for (int i = 0; i < QuestData.ObjectiveIDs.Length; i++)
-                if (data2[83] == QuestData.ObjectiveIDs[i])
-                    MObjT1Index = i;
-            if (data2[84] == 04)
-                MObj1MMIsChecked = true;
-            else MObj1MMIsChecked = false;
-            MObjID1 = BitConverter.ToUInt16(new byte[] { data2[87], data2[88] }, 0);
-            MObjC1Text = BitConverter.ToUInt16(new byte[] { data2[89], data2[90] }, 0).ToString();
-            for (int i = 0; i < QuestData.ObjectiveIDs.Length; i++)
-                if (data2[91] == QuestData.ObjectiveIDs[i])
-                    MObjT2Index = i;
-            if (data2[92] == 04)
-                MObj2MMIsChecked = true;
-            else MObj2MMIsChecked = false;
-            MObjID2 = BitConverter.ToUInt16(new byte[] { data2[95], data2[96] }, 0);
-            MObjC2Text = BitConverter.ToUInt16(new byte[] { data2[97], data2[98] }, 0).ToString();
-            if (data2[99] == 1)
-                MultiOIsChecked = false;
-            else MultiOIsChecked = true;
-            for (int i = 0; i < QuestData.ObjectiveIDs.Length; i++)
-                if (data2[100] == QuestData.ObjectiveIDs[i])
-                    SObjT1Index = i;
-            if (data2[101] == 04)
-                SObj1MMIsChecked = true;
-            else SObj1MMIsChecked = false;
-            SObjID1Index = BitConverter.ToUInt16(new byte[] { data2[104], data2[105] }, 0);
-            SObjC1Text = BitConverter.ToUInt16(new byte[] { data2[106], data2[107] }, 0).ToString();
-            for (int i = 0; i < QuestData.ObjectiveIDs.Length; i++)
-                if (data2[108] == QuestData.ObjectiveIDs[i])
-                    SObjT2Index = i;
-            if (data2[109] == 04)
-                SObj2MMIsChecked = true;
-            else SObj2MMIsChecked = false;
-            SObjID2Index = BitConverter.ToUInt16(new byte[] { data2[112], data2[113] }, 0);
-            SObjC2Text = BitConverter.ToUInt16(new byte[] { data2[114], data2[115] }, 0).ToString();
+
+            //Main Objective 1
+            MObjT1Index = Array.IndexOf(QuestData.ObjectiveIDs, data2[83]);
+            MObj1MMIsChecked = data2[84] == 04;
+            MObjID1 = BitConverter.ToUInt16(data2, 87);
+            MObjC1Text = BitConverter.ToUInt16(data2, 89).ToString();
+            //Main Objective 2
+            MObjT2Index = Array.IndexOf(QuestData.ObjectiveIDs, data2[91]);
+            MObj2MMIsChecked = data2[92] == 04;
+            MObjID2 = BitConverter.ToUInt16(data2, 95);
+            MObjC2Text = BitConverter.ToUInt16(data2, 97).ToString();
+            MultiOIsChecked = data2[99] != 1;
+
+            //Sub Objective 1
+            SObjT1Index = Array.IndexOf(QuestData.ObjectiveIDs, data2[100]);
+            SObj1MMIsChecked = data2[101] == 04;
+            SObjID1Index = BitConverter.ToUInt16(data2, 104);
+            SObjC1Text = BitConverter.ToUInt16(data2, 106).ToString();
+            //Sub Objective 2
+            SObjT2Index = Array.IndexOf(QuestData.ObjectiveIDs, data2[108]);
+            SObj2MMIsChecked = data2[109] == 04;
+            SObjID2Index = BitConverter.ToUInt16(data2, 112);
+            SObjC2Text = BitConverter.ToUInt16(data2, 114).ToString();
+
             BGMIndex = data2[120];
             QCMusicIndex = data2[124];
-            for (int i = 0; i < QuestData.QuestTypeIDs.Length; i++)
-                if (data2[128] == QuestData.QuestTypeIDs[i])
-                    QTypeIndex = i;
-            if (data2[130] == 0)
-            {
-                ATFlagIsChecked = false;
-                PSGearIsChecked = false;
-            }
-            if (data2[130] == 1)
-            {
-                ATFlagIsChecked = false;
-                PSGearIsChecked = true;
-            }
-            if (data2[130] == 2)
-            {
-                ATFlagIsChecked = true;
-                PSGearIsChecked = false;
-            }
-            if (data2[130] == 3)
-            {
-                ATFlagIsChecked = true;
-                PSGearIsChecked = true;
-            }
-            RRemIDText = BitConverter.ToUInt32(new byte[] { data2[132], data2[133], data2[134], data2[135] }, 0).ToString();
-            S1RRemIDText = BitConverter.ToUInt32(new byte[] { data2[136], data2[137], data2[138], data2[139] }, 0).ToString();
-            S2RRemIDText = BitConverter.ToUInt32(new byte[] { data2[140], data2[141], data2[142], data2[143] }, 0).ToString();
-            SRemIDText = BitConverter.ToUInt32(new byte[] { data2[144], data2[145], data2[146], data2[147] }, 0).ToString();
-            HRpointText = BitConverter.ToUInt32(new byte[] { data2[160], data2[161], data2[162], data2[163] }, 0).ToString();
+            QTypeIndex = Array.IndexOf(QuestData.QuestTypeIDs, data2[128]);
+            ATFlagIsChecked = data2[130] == 2 || data2[130] == 3;
+            PSGearIsChecked = data2[130] == 1 || data2[130] == 3;
+
+            //Rem Stuff
+            RRemIDText = BitConverter.ToUInt32(data2, 132).ToString();
+            S1RRemIDText = BitConverter.ToUInt32(data2, 136).ToString();
+            S2RRemIDText = BitConverter.ToUInt32(data2, 140).ToString();
+            SRemIDText = BitConverter.ToUInt32(data2, 144).ToString();
+
+            HRpointText = BitConverter.ToUInt32(data2, 160).ToString();
             #endregion
             #region Monsters
+            //Monster Stats
             for (int i = 0; i < 7; i++)
             {
-                if (BitConverter.ToUInt32(new byte[] { data2[172 + 65 * i], data2[173 + 65 * i], data2[174 + 65 * i], data2[175 + 65 * i] }, 0) == 4294967295)
-                    MID[i] = 0;
-                else MID[i] = BitConverter.ToInt32(new byte[] { data2[172 + 65 * i], data2[173 + 65 * i], data2[174 + 65 * i], data2[175 + 65 * i] }, 0) + 1;
-                MSobj[i] = BitConverter.ToInt32(new byte[] { data2[176 + 65 * i], data2[177 + 65 * i], data2[178 + 65 * i], data2[179 + 65 * i] }, 0);
-                if (data2[184 + 65 * i] == 0)
-                    Tempered[i] = false;
-                else if (data2[184 + 65 * i] == 1)
-                    Tempered[i] = true;
-                MHtP[i] = BitConverter.ToInt32(new byte[] { data2[185 + 65 * i], data2[186 + 65 * i], data2[187 + 65 * i], data2[188 + 65 * i] }, 0);
-                MAtk[i] = BitConverter.ToInt32(new byte[] { data2[189 + 65 * i], data2[190 + 65 * i], data2[191 + 65 * i], data2[192 + 65 * i] }, 0);
-                MDef[i] = BitConverter.ToInt32(new byte[] { data2[193 + 65 * i], data2[194 + 65 * i], data2[195 + 65 * i], data2[196 + 65 * i] }, 0);
-                MHAR[i] = BitConverter.ToInt32(new byte[] { data2[197 + 65 * i], data2[198 + 65 * i], data2[199 + 65 * i], data2[200 + 65 * i] }, 0);
-                MSeT[i] = BitConverter.ToInt32(new byte[] { data2[205 + 65 * i], data2[206 + 65 * i], data2[207 + 65 * i], data2[208 + 65 * i] }, 0);
-                MPHP[i] = BitConverter.ToInt32(new byte[] { data2[213 + 65 * i], data2[214 + 65 * i], data2[215 + 65 * i], data2[216 + 65 * i] }, 0);
-                MBSt[i] = BitConverter.ToInt32(new byte[] { data2[217 + 65 * i], data2[218 + 65 * i], data2[219 + 65 * i], data2[220 + 65 * i] }, 0);
-                MStB[i] = BitConverter.ToInt32(new byte[] { data2[221 + 65 * i], data2[222 + 65 * i], data2[223 + 65 * i], data2[224 + 65 * i] }, 0);
-                MBKO[i] = BitConverter.ToInt32(new byte[] { data2[225 + 65 * i], data2[226 + 65 * i], data2[227 + 65 * i], data2[228 + 65 * i] }, 0);
-                MBEx[i] = BitConverter.ToInt32(new byte[] { data2[229 + 65 * i], data2[230 + 65 * i], data2[231 + 65 * i], data2[232 + 65 * i] }, 0);
-                MBMo[i] = BitConverter.ToInt32(new byte[] { data2[233 + 65 * i], data2[234 + 65 * i], data2[235 + 65 * i], data2[236 + 65 * i] }, 0);
-                MonsterSize[i] = BitConverter.ToInt32(new byte[] { data2[201 + 65 * i], data2[202 + 65 * i], data2[203 + 65 * i], data2[204 + 65 * i] }, 0);
+                MID[i] = BitConverter.ToInt32(data2, 172 + 65 * i) + 1;
+                MSobj[i] = BitConverter.ToInt32(data2, 176 + 65 * i);
+                Tempered[i] = data2[184 + 65 * i] == 1;
+                MHtP[i] = BitConverter.ToInt32(data2, 185 + 65 * i);
+                MAtk[i] = BitConverter.ToInt32(data2, 189 + 65 * i);
+                MDef[i] = BitConverter.ToInt32(data2, 193 + 65 * i);
+                MHAR[i] = BitConverter.ToInt32(data2, 197 + 65 * i);
+                MSeT[i] = BitConverter.ToInt32(data2, 205 + 65 * i);
+                MPHP[i] = BitConverter.ToInt32(data2, 213 + 65 * i);
+                MBSt[i] = BitConverter.ToInt32(data2, 217 + 65 * i);
+                MStB[i] = BitConverter.ToInt32(data2, 221 + 65 * i);
+                MBKO[i] = BitConverter.ToInt32(data2, 225 + 65 * i);
+                MBEx[i] = BitConverter.ToInt32(data2, 229 + 65 * i);
+                MBMo[i] = BitConverter.ToInt32(data2, 233 + 65 * i);
+                MonsterSize[i] = BitConverter.ToInt32(data2, 201 + 65 * i);
             }
-            sMsobj = BitConverter.ToInt32(new byte[] { data2[627], data2[628], data2[629], data2[630] }, 0);
-            sMHPIndex = BitConverter.ToInt32(new byte[] { data2[631], data2[632], data2[633], data2[634] }, 0);
-            sMAtIndex = BitConverter.ToInt32(new byte[] { data2[635], data2[636], data2[637], data2[638] }, 0);
-            sMDeIndex = BitConverter.ToInt32(new byte[] { data2[639], data2[640], data2[641], data2[642] }, 0);
-            MPModText = BitConverter.ToInt32(new byte[] { data2[644], data2[645], data2[646], data2[647] }, 0).ToString();
+            sMsobj = BitConverter.ToInt32(data2, 627);
+            sMHPIndex = BitConverter.ToInt32(data2, 631);
+            sMAtIndex = BitConverter.ToInt32(data2, 635);
+            sMDeIndex = BitConverter.ToInt32(data2, 639);
+            MPModText = BitConverter.ToInt32(data2, 644).ToString();
             #endregion
         }
 
@@ -738,12 +702,12 @@ namespace MHW_Randomizer
                     data3[39] = buffer[0];
                     buffer = BitConverter.GetBytes(Convert.ToByte(WeatherIndex));
                     data3[43] = buffer[0];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(RewardText));
+                    buffer = BitConverter.GetBytes(RewardMoney);
                     data3[51] = buffer[0];
                     data3[52] = buffer[1];
                     data3[53] = buffer[2];
                     data3[54] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(PenaltyText));
+                    buffer = BitConverter.GetBytes(PenaltyMoney);
                     data3[55] = buffer[0];
                     data3[56] = buffer[1];
                     data3[57] = buffer[2];
