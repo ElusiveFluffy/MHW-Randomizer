@@ -66,13 +66,14 @@
                                 <CheckBox Content="Randomize Maps"
                                           IsChecked="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
-                                          ToolTip="Randomize the map the quest will happen on (will use random sobjs for the map)"
+                                          ToolTip="Randomize the map the quest will happen on (will use random sobjs for the map)&#xA;(Some story quests don't randomize maps because it softlocks)"
                                           Checked="MapOption_Checked"
-                                          Unchecked="MapOption_Unchecked"/>
+                                          Unchecked="MapOption_Unchecked"
+                                          ToolTipService.ShowDuration="10000"/>
                                 <CheckBox Content="Random Quest Icons"
                                           IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
-                                          ToolTip="Makes it more of a surprise of what the monster will be before starting the quest (Also changes the monster in the quest objective text to ???) (Hasn't been tested without iceborne)"
+                                          ToolTip="Makes it more of a surprise of what the monster will be before starting the quest &#xA;(Also changes the monster in the quest objective text to ???) (Hasn't been tested without iceborne)"
                                           ToolTipService.ShowDuration="10000"/>
                             </StackPanel>
                         </StackPanel>
