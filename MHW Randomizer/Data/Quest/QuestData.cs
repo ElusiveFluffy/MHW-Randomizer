@@ -5,7 +5,7 @@ namespace MHW_Randomizer
 {
     public class QuestData
     {
-        //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj
+        //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj. em118_00_st102_02.sobj (story one?)
 
         public static Int32[] MapIDs = { 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 200, 201, 202, 203, 301, 302, 303, 305, 306, 307, 311, 400, 401, 403, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 501, 502, 503, 504, 505, 506 };
         public static Int32[] ForbiddenMapIDs = { 108, 109, 203, 305, 306, 307, 311, 410, 411, 412, 413, 414, 415, 416, 417, 506 };
@@ -561,6 +561,7 @@ namespace MHW_Randomizer
         //  Story Hunt Quests
         //======================
         //00201 is a expedtion, this is the quest if return from expedition
+        //All of these quests seem fine now with randomizing the map
         /// <summary>
         /// <para>The key is the quest ID and the value data about what to change (Don't randomize map with these, probably breaks story sequences)</para>
         /// <para>00401 and 00504 zorah magdaros quest (try randomizing the second monster (first is zorah, second is nergigante))</para>
@@ -573,15 +574,15 @@ namespace MHW_Randomizer
             { "00205", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 171 } } }, //Urgent: Pukei-Pukei Hunt
             { "00301", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 147, 149 } } }, //The Best Kind of Quest
             { "00302", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 175 } } }, //Sinister Shadows in the Swamp
-            { "00305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 178 } } }, //Flying Sparks: Tobi-Kadachi
-            { "00306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 181 } } }, //The Encroaching Anjanath
+            { "00305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 178 } } }, //Flying Sparks: Tobi-Kadachi
+            { "00306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 181 } } }, //The Encroaching Anjanath
             { "00401", new StoryQuestData() }, //One for the History Books
-            { "00405", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 191 } } }, //Ballooning Problems
+            { "00405", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 191 } } }, //Ballooning Problems
             { "00407", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 199 } } }, //Radobaan Roadblock
             { "00408", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 202 } } }, //Legiana: Embodiment of Elegance
             { "00501", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 207 } } }, //Into the Bowels of the Vale
             { "00502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 213 } } }, //A Fiery Throne Atop the Forest
-            { "00503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 216 } } }, //Horned Tyrant Below the Sands
+            { "00503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 216 } } }, //Horned Tyrant Below the Sands
             { "00504", new StoryQuestData { QuestObjTextIndexs = new int[] { 219 } } }, //A Colossal Task
             { "00601", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 227 } } }, //Invader in the Waste
             { "00605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 230 } } }, //Tickled Pink
@@ -589,16 +590,17 @@ namespace MHW_Randomizer
             { "00805", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 259 }, DuplicateMonsterHunt = true } }, //Beyond the Blasting Scales
 
             //Special Assignments
-            { "50701", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 305 } } }, //The Food Chain Dominator
+            { "50701", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 305 } } }, //The Food Chain Dominator
         };
 
         //May need some testing for 00804, 50601, 50802, and 50906 //May need special text case for 50802
+        //Done doing first check for these (check if has cutscene if so don't randomize the map)
         public static Dictionary<string, StoryQuestData> StorySlayQuest = new Dictionary<string, StoryQuestData>()
         {
-            { "00701", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 245 } } }, //A Wound and a Thirst
-            { "00801", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 248 } } }, //Kushala Daora, Dragon of Steel
-            { "00802", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 251 } } }, //Teostra the Infernal
-            { "00803", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 254 } } }, //Hellish Fiend Vaal Hazak
+            { "00701", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 245 } } }, //A Wound and a Thirst
+            { "00801", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 248 } } }, //Kushala Daora, Dragon of Steel
+            { "00802", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 251 } } }, //Teostra the Infernal
+            { "00803", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 254 } } }, //Hellish Fiend Vaal Hazak
             { "00804", new StoryQuestData { ChangeObjective = true } }, //Land of Convergence
             { "00806", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 261 } } }, //Thunderous Rumble in the Highlands
 
@@ -662,6 +664,7 @@ namespace MHW_Randomizer
         //  Story Hunt Quests
         //======================
         //may need to test 51604
+        //Done doing first check for these (check if has cutscene if so don't randomize the map)
         /// <summary>
         /// <para>The key is the quest ID and the value data about what to change (Don't randomize map with these, probably breaks story sequences)</para>
         /// <para>00401 and 00504 zorah magdaros quest (try randomizing the second monster (first is zorah, second is nergigante))</para>
@@ -671,22 +674,22 @@ namespace MHW_Randomizer
             { "01101", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 494 } } }, //Baptism by Ice
             { "01102", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 501 } } }, //Banbaro Blockade
             { "01201", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 508 } } }, //Ready to Strike
-            { "01202", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 512 } } }, //No Time for Naps
-            { "01203", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 515 } } }, //Play Both Ends
-            { "01301", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 519 } } }, //Blizzard Blitz
+            { "01202", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 512 } } }, //No Time for Naps
+            { "01203", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 515 } } }, //Play Both Ends
+            { "01301", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 519 } } }, //Blizzard Blitz
             { "01302", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 524 } } }, //Ever-present Shadow
-            { "01303", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 526, 527 } } }, //The Scorching Blade
-            { "01304", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 530, 531 } } }, //Absolute Power
-            { "01305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 533, 534 } } }, //A Smashing Cross Counter
+            { "01303", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 526, 527 } } }, //The Scorching Blade
+            { "01304", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 530, 531 } } }, //Absolute Power
+            { "01305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 533, 534 } } }, //A Smashing Cross Counter
             { "01306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 537, 538 } } }, //A Tale of Ice and Fire (Need to test this quest, repel velkhana quest)
             { "01401", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 545 } } }, //When the Mist Taketh You
-            { "01402", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 552 } } }, //The Disintegrating Blade
-            { "01403", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 555 } } }, //Bad Friends, Great Enemies
+            { "01402", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 552 } } }, //The Disintegrating Blade
+            { "01403", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 555 } } }, //Bad Friends, Great Enemies
             { "01405", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 548 } } }, //The Thunderous Troublemaker!
             { "01502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 571 } } }, //The Second Coming
 
             //Special Assignments
-            { "51603", new StoryQuestData() { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 641 } } }, //Across the Lost Path
+            { "51603", new StoryQuestData() { ChangeObjective = true, QuestObjTextIndexs = new int[] { 641 } } }, //Across the Lost Path
             { "51604", new StoryQuestData() { ChangeObjective = true } }, //Point of No Return
             { "51607", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 654 } } }, //The Fury Remains
         };
@@ -696,18 +699,18 @@ namespace MHW_Randomizer
         {
             { "01404", new StoryQuestData() { ChangeObjective = true } }, //The Defense of Seliana (Need to test)
             { "01501", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 563, 564 } } }, //The Iceborne Wyvern
-            { "01503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 574, 575 } } }, //Under the Veil of Death
-            { "01504", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //A Light From The Abyss
-            { "01601", new StoryQuestData() { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 583 } } }, //To The Guided, A Paean
+            { "01503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 574, 575 } } }, //Under the Veil of Death
+            { "01504", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //A Light From The Abyss
+            { "01601", new StoryQuestData() { ChangeObjective = true, QuestObjTextIndexs = new int[] { 583 } } }, //To The Guided, A Paean
             { "01602", new StoryQuestData() { ChangeObjective = true } }, //Paean of Guidance
-            { "01605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //To the Very Ends with You
+            { "01605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 598 } } }, //To the Very Ends with You
 
             //Special Assignments
-            { "51601", new StoryQuestData { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 633 } } }, //Reveal Thyself, Destroyer
+            { "51601", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 633 } } }, //Reveal Thyself, Destroyer
             { "51602", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 628 } } }, //Sterling Pride
             { "51606", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 651 } } }, //...And My Rage for All
-            { "51611", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 662 } } }, //Blazing Black Twilight
-            { "51612", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 673 } } }, //The Black Dragon (Fatalis)
+            { "51611", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 662 } } }, //Blazing Black Twilight
+            { "51612", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 673 } } }, //The Black Dragon (Fatalis)
             { "51613", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 670 } } }, //Dawn's Triumph
         };
 
