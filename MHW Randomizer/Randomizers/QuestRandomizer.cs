@@ -439,8 +439,8 @@ namespace MHW_Randomizer
                         if (MID[m] == 0 && !(IoC.Settings.TwoMonsterQuests && m == 1))
                             continue;
                         //If Zorah Magdaros quest only randomize the second monster (First is Zorah)
-                        if ((questNumber == "00401" && m == 0) || (questNumber == "00504" && m == 0))
-                            continue;
+                        //if ((questNumber == "00401" && m == 0) || (questNumber == "00504" && m == 0))
+                        //    continue;
 
                         //Get the old monster fsm file if its a story quest
                         if (MID[m] != 0 || (dlc != -1 && dlc != 1))

@@ -576,14 +576,13 @@ namespace MHW_Randomizer
             { "00302", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 175 } } }, //Sinister Shadows in the Swamp
             { "00305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 178 } } }, //Flying Sparks: Tobi-Kadachi
             { "00306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 181 } } }, //The Encroaching Anjanath
-            { "00401", new StoryQuestData() }, //One for the History Books
             { "00405", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 191 } } }, //Ballooning Problems
             { "00407", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 199 } } }, //Radobaan Roadblock
             { "00408", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 202 } } }, //Legiana: Embodiment of Elegance
             { "00501", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 207 } } }, //Into the Bowels of the Vale
             { "00502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 213 } } }, //A Fiery Throne Atop the Forest
             { "00503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 216 } } }, //Horned Tyrant Below the Sands
-            { "00504", new StoryQuestData { QuestObjTextIndexs = new int[] { 219 } } }, //A Colossal Task
+            //{ "00504", new StoryQuestData { QuestObjTextIndexs = new int[] { 219, 235 } } }, //A Colossal Task
             { "00601", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 227 } } }, //Invader in the Waste
             { "00605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 230 } } }, //Tickled Pink
             { "00607", new StoryQuestData { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 233 } } }, //Old World Monster in the New World
@@ -667,7 +666,6 @@ namespace MHW_Randomizer
         //Done doing first check for these (check if has cutscene if so don't randomize the map)
         /// <summary>
         /// <para>The key is the quest ID and the value data about what to change (Don't randomize map with these, probably breaks story sequences)</para>
-        /// <para>00401 and 00504 zorah magdaros quest (try randomizing the second monster (first is zorah, second is nergigante))</para>
         /// </summary>
         public static Dictionary<string, StoryQuestData> IBStoryHuntQuest = new Dictionary<string, StoryQuestData>()
         {
