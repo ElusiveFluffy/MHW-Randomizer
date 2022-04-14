@@ -270,8 +270,6 @@ namespace MHW_Randomizer
             NR3Generator pickMap = new NR3Generator(IoC.Randomizer.Seed);
             NR3Generator pickSize = new NR3Generator(IoC.Randomizer.Seed);
 
-            #region Quests
-
             int[] lowRankMonsterIDs = QuestData.LowRankBigMonsterIDs;
             int[] monsterIDs = QuestData.BigMonsterIDs;
             string[] avaliableEmNumbers = QuestData.MonsterEmNumber;
@@ -432,6 +430,9 @@ namespace MHW_Randomizer
 
                     int[] currentRankMonsterIDs = isLowRank ? lowRankMonsterIDs : monsterIDs;
                     byte[] fsm = null;
+
+                    #region Monster
+
                     //Loop to go through each monster
                     for (int m = 0; m < 7; m++)
                     {
@@ -464,7 +465,7 @@ namespace MHW_Randomizer
                             RandomMonsterIndex = Array.IndexOf(currentRankMonsterIDs, MID[0] - 1);
                         }
                         //Pick another monster if the monster is a duplicate to another one in the quest
-                        else if (!IoC.Settings.DuplicateMonster)
+                        else if (!IoC.Settings.DuplicateMonster || ((dlc == -1 || dlc == 1) && !storyQuests[questNumber].CanRandomizeMap))
                         {
                             int FoundMonsterIndex = Array.IndexOf(MID, currentRankMonsterIDs[RandomMonsterIndex] + 1);
                             while (FoundMonsterIndex != -1 && FoundMonsterIndex < m)
@@ -476,7 +477,7 @@ namespace MHW_Randomizer
 
                         if (questNumber == "00103")
                             RandomMonsterIndex = monsterFor00103[m];
-                        
+
                         //Set the monster to the randomized monster
                         MID[m] = currentRankMonsterIDs[RandomMonsterIndex] + 1;
 
@@ -567,6 +568,8 @@ namespace MHW_Randomizer
                         }
 
                     }
+
+                    #endregion
 
                     if ((dlc != -1 && dlc != 1) || storyQuests[questNumber].ChangeObjective)
                     {
@@ -966,7 +969,6 @@ namespace MHW_Randomizer
 
             storyTargetText.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\storyTarget_eng.gmd");
 
-            #endregion
         }
     }
 }
