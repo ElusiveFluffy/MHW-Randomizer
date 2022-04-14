@@ -66,7 +66,7 @@
                                 <CheckBox Content="Randomize Maps"
                                           IsChecked="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
-                                          ToolTip="Randomize the map the quest will happen on (will use random sobjs for the map)&#xA;(Some story quests don't randomize maps because it softlocks)"
+                                          ToolTip="Randomize the map the quest will happen on (needs to use random sobjs for the map)&#xA;(Some story quests don't randomize maps because it softlocks)&#xA;(The blockades in the rotten vale get moved out of the way so you can access the lower areas early)"
                                           Checked="MapOption_Checked"
                                           Unchecked="MapOption_Unchecked"
                                           ToolTipService.ShowDuration="10000"/>
