@@ -969,6 +969,26 @@ namespace MHW_Randomizer
 
             storyTargetText.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\storyTarget_eng.gmd");
 
+            if (IoC.Settings.RandomMaps)
+            {
+                byte[] levelObjects = ChunkOTF.files["st104_gm.sobj"].ChunkState.ExtractItem(ChunkOTF.files["st104_gm.sobj"]);
+
+                //Raise blockade in lowest part of the rotten vale
+                levelObjects[4487] = 0x00;
+                levelObjects[4488] = 0xB4;
+                levelObjects[4489] = 0x12;
+                levelObjects[4490] = 0xC6;
+
+                //Raise the first blockade in lower part  of the rotten vale
+                levelObjects[26691] = 0xD5;
+                levelObjects[26692] = 0xC9;
+                levelObjects[26693] = 0xEC;
+                levelObjects[26694] = 0xC5;
+
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st104\common\set");
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st104\common\set\st104_gm.sobj", levelObjects);
+            }
+
         }
     }
 }
