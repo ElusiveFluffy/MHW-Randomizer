@@ -337,11 +337,9 @@ namespace MHW_Randomizer
             {
                 file.WriteLine("Seed: " + Seed.ToString());
             }
-            if (!string.IsNullOrWhiteSpace(RandomizeRootFolder) && !File.Exists(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt"))
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt"))
-                {
-                    file.WriteLine("Put the quest and/or common folder into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");
-                }
+            if (!string.IsNullOrWhiteSpace(RandomizeRootFolder))
+                File.WriteAllText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt",
+                                  "Put the quest, common, and/or stage folders (some won't be there depending on what you randomized) into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");
 
             if (IoC.Settings.RandomizeQuests)
             {
