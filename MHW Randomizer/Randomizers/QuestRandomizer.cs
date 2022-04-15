@@ -971,6 +971,8 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.RandomMaps)
             {
+                #region Rotten Vale Blockade
+
                 byte[] levelObjects = ChunkOTF.files["st104_gm.sobj"].ChunkState.ExtractItem(ChunkOTF.files["st104_gm.sobj"]);
 
                 //Raise blockade in lowest part of the rotten vale
@@ -987,6 +989,35 @@ namespace MHW_Randomizer
 
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st104\common\set");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st104\common\set\st104_gm.sobj", levelObjects);
+
+                #endregion
+
+                #region Elder Recess Blockade
+
+                levelObjects = ChunkOTF.files["st105_gm.sobj"].ChunkState.ExtractItem(ChunkOTF.files["st105_gm.sobj"]);
+
+                //Raise the lava wall blockade
+                levelObjects[0x9AAA] = 0x00;
+                levelObjects[0x9AAB] = 0x00;
+                levelObjects[0x9AAC] = 0x00;
+                levelObjects[0x9AAD] = 0x00;
+
+                //Lower the crystals blocking the crawl space to the camp
+                levelObjects[0x9C64] = 0x00;
+                levelObjects[0x9C65] = 0x00;
+                levelObjects[0x9C66] = 0xAF;
+                levelObjects[0x9C67] = 0xC4;
+
+                //Raise the crystal blockade where nergigante would be
+                levelObjects[0x9FE7] = 0x00;
+                levelObjects[0x9FE8] = 0x00;
+                levelObjects[0x9FE9] = 0xAF;
+                levelObjects[0x9FEA] = 0x44;
+
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set");
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set\st105_gm.sobj", levelObjects);
+
+                #endregion
             }
 
         }
