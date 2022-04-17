@@ -7,6 +7,8 @@ namespace MHW_Randomizer
         public string ChunkFolderPath;
         public string SaveFolderPath;
         public string UserSeed { get; set; }
+        //To do
+        //Fix traces to match the monster
 
         //--------------------
         //  Quest Settings
@@ -17,7 +19,7 @@ namespace MHW_Randomizer
         public bool DuplicateMonster { get; set; }
         public bool HighRankMonInLowRank { get; set; }
         public bool IncludeLeshen { get; set; }
-        public bool IncludeXenojiiva { get; set; } //Fix Xenojiiva
+        public bool IncludeXenojiiva { get; set; } //Fix Xenojiiva (maybe can't include, too big)
         public bool IncludeBehemoth { get; set; }
         public bool TwoMonsterQuests { get; set; }
         public bool RandomSobj { get; set; }
@@ -87,14 +89,6 @@ namespace MHW_Randomizer
         public bool RandomKinsectType { get; set; }
         public bool RandomKinsectDust { get; set; }
 
-        //Extras for later maybe
-        //Completely random (maybe with some logic so low rank stuff only have low rank material, high rank with high rank materials, master rank with master rank materials)
-        public bool RandomArmourRecipes { get; set; }
-        public bool RandomWeaponRecipes { get; set; }
-        public bool RandomKinsectRecipes { get; set; }
-        //Using the pre-selected gear in the quest settings (Need to figure out how this works)
-        public bool RandomGearEachQuest { get; set; }
-
         //-----------------
         //  Shop Settings
         //-----------------
@@ -124,9 +118,22 @@ namespace MHW_Randomizer
 
         //---------------------------
         public bool ShuffleItemCraftingRecipes { get; set; }
+
         //Extras for later maybe
+        //Completely random (maybe with some logic so low rank stuff only have low rank material, high rank with high rank materials, master rank with master rank materials)
+        public bool RandomArmourRecipes { get; set; }
+        public bool RandomWeaponRecipes { get; set; }
+        public bool RandomKinsectRecipes { get; set; }
+        //Using the pre-selected gear in the quest settings (Need to figure out how this works)
+        public bool RandomGearEachQuest { get; set; }
+        //Random supply box rem ID
+
+        //Extras for later maybe
+        //Random slinger ammo? Random slinger ammo pickups
         public bool RandomizeSmallMonsters { get; set; }
         public bool RandomizeMissions { get; set; }
+        //For if random maps is checked
+        public bool IncludeArenaMap { get; set; }
         public bool ShuffleGatheringSpotLocation { get; set; }
         //Completely random
         public bool RandomItemCraftingRecipes { get; set; }
