@@ -540,7 +540,7 @@ namespace MHW_Randomizer
 
         #region Monster Data
 
-        public static int[,] MonsterMapSobjCount = new int[69, 43];
+        public static int[,] MonsterMapSobjCount = new int[101, 43];
 
         public static string[] MonsterNames = { "None", "Anjanath" , "Rathalos" , "[s] Aptonoth" , "[s] Jagras" , "Zorah Magdaros" , "[s] Mosswine" , "[s] Gajau" , "Great Jagras" , "[s] Kestodon M" , "Rathian" , "Pink Rathian" , "Azure Rathalos" , "Diablos" ,
             "Black Diablos" , "Kirin" , "Behemoth" , "Kushala Daora" , "Lunastra" , "Teostra" , "Lavasioth" , "Deviljho" , "Barroth" , "Uragaan" , "Leshen" , "Pukei-Pukei" , "Nergigante" , "Xeno'jiiva" , "Kulu-Ya-Ku" , "Tzitzi-Ya-Ku" ,
@@ -572,7 +572,7 @@ namespace MHW_Randomizer
             { "00103", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 168 } } }, //The Great Jagras Hunt
             { "00201", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 143 } } }, //Bird-Brained Bandit
             { "00205", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 171 } } }, //Urgent: Pukei-Pukei Hunt
-            { "00301", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 147, 149 } } }, //The Best Kind of Quest
+            { "00301", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 147, 149 } } }, //The Best Kind of Quest //Broken monsters 21 //kinda broken 0
             { "00302", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 175 } } }, //Sinister Shadows in the Swamp
             { "00305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 178 } } }, //Flying Sparks: Tobi-Kadachi
             { "00306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 181 } } }, //The Encroaching Anjanath

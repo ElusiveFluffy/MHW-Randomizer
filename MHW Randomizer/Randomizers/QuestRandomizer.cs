@@ -259,7 +259,7 @@ namespace MHW_Randomizer
 
         public void Randomize()
         {
-            QuestData.MonsterMapSobjCount = new int[69, 43];
+            QuestData.MonsterMapSobjCount = new int[101, 43];
             SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !o.Name.Contains("em102_00_st101_61.sobj")).ToArray();
             SobjFilesBigMCache = SobjFilesCache.Where(o => !o.Name.Contains("em101_00_st101")).ToArray();
             File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt").Dispose();
@@ -488,6 +488,8 @@ namespace MHW_Randomizer
                         if (fsm != null)
                         {
                             //Create a copy of the fsm file but with the name for the randomized monster
+                            if (Directory.Exists(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\"))
+                                Directory.Delete(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\", true);
                             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\");
                             File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm", fsm);
                         }
@@ -527,7 +529,7 @@ namespace MHW_Randomizer
                             else
                                 sobj = ChunkOTF.files[oldMSobj].ChunkState.ExtractItem(ChunkOTF.files[oldMSobj]);
                         }
-                        MSobj[m] = QuestData.MonsterMapSobjCount[RandomMonsterIndex, MapIDIndex];
+                        MSobj[m] = QuestData.MonsterMapSobjCount[currentRankMonsterIDs[RandomMonsterIndex], MapIDIndex];
 
                         //The count of hex byte CD
                         int CDCount = 0;
@@ -550,7 +552,7 @@ namespace MHW_Randomizer
 
                         #endregion
 
-                        QuestData.MonsterMapSobjCount[RandomMonsterIndex, MapIDIndex]++;
+                        QuestData.MonsterMapSobjCount[currentRankMonsterIDs[RandomMonsterIndex], MapIDIndex]++;
 
                         bool changeIcon = true;
                         if (dlc == -1 || dlc == 1)
