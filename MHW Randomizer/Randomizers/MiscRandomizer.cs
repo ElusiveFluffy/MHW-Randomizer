@@ -34,7 +34,7 @@ namespace MHW_Randomizer
                                                 new byte[] { 169, 0, 33 }, //Dark Red
                                                 new byte[] { 254, 231, 21 }, //Yellow
                                             };
-                byte[] scoutflyBytes = ChunkOTF.files["gi_param.gip"].ChunkState.ExtractItem(ChunkOTF.files["gi_param.gip"]);
+                byte[] scoutflyBytes = ChunkOTF.files["gi_param.gip"].Extract();
 
                 NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
                 //Scoutfly Colour

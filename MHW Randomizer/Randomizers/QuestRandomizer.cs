@@ -327,7 +327,7 @@ namespace MHW_Randomizer
             GMD GMDFile;
             int[] monsterFor00103 = new int[2];
 
-            GMD storyTargetText = new GMD(ChunkOTF.files["storyTarget_eng.gmd"].ChunkState.ExtractItem(ChunkOTF.files["storyTarget_eng.gmd"]));
+            GMD storyTargetText = new GMD(ChunkOTF.files["storyTarget_eng.gmd"].Extract());
 
             for (int dlc = -1; dlc <= (Convert.ToInt32(IoC.Settings.RandomizeIBQuests) * 2); dlc++)
             {
@@ -411,7 +411,7 @@ namespace MHW_Randomizer
                         continue;
                     }
 
-                    OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].ChunkState.ExtractItem(ChunkOTF.files["questData_" + questNumber + ".mib"]));
+                    OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].Extract());
 
                     //Pick Random Map
                     if (IoC.Settings.RandomMaps && ((dlc != -1 && dlc != 1) || storyQuests[questNumber].CanRandomizeMap))
@@ -447,8 +447,7 @@ namespace MHW_Randomizer
                             fsm = null;
 
                         if (MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm") && (dlc == -1 || dlc == 1))
-                            fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm"]
-                                                .ChunkState.ExtractItem(ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm"]);
+                            fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm"].Extract();
 
                         //Pick a random size percent between range if both aren't 100
                         if (IoC.Settings.MonsterMinSize != 100 && IoC.Settings.MonsterMaxSize != 100)
@@ -509,7 +508,7 @@ namespace MHW_Randomizer
                                 SobjFiles = SobjFilesCache.Where(o => o.Name.Contains("st" + QuestData.MapIDs[MapIDIndex])).ToArray();
                             int sobjIndex = pickSobj.Next(SobjFiles.Length);
 
-                            sobj = SobjFiles[sobjIndex].ChunkState.ExtractItem(SobjFiles[sobjIndex]);
+                            sobj = SobjFiles[sobjIndex].Extract();
                             oldMSobj = SobjFiles[sobjIndex].Name;
 
                         }
@@ -523,11 +522,11 @@ namespace MHW_Randomizer
                                 SobjFiles = SobjFilesBigMCache;
                                 int sobjIndex = pickSobj.Next(SobjFiles.Length);
 
-                                sobj = ChunkOTF.files[SobjFiles[sobjIndex].Name].ChunkState.ExtractItem(ChunkOTF.files[SobjFiles[sobjIndex].Name]);
+                                sobj = ChunkOTF.files[SobjFiles[sobjIndex].Name].Extract();
                                 oldMSobj = SobjFiles[sobjIndex].Name;
                             }
                             else
-                                sobj = ChunkOTF.files[oldMSobj].ChunkState.ExtractItem(ChunkOTF.files[oldMSobj]);
+                                sobj = ChunkOTF.files[oldMSobj].Extract();
                         }
                         MSobj[m] = QuestData.MonsterMapSobjCount[currentRankMonsterIDs[RandomMonsterIndex], MapIDIndex];
 
@@ -628,7 +627,7 @@ namespace MHW_Randomizer
                     if (!(QuestData.HuntMultiMonster.Contains(questNumber) || QuestData.HuntMultiObjective.Contains(questNumber) || QuestData.IBHuntMultiMonster.Contains(questNumber) || QuestData.IBHuntMultiObjective.Contains(questNumber) ||
                         QuestData.SlayMultiMonster.Contains(questNumber) || QuestData.SlayMultiObjective.Contains(questNumber) || QuestData.IBSlayMultiMonster.Contains(questNumber)) && changeText )
                     {
-                        GMDFile = new GMD(ChunkOTF.files["q" + questNumber + "_eng.gmd"].ChunkState.ExtractItem(ChunkOTF.files["q" + questNumber + "_eng.gmd"]));
+                        GMDFile = new GMD(ChunkOTF.files["q" + questNumber + "_eng.gmd"].Extract());
                         if (IoC.Settings.TwoMonsterQuests)
                             GMDFile.Entries[1].Value = "Hunt all target monsters";
                         else if (questNumber == "66801" || questNumber == "66803")
@@ -640,7 +639,7 @@ namespace MHW_Randomizer
                     }
                     else if (questNumber == "67103" || questNumber == "66864")
                     {
-                        GMDFile = new GMD(ChunkOTF.files["q" + questNumber + "_eng.gmd"].ChunkState.ExtractItem(ChunkOTF.files["q" + questNumber + "_eng.gmd"]));
+                        GMDFile = new GMD(ChunkOTF.files["q" + questNumber + "_eng.gmd"].Extract());
                         GMDFile.Entries[1].Value = "Hunt all target monsters";
                         GMDFile.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\quest\" + GMDFile.Filename + "_eng.gmd");
                     }
@@ -673,7 +672,7 @@ namespace MHW_Randomizer
                             }
                         }
                     }
-                    data = ChunkOTF.files["questData_" + questNumber + ".mib"].ChunkState.ExtractItem(ChunkOTF.files["questData_" + questNumber + ".mib"]);
+                    data = ChunkOTF.files["questData_" + questNumber + ".mib"].Extract();
                     WriteData = cipher.Decipher(data);
                     for (int i = 4; i < WriteData.Length; i++)
                         data3[i - 4] = WriteData[i];
@@ -981,7 +980,7 @@ namespace MHW_Randomizer
                 if (alnk.Name.Contains("ems"))
                     continue;
 
-                byte[] alnkBytes = alnk.ChunkState.ExtractItem(alnk);
+                byte[] alnkBytes = alnk.Extract();
                 byte[] newAlnk = new byte[44];
                 Array.Copy(alnkBytes, newAlnk, 44);
                 newAlnk[40] = 7;
@@ -1027,7 +1026,7 @@ namespace MHW_Randomizer
             {
                 #region Rotten Vale Blockade
 
-                byte[] levelObjects = ChunkOTF.files["st104_gm.sobj"].ChunkState.ExtractItem(ChunkOTF.files["st104_gm.sobj"]);
+                byte[] levelObjects = ChunkOTF.files["st104_gm.sobj"].Extract();
 
                 //Raise blockade in lowest part of the rotten vale
                 levelObjects[4487] = 0x00;
@@ -1048,7 +1047,7 @@ namespace MHW_Randomizer
 
                 #region Elder Recess Blockade
 
-                levelObjects = ChunkOTF.files["st105_gm.sobj"].ChunkState.ExtractItem(ChunkOTF.files["st105_gm.sobj"]);
+                levelObjects = ChunkOTF.files["st105_gm.sobj"].Extract();
 
                 //Raise the lava wall blockade
                 levelObjects[0x9AAA] = 0x00;

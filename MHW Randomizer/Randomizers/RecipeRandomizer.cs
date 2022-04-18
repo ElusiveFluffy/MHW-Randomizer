@@ -31,7 +31,7 @@ namespace MHW_Randomizer
                     file.WriteLine("---------------------------------------------------------------------------");
                 }
 
-                byte[] recipeBytes = ChunkOTF.files["armor.eq_crt"].ChunkState.ExtractItem(ChunkOTF.files["armor.eq_crt"]);
+                byte[] recipeBytes = ChunkOTF.files["armor.eq_crt"].Extract();
                 byte[] header = new byte[10];
                 Array.Copy(recipeBytes, header, 10);
                 List<RecipeStructs.Armour> recipeList = StructTools.RawDeserialize<RecipeStructs.Armour>(recipeBytes, 10);
@@ -300,7 +300,7 @@ namespace MHW_Randomizer
             if (IoC.Settings.RandomArmourSkill || IoC.Settings.RandomArmourSkillLevels || IoC.Settings.ShuffleArmourSetBonus || IoC.Settings.RandomArmourDecoSlots || IoC.Settings.RandomDecoSlotSize || IoC.Settings.GiveCharmDecoSlot 
                 || IoC.Settings.RandomArmourIconColour || IoC.Settings.RandomCharmSkill || IoC.Settings.RandomCharmSkillLevels)
             {
-                byte[] datBytes = ChunkOTF.files["armor.am_dat"].ChunkState.ExtractItem(ChunkOTF.files["armor.am_dat"]);
+                byte[] datBytes = ChunkOTF.files["armor.am_dat"].Extract();
                 List<RecipeStructs.ArmourDat> datList = StructTools.RawDeserialize<RecipeStructs.ArmourDat>(datBytes, 10);
                 NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
 
@@ -326,8 +326,8 @@ namespace MHW_Randomizer
                 }
 
 
-                byte[] recipeBytes = ChunkOTF.files["weapon.eq_cus"].ChunkState.ExtractItem(ChunkOTF.files["weapon.eq_cus"]);
-                byte[] weaponCraftBytes = ChunkOTF.files["weapon.eq_crt"].ChunkState.ExtractItem(ChunkOTF.files["weapon.eq_crt"]);
+                byte[] recipeBytes = ChunkOTF.files["weapon.eq_cus"].Extract();
+                byte[] weaponCraftBytes = ChunkOTF.files["weapon.eq_crt"].Extract();
                 List<RecipeStructs.Weapon> recipeList = StructTools.RawDeserialize<RecipeStructs.Weapon>(recipeBytes, 10);
                 List<RecipeStructs.Weapon> recipeNonRandomList = StructTools.RawDeserialize<RecipeStructs.Weapon>(recipeBytes, 10);
                 byte[] treeBytes;
@@ -353,7 +353,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["c_axe.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["c_axe.wp_dat"]);
+                                treeBytes = ChunkOTF.files["c_axe.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Charge_Blade));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -378,7 +378,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["w_sword.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["w_sword.wp_dat"]);
+                                treeBytes = ChunkOTF.files["w_sword.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Dual_Blades));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -402,7 +402,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["l_sword.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["l_sword.wp_dat"]);
+                                treeBytes = ChunkOTF.files["l_sword.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Greatsword));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -426,7 +426,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["g_lance.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["g_lance.wp_dat"]);
+                                treeBytes = ChunkOTF.files["g_lance.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Gunlance));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -450,7 +450,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["hammer.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["hammer.wp_dat"]);
+                                treeBytes = ChunkOTF.files["hammer.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Hammer));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -474,7 +474,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["whistle.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["whistle.wp_dat"]);
+                                treeBytes = ChunkOTF.files["whistle.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Hunting_Horn));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -498,7 +498,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["rod.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["rod.wp_dat"]);
+                                treeBytes = ChunkOTF.files["rod.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Insect_Glaive));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -522,7 +522,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["lance.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["lance.wp_dat"]);
+                                treeBytes = ChunkOTF.files["lance.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Lance));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -546,7 +546,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["tachi.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["tachi.wp_dat"]);
+                                treeBytes = ChunkOTF.files["tachi.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Longsword));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -570,7 +570,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["s_axe.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["s_axe.wp_dat"]);
+                                treeBytes = ChunkOTF.files["s_axe.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Switch_Axe));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -594,7 +594,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["sword.wp_dat"].ChunkState.ExtractItem(ChunkOTF.files["sword.wp_dat"]);
+                                treeBytes = ChunkOTF.files["sword.wp_dat"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Sword_and_Shield));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -627,7 +627,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["bow.wp_dat_g"].ChunkState.ExtractItem(ChunkOTF.files["bow.wp_dat_g"]);
+                                treeBytes = ChunkOTF.files["bow.wp_dat_g"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Heavy_Bowgun));
                                 rangedWeaponTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
                                 rangedWeaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
@@ -652,7 +652,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["hbg.wp_dat_g"].ChunkState.ExtractItem(ChunkOTF.files["hbg.wp_dat_g"]);
+                                treeBytes = ChunkOTF.files["hbg.wp_dat_g"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Heavy_Bowgun));
                                 rangedWeaponTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
                                 rangedWeaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
@@ -677,7 +677,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["lbg.wp_dat_g"].ChunkState.ExtractItem(ChunkOTF.files["lbg.wp_dat_g"]);
+                                treeBytes = ChunkOTF.files["lbg.wp_dat_g"].Extract();
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Light_Bowgun));
                                 rangedWeaponTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
                                 rangedWeaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
@@ -720,8 +720,8 @@ namespace MHW_Randomizer
                     file.Write("\n---------------------------------------------------------------------------");
                 }
 
-                byte[] recipeBytes = ChunkOTF.files["insect.eq_cus"].ChunkState.ExtractItem(ChunkOTF.files["insect.eq_cus"]);
-                byte[] treeBytes = ChunkOTF.files["rod_insect.rod_inse"].ChunkState.ExtractItem(ChunkOTF.files["rod_insect.rod_inse"]);
+                byte[] recipeBytes = ChunkOTF.files["insect.eq_cus"].Extract();
+                byte[] treeBytes = ChunkOTF.files["rod_insect.rod_inse"].Extract();
 
                 Cipher cipher = new Cipher("SFghFQVFJycHnypExurPwut98ZZq1cwvm7lpDpASeP4biRhstQgULzlb");
                 treeBytes = cipher.Decipher(treeBytes);
@@ -843,7 +843,7 @@ namespace MHW_Randomizer
             if (IoC.Settings.ShufflePalicoArmour || IoC.Settings.ShufflePalicoWeapons)
             {
                 File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Palico Log.txt").Dispose();
-                byte[] recipeBytes = ChunkOTF.files["ot_equip.eq_crt"].ChunkState.ExtractItem(ChunkOTF.files["ot_equip.eq_crt"]);
+                byte[] recipeBytes = ChunkOTF.files["ot_equip.eq_crt"].Extract();
                 List<RecipeStructs.Armour> recipeList = StructTools.RawDeserialize<RecipeStructs.Armour>(recipeBytes, 10);
                 NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
                 List<RecipeStructs.Armour> validLowRank = new List<RecipeStructs.Armour>();
@@ -950,7 +950,7 @@ namespace MHW_Randomizer
                 }
 
                 int[] badIDs = { 50, 54, 55, 60, 130, 149, 150, 151, 153, 155, 158, 162, 163, 164 };
-                byte[] weaponBytes = ChunkOTF.files["otomoWeapon.owp_dat"].ChunkState.ExtractItem(ChunkOTF.files["otomoWeapon.owp_dat"]);
+                byte[] weaponBytes = ChunkOTF.files["otomoWeapon.owp_dat"].Extract();
                 Cipher cipher = new Cipher("FZoS8QLyOyeFmkdrz73P9Fh2N4NcTwy3QQPjc1YRII5KWovK6yFuU8SL");
                 weaponBytes = cipher.Decipher(weaponBytes);
 

@@ -26,7 +26,7 @@ namespace MHW_Randomizer
                     file.WriteLine("---------------------------------------------------------------------------");
                 }
 
-                byte[] shopBytes = ChunkOTF.files["shopList.slt"].ChunkState.ExtractItem(ChunkOTF.files["shopList.slt"]);
+                byte[] shopBytes = ChunkOTF.files["shopList.slt"].Extract();
                 List<ShopStructs.ItemShop> shopItemList = new List<ShopStructs.ItemShop>();
                 Dictionary<uint, string> itemList = GetItemData();
 
@@ -52,7 +52,7 @@ namespace MHW_Randomizer
                     itemList.Remove(itemList.ElementAt(index).Key);
                 }
                 //Deserialize itemData file for game defined item sorting order
-                byte[] itemDataBytes = ChunkOTF.files["itemData.itm"].ChunkState.ExtractItem(ChunkOTF.files["itemData.itm"]);
+                byte[] itemDataBytes = ChunkOTF.files["itemData.itm"].Extract();
                 List<ItemDataFile> itemDatas = StructTools.RawDeserialize<ItemDataFile>(itemDataBytes, 10);
                 //Change Survival Jewel 1 sort order from 0 to 7000 (Just before Defence Jewel 1 (The first jewel)
                 itemDatas[2270].Sort_Order = 7000;
@@ -93,17 +93,17 @@ namespace MHW_Randomizer
                     file.WriteLine("---------------------------------------------------------------------------");
                 }
 
-                byte[] shopBytes = ChunkOTF.files["shop.sed"].ChunkState.ExtractItem(ChunkOTF.files["shop.sed"]);
+                byte[] shopBytes = ChunkOTF.files["shop.sed"].Extract();
                 List<ShopStructs.ArmourShop> shopItemList = StructTools.RawDeserialize<ShopStructs.ArmourShop>(shopBytes, 10);
 
                 NR3Generator itemIndex = new NR3Generator(IoC.Randomizer.Seed);
                 int index;
                 Dictionary<uint, string> currentGear = new Dictionary<uint, string>();
 
-                byte[] armourBytes = ChunkOTF.files["armor.eq_crt"].ChunkState.ExtractItem(ChunkOTF.files["armor.eq_crt"]);
+                byte[] armourBytes = ChunkOTF.files["armor.eq_crt"].Extract();
                 List<RecipeStructs.Armour> armourList = StructTools.RawDeserialize<RecipeStructs.Armour>(armourBytes, 10);
 
-                byte[] weaponBytes = ChunkOTF.files["weapon.eq_cus"].ChunkState.ExtractItem(ChunkOTF.files["weapon.eq_cus"]);
+                byte[] weaponBytes = ChunkOTF.files["weapon.eq_cus"].Extract();
                 List<RecipeStructs.Weapon> weaponList = StructTools.RawDeserialize<RecipeStructs.Weapon>(weaponBytes, 10);
 
                 //Get all the Equipment Data

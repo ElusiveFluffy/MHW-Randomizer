@@ -144,7 +144,7 @@ namespace MHW_Randomizer
                     if (fathernodes[fathernodes.Length - 2] == "trace" || (fathernodes[fathernodes.Length - 2] == "text" && fathernodes[fathernodes.Length - 1] == "q51613_eng.gmd"))
                         continue;
 
-                    if (fathernodes[fathernodes.Length - 1].Contains(".fsm"))
+                    if (fathernodes[fathernodes.Length - 1].Contains(".fsm") || fathernodes[1] == "em")
                     {
                         files[StringNameChild] = new Files
                         {
@@ -307,6 +307,11 @@ namespace MHW_Randomizer
         public ChunkOTF ChunkState { get; set; }
         public string FromChunk { get; set; }
         public string FromChunkName { get; set; }
+
+        public byte[] Extract()
+        {
+            return ChunkState.ExtractItem(this);
+        }
     }
 
     public class FileNode : INotifyPropertyChanged
