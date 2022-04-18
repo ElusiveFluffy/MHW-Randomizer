@@ -248,6 +248,20 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Chunk\keyseq.key" />
+    <None Include="Data\alnk\m101 Flying" />
+    <None Include="Data\alnk\m101 Ground" />
+    <None Include="Data\alnk\m102 Flying" />
+    <None Include="Data\alnk\m102 Ground" />
+    <None Include="Data\alnk\m103 Flying" />
+    <None Include="Data\alnk\m103 Ground" />
+    <None Include="Data\alnk\m104 Flying" />
+    <None Include="Data\alnk\m104 Ground" />
+    <None Include="Data\alnk\m105 Flying" />
+    <None Include="Data\alnk\m105 Ground" />
+    <None Include="Data\alnk\m108 Flying" />
+    <None Include="Data\alnk\m108 Ground" />
+    <None Include="Data\alnk\m109 Flying" />
+    <None Include="Data\alnk\m109 Ground" />
     <None Include="Data\Armour\Arms.json" />
     <None Include="Data\Armour\Chest.json" />
     <None Include="Data\Armour\Head.json" />

@@ -272,7 +272,6 @@ namespace MHW_Randomizer
 
             int[] lowRankMonsterIDs = QuestData.LowRankBigMonsterIDs;
             int[] monsterIDs = QuestData.BigMonsterIDs;
-            string[] avaliableEmNumbers = QuestData.MonsterEmNumber;
 
             if (IoC.Settings.IncludeLeshen)
             {
@@ -447,8 +446,9 @@ namespace MHW_Randomizer
                         if (MID[m] != 0 || (dlc != -1 && dlc != 1))
                             fsm = null;
 
-                        if (MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm") && (dlc == -1 || dlc == 1))
-                            fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm"].ChunkState.ExtractItem(ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm"]);
+                        if (MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm") && (dlc == -1 || dlc == 1))
+                            fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm"]
+                                                .ChunkState.ExtractItem(ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm"]);
 
                         //Pick a random size percent between range if both aren't 100
                         if (IoC.Settings.MonsterMinSize != 100 && IoC.Settings.MonsterMaxSize != 100)
@@ -491,7 +491,7 @@ namespace MHW_Randomizer
                             if (Directory.Exists(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\"))
                                 Directory.Delete(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\", true);
                             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\");
-                            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\" + avaliableEmNumbers[MID[m] - 1].Truncate(avaliableEmNumbers[MID[m] - 1].Length - 3) + ".fsm", fsm);
+                            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm", fsm);
                         }
 
                         #region sobj Randomization
@@ -516,7 +516,7 @@ namespace MHW_Randomizer
                         //Else use old monsters one
                         else
                         {
-                            oldMSobj = avaliableEmNumbers[oldMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj";
+                            oldMSobj = QuestData.MonsterStageEmNumber[oldMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj";
                             if (currentRankMonsterIDs[RandomMonsterIndex] == 26 && oldMSobj.Contains("em101_00_st101"))
                             {
                                 Files[] SobjFiles;
@@ -548,7 +548,7 @@ namespace MHW_Randomizer
                             else
                                 CDCount = 0;
                         }
-                        File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + avaliableEmNumbers[currentRankMonsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj", sobj);
+                        File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[currentRankMonsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj", sobj);
 
                         #endregion
 
@@ -565,7 +565,7 @@ namespace MHW_Randomizer
 
                         using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt"))
                         {
-                            file.WriteLine("Monster " + (m + 1).ToString() + ": " + QuestData.MonsterNames[currentRankMonsterIDs[RandomMonsterIndex] + 1] + "\tSobj File Name: " + avaliableEmNumbers[currentRankMonsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj" + "\tOld sobj File Name: " + oldMSobj
+                            file.WriteLine("Monster " + (m + 1).ToString() + ": " + QuestData.MonsterNames[currentRankMonsterIDs[RandomMonsterIndex] + 1] + "\tSobj File Name: " + QuestData.MonsterStageEmNumber[currentRankMonsterIDs[RandomMonsterIndex]] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj" + "\tOld sobj File Name: " + oldMSobj
                                + (IoC.Settings.RandomIcons && m < 5 && MonIcons[m] != 127 ? "\tIcon: " + QuestData.IconList[MonIcons[m]] : ""));
                         }
 
@@ -970,6 +970,58 @@ namespace MHW_Randomizer
             }
 
             storyTargetText.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\storyTarget_eng.gmd");
+
+            #region alnk
+
+            Files[] alnkFiles = ChunkOTF.files.Values.Where(o => o.Name.Contains("alnk")).ToArray();
+            alnkFiles = alnkFiles.OrderBy(x => x.Name).ToArray();
+            for (int a = 0; a < alnkFiles.Length; a++)
+            {
+                Files alnk = alnkFiles[a];
+                if (alnk.Name.Contains("ems"))
+                    continue;
+
+                byte[] alnkBytes = alnk.ChunkState.ExtractItem(alnk);
+                byte[] newAlnk = new byte[44];
+                Array.Copy(alnkBytes, newAlnk, 44);
+                newAlnk[40] = 7;
+                if (QuestData.IsGroundMonster[a])
+                {
+                    newAlnk = newAlnk.Concat(Properties.Resources.m101_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m102_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m103_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m104_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m105_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m108_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m109_Ground).ToArray();
+                }
+                else
+                {
+                    newAlnk = newAlnk.Concat(Properties.Resources.m101_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m102_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m103_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m104_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m105_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m108_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m109_Flying).ToArray();
+                }
+
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName.Truncate(alnk.EntireName.Length - 14));
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName, newAlnk);
+                if (alnk.Name.Contains("em018"))
+                {
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em018/05/data");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em018/05/data/em018.dtt_alnk", newAlnk);
+                }
+
+                if (alnk.Name.Contains("em023"))
+                {
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em023/05/data");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em023/05/data/em023.dtt_alnk", newAlnk);
+                }
+            }
+
+            #endregion
 
             if (IoC.Settings.RandomMaps)
             {

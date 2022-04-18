@@ -551,10 +551,25 @@ namespace MHW_Randomizer
             "[s] Cortos" , "[s] Boaboa" , "Alatreon" , "Gold Rathian" , "Silver Rathalos" , "Yian Garuga" , "Rajang" , "Furious Rajang" , "Brute Tigrex" , "Zinogre" , "Stygian Zinogre" , "Raging Brachydios" , "Safi'jiiva" , "[s] Wood Dummy" ,
             "Scarred Yian Garuga","Frostfang Barioth", "Fatalis"};
 
-        public static string[] MonsterEmNumber = { "em100_00_st", "em002_00_st", "unused", "unused", "unused", "unused", "unused", "em101_00_st", "unused", "em001_00_st", "em001_01_st", "em002_01_st", "em007_00_st", "em007_01_st", "em011_00_st", "em121_00_st", "em024_00_st", "em026_00_st", "em027_00_st", "em036_00_st",
+        public static bool[] IsGroundMonster = { false, false, false, false, false, false, true, true, true, false, false, true, false, false, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, 
+            true, true, false, false, false, false, false, false, true, true, true, true, true, false, false, false, false, true, true, true, true, false, false, true, true, false, false, true, true, true, true, false, false, false, true, true };
+
+        public static string[] MonsterStageEmNumber = { "em100_00_st", "em002_00_st", "unused", "unused", "unused", "unused", "unused", "em101_00_st", "unused", "em001_00_st", "em001_01_st", "em002_01_st", "em007_00_st", "em007_01_st", "em011_00_st", "em121_00_st", "em024_00_st", "em026_00_st", "em027_00_st", "em036_00_st",
             "em043_00_st", "em044_00_st", "em045_00_st", "em127_00_st", "em102_00_st", "em103_00_st", "em105_00_st", "em107_00_st", "em120_00_st", "em108_00_st", "em109_00_st", "em110_00_st", "em111_00_st", "em112_00_st", "em113_00_st", "em114_00_st", "em115_00_st", "em116_00_st", "unused", "em118_00_st", "unused",
             "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "em127_01_st", "unused", "unused", "unused", "unused","unused", "unused", "unused", "unused", "unused", "em032_00_st", "em037_00_st", "em042_00_st", "em043_05_st", "em063_00_st", "em080_00_st", "em080_01_st",
             "em100_01_st", "em102_01_st", "em103_05_st", "em109_01_st", "em110_01_st", "em111_05_st", "em113_01_st", "em115_05_st", "em118_05_st", "em122_00_st", "em123_00_st", "em124_00_st", "em125_00_st", "em126_00_st", "unused", "unused", "unused", "unused", "unused", "em050_00_st", "em001_02_st", "em002_02_st",
+            "em018_00_st", "em023_00_st", "em023_05_st", "em032_01_st", "em057_00_st", "em057_01_st", "em063_05_st", "em104_00_st", "unused", "em018_05_st", "em042_05_st", "em013_00_st" };
+        
+        public static string[] MonsterEmNumber = { "em100", "em002", "unused", "unused", "unused", "unused", "unused", "em101", "unused", "em001", "em001", "em002", "em007", "em007", "em011", "em121", "em024", "em026", "em027", "em036",
+            "em043", "em044", "em045", "em127", "em102", "em103", "em105", "em107", "em120", "em108", "em109", "em110", "em111", "em112", "em113", "em114", "em115", "em116", "unused", "em118", "unused",
+            "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "em127", "unused", "unused", "unused", "unused","unused", "unused", "unused", "unused", "unused", "em032", "em037", "em042", "em043", "em063", "em080", "em080",
+            "em100", "em102", "em103", "em109", "em110", "em111", "em113", "em115", "em118_", "em122", "em123", "em124", "em125", "em126", "unused", "unused", "unused", "unused", "unused", "em050", "em001", "em002",
+            "em018", "em023", "em023", "em032", "em057", "em057", "em063", "em104", "unused", "em018", "em042", "em013" };
+
+        public static string[] MonsterVariantNumber = { "00", "00", "unused", "unused", "unused", "unused", "unused", "00", "unused", "00", "01", "01", "00", "01", "00", "00", "00", "00", "00", "00",
+            "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "unused", "00", "unused",
+            "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "01", "unused", "unused", "unused", "unused","unused", "unused", "unused", "unused", "unused", "00", "00", "00", "05", "00", "00", "01",
+            "01", "01", "05", "01", "01", "05", "01", "05", "05", "00", "00", "00", "00", "00", "unused", "unused", "unused", "unused", "unused", "00", "em001_02_st", "em002_02_st",
             "em018_00_st", "em023_00_st", "em023_05_st", "em032_01_st", "em057_00_st", "em057_01_st", "em063_05_st", "em104_00_st", "unused", "em018_05_st", "em042_05_st", "em013_00_st" };
 
         //======================
