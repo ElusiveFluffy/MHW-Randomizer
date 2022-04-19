@@ -140,6 +140,7 @@ namespace MHW_Randomizer
             return str.Substring(0, Math.Min(str.Length, maxLength));
         }
 
+        //My string contain to be able to have non case sensitive
         public static bool Contains(this string source, string toCheck, StringComparison comp)
         {
             return source?.IndexOf(toCheck, comp) >= 0;
