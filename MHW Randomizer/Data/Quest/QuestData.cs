@@ -560,11 +560,11 @@ namespace MHW_Randomizer
             "em100_01_st", "em102_01_st", "em103_05_st", "em109_01_st", "em110_01_st", "em111_05_st", "em113_01_st", "em115_05_st", "em118_05_st", "em122_00_st", "em123_00_st", "em124_00_st", "em125_00_st", "em126_00_st", "unused", "unused", "unused", "unused", "unused", "em050_00_st", "em001_02_st", "em002_02_st",
             "em018_00_st", "em023_00_st", "em023_05_st", "em032_01_st", "em057_00_st", "em057_01_st", "em063_05_st", "em104_00_st", "unused", "em018_05_st", "em042_05_st", "em013_00_st" };
         
-        public static string[] MonsterEmNumber = { "em100", "em002", "unused", "unused", "unused", "unused", "unused", "em101", "unused", "em001", "em001", "em002", "em007", "em007", "em011", "em121", "em024", "em026", "em027", "em036",
-            "em043", "em044", "em045", "em127", "em102", "em103", "em105", "em107", "em120", "em108", "em109", "em110", "em111", "em112", "em113", "em114", "em115", "em116", "unused", "em118", "unused",
-            "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "em127", "unused", "unused", "unused", "unused","unused", "unused", "unused", "unused", "unused", "em032", "em037", "em042", "em043", "em063", "em080", "em080",
-            "em100", "em102", "em103", "em109", "em110", "em111", "em113", "em115", "em118_", "em122", "em123", "em124", "em125", "em126", "unused", "unused", "unused", "unused", "unused", "em050", "em001", "em002",
-            "em018", "em023", "em023", "em032", "em057", "em057", "em063", "em104", "unused", "em018", "em042", "em013" };
+        public static string[] MonsterEmNumber = { "em100_00", "em002_00", "unused", "unused", "em106_00", "unused", "unused", "em101_00", "unused", "em001_00", "em001_01", "em002_01", "em007_00", "em007_01", "em011_00", "em121_00", "em024_00", "em026_00", "em027_00", "em036_00",
+            "em043_00", "em044_00", "em045_00", "em127_00", "em102_00", "em103_00", "em105_00", "em107_00", "em120_00", "em108_00", "em109_00", "em110_00", "em111_00", "em112_00", "em113_00", "em114_00", "em115_00", "em116_00", "unused", "em118_00", "unused",
+            "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "em127_01", "unused", "unused", "unused", "unused","unused", "unused", "unused", "unused", "unused", "em032_00", "em037_00", "em042_00", "em043_05", "em063_00", "em080_00", "em080_01",
+            "em100_01", "em102_01", "em103_05", "em109_01", "em110_01", "em111_05", "em113_01", "em115_05", "em118_05", "em122_00", "em123_00", "em124_00", "em125_00", "em126_00", "unused", "unused", "unused", "unused", "unused", "em050_00", "em001_02", "em002_02",
+            "em018_00", "em023_00", "em023_05", "em032_01", "em057_00", "em057_01", "em063_05", "em104_00", "unused", "em018_05", "em042_05", "em013_00" };
 
         public static string[] MonsterVariantNumber = { "00", "00", "unused", "unused", "unused", "unused", "unused", "00", "unused", "00", "01", "01", "00", "01", "00", "00", "00", "00", "00", "00",
             "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "unused", "00", "unused",

@@ -625,7 +625,7 @@ namespace MHW_Randomizer
                     }
 
                     if (!(QuestData.HuntMultiMonster.Contains(questNumber) || QuestData.HuntMultiObjective.Contains(questNumber) || QuestData.IBHuntMultiMonster.Contains(questNumber) || QuestData.IBHuntMultiObjective.Contains(questNumber) ||
-                        QuestData.SlayMultiMonster.Contains(questNumber) || QuestData.SlayMultiObjective.Contains(questNumber) || QuestData.IBSlayMultiMonster.Contains(questNumber)) && changeText )
+                        QuestData.SlayMultiMonster.Contains(questNumber) || QuestData.SlayMultiObjective.Contains(questNumber) || QuestData.IBSlayMultiMonster.Contains(questNumber)) && changeText)
                     {
                         GMDFile = new GMD(ChunkOTF.files["q" + questNumber + "_eng.gmd"].Extract());
                         if (IoC.Settings.TwoMonsterQuests)
@@ -970,58 +970,114 @@ namespace MHW_Randomizer
 
             storyTargetText.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\storyTarget_eng.gmd");
 
-            #region alnk
+            EditAlnks();
+            EditMaps();
 
-            Files[] alnkFiles = ChunkOTF.files.Values.Where(o => o.Name.Contains("alnk")).ToArray();
-            alnkFiles = alnkFiles.OrderBy(x => x.Name).ToArray();
-            for (int a = 0; a < alnkFiles.Length; a++)
+        }
+
+
+        public static void RandomAttackStatus()
+        {
+            Files[] colFiles = ChunkOTF.files.Values.Where(o => o.Name.Contains(".col") && o.EntireName.Contains("collision\\em") && !o.Name.Contains("_") && !o.EntireName.Contains("shell")).ToArray();
+            //"atk" string represented in bytes
+            byte[] atkBytes = new byte[] { 65, 84, 75, 0 };
+            string[] statusNames = new string[] { "Poison", "Deadly Poison", "Paralysis", "Sleep", "Blast", "Slime", "Stun", "Miasma", "Bleed" };
+            string[] elementNames = new string[] { "None", "Thunder", "Water", "Ice", "Fire", "Dragon" };
+            NR3Generator statusRan = new NR3Generator(IoC.Randomizer.Seed);
+            NR3Generator elementRan = new NR3Generator(IoC.Randomizer.Seed);
+            File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Monster Attack Log.txt").Dispose();
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Monster Attack Log.txt"))
             {
-                Files alnk = alnkFiles[a];
-                if (alnk.Name.Contains("ems"))
-                    continue;
+                foreach (Files col in colFiles)
+                {
+                    if (col.Name.Contains("ems"))
+                        continue;
+                    string[] fathernodes = col.EntireName.Split('\\');
+                    file.WriteLine("Monster: " + QuestData.MonsterNames[Array.IndexOf(QuestData.MonsterEmNumber, col.Name.Truncate(col.Name.Length - 4) + "_" + fathernodes[3]) + 1]);
+                    var colBytes = col.Extract();
+                    //Find where the attack stats are
+                    int attackIndex = colBytes.BMHIndexOf(atkBytes);
+                    var atk2List = StructTools.RawDeserialize<MonsterAtkStructs.Atk2>(colBytes, attackIndex + 16);
 
-                byte[] alnkBytes = alnk.Extract();
-                byte[] newAlnk = new byte[44];
-                Array.Copy(alnkBytes, newAlnk, 44);
-                newAlnk[40] = 7;
-                if (QuestData.IsGroundMonster[a])
-                {
-                    newAlnk = newAlnk.Concat(Properties.Resources.m101_Ground).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m102_Ground).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m103_Ground).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m104_Ground).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m105_Ground).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m108_Ground).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m109_Ground).ToArray();
-                }
-                else
-                {
-                    newAlnk = newAlnk.Concat(Properties.Resources.m101_Flying).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m102_Flying).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m103_Flying).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m104_Flying).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m105_Flying).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m108_Flying).ToArray();
-                    newAlnk = newAlnk.Concat(Properties.Resources.m109_Flying).ToArray();
-                }
+                    int[] status = new int[statusRan.Next(1, 5)];
+                    for (int n = 0; n < status.Length; n++)
+                    {
+                        status[n] = statusRan.Next(9);
+                    }
+                    uint elementIndex = elementRan.NextUInt(6);
+                    foreach (var attack in atk2List)
+                    {
+                        bool randomEle = false;
+                        if (IoC.Settings.RandomMonsterElement && 30 >= elementRan.Next(101))
+                        {
+                            file.WriteLine("Attack Index: " + attack.Index);
+                            attack.Element_Id = elementIndex;
+                            if (elementIndex != 0)
+                            {
+                                attack.Element_Dmg = elementRan.Next(10, 30);
+                                file.WriteLine("   " + elementNames[elementIndex] + " Damage: " + attack.Element_Dmg);
+                            }
+                            else
+                                attack.Element_Dmg = 0;
+                            randomEle = true;
+                        }
+                        if (!IoC.Settings.RandomMonsterAttackStatus)
+                            continue;
+                        //30% chance to give a random status/change the status
+                        if (30 <= statusRan.Next(101))
+                        {
+                            for (int a = 0; a < 9; a++)
+                            {
+                                //Clear status if stun is the same as one randomly chosen so there isn't alot of stun
+                                if (status.Contains(6))
+                                    attack.Statuses[6] = 0;
+                                //Clear all other statuses
+                                else
+                                    attack.Statuses[a] = 0;
+                            }
+                            continue;
+                        }
+                        if (!randomEle)
+                            file.WriteLine("Attack Index: " + attack.Index);
 
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName.Truncate(alnk.EntireName.Length - 14));
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName, newAlnk);
-                if (alnk.Name.Contains("em018"))
-                {
-                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em018/05/data");
-                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em018/05/data/em018.dtt_alnk", newAlnk);
-                }
+                        //poison, deadly poison, para, sleep, blast, slime, stun, miasma, bleed
+                        for (int a = 0; a < 9; a++)
+                        {
+                            //Only check whole array if randomizing multiple statuses
+                            if (status[0] == a || (status.Contains(a) && IoC.Settings.MultipleStatusesPerAttack))
+                            {
+                                //Bias towards lower numbers
+                                int roll1 = statusRan.Next(25, 101);
+                                int roll2 = statusRan.Next(25, 101);
+                                int min = Math.Min(roll1, roll2);
 
-                if (alnk.Name.Contains("em023"))
-                {
-                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em023/05/data");
-                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em023/05/data/em023.dtt_alnk", newAlnk);
+                                //Random chance to inflict it
+                                attack.Statuses[a] = min;
+
+                                file.WriteLine("   " + statusNames[a] + " Chance: " + attack.Statuses[a] + "%");
+                            }
+                            //Don't remove stun (6)
+                            else if (a != 6)
+                                attack.Statuses[a] = 0;
+                        }
+                        if (IoC.Settings.EachAttackDifferentStatus)
+                            for (int n = 0; n < status.Length; n++)
+                            {
+                                status[n] = statusRan.Next(9);
+                            }
+                    }
+                    file.WriteLine();
+
+                    byte[] randomizedBytes = StructTools.RawSerialize(atk2List);
+                    Array.Copy(randomizedBytes, 0, colBytes, attackIndex + 16, randomizedBytes.Length);
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + col.EntireName.Truncate(col.EntireName.Length - 9));
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + col.EntireName, colBytes);
                 }
             }
+        }
 
-            #endregion
-
+        private static void EditMaps()
+        {
             if (IoC.Settings.RandomMaps)
             {
                 #region Rotten Vale Blockade
@@ -1072,7 +1128,57 @@ namespace MHW_Randomizer
 
                 #endregion
             }
+        }
 
+        private static void EditAlnks()
+        {
+            Files[] alnkFiles = ChunkOTF.files.Values.Where(o => o.Name.Contains("alnk")).ToArray();
+            alnkFiles = alnkFiles.OrderBy(x => x.Name).ToArray();
+            for (int a = 0; a < alnkFiles.Length; a++)
+            {
+                Files alnk = alnkFiles[a];
+                if (alnk.Name.Contains("ems"))
+                    continue;
+
+                byte[] alnkBytes = alnk.Extract();
+                byte[] newAlnk = new byte[44];
+                Array.Copy(alnkBytes, newAlnk, 44);
+                newAlnk[40] = 7;
+                if (QuestData.IsGroundMonster[a])
+                {
+                    newAlnk = newAlnk.Concat(Properties.Resources.m101_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m102_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m103_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m104_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m105_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m108_Ground).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m109_Ground).ToArray();
+                }
+                else
+                {
+                    newAlnk = newAlnk.Concat(Properties.Resources.m101_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m102_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m103_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m104_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m105_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m108_Flying).ToArray();
+                    newAlnk = newAlnk.Concat(Properties.Resources.m109_Flying).ToArray();
+                }
+
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName.Truncate(alnk.EntireName.Length - 14));
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName, newAlnk);
+                if (alnk.Name.Contains("em018"))
+                {
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em018/05/data");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em018/05/data/em018.dtt_alnk", newAlnk);
+                }
+
+                if (alnk.Name.Contains("em023"))
+                {
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em023/05/data");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em023/05/data/em023.dtt_alnk", newAlnk);
+                }
+            }
         }
     }
 }

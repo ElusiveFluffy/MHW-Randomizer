@@ -33,6 +33,12 @@ namespace MHW_Randomizer
         public bool DontRandomizeCapture { get; set; }
         //Small Monsters
 
+        //Monsters
+        public bool RandomMonsterElement { get; set; } //Adds extra damage and also gives the element blights, eg frostblight, and burns
+        public bool RandomMonsterAttackStatus { get; set; } //eg like bleed, paralysis
+        public bool EachAttackDifferentStatus { get; set; }
+        public bool MultipleStatusesPerAttack { get; set; }
+
         //Iceborne Specific Quest Settings
         public bool RandomizeIBQuests { get; set; }
         [DefaultValue(true)]
@@ -117,38 +123,39 @@ namespace MHW_Randomizer
         public bool DifferentTrackScoutflyColour { get; set; }
 
         //---------------------------
-        public bool ShuffleItemCraftingRecipes { get; set; }
 
         //Extras for later maybe
-        //Completely random (maybe with some logic so low rank stuff only have low rank material, high rank with high rank materials, master rank with master rank materials)
+
+        //Quests
+        public bool RandomGearEachQuest { get; set; } //Using the pre-selected gear in the quest settings (Need to figure out how this works)
+        public bool ShuffledSupplyBoxItems { get; set; } //Random supply box rem ID
+        public bool IncludeArenaMap { get; set; } //Maybe including the shara stage //For if random maps is checked
+        public bool RandomQuestRewards { get; set; }
+
+        public bool RandomizeMissions { get; set; }
+
+        //Monsters
+        public bool RandomizeSmallMonsters { get; set; }
+        public bool RandomMonsterAttacks { get; set; }
+        public bool RandomMonsterTrace { get; set; } //eg a great jagras could have a rathian traces
+        public bool RandomMonsterDrops { get; set; }
+
+        //Completely random (maybe with some logic or only if high rank monsters in low rank so low rank stuff only have low rank material, high rank with high rank materials, master rank with master rank materials)
         public bool RandomArmourRecipes { get; set; }
         public bool RandomWeaponRecipes { get; set; }
         public bool RandomKinsectRecipes { get; set; }
-        //Using the pre-selected gear in the quest settings (Need to figure out how this works)
-        public bool RandomGearEachQuest { get; set; }
-        //Random supply box rem ID
 
-        //Extras for later maybe
-        //Random slinger ammo? Random slinger ammo pickups
-        public bool RandomizeSmallMonsters { get; set; }
-        public bool RandomizeMissions { get; set; }
-        //For if random maps is checked
-        public bool IncludeArenaMap { get; set; }
-        public bool ShuffleGatheringSpotLocation { get; set; }
-        //Completely random
         public bool RandomItemCraftingRecipes { get; set; }
-        public bool RandomStartingItems { get; set; }
-        //eg a great jagras could have a rathian traces
-        public bool RandomMonsterTrace { get; set; }
+        public bool ShuffleItemCraftingRecipes { get; set; }
+
+        //Random slinger ammo? Random slinger ammo pickups
+        public bool ShuffleGatheringSpotLocation { get; set; }
+
+        public bool RandomStartingItems { get; set; } //Completely random
+
         //Need to figure out how to do this
-        public bool RandomMonsterAttacks { get; set; }
         //I think giving palicos monster moves damages the player, could have a option for it, not sure if it damages monsters, could be chaotic
         public bool RandomPalicoAttacks { get; set; }
-
-        public bool RandomMonsterDrops { get; set; }
-        public bool RandomQuestRewards { get; set; }
-        //Not sure if possible
-        public bool RandomStartingWeapons { get; set; }
 
     }
 }

@@ -279,4 +279,52 @@ namespace MHW_Randomizer
         public uint Sell_Price;
         public uint Buy_Price;
     }
+
+    public class MonsterAtkStructs
+    {
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class Atk2
+        {
+            public uint Index;
+            public uint Knock_back_Type;
+            public uint Knock_back_Lvl;
+            public uint Unk_1;
+            public float Motion_Value;
+            public uint Unk_2;
+            public uint Unk_3;
+            public float Guard_Stamina_Cost;
+            public uint Guard_Req;
+            public uint Element_Id;
+            public uint Unk_4;
+            public float Element_Dmg;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
+            public float[] Statuses;
+            public byte Ele_Res_Down_Double;
+            public byte Ele_Res_Down;
+            public byte Def_Down_Double;
+            public byte Def_Down;
+            public uint Unk_6;
+            public uint Unk_7;
+            public float Unk_8;
+            public float Unk_9;
+            public float Unk_10;
+            public float Unk_11;
+            public float Unk_12;
+            public uint Unk_13;
+            public uint Unk_14;
+            public uint Unk_15;
+            public byte Unk_16;
+            public float Unk_17;
+            public uint Unk_18;
+            public uint Unk_19;
+            public uint Unk_20;
+            public uint Unk_21;
+            public uint Unk_22;
+            public uint Unk_23;
+            public uint Unk_24;
+            public uint Unk_25;
+            public uint Unk_26;
+            public ushort Unk_27;
+        }
+    }
 }
