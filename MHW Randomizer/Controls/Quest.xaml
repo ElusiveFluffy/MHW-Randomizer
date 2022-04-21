@@ -124,7 +124,7 @@
                                 <CheckBox Content="Include Leshen"
                                           IsChecked="{Binding IncludeLeshen, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
-                                          ToolTip="Leshen has a fair amount of health so could be a bit hard if included in possible random monster"/>
+                                          ToolTip="Could be hard if included as a possible random monster"/>
                                 <!--<CheckBox Content="Include Xeno'jiiva"
                                           IsChecked="{Binding IncludeXenojiiva, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
