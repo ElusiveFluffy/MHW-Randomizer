@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:MHW_Randomizer"
              mc:Ignorable="d" 
              d:DesignHeight="450">
-    <Grid Height="100"
-          VerticalAlignment="Top">
+    <Grid VerticalAlignment="Top">
         <TextBlock Text="Monster Attacks"
                    Margin="15 -4 0 0"
                    Background="White"
@@ -22,9 +21,14 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0 5">
                 <StackPanel>
+                    <CheckBox Content="Include Small Monsters"
+                              IsChecked="{Binding IncludeSmallMonsterDebuffs, Source={x:Static local:IoC.Settings}}"
+                              Margin="5, 4"
+                              ToolTip="Includes small monster with getting the random attack status and element &#xA;(Still need to check those below)"
+                              ToolTipService.ShowDuration="10000"/>
                     <CheckBox Content="Random Monster Status Effect"
                               IsChecked="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
-                              Margin="5, 4"
+                              Margin="5, 10, 5, 4"
                               ToolTip="Gives the monsters a random status and chance to inflict the player with on some attacks &#xA;(eg. bleed, paralysis, stun, etc (Some monster don't get a status))(Will keep stun value)"
                               ToolTipService.ShowDuration="10000"/>
                     <CheckBox Content="Different Status Effect Per Attack"
@@ -40,7 +44,7 @@
                               IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
                               ToolTipService.ShowDuration="10000"/>
                 </StackPanel>
-                <StackPanel Margin="40 0 0 0">
+                <StackPanel Margin="40 30 0 0">
                     <CheckBox Content="Random Monster Attack Element"
                               IsChecked="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
                               Margin="5, 4"

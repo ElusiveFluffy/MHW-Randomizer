@@ -34,6 +34,7 @@ namespace MHW_Randomizer
         //Small Monsters
 
         //Monsters
+        public bool IncludeSmallMonsterDebuffs { get; set; }
         public bool RandomMonsterElement { get; set; } //Adds extra damage and also gives the element blights, eg frostblight, and burns
         public bool IncreaseElementPower { get; set; }
         public bool RandomMonsterAttackStatus { get; set; } //eg like bleed, paralysis

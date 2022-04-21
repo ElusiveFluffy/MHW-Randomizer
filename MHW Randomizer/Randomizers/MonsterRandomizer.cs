@@ -16,6 +16,7 @@ namespace MHW_Randomizer
         private static void RandomAttackDebuffs()
         {
             Files[] colFiles = ChunkOTF.files.Values.Where(o => o.Name.Contains(".col") && o.EntireName.Contains("collision\\em") && !o.Name.Contains("_") && !o.EntireName.Contains("shell")).ToArray();
+            colFiles = colFiles.OrderBy(x => x.Name).ToArray();
             //"atk" string represented in bytes
             byte[] atkBytes = new byte[] { 65, 84, 75, 0 };
             string[] statusNames = new string[] { "Poison", "Deadly Poison", "Paralysis", "Sleep", "Blast", "Slime", "Stun", "Miasma", "Bleed" };
@@ -28,10 +29,10 @@ namespace MHW_Randomizer
             {
                 foreach (Files col in colFiles)
                 {
-                    if (col.Name.Contains("ems"))
+                    if (!IoC.Settings.IncludeSmallMonsterDebuffs && col.Name.Contains("ems") || col.Name == "ems062.col")
                         continue;
                     string[] fathernodes = col.EntireName.Split('\\');
-                    file.WriteLine("Monster: " + QuestData.MonsterNames[Array.IndexOf(QuestData.MonsterEmNumber, col.Name.Truncate(col.Name.Length - 4) + "_" + fathernodes[3]) + 1]);
+                    file.WriteLine("Monster: " + QuestData.MonsterNames[Array.IndexOf(QuestData.MonsterEmNumber, fathernodes[2] + "_" + fathernodes[3]) + 1]);
                     var colBytes = col.Extract();
                     //Find where the attack stats are
                     int attackIndex = colBytes.BMHIndexOf(atkBytes);
@@ -50,19 +51,19 @@ namespace MHW_Randomizer
                         bool randomEle = false;
                         if (IoC.Settings.RandomMonsterElement && 30 >= elementRandom.Next(101))
                         {
-                            file.WriteLine("Attack Index: " + attack.Index);
                             attack.Element_Id = elementIndex;
                             if (elementIndex != 0)
                             {
+                                file.WriteLine("\tAttack Index: " + attack.Index);
                                 if (IoC.Settings.IncreaseElementPower)
                                     attack.Element_Dmg = elementRandom.Next(20, 50);
                                 else
                                     attack.Element_Dmg = elementRandom.Next(10, 30);
-                                file.WriteLine("   " + elementNames[elementIndex] + " Damage: " + attack.Element_Dmg);
+                                file.WriteLine("\t   " + elementNames[elementIndex] + " Damage: " + attack.Element_Dmg);
+                                randomEle = true;
                             }
                             else
                                 attack.Element_Dmg = 0;
-                            randomEle = true;
                         }
 
                         #endregion
@@ -82,7 +83,7 @@ namespace MHW_Randomizer
                             continue;
                         }
                         if (!randomEle)
-                            file.WriteLine("Attack Index: " + attack.Index);
+                            file.WriteLine("\tAttack Index: " + attack.Index);
 
                         //poison, deadly poison, para, sleep, blast, slime, stun, miasma, bleed
                         for (int a = 0; a < 9; a++)
@@ -98,7 +99,7 @@ namespace MHW_Randomizer
                                 //Random chance to inflict it
                                 attack.Statuses[a] = min;
 
-                                file.WriteLine("   " + statusNames[a] + " Chance: " + attack.Statuses[a] + "%");
+                                file.WriteLine("\t   " + statusNames[a] + " Chance: " + attack.Statuses[a] + "%");
                             }
                             //Don't remove stun (6)
                             else if (a != 6)
@@ -116,7 +117,7 @@ namespace MHW_Randomizer
 
                     byte[] randomizedBytes = StructTools.RawSerialize(atk2List);
                     Array.Copy(randomizedBytes, 0, colBytes, attackIndex + 16, randomizedBytes.Length);
-                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + col.EntireName.Truncate(col.EntireName.Length - 9));
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + col.EntireName.Truncate(col.EntireName.Length - 10));
                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + col.EntireName, colBytes);
                 }
             }
