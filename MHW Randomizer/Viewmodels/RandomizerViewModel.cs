@@ -347,6 +347,8 @@ namespace MHW_Randomizer
                 questRandomizer.Randomize();
             }
 
+            MonsterRandomizer.Randomizer();
+
             //Shuffle recipes
             RecipeRandomizer.RandomizeRecipes();
 

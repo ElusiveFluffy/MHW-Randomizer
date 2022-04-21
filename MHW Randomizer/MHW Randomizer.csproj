@@ -132,6 +132,9 @@
     <Compile Include="Controls\Misc.xaml.cs">
       <DependentUpon>Misc.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Monster.xaml.cs">
+      <DependentUpon>Monster.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Quest.xaml.cs">
       <DependentUpon>Quest.xaml</DependentUpon>
     </Compile>
@@ -155,6 +158,7 @@
     <Compile Include="GMD %28Cirilla%29\Extentions\StructExtensions.cs" />
     <Compile Include="GMD %28Cirilla%29\Structs\GMD.cs" />
     <Compile Include="IoC.cs" />
+    <Compile Include="Randomizers\MonsterRandomizer.cs" />
     <Compile Include="Windows\ChoiceWindow.xaml.cs">
       <DependentUpon>ChoiceWindow.xaml</DependentUpon>
     </Compile>
@@ -193,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Misc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Monster.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
