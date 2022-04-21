@@ -54,7 +54,10 @@ namespace MHW_Randomizer
                             attack.Element_Id = elementIndex;
                             if (elementIndex != 0)
                             {
-                                attack.Element_Dmg = elementRandom.Next(10, 30);
+                                if (IoC.Settings.IncreaseElementPower)
+                                    attack.Element_Dmg = elementRandom.Next(20, 50);
+                                else
+                                    attack.Element_Dmg = elementRandom.Next(10, 30);
                                 file.WriteLine("   " + elementNames[elementIndex] + " Damage: " + attack.Element_Dmg);
                             }
                             else
@@ -73,10 +76,7 @@ namespace MHW_Randomizer
                             for (int a = 0; a < 9; a++)
                             {
                                 //Clear status if stun is the same as one randomly chosen so there isn't alot of stun
-                                if (status.Contains(6))
-                                    attack.Statuses[6] = 0;
-                                //Clear all other statuses
-                                else
+                                if (status.Contains(6) || a != 6)
                                     attack.Statuses[a] = 0;
                             }
                             continue;
