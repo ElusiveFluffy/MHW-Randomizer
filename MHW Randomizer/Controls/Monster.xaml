@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="MHW_Randomizer.Monster"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MHW_Randomizer"
+             mc:Ignorable="d" 
+             d:DesignHeight="450">
+    <Grid Height="100"
+          VerticalAlignment="Top">
+        <TextBlock Text="Monster Attacks"
+                   Margin="15 -4 0 0"
+                   Background="White"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Panel.ZIndex="1"
+                   FontWeight="Bold"
+                   Height="16"/>
+        <Border BorderBrush="Gray" 
+                BorderThickness="1"
+                Margin="5">
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 5">
+                <StackPanel>
+                    <CheckBox Content="Random Monster Status Effect"
+                              IsChecked="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
+                              Margin="5, 4"
+                              ToolTip="Gives the monsters a random status and chance to inflict the player with on some attacks &#xA;(eg. bleed, paralysis, stun, etc (Some monster don't get a status))"
+                              ToolTipService.ShowDuration="10000"/>
+                    <CheckBox Content="Different Status Effect Per Attack"
+                              IsChecked="{Binding EachAttackDifferentStatus, Source={x:Static local:IoC.Settings}}"
+                              Margin="12, 4"
+                              ToolTip="Each attack that gets chosen to have a status inflicted, will have the status randomly selected again"
+                              IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
+                              ToolTipService.ShowDuration="10000"/>
+                    <CheckBox Content="Multiple Statuses"
+                              IsChecked="{Binding MultipleStatusesPerAttack, Source={x:Static local:IoC.Settings}}"
+                              Margin="12, 4"
+                              ToolTip="Makes is so there is a chance to get between 1-5 statuses on a attack"
+                              IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
+                              ToolTipService.ShowDuration="10000"/>
+                </StackPanel>
+                <StackPanel Margin="40 0 0 0">
+                    <CheckBox Content="Random Monster Attack Element"
+                              IsChecked="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
+                              Margin="5, 4"
+                              ToolTip="Gives the monsters a random attack element for some of their attacks &#xA;(Inflicts stuff like frostblight, and burn)(Also increases the monster's attack a bit)"
+                              ToolTipService.ShowDuration="10000"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
