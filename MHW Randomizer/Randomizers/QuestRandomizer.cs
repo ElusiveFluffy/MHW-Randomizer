@@ -358,6 +358,14 @@ namespace MHW_Randomizer
                                     storyQuests = storyQuests.Concat(QuestData.IBStorySlayQuest).ToDictionary(x => x.Key, x => x.Value);
                                 }
 
+                                monsterIDs = QuestData.BigMonsterIDsIB;
+                                if (IoC.Settings.IceborneOnlyMonsters)
+                                    monsterIDs = monsterIDs.Where(mon => !QuestData.BigMonsterIDs.Contains(mon)).ToArray();
+                                if (IoC.Settings.IncludeHighRankOnly)
+                                    monsterIDs = monsterIDs.Concat(QuestData.IBHighRankOnlyMonsters).ToArray();
+                                if (IoC.Settings.IncludeFatalis)
+                                    monsterIDs = monsterIDs.Append(101).ToArray();
+
                                 file.WriteLine("\n\n---------------------------------------------------------------------------");
                                 file.WriteLine("                          Iceborne Story Quests                            ");
                                 file.WriteLine("---------------------------------------------------------------------------");
@@ -381,15 +389,6 @@ namespace MHW_Randomizer
                                 }
                                 if (IoC.Settings.RandomizeDuplicate)
                                     quests = quests.Concat(QuestData.IBHuntDuplicate).ToArray();
-
-                                monsterIDs = QuestData.BigMonsterIDsIB;
-                                if (IoC.Settings.IceborneOnlyMonsters)
-                                    monsterIDs = monsterIDs.Where(mon => !QuestData.BigMonsterIDs.Contains(mon)).ToArray();
-                                if (IoC.Settings.IncludeHighRankOnly)
-                                    monsterIDs = monsterIDs.Concat(QuestData.IBHighRankOnlyMonsters).ToArray();
-                                if (IoC.Settings.IncludeFatalis)
-                                    monsterIDs = monsterIDs.Append(101).ToArray();
-
 
                                 file.WriteLine("\n\n---------------------------------------------------------------------------");
                                 file.WriteLine("                              Iceborne Quests                              ");
