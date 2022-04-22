@@ -259,7 +259,7 @@ namespace MHW_Randomizer
 
         public void Randomize()
         {
-            QuestData.MonsterMapSobjCount = new int[101, 43];
+            QuestData.MonsterMapSobjCount = new int[102, 43];
             SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !o.Name.Contains("em102_00_st101_61.sobj")).ToArray();
             SobjFilesBigMCache = SobjFilesCache.Where(o => !o.Name.Contains("em101_00_st101")).ToArray();
             File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt").Dispose();
@@ -615,10 +615,11 @@ namespace MHW_Randomizer
                         {
                             int entryIndex = storyQuests[questNumber].QuestObjTextIndexs[i];
                             string value = "";
+                            List<string> textToReplace = QuestData.MonsterNames.Where(o => storyTargetText.Entries[entryIndex].Value.Contains(o, StringComparison.OrdinalIgnoreCase)).ToList();
                             if (storyQuests[questNumber].MultiObjectiveHunt)
-                                value = storyTargetText.Entries[entryIndex].Value.Replace(QuestData.MonsterNames.FirstOrDefault(o => storyTargetText.Entries[entryIndex].Value.Contains(o)), IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[i]]);
+                                value = storyTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[i]]);
                             else
-                                value = storyTargetText.Entries[entryIndex].Value.Replace(QuestData.MonsterNames.FirstOrDefault(o => storyTargetText.Entries[entryIndex].Value.Contains(o, StringComparison.OrdinalIgnoreCase)), IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
+                                value = storyTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
 
                             storyTargetText.Entries[entryIndex].Value = value;
                         }
@@ -633,7 +634,10 @@ namespace MHW_Randomizer
                         else if (questNumber == "66801" || questNumber == "66803")
                             GMDFile.Entries[1].Value = "Hunt 2 " + (IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
                         else
-                            GMDFile.Entries[1].Value = GMDFile.Entries[1].Value.Replace(QuestData.MonsterNames.FirstOrDefault(o => GMDFile.Entries[1].Value.Contains(o)), IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
+                        {
+                            var textToReplace = QuestData.MonsterNames.Where(o => GMDFile.Entries[1].Value.Contains(o)).ToList();
+                            GMDFile.Entries[1].Value = GMDFile.Entries[1].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
+                        }
 
                         GMDFile.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\quest\" + GMDFile.Filename + "_eng.gmd");
                     }

@@ -540,7 +540,7 @@ namespace MHW_Randomizer
 
         #region Monster Data
 
-        public static int[,] MonsterMapSobjCount = new int[101, 43];
+        public static int[,] MonsterMapSobjCount = new int[102, 43];
 
         public static string[] MonsterNames = { "None", "Anjanath" , "Rathalos" , "[s] Aptonoth" , "[s] Jagras" , "Zorah Magdaros" , "[s] Mosswine" , "[s] Gajau" , "Great Jagras" , "[s] Kestodon M" , "Rathian" , "Pink Rathian" , "Azure Rathalos" , "Diablos" ,
             "Black Diablos" , "Kirin" , "Behemoth" , "Kushala Daora" , "Lunastra" , "Teostra" , "Lavasioth" , "Deviljho" , "Barroth" , "Uragaan" , "Leshen" , "Pukei-Pukei" , "Nergigante" , "Xeno'jiiva" , "Kulu-Ya-Ku" , "Tzitzi-Ya-Ku" ,
