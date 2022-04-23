@@ -233,7 +233,7 @@
                                   ToolTipService.ShowDuration="10000"
                               Style="{StaticResource Circle}"/>
                 </StackPanel>
-                <StackPanel VerticalAlignment="Center"
+                <!--<StackPanel VerticalAlignment="Center"
                             Margin="0 31 0 0">
                     <CheckBox Content="Include Fatalis"
                                   IsChecked="{Binding IncludeFatalis, Source={x:Static local:IoC.Settings}}"
@@ -241,7 +241,7 @@
                                   Foreground="Red"
                                   ToolTip="Good luck (WARNING: They are a bit buggy and the attack where meant to go behind a gate, that doesn't exist in any other stage, will one shot you)"
                                   ToolTipService.ShowDuration="10000"/>
-                </StackPanel>
+                </StackPanel>-->
             </StackPanel>
         </Border>
     </Grid>
