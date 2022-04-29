@@ -399,6 +399,8 @@ namespace MHW_Randomizer
                 }
                 foreach (string questNumber in (dlc == -1 || dlc == 1) ? storyQuests.Keys.ToArray() : quests)
                 {
+                    bool IsStoryQuest = dlc == -1 || dlc == 1;
+
                     if (!ChunkOTF.files.ContainsKey("questData_" + questNumber + ".mib"))
                     {
                         if (questNumber == "64802" && ChunkOTF.files.ContainsKey("questData_66859.mib"))
@@ -413,7 +415,7 @@ namespace MHW_Randomizer
                     OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].Extract());
 
                     //Pick Random Map
-                    if (IoC.Settings.RandomMaps && ((dlc != -1 && dlc != 1) || storyQuests[questNumber].CanRandomizeMap))
+                    if (IoC.Settings.RandomMaps && (!IsStoryQuest || storyQuests[questNumber].CanRandomizeMap))
                     {
                         MapIDIndex = QuestData.ValidMapIndexes[pickMap.Next(5 + (Convert.ToInt32(RandomizingIB) * 2))];
                     }
@@ -442,10 +444,10 @@ namespace MHW_Randomizer
                         //    continue;
 
                         //Get the old monster fsm file if its a story quest
-                        if (MID[m] != 0 || (dlc != -1 && dlc != 1))
+                        if (MID[m] != 0 || !IsStoryQuest)
                             fsm = null;
 
-                        if (MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm") && (dlc == -1 || dlc == 1))
+                        if (MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm") && IsStoryQuest)
                             fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterStageEmNumber[MID[m] - 1].Truncate(QuestData.MonsterStageEmNumber[MID[m] - 1].Length - 3) + ".fsm"].Extract();
 
                         //Pick a random size percent between range if both aren't 100
@@ -463,7 +465,7 @@ namespace MHW_Randomizer
                             RandomMonsterIndex = Array.IndexOf(currentRankMonsterIDs, MID[0] - 1);
                         }
                         //Pick another monster if the monster is a duplicate to another one in the quest
-                        else if (!IoC.Settings.DuplicateMonster || ((dlc == -1 || dlc == 1) && !storyQuests[questNumber].CanRandomizeMap))
+                        else if (!IoC.Settings.DuplicateMonster || (IsStoryQuest && !storyQuests[questNumber].CanRandomizeMap))
                         {
                             int FoundMonsterIndex = Array.IndexOf(MID, currentRankMonsterIDs[RandomMonsterIndex] + 1);
                             while (FoundMonsterIndex != -1 && FoundMonsterIndex < m)
@@ -498,7 +500,7 @@ namespace MHW_Randomizer
                         byte[] sobj;
 
                         //Pick random sobj
-                        if ((m == 1 && IoC.Settings.TwoMonsterQuests && ((dlc != -1 && dlc != 1) || storyQuests[questNumber].CanRandomizeMap || oldMonsterID == -1)) || (IoC.Settings.RandomSobj && ((dlc != -1 && dlc != 1) || storyQuests[questNumber].CanRandomizeMap)))
+                        if ((m == 1 && IoC.Settings.TwoMonsterQuests && (!IsStoryQuest || storyQuests[questNumber].CanRandomizeMap || oldMonsterID == -1)) || (IoC.Settings.RandomSobj && (!IsStoryQuest || storyQuests[questNumber].CanRandomizeMap)))
                         {
                             Files[] SobjFiles;
                             if (currentRankMonsterIDs[RandomMonsterIndex] == 26)
@@ -553,7 +555,7 @@ namespace MHW_Randomizer
                         QuestData.MonsterMapSobjCount[currentRankMonsterIDs[RandomMonsterIndex], MapIDIndex]++;
 
                         bool changeIcon = true;
-                        if (dlc == -1 || dlc == 1)
+                        if (IsStoryQuest)
                             changeIcon = storyQuests[questNumber].ChangeQuestIcon;
 
                         if (IoC.Settings.RandomIcons && m < 5 && MonIcons[m] != 127)
@@ -571,7 +573,7 @@ namespace MHW_Randomizer
 
                     #endregion
 
-                    if ((dlc != -1 && dlc != 1) || storyQuests[questNumber].ChangeObjective)
+                    if (!IsStoryQuest || storyQuests[questNumber].ChangeObjective)
                     {
                         //Change the quest objective
                         MObjID1 = MID[0] - 1;
