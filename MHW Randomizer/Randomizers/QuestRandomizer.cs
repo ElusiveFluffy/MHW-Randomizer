@@ -475,6 +475,17 @@ namespace MHW_Randomizer
                             }
                         }
 
+                        //Some monsters don't work properly when replacing the rathian in "The Best Kind of Quest"
+                        if (questNumber == "00301" && m == 2)
+                        {
+                            NR3Generator mon = new NR3Generator(IoC.Randomizer.Seed);
+                            int[] validMonsters = new int[] { 1, 9 };
+                            if (IoC.Settings.HighRankMonInLowRank)
+                                validMonsters = new int[] { 1, 9, 10, 11 };
+                            int index = mon.Next(validMonsters.Length);
+                            RandomMonsterIndex = Array.IndexOf(currentRankMonsterIDs, validMonsters[index]);
+                        }
+
                         if (questNumber == "00103")
                             RandomMonsterIndex = monsterFor00103[m];
 
