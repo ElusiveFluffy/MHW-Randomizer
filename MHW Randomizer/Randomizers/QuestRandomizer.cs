@@ -605,12 +605,12 @@ namespace MHW_Randomizer
                     }
 
                     bool changeText = true;
-                    if (dlc == -1 || dlc == 1)
+                    if (IsStoryQuest)
                         changeText = storyQuests[questNumber].ChangeQuestBookObjText;
 
                     #region GMD
 
-                    if (dlc == -1 || dlc == 1)
+                    if (IsStoryQuest)
                     {
                         for (int i = 0; i < storyQuests[questNumber].QuestObjTextIndexs.Length; i++)
                         {
