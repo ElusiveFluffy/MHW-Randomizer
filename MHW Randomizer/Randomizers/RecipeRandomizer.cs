@@ -308,6 +308,7 @@ namespace MHW_Randomizer
 
                 byte[] randomizedDatBytes = StructTools.RawSerialize(datList);
                 Array.Copy(randomizedDatBytes, 0, datBytes, 10, randomizedDatBytes.Length);
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\armor.am_dat", datBytes);
             }
 
@@ -315,7 +316,7 @@ namespace MHW_Randomizer
 
             #region Weapons
 
-            if (IoC.Settings.ShuffleWeaponRecipes || IoC.Settings.ShuffleWeaponOrder)
+            if (IoC.Settings.ShuffleWeaponRecipes || IoC.Settings.ShuffleWeaponOrder || IoC.Settings.RandomWeaponElement || IoC.Settings.RandomWeaponIconColour || IoC.Settings.RandomWeaponDecoSlots || IoC.Settings.RandomWeaponDecoSlotSize)
             {
                 File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt").Dispose();
                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
@@ -340,6 +341,7 @@ namespace MHW_Randomizer
                 NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
 
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                bool exportWp_dat = IoC.Settings.ShuffleWeaponOrder || IoC.Settings.RandomWeaponElement || IoC.Settings.RandomWeaponIconColour || IoC.Settings.RandomWeaponDecoSlots || IoC.Settings.RandomWeaponDecoSlotSize;
                 for (int weapons = 0; weapons < 11; weapons++)
                 {
                     switch (weapons)
@@ -349,7 +351,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                          Charge Blade Recipes                             ");
+                                    file.WriteLine("                          Charge Blade Changes                             ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -364,7 +366,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\c_axe.wp_dat", treeBytes);
 
                                 break;
@@ -374,7 +376,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                           Dual Blades Recipes                             ");
+                                    file.WriteLine("                           Dual Blades Changes                             ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -389,7 +391,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\w_sword.wp_dat", treeBytes);
                                 break;
                             }
@@ -398,7 +400,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                           Great Sword Recipes                             ");
+                                    file.WriteLine("                           Great Sword Changes                             ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -413,7 +415,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\l_sword.wp_dat", treeBytes);
                                 break;
                             }
@@ -422,7 +424,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                             GunLance Recipes                              ");
+                                    file.WriteLine("                             GunLance Changes                              ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -437,7 +439,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\g_lance.wp_dat", treeBytes);
                                 break;
                             }
@@ -446,7 +448,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                             Hammer Recipes                                ");
+                                    file.WriteLine("                             Hammer Changes                                ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -461,7 +463,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\hammer.wp_dat", treeBytes);
                                 break;
                             }
@@ -470,7 +472,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                          Hunting Horn Recipes                             ");
+                                    file.WriteLine("                          Hunting Horn Changes                             ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -485,7 +487,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\whistle.wp_dat", treeBytes);
                                 break;
                             }
@@ -494,7 +496,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                          Insect Glaive Recipes                            ");
+                                    file.WriteLine("                          Insect Glaive Changes                            ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -509,7 +511,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\rod.wp_dat", treeBytes);
                                 break;
                             }
@@ -518,7 +520,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                              Lance Recipes                                ");
+                                    file.WriteLine("                              Lance Changes                                ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -533,7 +535,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\lance.wp_dat", treeBytes);
                                 break;
                             }
@@ -542,7 +544,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                            Longsword Recipes                              ");
+                                    file.WriteLine("                            Longsword Changes                              ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -557,7 +559,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\tachi.wp_dat", treeBytes);
                                 break;
                             }
@@ -566,7 +568,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                            Switch Axe Recipes                             ");
+                                    file.WriteLine("                            Switch Axe Changes                             ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -581,7 +583,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\s_axe.wp_dat", treeBytes);
                                 break;
                             }
@@ -590,7 +592,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                        Sword and Shield Recipes                           ");
+                                    file.WriteLine("                        Sword and Shield Changes                           ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -605,7 +607,7 @@ namespace MHW_Randomizer
                                 byte[] randomizedTreeBytes = StructTools.RawSerialize(weaponTree);
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\sword.wp_dat", treeBytes);
                                 break;
                             }
@@ -623,7 +625,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                               Bow Recipes                                 ");
+                                    file.WriteLine("                               Bow Changes                                 ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -635,7 +637,7 @@ namespace MHW_Randomizer
 
                                 RandomizeRangedWeapon(2369, 2543, badIndex, WeaponCategory.Bow, weaponCraft, recipeList, recipeNonRandomList, rangedWeaponTree, rangedWeaponNonRandomTree, weaponNames, r);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
@@ -648,7 +650,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                           Heavy Bowgun Recipes                            ");
+                                    file.WriteLine("                           Heavy Bowgun Changes                            ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -660,7 +662,7 @@ namespace MHW_Randomizer
 
                                 RandomizeRangedWeapon(2203, 2367, badIndex, WeaponCategory.Heavy_Bowgun, weaponCraft, recipeList, recipeNonRandomList, rangedWeaponTree, rangedWeaponNonRandomTree, weaponNames, r);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
@@ -673,7 +675,7 @@ namespace MHW_Randomizer
                                 using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
-                                    file.WriteLine("                           Light Bowgun Recipes                            ");
+                                    file.WriteLine("                           Light Bowgun Changes                            ");
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
@@ -685,7 +687,7 @@ namespace MHW_Randomizer
 
                                 RandomizeRangedWeapon(2022, 2201, badIndex, WeaponCategory.Heavy_Bowgun, weaponCraft, recipeList, recipeNonRandomList, rangedWeaponTree, rangedWeaponNonRandomTree, weaponNames, r);
 
-                                if (IoC.Settings.ShuffleWeaponOrder)
+                                if (exportWp_dat)
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
@@ -701,8 +703,11 @@ namespace MHW_Randomizer
                 byte[] randomizedCraftBytes = StructTools.RawSerialize(weaponCraft);
                 Array.Copy(randomizedCraftBytes, 0, weaponCraftBytes, 10, randomizedCraftBytes.Length);
 
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_cus", recipeBytes);
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_crt", weaponCraftBytes);
+                if (IoC.Settings.ShuffleWeaponRecipes || IoC.Settings.ShuffleWeaponOrder)
+                {
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_cus", recipeBytes);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_crt", weaponCraftBytes);
+                }
 
             }
 
@@ -934,6 +939,7 @@ namespace MHW_Randomizer
                 byte[] randomizedBytes = StructTools.RawSerialize(recipeList);
                 Array.Copy(randomizedBytes, 0, recipeBytes, 10, randomizedBytes.Length);
 
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\ot_equip.eq_crt", recipeBytes);
             }
 
@@ -1020,6 +1026,7 @@ namespace MHW_Randomizer
                 Array.Copy(randomizedBytes, 0, weaponBytes, 10, randomizedBytes.Length);
                 weaponBytes = cipher.Encipher(weaponBytes);
 
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\otomoWeapon.owp_dat", weaponBytes);
 
             }
@@ -1256,6 +1263,7 @@ namespace MHW_Randomizer
                 for (int p = firstIndex; p < lastIndex + 1; p++)
                 {
                     var weaponTreePos = weaponTree.FirstOrDefault(o => o.Index == recipeList[p].Equipment_Index_Raw);
+                    string log = "";
                     if (IoC.Settings.ShuffleWeaponOrder)
                     {
                         var wep = weaponCraft.FirstOrDefault(o => o.Equipment_Index_Raw == recipeNonRandomList[p].Equipment_Index_Raw && o.Equipment_Category_Raw == recipeList[p].Equipment_Category_Raw);
@@ -1272,10 +1280,10 @@ namespace MHW_Randomizer
 
                         //31 18
                         //Log
-                        string original = "Original Weapon: " + weaponNames[recipeNonRandomList[p].Equipment_Index_Raw];
+                        string original = "\nOriginal Weapon: " + weaponNames[recipeNonRandomList[p].Equipment_Index_Raw];
                         if (original.Length < 32)
                             original = original + "\t";
-                        file.WriteLine(original + "\tShuffled Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw]);
+                        log += original + "\tShuffled Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw];
                     }
                     if (IoC.Settings.RandomWeaponElement)
                     {
@@ -1288,8 +1296,8 @@ namespace MHW_Randomizer
                             int roll2 = dice.Next(6 + (weaponTreePos.Rarity * 2), 22 + (weaponTreePos.Rarity * 3));
                             ushort lowest = (ushort)Math.Min(roll1, roll2);
                             weaponTreePos.Element_Damage = lowest;
-                            file.WriteLine("\tElement: " + Element[weaponTreePos.Element]);
-                            file.WriteLine("\tElement Power: " + (weaponTreePos.Element_Damage * 10));
+                            log += "\n\tElement: " + Element[weaponTreePos.Element];
+                            log += "\n\tElement Power: " + (weaponTreePos.Element_Damage * 10);
                         }
                         weaponTreePos.Element_Hidden = 0;
                         weaponTreePos.Element_Hidden_Damage = 0;
@@ -1298,8 +1306,202 @@ namespace MHW_Randomizer
                     //Change icon colour
                     if (IoC.Settings.RandomWeaponIconColour)
                         weaponTreePos.Rarity = (byte)r.Next(12);
-                }
 
+                    #region Weapon Slot Count
+
+                    //Armour Decoration Slot Count
+                    if (IoC.Settings.RandomWeaponDecoSlots)
+                    {
+                        int[] weightTable = { 50 - weaponTreePos.Rarity * 4, 40 - weaponTreePos.Rarity * 3, 10 + (weaponTreePos.Rarity - 1) * 2, 10 + (int)Math.Round(((double)weaponTreePos.Rarity - 1) * 1.5) };
+
+                        byte slotCount = (byte)r.Next(weightTable.Sum());
+                        byte Smallestslot = 0;
+
+                        int cumulative_weight = 0;
+                        for (byte i = 0; i < 4; i++)
+                        {
+                            cumulative_weight += weightTable[i];
+                            if (slotCount < cumulative_weight)
+                            {
+                                Smallestslot = i;
+                                break;
+                            }
+                        }
+                        weaponTreePos.Slot_Count = Smallestslot;
+                        if (Smallestslot != 0)
+                            log += "\n\tDeco Slot Count: " + Smallestslot;
+
+                        switch (Smallestslot)
+                        {
+                            case 0:
+                                {
+                                    weaponTreePos.Slot_1_Size = 0;
+                                    weaponTreePos.Slot_2_Size = 0;
+                                    weaponTreePos.Slot_3_Size = 0;
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    if (weaponTreePos.Slot_1_Size == 0)
+                                        weaponTreePos.Slot_1_Size = 1;
+
+                                    weaponTreePos.Slot_2_Size = 0;
+                                    weaponTreePos.Slot_3_Size = 0;
+
+                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                        log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    if (weaponTreePos.Slot_1_Size == 0)
+                                        weaponTreePos.Slot_1_Size = 1;
+
+                                    if (weaponTreePos.Slot_2_Size == 0)
+                                        weaponTreePos.Slot_2_Size = 1;
+
+                                    weaponTreePos.Slot_3_Size = 0;
+
+                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    {
+                                        log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                        log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
+                                    }
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    if (weaponTreePos.Slot_1_Size == 0)
+                                        weaponTreePos.Slot_1_Size = 1;
+
+                                    if (weaponTreePos.Slot_2_Size == 0)
+                                        weaponTreePos.Slot_2_Size = 1;
+
+                                    if (weaponTreePos.Slot_3_Size == 0)
+                                        weaponTreePos.Slot_3_Size = 1;
+
+                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    {
+                                        log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                        log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
+                                        log += "\n\tSlot 3 Size: " + weaponTreePos.Slot_3_Size;
+                                    }
+                                    break;
+                                }
+                        }
+                    }
+
+                    #endregion
+
+                    #region Weapon Slot Size
+
+                    //Weapon Decoration Slot Size
+                    if (IoC.Settings.RandomWeaponDecoSlotSize)
+                    {
+                        int[] weightTable = { 50 - weaponTreePos.Rarity * 4, 40 - weaponTreePos.Rarity * 3, 10 + (weaponTreePos.Rarity - 1) * 2, 10 + (int)Math.Round(((double)weaponTreePos.Rarity - 1) * 1.5) };
+
+                        int cumulative_weight;
+                        switch (weaponTreePos.Slot_Count)
+                        {
+                            case 0:
+                                {
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    byte slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_1_Size = (byte)(i + 1);
+                                            log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    byte slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_1_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+
+                                    slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_2_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+                                    log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                    log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    byte slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_1_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+
+                                    slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_2_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+
+                                    slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_3_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+                                    log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                    log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
+                                    log += "\n\tSlot 3 Size: " + weaponTreePos.Slot_3_Size;
+                                    break;
+                                }
+                        }
+                    }
+
+                    #endregion
+
+                    if (!string.IsNullOrEmpty(log))
+                        file.WriteLine("Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw] + log);
+                }
             }
         }
 
@@ -1335,12 +1537,17 @@ namespace MHW_Randomizer
                 }
             }
 
-            if (IoC.Settings.ShuffleWeaponOrder)
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                file.WriteLine("\n");
+                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator re = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator dice = new NR3Generator(IoC.Randomizer.Seed);
+                for (int p = firstIndex; p < lastIndex + 1; p++)
                 {
-                    file.WriteLine("\n");
-                    for (int p = firstIndex; p < lastIndex + 1; p++)
+                    var weaponTreePos = weaponTree.FirstOrDefault(o => o.Index == recipeList[p].Equipment_Index_Raw);
+                    string log = "";
+                    if (IoC.Settings.ShuffleWeaponOrder)
                     {
                         var wep = weaponCraft.FirstOrDefault(o => o.Equipment_Index_Raw == recipeNonRandomList[p].Equipment_Index_Raw && o.Equipment_Category_Raw == recipeList[p].Equipment_Category_Raw);
                         if (wep != null && !badIndex.Contains(p))
@@ -1348,18 +1555,235 @@ namespace MHW_Randomizer
                             wep.Equipment_Index_Raw = recipeList[p].Equipment_Index_Raw;
                             wep.Needed_Item_Id_to_Unlock = 1;
                         }
+
                         //Fix position
                         var positionNonRandomTree = weaponNonRandomTree.FirstOrDefault(o => o.Index == recipeNonRandomList[p].Equipment_Index_Raw);
-                        weaponTree.FirstOrDefault(o => o.Index == recipeList[p].Equipment_Index_Raw).Tree_Id = positionNonRandomTree.Tree_Id;
-                        weaponTree.FirstOrDefault(o => o.Index == recipeList[p].Equipment_Index_Raw).Tree_Position = positionNonRandomTree.Tree_Position;
+                        weaponTreePos.Tree_Id = positionNonRandomTree.Tree_Id;
+                        weaponTreePos.Tree_Position = positionNonRandomTree.Tree_Position;
 
                         //31 18
                         //Log
-                        string original = "Original Weapon: " + weaponNames[recipeNonRandomList[p].Equipment_Index_Raw];
+                        string original = "\nOriginal Weapon: " + weaponNames[recipeNonRandomList[p].Equipment_Index_Raw];
                         if (original.Length < 32)
                             original = original + "\t";
-                        file.WriteLine(original + "\tShuffled Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw]);
+                        log += original + "\tShuffled Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw];
                     }
+                    if (IoC.Settings.RandomWeaponElement)
+                    {
+                        weaponTreePos.Element = (byte)re.Next(10);
+                        if (weaponTreePos.Element == 0)
+                            weaponTreePos.Element_Damage = 0;
+                        else
+                        {
+                            int roll1 = dice.Next(6 + (weaponTreePos.Rarity * 2), 22 + (weaponTreePos.Rarity * 3));
+                            int roll2 = dice.Next(6 + (weaponTreePos.Rarity * 2), 22 + (weaponTreePos.Rarity * 3));
+                            ushort lowest = (ushort)Math.Min(roll1, roll2);
+                            weaponTreePos.Element_Damage = lowest;
+                            log += "\n\tElement: " + Element[weaponTreePos.Element];
+                            log += "\n\tElement Power: " + (weaponTreePos.Element_Damage * 10);
+                        }
+                        weaponTreePos.Element_Hidden = 0;
+                        weaponTreePos.Element_Hidden_Damage = 0;
+                    }
+
+                    //Change icon colour
+                    if (IoC.Settings.RandomWeaponIconColour)
+                        weaponTreePos.Rarity = (byte)r.Next(12);
+
+                    #region Weapon Slot Count
+
+                    //Armour Decoration Slot Count
+                    if (IoC.Settings.RandomWeaponDecoSlots)
+                    {
+                        int[] weightTable = { 50 - weaponTreePos.Rarity * 4, 40 - weaponTreePos.Rarity * 3, 10 + (weaponTreePos.Rarity - 1) * 2, 10 + (int)Math.Round(((double)weaponTreePos.Rarity - 1) * 1.5) };
+
+                        byte slotCount = (byte)r.Next(weightTable.Sum());
+                        byte Smallestslot = 0;
+
+                        int cumulative_weight = 0;
+                        for (byte i = 0; i < 4; i++)
+                        {
+                            cumulative_weight += weightTable[i];
+                            if (slotCount < cumulative_weight)
+                            {
+                                Smallestslot = i;
+                                break;
+                            }
+                        }
+                        weaponTreePos.Slot_Count = Smallestslot;
+                        if (Smallestslot != 0)
+                            log += "\n\tDeco Slot Count: " + Smallestslot;
+
+                        switch (Smallestslot)
+                        {
+                            case 0:
+                                {
+                                    weaponTreePos.Slot_1_Size = 0;
+                                    weaponTreePos.Slot_2_Size = 0;
+                                    weaponTreePos.Slot_3_Size = 0;
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    if (weaponTreePos.Slot_1_Size == 0)
+                                        weaponTreePos.Slot_1_Size = 1;
+
+                                    weaponTreePos.Slot_2_Size = 0;
+                                    weaponTreePos.Slot_3_Size = 0;
+
+                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                        log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    if (weaponTreePos.Slot_1_Size == 0)
+                                        weaponTreePos.Slot_1_Size = 1;
+
+                                    if (weaponTreePos.Slot_2_Size == 0)
+                                        weaponTreePos.Slot_2_Size = 1;
+
+                                    weaponTreePos.Slot_3_Size = 0;
+
+                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    {
+                                        log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                        log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
+                                    }
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    if (weaponTreePos.Slot_1_Size == 0)
+                                        weaponTreePos.Slot_1_Size = 1;
+
+                                    if (weaponTreePos.Slot_2_Size == 0)
+                                        weaponTreePos.Slot_2_Size = 1;
+
+                                    if (weaponTreePos.Slot_3_Size == 0)
+                                        weaponTreePos.Slot_3_Size = 1;
+
+                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    {
+                                        log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                        log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
+                                        log += "\n\tSlot 3 Size: " + weaponTreePos.Slot_3_Size;
+                                    }
+                                    break;
+                                }
+                        }
+                    }
+
+                    #endregion
+
+                    #region Weapon Slot Size
+
+                    //Weapon Decoration Slot Size
+                    if (IoC.Settings.RandomWeaponDecoSlotSize)
+                    {
+                        int[] weightTable = { 50 - weaponTreePos.Rarity * 4, 40 - weaponTreePos.Rarity * 3, 10 + (weaponTreePos.Rarity - 1) * 2, 10 + (int)Math.Round(((double)weaponTreePos.Rarity - 1) * 1.5) };
+
+                        int cumulative_weight;
+                        switch (weaponTreePos.Slot_Count)
+                        {
+                            case 0:
+                                {
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    byte slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_1_Size = (byte)(i + 1);
+                                            log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    byte slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_1_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+
+                                    slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_2_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+                                    log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                    log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    byte slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_1_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+
+                                    slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_2_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+
+                                    slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    cumulative_weight = 0;
+                                    for (byte i = 0; i < 4; i++)
+                                    {
+                                        cumulative_weight += weightTable[i];
+                                        if (slotCountTes < cumulative_weight)
+                                        {
+                                            weaponTreePos.Slot_3_Size = (byte)(i + 1);
+                                            break;
+                                        }
+                                    }
+                                    log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
+                                    log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
+                                    log += "\n\tSlot 3 Size: " + weaponTreePos.Slot_3_Size;
+                                    break;
+                                }
+                        }
+                    }
+
+                    #endregion
+
+                    if (!string.IsNullOrEmpty(log))
+                        file.WriteLine("Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw] + log);
 
                 }
             }

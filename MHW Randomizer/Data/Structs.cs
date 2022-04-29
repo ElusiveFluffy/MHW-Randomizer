@@ -172,7 +172,7 @@ namespace MHW_Randomizer
             /// Value * 10 = final shown value
             /// </summary>
             public ushort Element_Damage;
-            public byte Element_Hidden_;
+            public byte Element_Hidden;
             /// <summary>
             /// Value * 10 = final shown value
             /// </summary>
