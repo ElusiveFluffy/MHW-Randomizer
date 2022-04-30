@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MHW_Randomizer"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Title="MHW Randomizer - v1.1.0" Height="560" Width="620"
+        Title="MHW Randomizer - v1.1.1" Height="560" Width="620"
         MinHeight="560"
         MinWidth="620">
     <Grid>
