@@ -5,7 +5,6 @@ namespace MHW_Randomizer
 {
     public class QuestData
     {
-        //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj. em118_00_st102_02.sobj (story one?)
 
         public static Int32[] MapIDs = { 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 200, 201, 202, 203, 301, 302, 303, 305, 306, 307, 311, 400, 401, 403, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 501, 502, 503, 504, 505, 506 };
         public static Int32[] ForbiddenMapIDs = { 108, 109, 203, 305, 306, 307, 311, 410, 411, 412, 413, 414, 415, 416, 417, 506 };
@@ -18,6 +17,9 @@ namespace MHW_Randomizer
             "Special Arena" , "Arena (Challenge)" ,"IB Arena (Seliana Supply Cache)",  "Astera" , "Gathering Hub (Astera)" , "Research Base" , "Seliana", "Gathering Hub (Seliana)", "307 Unconfirmed/To Be Tested","311 Unconfirmed/To Be Tested","Crashes game" , "Ancient Forest (Flooded / Intro)" ,
             "Everstream" , "Confluence of Fates" , "Ancient Forest (Tutorial)" , "Infinity of Nothing" , "Debug Map" , "Caverns of El Dorado" , "Origin Isle (Cutscene)?","Seliana Supply Cache","Origin Isle (Ruiner Nerg Fight)","Origin Isle (Shara Fight)","Ancient Forest (Legiana Track Quest)",
             "Secluded Valley","Alatreon's Stage","Castle Schrade","Living Quarters" , "Private Quarters" , "Private Suite" , "Training Camp" , "Chamber of Five","Seliana House" };
+
+        //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj. em118_00_st102_02.sobj (story one?), em103_00_st105_10.sobj (story one too maybe)
+        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj" };
 
         public static string[] IconList = { "Anjanath", "Great Jagras", "Pukei-Pukei", "Nergigante", "Xeno'jiiva", "Xeno'jiiva", "Zorah Magdaros", "Kulu-Ya-Ku", "Tzitzi-Ya-Ku", "Jyuratodus", "Tobi-Kadachi", "Paolumu", "Legiana", "Great Girros", "Odogaron", "Radobaan", 
             "Vaal Hazak", "Dodogama", "Kulve Tarroth", "Bazelgeuse", "Behemoth", "Leshen", "Ancient Leshen", "17 EMPTY", "Rathian", "Pink Rathian", "Rathalos", "Azure Rathalos", "Diablos", "Black Diablos", "Kirin", "1F EMPTY", "Kushala Daora", "Lunastra", "Teostra", 
