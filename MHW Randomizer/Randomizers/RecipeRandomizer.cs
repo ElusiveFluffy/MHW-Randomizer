@@ -1303,10 +1303,6 @@ namespace MHW_Randomizer
                         weaponTreePos.Element_Hidden_Damage = 0;
                     }
 
-                    //Change icon colour
-                    if (IoC.Settings.RandomWeaponIconColour)
-                        weaponTreePos.Rarity = (byte)r.Next(12);
-
                     #region Weapon Slot Count
 
                     //Armour Decoration Slot Count
@@ -1498,6 +1494,13 @@ namespace MHW_Randomizer
                     }
 
                     #endregion
+
+                    //Change icon colour
+                    if (IoC.Settings.RandomWeaponIconColour)
+                    {
+                        weaponTreePos.Rarity = (byte)r.Next(12);
+                        log += "\n\tRarity (Colour): " + weaponTreePos.Rarity;
+                    }
 
                     if (!string.IsNullOrEmpty(log))
                         file.WriteLine("Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw] + log);
@@ -1586,10 +1589,6 @@ namespace MHW_Randomizer
                         weaponTreePos.Element_Hidden_Damage = 0;
                     }
 
-                    //Change icon colour
-                    if (IoC.Settings.RandomWeaponIconColour)
-                        weaponTreePos.Rarity = (byte)r.Next(12);
-
                     #region Weapon Slot Count
 
                     //Armour Decoration Slot Count
@@ -1781,6 +1780,13 @@ namespace MHW_Randomizer
                     }
 
                     #endregion
+
+                    //Change icon colour
+                    if (IoC.Settings.RandomWeaponIconColour)
+                    {
+                        weaponTreePos.Rarity = (byte)r.Next(12);
+                        log += "\n\tRarity (Colour): " + weaponTreePos.Rarity;
+                    }
 
                     if (!string.IsNullOrEmpty(log))
                         file.WriteLine("Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw] + log);
