@@ -18,8 +18,9 @@ namespace MHW_Randomizer
             "Everstream" , "Confluence of Fates" , "Ancient Forest (Tutorial)" , "Infinity of Nothing" , "Debug Map" , "Caverns of El Dorado" , "Origin Isle (Cutscene)?","Seliana Supply Cache","Origin Isle (Ruiner Nerg Fight)","Origin Isle (Shara Fight)","Ancient Forest (Legiana Track Quest)",
             "Secluded Valley","Alatreon's Stage","Castle Schrade","Living Quarters" , "Private Quarters" , "Private Suite" , "Training Camp" , "Chamber of Five","Seliana House" };
 
-        //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj. em118_00_st102_02.sobj (story one?), em103_00_st105_10.sobj (story one too maybe)
-        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj" };
+        //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj. em118_00_st102_02.sobj (story one?), em103_00_st105_10.sobj (story one too maybe), em042_05_st109_60.sobj (in area that need to do the quest "Across the Lost Path", get the quest after beating the main story,
+        //gonna exclude it because could cause a softlock and could be confusing where the monster is)
+        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj", "em042_05_st109_60.sobj" };
 
         public static string[] IconList = { "Anjanath", "Great Jagras", "Pukei-Pukei", "Nergigante", "Xeno'jiiva", "Xeno'jiiva", "Zorah Magdaros", "Kulu-Ya-Ku", "Tzitzi-Ya-Ku", "Jyuratodus", "Tobi-Kadachi", "Paolumu", "Legiana", "Great Girros", "Odogaron", "Radobaan", 
             "Vaal Hazak", "Dodogama", "Kulve Tarroth", "Bazelgeuse", "Behemoth", "Leshen", "Ancient Leshen", "17 EMPTY", "Rathian", "Pink Rathian", "Rathalos", "Azure Rathalos", "Diablos", "Black Diablos", "Kirin", "1F EMPTY", "Kushala Daora", "Lunastra", "Teostra", 
@@ -553,8 +554,78 @@ namespace MHW_Randomizer
             "[s] Cortos" , "[s] Boaboa" , "Alatreon" , "Gold Rathian" , "Silver Rathalos" , "Yian Garuga" , "Rajang" , "Furious Rajang" , "Brute Tigrex" , "Zinogre" , "Stygian Zinogre" , "Raging Brachydios" , "Safi'jiiva" , "[s] Wood Dummy" ,
             "Scarred Yian Garuga","Frostfang Barioth", "Fatalis"};
 
-        public static bool[] IsGroundMonster = { false, false, false, false, false, false, true, true, true, false, false, true, false, false, false, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, 
-            true, true, false, false, false, false, false, false, true, true, true, true, true, false, false, false, false, true, true, true, true, false, false, true, true, false, false, true, true, true, true, false, false, false, true, true };
+        public static bool[] IsGroundMonster = 
+        { 
+            false, //Rathian
+            false, //Pink Rathian
+            false, //Gold Rathian
+            false, //Rathalos
+            false, //Azure Rathalos
+            false, //Silver Rathalos
+            true, //Diablos
+            true, //Black Diablos
+            true, //Kirin
+            false, //Fatalis
+            false, //Yian Garuga and Scarred Yian Garuga
+            true, //Rajang and Furious Rajang
+            false, //Kushala Daora
+            false, //Lunastra
+            false, //Teostra
+            true, //Tigrex
+            true, //Brute Tigrex
+            true, //Lavasioth
+            true, //Nargacuga
+            true, //Barioth
+            true, //Frostfang Barioth
+            true, //Deviljho
+            true, //Savage Deviljho
+            true, //Barroth
+            true, //Uragaan
+            false, //Alatreon
+            true, //Zinogre
+            true, //Stygian Zinogre
+            true, //Brachydios
+            true, //Raging Brachydios
+            true, //Glavenus
+            true, //Acidic Glavenus
+            true, //Anjanath
+            true, //Fulgur Anjanath
+            true, //Great Jagras
+            false, //Pukei-Pukei
+            false, //Coral Pukei-Pukei
+            false, //Nergigante
+            false, //Ruiner Nergigante
+            false, //Safi'jiiva
+            false, //Xeno'jiiva
+            true, //Zorah Magdaros
+            true, //Kulu-Ya-Ku
+            true, //Jyuratodus
+            true, //Tobi-Kadachi
+            true, //Viper Tobi-Kadachi
+            false, //Paolumu
+            false, //NightShade Paolumu
+            false, //Legiana
+            false, //Shreiking Legiana
+            true, //Great Girros
+            true, //Odogaron
+            true, //Ebony Odogaron
+            true, //Radobaan
+            false, //Vaal Hazak
+            false, //Blackveil Vaal Hazak
+            true, //Dodogama
+            true, //Kulve Taroth
+            false, //Bazelgeuse
+            false, //Seething Bazelgeuse
+            true, //Tzitzi-Ya-Ku
+            true, //Behemoth
+            true, //Beotodus
+            true, //Banbaro
+            false, //Velkhana
+            false, //Namielle
+            false, //Shara Ishvalda
+            true, //Leshen
+            true //Ancient Leshen
+        };
 
         public static string[] MonsterStageEmNumber = { "em100_00_st", "em002_00_st", "unused", "unused", "unused", "unused", "unused", "em101_00_st", "unused", "em001_00_st", "em001_01_st", "em002_01_st", "em007_00_st", "em007_01_st", "em011_00_st", "em121_00_st", "em024_00_st", "em026_00_st", "em027_00_st", "em036_00_st",
             "em043_00_st", "em044_00_st", "em045_00_st", "em127_00_st", "em102_00_st", "em103_00_st", "em105_00_st", "em107_00_st", "em120_00_st", "em108_00_st", "em109_00_st", "em110_00_st", "em111_00_st", "em112_00_st", "em113_00_st", "em114_00_st", "em115_00_st", "em116_00_st", "unused", "em118_00_st", "unused",
@@ -764,7 +835,8 @@ namespace MHW_Randomizer
 
         public static int[] IBHighRankOnlyMonsters = { 7, 10, 15, 20, 23, 25, 26, 36, 39, 51 };
 
-        public static int[] BigMonsterIDsIB = { 0, 1, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 99, 100 }; 
+        //Removed safi'jiiva because doesn't spawn on most maps
+        public static int[] BigMonsterIDsIB = { 0, 1, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 99, 100 };
 
         #endregion
     }
