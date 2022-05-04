@@ -106,7 +106,7 @@
                         <CheckBox Content="Random Weapon Icon Colour"
                                   IsChecked="{Binding RandomWeaponIconColour, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
-                                  ToolTip="Randomizes the colour of the weapon icon &#x0a;(Done through randomizing rarity value, doesn't seem to have any negative effect, seems to just be a visual thing)"
+                                  ToolTip="Randomizes the colour of the weapon icon &#x0a;(Done through randomizing rarity value, can cause some upgrade paths to be marked as you've reached the max upgrade path until you are a rank high enough for that rarity)&#x0a;(Rarity 1-4 for low rank, 5-9 for high, 10-12 for master)"
                                   ToolTipService.ShowDuration="10000"/>
 
                         <StackPanel Margin="0 10 0 0">
@@ -126,7 +126,7 @@
                             <CheckBox Content="Random Kinsect Icon Colour"
                                   IsChecked="{Binding RandomKinsectIconColour, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
-                                  ToolTip="Randomizes the colour of the kinsect icon &#x0a;(Done through randomizing rarity value, doesn't seem to have any negative effect, seems to just be a visual thing)"/>
+                                  ToolTip="Randomizes the colour of the kinsect icon &#x0a;(Done through randomizing rarity value, can cause some upgrade paths to be marked as you've reached the max upgrade path until you are a rank high enough for that rarity)&#x0a;(Rarity 1-4 for low rank, 5-9 for high, 10-12 for master)"/>
                         </StackPanel>
 
                     </StackPanel>
