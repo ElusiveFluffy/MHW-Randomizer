@@ -491,7 +491,11 @@ namespace MHW_Randomizer
                 bool isLowRank = RankIndex == 0;
                 bool isDuplicateMonQuest = QuestData.HuntDuplicate.Contains(questNumber) || QuestData.SlayDuplicate.Contains(questNumber) || QuestData.IBHuntDuplicate.Contains(questNumber);
 
-                int[] currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs : MonsterIDs;
+                int[] currentRankMonsterIDs;
+                if (captureQuest)
+                    currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray() : MonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray();
+                else
+                    currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs : MonsterIDs;
                 byte[] fsm = null;
 
                 #region Monster
@@ -510,8 +514,10 @@ namespace MHW_Randomizer
                     if (MID[m] != 0 || !isStoryQuest)
                         fsm = null;
 
-                    if (MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + ".fsm") && isStoryQuest)
+                    if (isStoryQuest && MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + ".fsm"))
                         fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + ".fsm"].Extract();
+                    else if (isStoryQuest && m == 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm"))
+                        fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm"].Extract();
 
                     //Pick a random size percent between range if both aren't 100
                     if (IoC.Settings.MonsterMinSize != 100 && IoC.Settings.MonsterMaxSize != 100)
