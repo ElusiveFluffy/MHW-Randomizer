@@ -11,6 +11,8 @@ namespace MHW_Randomizer
         public static byte[] ObjectiveIDs = { 0x00, 0x01, 0x02, 0x11, 0x21, 0x31 };
         public static byte[] QuestTypeIDs = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 };
 
+        public static int[] TestMaps = { 201, 202, 405, 409, 412, 413, 415, 416, 417 };
+
         public static int[] ValidMapIndexes = { 1, 2, 3, 4, 5, 8, 9 };
 
         public static string[] MapNames = {"Infinity of Nothing", "Ancient Forest", "Wildspire Waste", "Coral Highlands", "Rotten Vale", "Elder Recess" , "Great Ravine" , "Great Ravine (Story Map to Coral Highlands)" , "Hoarfrost Reach", "Guiding Lands", "Infinity of Nothing" ,
@@ -21,7 +23,7 @@ namespace MHW_Randomizer
         //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj. em118_00_st102_02.sobj (story one?), em103_00_st105_10.sobj (story one too maybe), em042_05_st109_60.sobj (in area that need to do the quest "Across the Lost Path", get the quest after beating the main story,
         //gonna exclude it because could cause a softlock and could be confusing where the monster is), em057_01_st109_00.sobj (in area that need to do the quest "Across the Lost Path"), em113_01_st109_50.sobj (Don't know, seems to be in another area that needs to be unlocked),
         //em057_01_st109_10.sobj (in area that need to do the quest "Across the Lost Path"), em042_00_st109_60.sobj (in area that need to do the quest "Across the Lost Path"), em043_05_st109_50.sobj (Don't know, seems to be in another area that needs to be unlocked)
-        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj", "em042_05_st109_60.sobj", "em057_01_st109_00.sobj", "em113_01_st109_50.sobj", "em057_01_st109_10.sobj", "em042_00_st109_60.sobj", "em043_05_st109_50.sobj" };
+        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj" };
         //Possible one em043_05_st109_60.sobj
 
         public static string[] IconList = { "Anjanath", "Great Jagras", "Pukei-Pukei", "Nergigante", "Xeno'jiiva", "Xeno'jiiva", "Zorah Magdaros", "Kulu-Ya-Ku", "Tzitzi-Ya-Ku", "Jyuratodus", "Tobi-Kadachi", "Paolumu", "Legiana", "Great Girros", "Odogaron", "Radobaan", 
@@ -740,6 +742,7 @@ namespace MHW_Randomizer
 
         public static int[] BigMonsterIDs = { 0, 1, 7, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 39 };
         public static int[] LowRankBigMonsterIDs = { 0, 1, 7, 9, 12, 14, 21, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35 };
+        public static int[] ElderDragonIDs = { 14, 15, 16, 17, 18, 25, 26, 36, 70, 75, 79, 80, 81, 87, 97, 101 };
 
         //15 (behemoth), 23 (leshen), 26 (xeno'jjiva), 51 (ancient leshen)
         //public static int[] HighRankMonsters = { 10, 11, 13, 16, 17, 18, 19, 20, 22, 25, 36, 37, 39 };

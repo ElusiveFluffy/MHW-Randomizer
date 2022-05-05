@@ -482,7 +482,13 @@ namespace MHW_Randomizer
                 //Pick Random Map
                 if (IoC.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
                 {
-                    MapIDIndex = QuestData.ValidMapIndexes[PickMap.Next(5 + (Convert.ToInt32(iceborne) * 2))];
+                    //if (iceborne)
+                    //{
+                    //    MapIDIndex = Array.IndexOf(QuestData.MapIDs, QuestData.TestMaps[PickMap.Next(QuestData.TestMaps.Length)]);
+                    //    PSpawnIndex = 0;
+                    //}
+                    //else
+                        MapIDIndex = QuestData.ValidMapIndexes[PickMap.Next(5 + (Convert.ToInt32(iceborne) * 2))];
                 }
 
                 //Write quest info to log
@@ -1050,7 +1056,7 @@ namespace MHW_Randomizer
 
         private static void EditMaps()
         {
-            if (IoC.Settings.RandomMaps)
+            if (IoC.Settings.RandomMaps || IoC.Settings.RandomSobj)
             {
                 #region Rotten Vale Blockade
 
@@ -1097,6 +1103,51 @@ namespace MHW_Randomizer
 
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set\st105_gm.sobj", levelObjects);
+
+                #endregion
+
+                #region Guiding Lands Blockade
+
+                //Unlock the blocked off areas in the guiding lands
+                if (IoC.Settings.RandomizeIBQuests)
+                {
+                    //Unlock the blocked off areas
+                    byte[] unblockBytes = ChunkOTF.files["st109_v03.sdl"].Extract();
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v01.sdl", unblockBytes);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v02.sdl", unblockBytes);
+                    //Do the same for bake files
+                    unblockBytes = ChunkOTF.files["st109_v03_bake.sdl"].Extract();
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v01_bake.sdl", unblockBytes);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v02_bake.sdl", unblockBytes);
+
+                    //Light
+                    unblockBytes = ChunkOTF.files["LL_st109_area_v03.llsd"].Extract();
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_area_v01.llsd", unblockBytes);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_area_v02.llsd", unblockBytes);
+
+                    unblockBytes = ChunkOTF.files["LL_st109_v03.llk"].Extract();
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_v01.llk", unblockBytes);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_v02.llk", unblockBytes);
+
+                    //etc
+                    unblockBytes = ChunkOTF.files["st109_v03.bkipr"].Extract();
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v01.bkipr", unblockBytes);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v02.bkipr", unblockBytes);
+                    unblockBytes = ChunkOTF.files["st109_v03.umbra"].Extract();
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v01.umbra", unblockBytes);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v02.umbra", unblockBytes);
+
+
+                    //Remove blocked off area collision by replacing it with a different one
+                    unblockBytes = ChunkOTF.files["st109_F_col_add.sbc"].Extract();
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_V\col");
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_W\col");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_V\col\st109_V_col.sbc", unblockBytes);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_W\col\st109_W_col.sbc", unblockBytes);
+                }
 
                 #endregion
             }
