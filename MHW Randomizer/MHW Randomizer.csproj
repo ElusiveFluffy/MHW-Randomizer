@@ -275,6 +275,7 @@
     <None Include="Data\Armour\Head.json" />
     <None Include="Data\Armour\Legs.json" />
     <None Include="Data\Armour\Waist.json" />
+    <None Include="Data\em126_00.thk" />
     <None Include="Data\eng_armorData.json" />
     <None Include="Data\eng_insectData.json" />
     <None Include="Data\eng_itemData.json" />

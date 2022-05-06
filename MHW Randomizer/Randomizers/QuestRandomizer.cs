@@ -385,6 +385,8 @@ namespace MHW_Randomizer
                         MonsterIDs = MonsterIDs.Where(mon => !QuestData.BigMonsterIDs.Contains(mon)).ToArray();
                     if (IoC.Settings.IncludeHighRankOnly)
                         MonsterIDs = MonsterIDs.Concat(QuestData.IBHighRankOnlyMonsters).ToArray();
+                    if (IoC.Settings.IncludeShara)
+                        MonsterIDs = MonsterIDs.Append(81).ToArray();
                     //if (IoC.Settings.IncludeFatalis)
                     //    MonsterIDs = MonsterIDs.Append(101).ToArray();
 
@@ -701,7 +703,12 @@ namespace MHW_Randomizer
                         int entryIndex = StoryQuests[questNumber].QuestObjTextIndexs[i];
                         string value = "";
                         List<string> textToReplace = QuestData.MonsterNames.Where(o => StoryTargetText.Entries[entryIndex].Value.Contains(o, StringComparison.OrdinalIgnoreCase)).ToList();
-                        if (StoryQuests[questNumber].MultiObjectiveHunt)
+                        if (questNumber == "01404" && MID[0] != 80)
+                        {
+                            value = "Slay " + QuestData.MonsterNames[MID[0]];
+                            StoryTargetText.Entries[560].Value = "(Don't need to load Dragonrazer)";
+                        }
+                        else if (StoryQuests[questNumber].MultiObjectiveHunt)
                             value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[i]]);
                         else
                             value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
@@ -1204,6 +1211,8 @@ namespace MHW_Randomizer
                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em023/05/data/em023.dtt_alnk", newAlnk);
                 }
             }
+            if (IoC.Settings.IncludeShara)
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data/em126_00.thk", Properties.Resources.em126_00thk);
         }
     }
 }

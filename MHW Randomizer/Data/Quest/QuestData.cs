@@ -788,7 +788,7 @@ namespace MHW_Randomizer
         //May need some testing
         public static Dictionary<string, StoryQuestData> IBStorySlayQuest = new Dictionary<string, StoryQuestData>()
         {
-            { "01404", new StoryQuestData() { ChangeObjective = true } }, //The Defense of Seliana (Need to test)
+            { "01404", new StoryQuestData() { ChangeObjective = true, QuestObjTextIndexs = new int[] { 558, 559 } } }, //The Defense of Seliana (Need to test)
             { "01501", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 563, 564 } } }, //The Iceborne Wyvern
             { "01503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 574, 575 } } }, //Under the Veil of Death
             { "01504", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //A Light From The Abyss
@@ -841,7 +841,7 @@ namespace MHW_Randomizer
         public static int[] IBHighRankOnlyMonsters = { 7, 10, 15, 20, 23, 25, 26, 36, 39, 51 };
 
         //Removed safi'jiiva because doesn't spawn on most maps
-        public static int[] BigMonsterIDsIB = { 0, 1, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 99, 100 };
+        public static int[] BigMonsterIDsIB = { 0, 1, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 99, 100 };
 
         #endregion
     }

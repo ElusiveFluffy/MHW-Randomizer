@@ -133,6 +133,9 @@
   <data name="Dual_Blades" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Weapons\Dual_Blades.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="em126_00thk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\em126_00.thk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="eng_armorData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\eng_armorData.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

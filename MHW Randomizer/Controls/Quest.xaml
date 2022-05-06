@@ -242,6 +242,14 @@
                                   ToolTip="Good luck (WARNING: They are a bit buggy and the attack where meant to go behind a gate, that doesn't exist in any other stage, will one shot you)"
                                   ToolTipService.ShowDuration="10000"/>
                 </StackPanel>-->
+                <StackPanel VerticalAlignment="Center"
+                            Margin="0 31 0 0">
+                    <CheckBox Content="Include Shara Ishvalda"
+                                  IsChecked="{Binding IncludeShara, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  ToolTip="May get stuck, has a custom think file that makes them transform to the second phase when they see you"
+                                  ToolTipService.ShowDuration="10000"/>
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>
