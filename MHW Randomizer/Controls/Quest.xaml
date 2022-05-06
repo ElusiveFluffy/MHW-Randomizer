@@ -242,12 +242,16 @@
                                   ToolTip="Good luck (WARNING: They are a bit buggy and the attack where meant to go behind a gate, that doesn't exist in any other stage, will one shot you)"
                                   ToolTipService.ShowDuration="10000"/>
                 </StackPanel>-->
-                <StackPanel VerticalAlignment="Center"
-                            Margin="0 31 0 0">
+                <StackPanel Margin="0 77 0 0">
                     <CheckBox Content="Include Shara Ishvalda"
                                   IsChecked="{Binding IncludeShara, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="May get stuck, has a custom think file that makes them transform to the second phase when they see you"
+                                  ToolTipService.ShowDuration="10000"/>
+                    <CheckBox Content="Include Alatreon"
+                                  IsChecked="{Binding IncludeAlatreon, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  ToolTip="May get stuck, can be hard if include them. Apparently has a issue where in their fire form they make your sceen completely white when near them, &#xA;I haven't replicated it, maybe it only happens on one map"
                                   ToolTipService.ShowDuration="10000"/>
                 </StackPanel>
             </StackPanel>

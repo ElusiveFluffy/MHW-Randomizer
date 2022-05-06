@@ -48,6 +48,7 @@ namespace MHW_Randomizer
         public bool IceborneOnlyMonsters { get; set; }
         public bool IncludeHighRankOnly { get; set; }
         public bool IncludeShara { get; set; }
+        public bool IncludeAlatreon { get; set; }
         public bool IncludeFatalis { get; set; } //Fix fatalis
 
         [DefaultValue(100)]

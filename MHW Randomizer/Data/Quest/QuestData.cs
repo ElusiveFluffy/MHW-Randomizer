@@ -23,7 +23,7 @@ namespace MHW_Randomizer
         //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj. em118_00_st102_02.sobj (story one?), em103_00_st105_10.sobj (story one too maybe), em042_05_st109_60.sobj (in area that need to do the quest "Across the Lost Path", get the quest after beating the main story,
         //gonna exclude it because could cause a softlock and could be confusing where the monster is), em057_01_st109_00.sobj (in area that need to do the quest "Across the Lost Path"), em113_01_st109_50.sobj (Don't know, seems to be in another area that needs to be unlocked),
         //em057_01_st109_10.sobj (in area that need to do the quest "Across the Lost Path"), em042_00_st109_60.sobj (in area that need to do the quest "Across the Lost Path"), em043_05_st109_50.sobj (Don't know, seems to be in another area that needs to be unlocked)
-        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj" };
+        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj", "em011_00_st105_02.sobj" };
         //Possible one em043_05_st109_60.sobj
 
         public static string[] IconList = { "Anjanath", "Great Jagras", "Pukei-Pukei", "Nergigante", "Xeno'jiiva", "Xeno'jiiva", "Zorah Magdaros", "Kulu-Ya-Ku", "Tzitzi-Ya-Ku", "Jyuratodus", "Tobi-Kadachi", "Paolumu", "Legiana", "Great Girros", "Odogaron", "Radobaan", 
@@ -780,20 +780,20 @@ namespace MHW_Randomizer
             { "01502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 571 } } }, //The Second Coming
 
             //Special Assignments
-            { "51603", new StoryQuestData() { ChangeObjective = true, QuestObjTextIndexs = new int[] { 641 } } }, //Across the Lost Path
-            { "51604", new StoryQuestData() { ChangeObjective = true } }, //Point of No Return
+            { "51603", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 641 } } }, //Across the Lost Path
+            { "51604", new StoryQuestData { ChangeObjective = true } }, //Point of No Return
             { "51607", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 654 } } }, //The Fury Remains
         };
 
         //May need some testing
         public static Dictionary<string, StoryQuestData> IBStorySlayQuest = new Dictionary<string, StoryQuestData>()
         {
-            { "01404", new StoryQuestData() { ChangeObjective = true, QuestObjTextIndexs = new int[] { 558, 559 } } }, //The Defense of Seliana (Need to test)
+            { "01404", new StoryQuestData { ChangeObjective = true, ChangeQuestIcon = true, QuestObjTextIndexs = new int[] { 558, 559 } } }, //The Defense of Seliana (Need to test)
             { "01501", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 563, 564 } } }, //The Iceborne Wyvern
             { "01503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 574, 575 } } }, //Under the Veil of Death
             { "01504", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //A Light From The Abyss
-            { "01601", new StoryQuestData() { ChangeObjective = true, QuestObjTextIndexs = new int[] { 583 } } }, //To The Guided, A Paean
-            { "01602", new StoryQuestData() { ChangeObjective = true } }, //Paean of Guidance
+            { "01601", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 583 } } }, //To The Guided, A Paean
+            { "01602", new StoryQuestData { ChangeObjective = true } }, //Paean of Guidance
             { "01605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 598 } } }, //To the Very Ends with You
 
             //Special Assignments
@@ -841,7 +841,7 @@ namespace MHW_Randomizer
         public static int[] IBHighRankOnlyMonsters = { 7, 10, 15, 20, 23, 25, 26, 36, 39, 51 };
 
         //Removed safi'jiiva because doesn't spawn on most maps
-        public static int[] BigMonsterIDsIB = { 0, 1, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 99, 100 };
+        public static int[] BigMonsterIDsIB = { 0, 1, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 88, 89, 90, 91, 92, 93, 94, 95, 96, 99, 100 };
 
         #endregion
     }

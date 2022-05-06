@@ -387,6 +387,8 @@ namespace MHW_Randomizer
                         MonsterIDs = MonsterIDs.Concat(QuestData.IBHighRankOnlyMonsters).ToArray();
                     if (IoC.Settings.IncludeShara)
                         MonsterIDs = MonsterIDs.Append(81).ToArray();
+                    if (IoC.Settings.IncludeAlatreon)
+                        MonsterIDs = MonsterIDs.Append(87).ToArray();
                     //if (IoC.Settings.IncludeFatalis)
                     //    MonsterIDs = MonsterIDs.Append(101).ToArray();
 
