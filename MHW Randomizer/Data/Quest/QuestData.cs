@@ -11,9 +11,11 @@ namespace MHW_Randomizer
         public static byte[] ObjectiveIDs = { 0x00, 0x01, 0x02, 0x11, 0x21, 0x31 };
         public static byte[] QuestTypeIDs = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 };
 
-        public static int[] TestMaps = { 201, 202, 405, 409, 412, 413, 415, 416, 417 };
+        public static int[] ArenaMaps = { 201, 202, 405, 409, 412, 413, 415, 416, 417 };
 
         public static int[] ValidMapIndexes = { 1, 2, 3, 4, 5, 8, 9 };
+
+        public static int[] ValidArenaMapIndexes = { 1, 2, 3, 4, 5, 11, 12, 8, 9, 31, 32, 34, 35, 36 };
 
         public static string[] MapNames = {"Infinity of Nothing", "Ancient Forest", "Wildspire Waste", "Coral Highlands", "Rotten Vale", "Elder Recess" , "Great Ravine" , "Great Ravine (Story Map to Coral Highlands)" , "Hoarfrost Reach", "Guiding Lands", "Infinity of Nothing" ,
             "Special Arena" , "Arena (Challenge)" ,"IB Arena (Seliana Supply Cache)",  "Astera" , "Gathering Hub (Astera)" , "Research Base" , "Seliana", "Gathering Hub (Seliana)", "307 Unconfirmed/To Be Tested","311 Unconfirmed/To Be Tested","Crashes game" , "Ancient Forest (Flooded / Intro)" ,

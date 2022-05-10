@@ -483,6 +483,14 @@ namespace MHW_Randomizer
 
                 OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].Extract());
 
+                bool isLowRank = RankIndex == 0;
+                bool isDuplicateMonQuest = QuestData.HuntDuplicate.Contains(questNumber) || QuestData.SlayDuplicate.Contains(questNumber) || QuestData.IBHuntDuplicate.Contains(questNumber);
+
+                int[] currentRankMonsterIDs;
+                if (captureQuest)
+                    currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray() : MonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray();
+                else
+                    currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs : MonsterIDs;
                 //Pick Random Map
                 if (IoC.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
                 {
@@ -492,20 +500,23 @@ namespace MHW_Randomizer
                     //    PSpawnIndex = 0;
                     //}
                     //else
+                    if (IoC.Settings.IncludeArenaMap)
+                    {
+                        MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne) * 7))];
+                        if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
+                            PSpawnIndex = 0;
+                    }
+                    else
                         MapIDIndex = QuestData.ValidMapIndexes[PickMap.Next(5 + (Convert.ToInt32(iceborne) * 2))];
                 }
+
+                if (iceborne && MapIDIndex == 3)
+                    //Remove alatreon as a possible monster if map is coral highlands as it causes a blinding white light effect on that map
+                    currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87).ToArray();
 
                 //Write quest info to log
                 file.WriteLine("\n---------------------- " + "Quest: " + QuestData.QuestName[questNumber == "66859" || questNumber == "66860" ? (questNumber == "66859" ? 64802 : 66835) : int.Parse(questNumber)] + ", Quest ID: " + QIDText + ", Map: " + QuestData.MapNames[MapIDIndex] + " ------------------------------");
 
-                bool isLowRank = RankIndex == 0;
-                bool isDuplicateMonQuest = QuestData.HuntDuplicate.Contains(questNumber) || QuestData.SlayDuplicate.Contains(questNumber) || QuestData.IBHuntDuplicate.Contains(questNumber);
-
-                int[] currentRankMonsterIDs;
-                if (captureQuest)
-                    currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray() : MonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray();
-                else
-                    currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs : MonsterIDs;
                 byte[] fsm = null;
 
                 #region Monster
@@ -513,9 +524,13 @@ namespace MHW_Randomizer
                 //Loop to go through each monster
                 for (int m = 0; m < 7; m++)
                 {
+                    if (!IoC.Settings.AllMonstersInArena && m != 0 && IoC.Settings.RandomMaps && QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]) && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
+                        MID[m] = 0;
+
                     //If there is no monster at that index skip unless the option for two monster quest is true
                     if (MID[m] == 0 && !(IoC.Settings.TwoMonsterQuests && m == 1))
                         continue;
+
                     //If Zorah Magdaros quest only randomize the second monster (First is Zorah)
                     //if ((questNumber == "00401" && m == 0) || (questNumber == "00504" && m == 0))
                     //    continue;
@@ -1201,6 +1216,7 @@ namespace MHW_Randomizer
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName, newAlnk);
                 if (alnk.Name.Contains("em018"))
                 {
+                    //Edit the monster ID
                     newAlnk[8] = 99;
                     Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em018/05/data");
                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em018/05/data/em018.dtt_alnk", newAlnk);
@@ -1208,11 +1224,13 @@ namespace MHW_Randomizer
 
                 if (alnk.Name.Contains("em023"))
                 {
+                    //Edit the monster ID
                     newAlnk[8] = 92;
                     Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em023/05/data");
                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em023/05/data/em023.dtt_alnk", newAlnk);
                 }
             }
+            //Add custom think table for Shara to transform
             if (IoC.Settings.IncludeShara)
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data/em126_00.thk", Properties.Resources.em126_00thk);
         }

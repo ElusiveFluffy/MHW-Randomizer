@@ -24,6 +24,8 @@ namespace MHW_Randomizer
         public bool TwoMonsterQuests { get; set; }
         public bool RandomSobj { get; set; }
         public bool RandomMaps { get; set; }
+        public bool IncludeArenaMap { get; set; } //Maybe including the shara stage //For if random maps is checked
+        public bool AllMonstersInArena { get; set; }
         public bool RandomIcons { get; set; }
         public bool RandomizeMusic { get; set; }
         public bool RandomizeMultiObj { get; set; }
@@ -133,14 +135,13 @@ namespace MHW_Randomizer
         //Quests
         public bool RandomGearEachQuest { get; set; } //Using the pre-selected gear in the quest settings (Need to figure out how this works)
         public bool ShuffledSupplyBoxItems { get; set; } //Random supply box rem ID
-        public bool IncludeArenaMap { get; set; } //Maybe including the shara stage //For if random maps is checked
         public bool RandomQuestRewards { get; set; }
 
         public bool RandomizeMissions { get; set; }
 
         //Monsters
         public bool RandomizeSmallMonsters { get; set; }
-        public bool RandomMonsterAttacks { get; set; }
+        public bool RandomMonsterProjectiles { get; set; }
         public bool RandomMonsterTrace { get; set; } //eg a great jagras could have a rathian traces
         public bool RandomMonsterDrops { get; set; }
 
@@ -153,7 +154,7 @@ namespace MHW_Randomizer
         public bool ShuffleItemCraftingRecipes { get; set; }
 
         //Random slinger ammo? Random slinger ammo pickups
-        public bool ShuffleGatheringSpotLocation { get; set; }
+        public bool ShuffleGatheringSpots { get; set; }
 
         public bool RandomStartingItems { get; set; } //Completely random
 

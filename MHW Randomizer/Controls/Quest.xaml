@@ -61,7 +61,7 @@
                                           ToolTip="Won't randomize big monster capture quests"/>
                             </StackPanel>
                             <StackPanel VerticalAlignment="Center"
-                                        Margin="40 0 0 0"
+                                        Margin="35 0 0 0"
                                         IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
                                 <CheckBox Content="Randomize Maps"
                                           IsChecked="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
@@ -70,9 +70,21 @@
                                           Checked="MapOption_Checked"
                                           Unchecked="MapOption_Unchecked"
                                           ToolTipService.ShowDuration="10000"/>
+                                <CheckBox Content="Include Arenas"
+                                          IsChecked="{Binding IncludeArenaMap, Source={x:Static local:IoC.Settings}}"
+                                          Margin="12, 4"
+                                          ToolTip="Includes all the arena maps in the pool of maps to randomly chose from &#xA;(includes arenas like Shara's and Fatalis') &#xA;(only one monster will be in the arena unless you have every quest a 2 monster quest checked then there will be 2)"
+                                          ToolTipService.ShowDuration="10000"
+                                          IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"/>
+                                <CheckBox Content="All Monster In Arenas"
+                                          IsChecked="{Binding AllMonstersInArena, Source={x:Static local:IoC.Settings}}"
+                                          Margin="12, 4"
+                                          ToolTip="Includes the amount of monsters in the original quest instead of only one (can be chaotic)"
+                                          ToolTipService.ShowDuration="10000"
+                                          IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"/>
                                 <CheckBox Content="Random Quest Icons"
                                           IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
-                                          Margin="5, 4"
+                                          Margin="5, 4, 5, 4"
                                           ToolTip="Makes it more of a surprise of what the monster will be before starting the quest &#xA;(Also changes the monster in the quest objective text to ???) (Hasn't been tested without iceborne)"
                                           ToolTipService.ShowDuration="10000"/>
                             </StackPanel>
