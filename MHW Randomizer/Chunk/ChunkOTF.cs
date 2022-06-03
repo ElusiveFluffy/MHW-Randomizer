@@ -187,38 +187,38 @@ namespace MHW_Randomizer
             int failed = 0;
             try
             {
-                Reader = new BinaryReader(File.Open(ChunkFile, FileMode.Open));
+                var localReader = new BinaryReader(File.Open(ChunkFile, FileMode.Open, FileAccess.Read, FileShare.Read));
 
                 // Read header
-                Reader.BaseStream.Seek(4, SeekOrigin.Begin);
+                localReader.BaseStream.Seek(4, SeekOrigin.Begin);
                 ChunkOTF CurNodeChunk = this;
-                CurNodeChunk.cur_index = file.ChunkIndex;
-                CurNodeChunk.cur_pointer = file.ChunkPointer;
+                var local_cur_index = file.ChunkIndex;
+                var local_cur_pointer = file.ChunkPointer;
                 long size = file.Size;
-                if (CurNodeChunk.ChunkCache.ContainsKey(CurNodeChunk.cur_index))
+                if (CurNodeChunk.ChunkCache.ContainsKey(local_cur_index))
                 {
-                    CurNodeChunk.ChunkDecompressed = CurNodeChunk.ChunkCache[CurNodeChunk.cur_index];
+                    CurNodeChunk.ChunkDecompressed = CurNodeChunk.ChunkCache[local_cur_index];
                 }
                 else
                 {
                     if (CurNodeChunk.ChunkCache.Count > 20) CurNodeChunk.ChunkCache.Clear();
-                    CurNodeChunk.ChunkDecompressed = CurNodeChunk.getDecompressedChunk(CurNodeChunk.ChunkOffsetDict[CurNodeChunk.cur_index], CurNodeChunk.MetaChunk[CurNodeChunk.ChunkOffsetDict[CurNodeChunk.cur_index]], CurNodeChunk.Reader, false, CurNodeChunk.cur_index);
-                    CurNodeChunk.ChunkCache.Add(CurNodeChunk.cur_index, CurNodeChunk.ChunkDecompressed);
+                    CurNodeChunk.ChunkDecompressed = CurNodeChunk.getDecompressedChunk(CurNodeChunk.ChunkOffsetDict[local_cur_index], CurNodeChunk.MetaChunk[CurNodeChunk.ChunkOffsetDict[local_cur_index]], localReader, false, local_cur_index);
+                    CurNodeChunk.ChunkCache.Add(local_cur_index, CurNodeChunk.ChunkDecompressed);
                 }
-                if (CurNodeChunk.ChunkCache.ContainsKey(CurNodeChunk.cur_index + 1))
+                if (CurNodeChunk.ChunkCache.ContainsKey(local_cur_index + 1))
                 {
-                    CurNodeChunk.NextChunkDecompressed = CurNodeChunk.ChunkCache[CurNodeChunk.cur_index + 1];
+                    CurNodeChunk.NextChunkDecompressed = CurNodeChunk.ChunkCache[local_cur_index + 1];
                 }
                 else
                 {
                     if (CurNodeChunk.ChunkCache.Count > 20) CurNodeChunk.ChunkCache.Clear();
-                    if (CurNodeChunk.cur_index + 1 < CurNodeChunk.DictCount) { CurNodeChunk.NextChunkDecompressed = CurNodeChunk.getDecompressedChunk(CurNodeChunk.ChunkOffsetDict[CurNodeChunk.cur_index + 1], CurNodeChunk.MetaChunk[CurNodeChunk.ChunkOffsetDict[CurNodeChunk.cur_index + 1]], CurNodeChunk.Reader, false, CurNodeChunk.cur_index + 1); }
+                    if (local_cur_index + 1 < CurNodeChunk.DictCount) { CurNodeChunk.NextChunkDecompressed = CurNodeChunk.getDecompressedChunk(CurNodeChunk.ChunkOffsetDict[local_cur_index + 1], CurNodeChunk.MetaChunk[CurNodeChunk.ChunkOffsetDict[local_cur_index + 1]], localReader, false, local_cur_index + 1); }
                     else { CurNodeChunk.NextChunkDecompressed = new byte[0]; }
-                    CurNodeChunk.ChunkCache.Add(CurNodeChunk.cur_index + 1, CurNodeChunk.NextChunkDecompressed);
+                    CurNodeChunk.ChunkCache.Add(local_cur_index + 1, CurNodeChunk.NextChunkDecompressed);
                 }
                 //Console.Write($"Extracting {node.EntireName} ...                          \r");
                 byte[] fileBites = CurNodeChunk.getOnLength(size, new byte[size], 0, false);
-                Reader.Dispose();
+                localReader.Dispose();
                 return fileBites;
             }
             catch (Exception ex)

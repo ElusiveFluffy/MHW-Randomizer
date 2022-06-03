@@ -341,20 +341,25 @@ namespace MHW_Randomizer
                 File.WriteAllText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt",
                                   "Put the common, em, quest, and/or stage folders (some won't be there depending on what you randomized) into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");
 
+            Task questTask = null;
             if (IoC.Settings.RandomizeQuests)
             {
                 QuestRandomizer questRandomizer = new QuestRandomizer();
-                questRandomizer.Randomize();
+                questTask = Task.Run(() => questRandomizer.Randomize());
             }
 
-            MonsterRandomizer.Randomizer();
+            Task monsterTask = Task.Run(() => MonsterRandomizer.Randomizer());
 
             //Shuffle recipes
-            RecipeRandomizer.RandomizeRecipes();
+            Task recipeTask = Task.Run(() => RecipeRandomizer.RandomizeRecipes());
 
-            ShopRandomizer.Randomize();
+            Task shopTask = Task.Run(() => ShopRandomizer.Randomize());
 
-            MiscRandomizer.Randomize();
+            Task miscTask = Task.Run(() => MiscRandomizer.Randomize());
+            if (IoC.Settings.RandomizeQuests)
+                Task.WaitAll(questTask, monsterTask, recipeTask, shopTask, miscTask);
+            else
+                Task.WaitAll(monsterTask, recipeTask, shopTask, miscTask);
 
             Randomizing = false;
 
