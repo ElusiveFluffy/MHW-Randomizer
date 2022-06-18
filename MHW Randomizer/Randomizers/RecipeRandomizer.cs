@@ -302,9 +302,8 @@ namespace MHW_Randomizer
             {
                 byte[] datBytes = ChunkOTF.files["armor.am_dat"].Extract();
                 List<RecipeStructs.ArmourDat> datList = StructTools.RawDeserialize<RecipeStructs.ArmourDat>(datBytes, 10);
-                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
 
-                RandomizeArmourDat(datList, r);
+                RandomizeArmourDat(datList);
 
                 byte[] randomizedDatBytes = StructTools.RawSerialize(datList);
                 Array.Copy(randomizedDatBytes, 0, datBytes, 10, randomizedDatBytes.Length);
@@ -1895,7 +1894,7 @@ namespace MHW_Randomizer
             }
         }
 
-        private static void RandomizeArmourDat(List<RecipeStructs.ArmourDat> armourDats, NR3Generator r)
+        private static void RandomizeArmourDat(List<RecipeStructs.ArmourDat> armourDats)
         {
             int[] badIndex = {125, 127, 129, 130, 131, 133, 135, 137, 140, 141, 146, 147, 155, 156, 159, 161, 162, 163, 165, 176, 198, 225, 445, 454, 637, 789, 790, 795, 796, 804, 805, 808, 810, 811, 812, 814, 825, 847, 863, 1064, 1073, 1251, 1407, 1408, 1420, 1423, 1424, 1425, 1426, 1428, 1429, 1430, 1432, 1443, 1465, 1481,
                               1681, 1690, 1866, 2019, 2020, 2032, 2035, 2036, 2037, 2038, 2040, 2041, 2042, 2044, 2055, 2077, 2093, 2290, 2299, 2457, 2631, 2632, 2644, 2647, 2648, 2649, 2650, 2652, 2653, 2654, 2656, 2667, 2689, 2705, 2905, 2914, 3090, 3124, 3125, 3126, 3127, 3155, 3156, 3157, 3224, 3291, 3349, 3351, 3368,
@@ -1904,6 +1903,7 @@ namespace MHW_Randomizer
                               2494, 2495, 2496, 2497, 2498, 2499, 2500, 2501, 2502, 2503, 2504, 2505, 2506, 2507, 2915, 3089, 3093, 3100, 3101, 3102, 3103, 3104, 3105, 3106, 3107, 3108, 3109, 3110, 3111, 3112, 3113, 3114, 3115, 3116, 3117, 3118, 3119, 3120, 3121, 3122, 3463, 3464, 3465, 3466, 3467, 3468, 3469, 3470, 
                               3471, 3472, 3473, 3474, 3475, 3476, 3477, 3478, 3479};
 
+            NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
 
             Dictionary<uint, string> skillNames = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_skillData));
             Dictionary<uint, string> fullArmourList = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_armorData));
@@ -1967,21 +1967,25 @@ namespace MHW_Randomizer
                 if (IoC.Settings.NonRankSpecificSetBonusShuffle)
                 {
                     var dats = armourDats.Where(o => !badIndex.Contains((int)o.Index) && o.Set_Skill_1 > 0).ToList();
-                    ShuffleDat(r, dats);
+                    ShuffleSetBonus(r, dats);
                 }
                 else
                 {
                     var datsLow = armourDats.Where(o => !badIndex.Contains((int)o.Index) && o.Set_Skill_1 > 0 && o.Rarity < 4).ToList();
                     var datsHigh = armourDats.Where(o => !badIndex.Contains((int)o.Index) && o.Set_Skill_1 > 0 && o.Rarity > 3 && o.Rarity <= 8).ToList();
-                    var datsMaster = armourDats.Where(o => !badIndex.Contains((int)o.Index) && o.Set_Skill_1 > 0 && o.Rarity > 8).ToList();
-                    ShuffleDat(r, datsLow);
-                    ShuffleDat(r, datsHigh);
-                    ShuffleDat(r, datsMaster);
+                    //var datsMaster = armourDats.Where(o => !badIndex.Contains((int)o.Index) && o.Set_Skill_1 > 0 && o.Rarity > 8).ToList();
+                    ShuffleSetBonus(r, datsLow);
+                    ShuffleSetBonus(r, datsHigh);
+                    //ShuffleDat(r, datsMaster);
                 }
             }
             using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Armour Data Log.txt"))
             {
                 NR3Generator skillR = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator skillLevelR = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator decoR = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator decoSizeR = new NR3Generator(IoC.Randomizer.Seed);
+
                 float[] skillWeightTable = { 45, 43.5f, 9.1f, 1.4f, 1 };
                 for (int c = 0; c < armourDats.Count; c++)
                 {
@@ -1999,13 +2003,13 @@ namespace MHW_Randomizer
                     {
                         if (armourDats[c].Skill_1 != 0)
                         {
-                            int index = r.Next(ItemData.ArmourSkills.Length);
+                            int index = skillR.Next(ItemData.ArmourSkills.Length);
                             armourDats[c].Skill_1 = ItemData.ArmourSkills[index];
                             logText += "\n\tSkill 1: " + skillNames[(uint)armourDats[c].Skill_1 * 3];
                         }
                         if (armourDats[c].Skill_2 != 0)
                         {
-                            int index = r.Next(ItemData.ArmourSkills.Length);
+                            int index = skillR.Next(ItemData.ArmourSkills.Length);
                             armourDats[c].Skill_2 = ItemData.ArmourSkills[index];
                             logText += "\n\tSkill 2: " + skillNames[(uint)armourDats[c].Skill_2 * 3];
                         }
@@ -2015,7 +2019,7 @@ namespace MHW_Randomizer
                     {
                         if (armourDats[c].Skill_1 != 0)
                         {
-                            float slotCount = (float)skillR.NextDouble(skillWeightTable.Sum());
+                            float slotCount = (float)skillLevelR.NextDouble(skillWeightTable.Sum());
                             int smallestLevel = 0;
 
                             float cumulative_weight = 0;
@@ -2033,7 +2037,7 @@ namespace MHW_Randomizer
                         }
                         if (armourDats[c].Skill_2 != 0)
                         {
-                            float slotCount = (float)skillR.NextDouble(skillWeightTable.Sum());
+                            float slotCount = (float)skillLevelR.NextDouble(skillWeightTable.Sum());
                             int smallestLevel = 0;
 
                             float cumulative_weight = 0;
@@ -2066,7 +2070,7 @@ namespace MHW_Randomizer
                     {
                         int[] weightTable = { 50 - armourDats[c].Rarity * 4, 40 - armourDats[c].Rarity * 3, 10 + (armourDats[c].Rarity - 1) * 2, 10 + (int)Math.Round(((double)armourDats[c].Rarity - 1) * 1.5) };
 
-                        byte slotCount = (byte)r.Next(weightTable.Sum());
+                        byte slotCount = (byte)decoR.Next(weightTable.Sum());
                         byte Smallestslot = 0;
 
                         int cumulative_weight = 0;
@@ -2170,7 +2174,7 @@ namespace MHW_Randomizer
                                 }
                             case 1:
                                 {
-                                    byte slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    byte slotCountTes = (byte)decoSizeR.Next(weightTable.Sum());
                                     cumulative_weight = 0;
                                     for (byte i = 0; i < 4; i++)
                                     {
@@ -2186,7 +2190,7 @@ namespace MHW_Randomizer
                                 }
                             case 2:
                                 {
-                                    byte slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    byte slotCountTes = (byte)decoSizeR.Next(weightTable.Sum());
                                     cumulative_weight = 0;
                                     for (byte i = 0; i < 4; i++)
                                     {
@@ -2198,7 +2202,7 @@ namespace MHW_Randomizer
                                         }
                                     }
 
-                                    slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    slotCountTes = (byte)decoSizeR.Next(weightTable.Sum());
                                     cumulative_weight = 0;
                                     for (byte i = 0; i < 4; i++)
                                     {
@@ -2215,7 +2219,7 @@ namespace MHW_Randomizer
                                 }
                             case 3:
                                 {
-                                    byte slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    byte slotCountTes = (byte)decoSizeR.Next(weightTable.Sum());
                                     cumulative_weight = 0;
                                     for (byte i = 0; i < 4; i++)
                                     {
@@ -2227,7 +2231,7 @@ namespace MHW_Randomizer
                                         }
                                     }
 
-                                    slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    slotCountTes = (byte)decoSizeR.Next(weightTable.Sum());
                                     cumulative_weight = 0;
                                     for (byte i = 0; i < 4; i++)
                                     {
@@ -2239,7 +2243,7 @@ namespace MHW_Randomizer
                                         }
                                     }
 
-                                    slotCountTes = (byte)r.Next(weightTable.Sum());
+                                    slotCountTes = (byte)decoSizeR.Next(weightTable.Sum());
                                     cumulative_weight = 0;
                                     for (byte i = 0; i < 4; i++)
                                     {
@@ -2272,7 +2276,7 @@ namespace MHW_Randomizer
             }
         }
 
-        private static void ShuffleDat(NR3Generator r, List<RecipeStructs.ArmourDat> dats)
+        private static void ShuffleSetBonus(NR3Generator r, List<RecipeStructs.ArmourDat> dats)
         {
             for (int c = dats.Count - 1; c >= 0; c--)
             {
