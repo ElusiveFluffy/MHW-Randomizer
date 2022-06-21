@@ -262,6 +262,7 @@ namespace MHW_Randomizer
 
         public async void Randomize()
         {
+            FolderBrowser = new BetterFolderBrowser();
             if (!string.IsNullOrWhiteSpace(IoC.Settings.SaveFolderPath) && Directory.Exists(IoC.Settings.SaveFolderPath))
                 FolderBrowser.RootFolder = IoC.Settings.SaveFolderPath;
             else
