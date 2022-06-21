@@ -93,6 +93,50 @@
                 </Grid>
 
                 <Grid>
+                    <TextBlock Text="Supply Box"
+                               Margin="15 -3 0 0"
+                               Background="White"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Panel.ZIndex="1"
+                               FontWeight="Bold"/>
+                    <Border BorderBrush="Gray" 
+                            BorderThickness="1"
+                            Margin="5">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5"
+                                    IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
+                            <StackPanel VerticalAlignment="Center">
+                                <CheckBox Content="Random Supply Box"
+                                          IsChecked="{Binding RandomSupplyBox, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Picks a random supply box for each quest"/>
+                                <CheckBox Content="Random Supply Box Items"
+                                          IsChecked="{Binding RandomSupplyBoxItems, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Randomizes the items in supply boxes"/>
+                            </StackPanel>
+                            <StackPanel Margin="13 -4 0 0"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Extra Supply Boxes"
+                                           FontSize="12"
+                                           Margin="5 2"/>
+                                <TextBox Margin="5 2"
+                                         Text="{Binding ExtraSupplyBoxes, Source={x:Static local:IoC.Settings}}"
+                                         Width="100"
+                                         HorizontalAlignment="Left"
+                                         PreviewTextInput="NumberValidationTextBox"
+                                         IsKeyboardFocusedChanged="TBSupply_IsKeyboardFocusedChanged"
+                                         KeyDown="EnterKeyRemoveFocus"
+                                         x:Name="TBSupply"
+                                         ToolTip="How many extra supply boxes to create (will only create extra supply boxes if random supply box items it checked)&#xA;(0 will only randomize the items in exisiting supply boxes and create no extra)"
+                                         ToolTipService.ShowDuration="10000"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid>
                     <TextBlock Text="Monsters"
                                Margin="15 -3 0 0"
                                Background="White"

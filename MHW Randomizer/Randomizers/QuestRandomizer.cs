@@ -1,8 +1,10 @@
 ﻿using MHW_Randomizer.Crypto;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using Troschuetz.Random.Generators;
 
@@ -166,6 +168,8 @@ namespace MHW_Randomizer
         private Files[] SobjFilesCache;
         private Files[] SobjFilesBigMCache;
 
+        private static List<string> SuppIDs = new List<string>();
+
         #region Random Number Generators
 
         private NR3Generator r;
@@ -173,6 +177,7 @@ namespace MHW_Randomizer
         private NR3Generator PickIcon;
         private NR3Generator PickMap;
         private NR3Generator PickSize;
+        private NR3Generator PickSupplyID;
 
         #endregion
 
@@ -284,6 +289,7 @@ namespace MHW_Randomizer
             PickIcon = new NR3Generator(IoC.Randomizer.Seed);
             PickMap = new NR3Generator(IoC.Randomizer.Seed);
             PickSize = new NR3Generator(IoC.Randomizer.Seed);
+            PickSupplyID = new NR3Generator(IoC.Randomizer.Seed);
 
             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\");
             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\quest");
@@ -291,6 +297,9 @@ namespace MHW_Randomizer
             IoC.Randomizer.MissingMIBFiles = new List<string>();
 
             StoryTargetText = new GMD(ChunkOTF.files["storyTarget_eng.gmd"].Extract());
+
+            if (IoC.Settings.RandomSupplyBox || IoC.Settings.RandomSupplyBoxItems)
+                GetSupplyIDs();
 
             using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt"))
             {
@@ -458,6 +467,9 @@ namespace MHW_Randomizer
             }
 
             StoryTargetText.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\storyTarget_eng.gmd");
+
+            if (IoC.Settings.RandomSupplyBoxItems)
+                RandomizeSupplyItems();
 
             EditAlnks();
             EditMaps();
@@ -706,6 +718,9 @@ namespace MHW_Randomizer
                     MObjT2Index = MObjT1Index;
                     MObjC2Text = "1";
                 }
+
+                if (IoC.Settings.RandomSupplyBox)
+                    SRemIDText = SuppIDs[PickSupplyID.Next(SuppIDs.Count)];
 
                 bool changeText = true;
                 if (isStoryQuest)
@@ -1076,6 +1091,49 @@ namespace MHW_Randomizer
                 #endregion
 
             }
+        }
+
+        private static void RandomizeSupplyItems()
+        {
+            Dictionary<ushort, string> itemPool = JsonConvert.DeserializeObject<Dictionary<ushort, string>>(Encoding.UTF8.GetString(Properties.Resources.SupplyItems)).ToDictionary(x => x.Key, x => x.Value);
+            NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\supp");
+            File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Supply Log.txt").Dispose();
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Supply Log.txt"))
+            {
+                file.WriteLine("Items 8 and above only appear in the supply box if there is 2 or more players\n");
+                foreach (string supp in SuppIDs)
+                {
+                    file.WriteLine("Supply Box ID: " + supp);
+                    byte[] suppBytes = ChunkOTF.files["suppData_" + supp + ".supp"].Extract();
+                    byte[] suppItemBytes = new byte[96];
+                    Array.Copy(suppBytes, 14, suppItemBytes, 0, 96);
+                    List<SuppItems> items = StructTools.RawDeserialize<SuppItems>(suppItemBytes, 0);
+
+                    for (int i = 0; i < items.Count; i++)
+                    {
+                        if (items[i].Item_Count > 0)
+                        {
+                            items[i].Item_Id = itemPool.ElementAt(r.Next(itemPool.Count)).Key;
+                            file.WriteLine("Item " + i + ": " + itemPool[items[i].Item_Id]);
+                        }
+                    }
+
+                    suppItemBytes = StructTools.RawSerialize(items);
+                    Array.Copy(suppItemBytes, 0, suppBytes, 14, 96);
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\supp\" + "suppData_" + supp + ".supp", suppBytes);
+
+                    file.Write("\n\n");
+                }
+            }
+        }
+
+        private static void GetSupplyIDs()
+        {
+            string[] suppFiles = ChunkOTF.files.Keys.Where(o => o.Contains(".supp")).ToArray();
+            foreach (string supp in suppFiles)
+                SuppIDs.Add(supp.Split('_', '.')[1]);
         }
 
         private static void EditMaps()

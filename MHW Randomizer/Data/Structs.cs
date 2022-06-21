@@ -327,4 +327,11 @@ namespace MHW_Randomizer
             public ushort Unk_27;
         }
     }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class SuppItems
+    {
+        public ushort Item_Id;
+        public ushort Item_Count;
+    }
 }

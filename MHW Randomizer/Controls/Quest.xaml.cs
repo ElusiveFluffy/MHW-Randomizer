@@ -136,5 +136,17 @@ namespace MHW_Randomizer
             if (!IoC.Settings.IceborneOnlyMonsters && !IoC.Settings.MonstersFoundInIB)
                 NonIBMonsters.IsChecked = true;
         }
+
+        private void TBSupply_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            tb.Text = tb.Text.Truncate(5);
+
+            if (int.Parse(tb.Text) > 2000)
+            {
+                tb.Text = "2000";
+                tb.SelectionStart = 4;
+            }
+        }
     }
 }

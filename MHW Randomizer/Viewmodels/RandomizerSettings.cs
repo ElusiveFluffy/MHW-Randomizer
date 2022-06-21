@@ -134,7 +134,10 @@ namespace MHW_Randomizer
 
         //Quests
         public bool RandomGearEachQuest { get; set; } //Using the pre-selected gear in the quest settings (Need to figure out how this works)
-        public bool ShuffledSupplyBoxItems { get; set; } //Random supply box rem ID
+        public bool RandomSupplyBox { get; set; } //Random supply box rem ID
+        public bool RandomSupplyBoxItems { get; set; } //Random supply box items
+        public bool RandomSupplyBoxItemAmount { get; set; } //Random amount for each supply box item
+        public uint ExtraSupplyBoxes { get; set; } //Extra supply box files
         public bool RandomQuestRewards { get; set; }
 
         public bool RandomizeMissions { get; set; }
