@@ -114,10 +114,11 @@
                                 <CheckBox Content="Random Supply Box Items"
                                           IsChecked="{Binding RandomSupplyBoxItems, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
-                                          ToolTip="Randomizes the items in supply boxes"/>
+                                          ToolTip="Randomizes the items in supply boxes (Only includes supply items)"/>
                             </StackPanel>
                             <StackPanel Margin="13 -4 0 0"
-                                        VerticalAlignment="Center">
+                                        VerticalAlignment="Center"
+                                        IsEnabled="{Binding RandomSupplyBoxItems, Source={x:Static local:IoC.Settings}}">
                                 <TextBlock Text="Extra Supply Boxes"
                                            FontSize="12"
                                            Margin="5 2"/>
@@ -129,7 +130,7 @@
                                          IsKeyboardFocusedChanged="TBSupply_IsKeyboardFocusedChanged"
                                          KeyDown="EnterKeyRemoveFocus"
                                          x:Name="TBSupply"
-                                         ToolTip="How many extra supply boxes to create (will only create extra supply boxes if random supply box items it checked)&#xA;(0 will only randomize the items in exisiting supply boxes and create no extra)"
+                                         ToolTip="How many extra supply boxes to create &#xA;(0 will only randomize the items in exisiting supply boxes and create no extra)&#xA;(Picks a random amount of items between 3-5, and random count of each item between 1-30)"
                                          ToolTipService.ShowDuration="10000"/>
                             </StackPanel>
                         </StackPanel>

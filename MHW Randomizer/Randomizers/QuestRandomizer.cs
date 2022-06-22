@@ -301,6 +301,9 @@ namespace MHW_Randomizer
             if (IoC.Settings.RandomSupplyBox || IoC.Settings.RandomSupplyBoxItems)
                 GetSupplyIDs();
 
+            if (IoC.Settings.ExtraSupplyBoxes > 0)
+                AddSupplyBoxIDs();
+
             using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt"))
             {
                 //Set up IDs
@@ -1106,11 +1109,19 @@ namespace MHW_Randomizer
                 foreach (string supp in SuppIDs)
                 {
                     file.WriteLine("Supply Box ID: " + supp);
-                    byte[] suppBytes = ChunkOTF.files["suppData_" + supp + ".supp"].Extract();
+                    byte[] suppBytes = new byte[0];
+                    //If its a custom extra supply box ID read it from the disk
+                    if (int.Parse(supp) > 11999)
+                        suppBytes = File.ReadAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\supp\" + "suppData_" + supp + ".supp");
+                    else
+                        suppBytes = ChunkOTF.files["suppData_" + supp + ".supp"].Extract();
+
+                    //Extract the bytes for the items
                     byte[] suppItemBytes = new byte[96];
                     Array.Copy(suppBytes, 14, suppItemBytes, 0, 96);
                     List<SuppItems> items = StructTools.RawDeserialize<SuppItems>(suppItemBytes, 0);
 
+                    //Pick a random item
                     for (int i = 0; i < items.Count; i++)
                     {
                         if (items[i].Item_Count > 0)
@@ -1126,6 +1137,43 @@ namespace MHW_Randomizer
 
                     file.Write("\n\n");
                 }
+            }
+        }
+
+        private static void AddSupplyBoxIDs()
+        {
+            NR3Generator IDr = new NR3Generator(IoC.Randomizer.Seed);
+            NR3Generator amountr = new NR3Generator(IoC.Randomizer.Seed);
+            NR3Generator dice = new NR3Generator(IoC.Randomizer.Seed);
+
+            string[] localSuppIDs = SuppIDs.ToArray();
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\supp");
+
+            for (int id = 0; id < IoC.Settings.ExtraSupplyBoxes; id++)
+            {
+                byte[] suppBytes = ChunkOTF.files["suppData_" + localSuppIDs[IDr.Next(localSuppIDs.Length)] +".supp"].Extract();
+                List<SuppItems> items = new List<SuppItems>();
+
+                int singlePlayAmount = amountr.Next(3, 6);
+                int multiPlayAmount = amountr.Next(7, 17);
+                for (int a = 0; a < 24; a++)
+                {
+                    if (a < singlePlayAmount || (7 < a && a - 8 < multiPlayAmount))
+                    {
+                        //Pick two random numbers for the item count and pick the lowest
+                        int roll1 = dice.Next(1, 31);
+                        int roll2 = dice.Next(1, 31);
+                        ushort lowest = (ushort)Math.Min(roll1, roll2);
+                        items.Add(new SuppItems { Item_Count = lowest });
+                    }
+                    else
+                        items.Add(new SuppItems());
+                }
+
+                Array.Copy(StructTools.RawSerialize(items), 0, suppBytes, 14, 96);
+                //Temporarily store the file in unfinished state on disk, rest will be done on picking random item
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\supp\" + "suppData_" + (12000 + id) + ".supp", suppBytes);
+                SuppIDs.Add((12000 + id).ToString());
             }
         }
 
