@@ -1236,6 +1236,76 @@ namespace MHW_Randomizer
 
                 #endregion
 
+                #region Hoarfrost Reach Blockade
+
+                levelObjects = ChunkOTF.files["st108_gm.sobj"].Extract();
+
+                //Rocks to the left area
+                levelObjects[0xF2A9] = 0x00;
+                levelObjects[0xF2AA] = 0x40;
+                levelObjects[0xF2AB] = 0x9C;
+                levelObjects[0xF2AC] = 0xC5;
+
+                levelObjects[0xF508] = 0x00;
+                levelObjects[0xF509] = 0x80;
+                levelObjects[0xF50A] = 0x3B;
+                levelObjects[0xF50B] = 0xC5;
+
+                levelObjects[0xF767] = 0x00;
+                levelObjects[0xF768] = 0x00;
+                levelObjects[0xF769] = 0x16;
+                levelObjects[0xF76A] = 0xC5;
+
+                levelObjects[0xFE6A] = 0x00;
+                levelObjects[0xFE6B] = 0xE0;
+                levelObjects[0xFE6C] = 0xAB;
+                levelObjects[0xFE6D] = 0xC5;
+
+                //Crawl space near the rocks in the left area
+                levelObjects[0x10637] = 0x00;
+                levelObjects[0x10638] = 0x00;
+                levelObjects[0x10639] = 0xFA;
+                levelObjects[0x1063A] = 0x44;
+
+                //Rock to the back left of the map
+                levelObjects[0xF9C6] = 0x00;
+                levelObjects[0xF9C7] = 0x40;
+                levelObjects[0xF9C8] = 0x9C;
+                levelObjects[0xF9C9] = 0xC5;
+
+                levelObjects[0xFC18] = 0x00;
+                levelObjects[0xFC19] = 0x40;
+                levelObjects[0xFC1A] = 0x9C;
+                levelObjects[0xFC1B] = 0xC5;
+
+                levelObjects[0x10837] = 0x00;
+                levelObjects[0x10838] = 0x40;
+                levelObjects[0x10839] = 0x9C;
+                levelObjects[0x1083A] = 0xC5;
+
+                //Logs in the middle of the map
+                levelObjects[0x1043E] = 0x00;
+                levelObjects[0x1043F] = 0x40;
+                levelObjects[0x10440] = 0x9C;
+                levelObjects[0x10441] = 0xC5;
+
+                //Ice to the back right of the map
+                levelObjects[0x10217] = 0x00;
+                levelObjects[0x10218] = 0x00;
+                levelObjects[0x10219] = 0x7A;
+                levelObjects[0x1021A] = 0xC5;
+
+                //Giant Crystal at back of the map
+                levelObjects[0x10031] = 0x00;
+                levelObjects[0x10032] = 0x40;
+                levelObjects[0x10033] = 0x9C;
+                levelObjects[0x10034] = 0xC5;
+
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st108\common\set");
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st108\common\set\st108_gm.sobj", levelObjects);
+
+                #endregion
+
                 #region Guiding Lands Blockade
 
                 //Unlock the blocked off areas in the guiding lands
