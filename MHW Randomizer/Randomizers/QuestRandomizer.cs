@@ -364,7 +364,7 @@ namespace MHW_Randomizer
                     string[] multiObjQuests = QuestData.HuntMultiObjective;
                     if (!IoC.Settings.DontRandomizeSlay)
                         multiObjQuests = multiObjQuests.Concat(QuestData.SlayMultiObjective).ToArray();
-                    RandomizeQuests(false, false, file, multiObjQuests);
+                    RandomizeQuests(false, false, file, multiObjQuests, null, false, false, true);
                 }
 
                 if (IoC.Settings.RandomizeMultiMon)
@@ -375,7 +375,7 @@ namespace MHW_Randomizer
                     string[] multiMonQuests = QuestData.HuntMultiMonster;
                     if (!IoC.Settings.DontRandomizeSlay)
                         multiMonQuests = multiMonQuests.Concat(QuestData.SlayMultiMonster).ToArray();
-                    RandomizeQuests(false, false, file, multiMonQuests);
+                    RandomizeQuests(false, false, file, multiMonQuests, null, false, false, true);
                 }
 
                 if (IoC.Settings.RandomizeDuplicate)
@@ -386,7 +386,7 @@ namespace MHW_Randomizer
                     string[] duplicateQuests = QuestData.HuntDuplicate;
                     if (!IoC.Settings.DontRandomizeSlay)
                         duplicateQuests = duplicateQuests.Concat(QuestData.SlayDuplicate).ToArray();
-                    RandomizeQuests(false, false, file, duplicateQuests);
+                    RandomizeQuests(false, false, file, duplicateQuests, null, false, true, true);
                 }
 
                 if (IoC.Settings.RandomizeIBQuests)
@@ -446,7 +446,7 @@ namespace MHW_Randomizer
                         file.WriteLine("\n\n---------------------------------------------------------------------------");
                         file.WriteLine("                      Iceborne Multi-Objective Quests                      ");
                         file.WriteLine("---------------------------------------------------------------------------");
-                        RandomizeQuests(false, true, file, QuestData.IBHuntMultiObjective);
+                        RandomizeQuests(false, true, file, QuestData.IBHuntMultiObjective, null, false, false, true);
                     }
 
                     if (IoC.Settings.RandomizeMultiMon)
@@ -457,14 +457,14 @@ namespace MHW_Randomizer
                         string[] multiMonQuests = QuestData.IBHuntMultiMonster;
                         if (!IoC.Settings.DontRandomizeSlay)
                             multiMonQuests = multiMonQuests.Concat(QuestData.IBSlayMultiMonster).ToArray();
-                        RandomizeQuests(false, true, file, multiMonQuests);
+                        RandomizeQuests(false, true, file, multiMonQuests, null, false, false, true);
                     }
                     if (IoC.Settings.RandomizeDuplicate)
                     {
                         file.WriteLine("\n\n---------------------------------------------------------------------------");
                         file.WriteLine("                         Iceborne Duplicate Quests                         ");
                         file.WriteLine("---------------------------------------------------------------------------");
-                        RandomizeQuests(false, true, file, QuestData.IBHuntDuplicate);
+                        RandomizeQuests(false, true, file, QuestData.IBHuntDuplicate, null, false, true, true);
                     }
                 }
             }
@@ -478,7 +478,7 @@ namespace MHW_Randomizer
             EditMaps();
         }
 
-        private void RandomizeQuests(bool isStoryQuest, bool iceborne, StreamWriter file, string[] Quests = null, Dictionary<string, StoryQuestData> StoryQuests = null, bool captureQuest = false)
+        private void RandomizeQuests(bool isStoryQuest, bool iceborne, StreamWriter file, string[] Quests = null, Dictionary<string, StoryQuestData> StoryQuests = null, bool captureQuest = false, bool duplicateMonQuest = false, bool multiMonQuest = false)
         {
             GMD GMDFile;
             int[] monsterFor00103 = new int[2];
@@ -499,13 +499,15 @@ namespace MHW_Randomizer
                 OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].Extract());
 
                 bool isLowRank = RankIndex == 0;
-                bool isDuplicateMonQuest = QuestData.HuntDuplicate.Contains(questNumber) || QuestData.SlayDuplicate.Contains(questNumber) || QuestData.IBHuntDuplicate.Contains(questNumber);
 
                 int[] currentRankMonsterIDs;
                 if (captureQuest)
                     currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray() : MonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray();
                 else
                     currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs : MonsterIDs;
+
+                //Was originally a arena quest incase the map randomizes to an arena again which could cause not all the monster to spawn
+                bool originallyArenaQuest = false;
                 //Pick Random Map
                 if (IoC.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
                 {
@@ -515,6 +517,8 @@ namespace MHW_Randomizer
                     //    PSpawnIndex = 0;
                     //}
                     //else
+                    originallyArenaQuest = QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]);
+
                     if (IoC.Settings.IncludeArenaMap)
                     {
                         MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne) * 7))];
@@ -539,7 +543,8 @@ namespace MHW_Randomizer
                 //Loop to go through each monster
                 for (int m = 0; m < 7; m++)
                 {
-                    if (!IoC.Settings.AllMonstersInArena && m != 0 && IoC.Settings.RandomMaps && QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]) && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
+                    //Should remove all other monsters if is in a arena
+                    if (IoC.Settings.RandomMaps && QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]) && !IoC.Settings.AllMonstersInArena && m != 0 && (!multiMonQuest || (duplicateMonQuest && m >= int.Parse(MObjC1Text))) && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap) && !originallyArenaQuest)
                         MID[m] = 0;
 
                     //If there is no monster at that index skip unless the option for two monster quest is true
@@ -568,7 +573,7 @@ namespace MHW_Randomizer
                     int oldMonsterID = MID[m] - 1;
 
                     //Randomizes it to be the same as the first monster if its a kill duplicate quest and is a low enough monster slot value
-                    if (m < int.Parse(MObjC1Text) && m != 0 && isDuplicateMonQuest)
+                    if (m < int.Parse(MObjC1Text) && m != 0 && duplicateMonQuest)
                     {
                         MID[m] = MID[0];
                         RandomMonsterIndex = Array.IndexOf(currentRankMonsterIDs, MID[0] - 1);
@@ -699,7 +704,7 @@ namespace MHW_Randomizer
                         MObjID2 = MID[1] - 1;
                 }
 
-                if (IoC.Settings.TwoMonsterQuests && !isDuplicateMonQuest)
+                if (IoC.Settings.TwoMonsterQuests && !duplicateMonQuest)
                 {
                     //Set monster 2's stats to be the same as monster 1 as it doesn't have any stats
                     MHtP[1] = MHtP[0];
