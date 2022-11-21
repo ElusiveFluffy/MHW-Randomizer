@@ -521,7 +521,7 @@ namespace MHW_Randomizer
 
                     if (IoC.Settings.IncludeArenaMap)
                     {
-                        MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne) * 7))];
+                        MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne) * 6))];
                         if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
                             PSpawnIndex = 0;
                     }
@@ -559,9 +559,9 @@ namespace MHW_Randomizer
                     if (MID[m] != 0 || !isStoryQuest)
                         fsm = null;
 
-                    if (isStoryQuest && MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + ".fsm"))
+                    if (isStoryQuest && StoryQuests[questNumber].CreateFSM && MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + ".fsm"))
                         fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + ".fsm"].Extract();
-                    else if (isStoryQuest && m == 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm"))
+                    else if (isStoryQuest && StoryQuests[questNumber].CreateFSM && m == 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm"))
                         fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm"].Extract();
 
                     //Pick a random size percent between range if both aren't 100

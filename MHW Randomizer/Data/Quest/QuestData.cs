@@ -11,11 +11,13 @@ namespace MHW_Randomizer
         public static byte[] ObjectiveIDs = { 0x00, 0x01, 0x02, 0x11, 0x21, 0x31 };
         public static byte[] QuestTypeIDs = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 };
 
-        public static int[] ArenaMaps = { 201, 202, 405, 409, 412, 413, 415, 416, 417 };
+        // 415,
+        public static int[] ArenaMaps = { 201, 202, 405, 409, 412, 413, 416, 417 };
 
         public static int[] ValidMapIndexes = { 1, 2, 3, 4, 5, 8, 9 };
 
-        public static int[] ValidArenaMapIndexes = { 1, 2, 3, 4, 5, 11, 12, 8, 9, 31, 32, 34, 35, 36 };
+        // 34,
+        public static int[] ValidArenaMapIndexes = { 1, 2, 3, 4, 5, 11, 12, 8, 9, 31, 32, 35, 36 };
 
         public static string[] MapNames = {"Infinity of Nothing", "Ancient Forest", "Wildspire Waste", "Coral Highlands", "Rotten Vale", "Elder Recess" , "Great Ravine" , "Great Ravine (Story Map to Coral Highlands)" , "Hoarfrost Reach", "Guiding Lands", "Infinity of Nothing" ,
             "Special Arena" , "Arena (Challenge)" ,"IB Arena (Seliana Supply Cache)",  "Astera" , "Gathering Hub (Astera)" , "Research Base" , "Seliana", "Gathering Hub (Seliana)", "307 Unconfirmed/To Be Tested","311 Unconfirmed/To Be Tested","Crashes game" , "Ancient Forest (Flooded / Intro)" ,
@@ -664,20 +666,20 @@ namespace MHW_Randomizer
         {
             { "00102", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 165 } } }, //A Kestodon Kerfuffle
             { "00103", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 168 } } }, //The Great Jagras Hunt
-            { "00201", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 143 } } }, //Bird-Brained Bandit
+            { "00201", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 143 } } }, //Bird-Brained Bandit
             { "00205", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 171 } } }, //Urgent: Pukei-Pukei Hunt
             { "00301", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 147, 149 } } }, //The Best Kind of Quest //Broken monsters 21 //kinda broken 0
             { "00302", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 175 } } }, //Sinister Shadows in the Swamp
             { "00305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 178 } } }, //Flying Sparks: Tobi-Kadachi
             { "00306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 181 } } }, //The Encroaching Anjanath
             { "00405", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 191 } } }, //Ballooning Problems
-            { "00407", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 199 } } }, //Radobaan Roadblock
+            { "00407", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 199 } } }, //Radobaan Roadblock
             { "00408", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 202 } } }, //Legiana: Embodiment of Elegance
             { "00501", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 205, 207 } } }, //Into the Bowels of the Vale
-            { "00502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 213 } } }, //A Fiery Throne Atop the Forest
+            { "00502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 213 } } }, //A Fiery Throne Atop the Forest
             { "00503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 216 } } }, //Horned Tyrant Below the Sands
             //{ "00504", new StoryQuestData { QuestObjTextIndexs = new int[] { 219, 235 } } }, //A Colossal Task
-            { "00601", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 227 } } }, //Invader in the Waste
+            { "00601", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 227 } } }, //Invader in the Waste
             { "00605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 230 } } }, //Tickled Pink
             { "00607", new StoryQuestData { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 233 } } }, //Old World Monster in the New World
             { "00805", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 259 }, DuplicateMonsterHunt = true } }, //Beyond the Blasting Scales
@@ -764,9 +766,9 @@ namespace MHW_Randomizer
         /// </summary>
         public static Dictionary<string, StoryQuestData> IBStoryHuntQuest = new Dictionary<string, StoryQuestData>()
         {
-            { "01101", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 494 } } }, //Baptism by Ice
-            { "01102", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 501 } } }, //Banbaro Blockade
-            { "01201", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 508 } } }, //Ready to Strike
+            { "01101", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 494 } } }, //Baptism by Ice
+            { "01102", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 501 } } }, //Banbaro Blockade
+            { "01201", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 508 } } }, //Ready to Strike
             { "01202", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 512 } } }, //No Time for Naps
             { "01203", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 515 } } }, //Play Both Ends
             { "01301", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 519 } } }, //Blizzard Blitz
@@ -775,11 +777,11 @@ namespace MHW_Randomizer
             { "01304", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 530, 531 } } }, //Absolute Power
             { "01305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 533, 534 } } }, //A Smashing Cross Counter
             { "01306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 537, 538 } } }, //A Tale of Ice and Fire (Need to test this quest, repel velkhana quest)
-            { "01401", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 545 } } }, //When the Mist Taketh You
+            { "01401", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 545 } } }, //When the Mist Taketh You
             { "01402", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 552 } } }, //The Disintegrating Blade
             { "01403", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 555 } } }, //Bad Friends, Great Enemies
             { "01405", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 548 } } }, //The Thunderous Troublemaker!
-            { "01502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 571 } } }, //The Second Coming
+            { "01502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 571 } } }, //The Second Coming
 
             //Special Assignments
             { "51603", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 641 } } }, //Across the Lost Path
