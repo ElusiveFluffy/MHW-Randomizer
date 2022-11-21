@@ -308,7 +308,7 @@
                     <CheckBox Content="Include Alatreon"
                                   IsChecked="{Binding IncludeAlatreon, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
-                                  ToolTip="May get stuck, can be hard if include them. Apparently has a issue where in their fire form they make your sceen completely white when near them, &#xA;I haven't replicated it, maybe it only happens on one map"
+                                  ToolTip="May get stuck, can be hard if include them (Won't be in the pool of monsters for coral highlands because they make the screen completely white when in fire form on that map)"
                                   ToolTipService.ShowDuration="10000"/>
                 </StackPanel>
             </StackPanel>
