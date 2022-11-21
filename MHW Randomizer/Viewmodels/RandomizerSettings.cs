@@ -144,11 +144,14 @@ namespace MHW_Randomizer
 
         public bool RandomizeMissions { get; set; }
 
+        public bool RandomizeExpeditions { get; set; }
+
         //Monsters
         public bool RandomizeSmallMonsters { get; set; }
         public bool RandomMonsterProjectiles { get; set; }
         public bool RandomMonsterTrace { get; set; } //eg a great jagras could have a rathian traces
         public bool RandomMonsterDrops { get; set; }
+        //Random monster slinger ammo drops
 
         //Completely random (maybe with some logic or only if high rank monsters in low rank so low rank stuff only have low rank material, high rank with high rank materials, master rank with master rank materials)
         public bool RandomArmourRecipes { get; set; }
@@ -161,11 +164,13 @@ namespace MHW_Randomizer
         //Random slinger ammo? Random slinger ammo pickups
         public bool ShuffleGatheringSpots { get; set; }
 
-        public bool RandomStartingItems { get; set; } //Completely random
+        public bool RandomStartingPouchItems { get; set; } //Completely random
 
         //Need to figure out how to do this
         //I think giving palicos monster moves damages the player, could have a option for it, not sure if it damages monsters, could be chaotic
         public bool RandomPalicoAttacks { get; set; }
+
+        //Mantles that get given are shuffled around
 
     }
 }
