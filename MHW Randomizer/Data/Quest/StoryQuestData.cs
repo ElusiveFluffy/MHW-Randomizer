@@ -10,6 +10,7 @@ namespace MHW_Randomizer
         public bool CanRandomizeMap;
         public bool DuplicateMonsterHunt;
         public bool MultiObjectiveHunt;
+        public bool CreateFSM = true;
 
         /// <summary>
         /// The text indexes for the hunt text in the story target file
