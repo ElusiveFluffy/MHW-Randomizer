@@ -168,7 +168,7 @@ namespace MHW_Randomizer
         private Files[] SobjFilesCache;
         private Files[] SobjFilesBigMCache;
 
-        private static List<string> SuppIDs = new List<string>();
+        private static List<string> SupplyBoxIDs = new List<string>();
 
         #region Random Number Generators
 
@@ -739,7 +739,7 @@ namespace MHW_Randomizer
                 }
 
                 if (IoC.Settings.RandomSupplyBox)
-                    SRemIDText = SuppIDs[PickSupplyID.Next(SuppIDs.Count)];
+                    SRemIDText = SupplyBoxIDs[PickSupplyID.Next(SupplyBoxIDs.Count)];
 
                 bool changeText = true;
                 if (isStoryQuest)
@@ -1112,6 +1112,7 @@ namespace MHW_Randomizer
             }
         }
 
+        //Supply item randomization step 3
         private static void RandomizeSupplyItems()
         {
             Dictionary<ushort, string> itemPool = JsonConvert.DeserializeObject<Dictionary<ushort, string>>(Encoding.UTF8.GetString(Properties.Resources.SupplyItems)).ToDictionary(x => x.Key, x => x.Value);
@@ -1122,7 +1123,7 @@ namespace MHW_Randomizer
             using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Supply Log.txt"))
             {
                 file.WriteLine("Items 8 and above only appear in the supply box if there is 2 or more players\n");
-                foreach (string supp in SuppIDs)
+                foreach (string supp in SupplyBoxIDs)
                 {
                     file.WriteLine("Supply Box ID: " + supp);
                     byte[] suppBytes = new byte[0];
@@ -1156,13 +1157,14 @@ namespace MHW_Randomizer
             }
         }
 
+        //Supply item randomization step 2
         private static void AddSupplyBoxIDs()
         {
             NR3Generator IDr = new NR3Generator(IoC.Randomizer.Seed);
             NR3Generator amountr = new NR3Generator(IoC.Randomizer.Seed);
             NR3Generator dice = new NR3Generator(IoC.Randomizer.Seed);
 
-            string[] localSuppIDs = SuppIDs.ToArray();
+            string[] localSuppIDs = SupplyBoxIDs.ToArray();
             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\supp");
 
             for (int id = 0; id < IoC.Settings.ExtraSupplyBoxes; id++)
@@ -1189,15 +1191,17 @@ namespace MHW_Randomizer
                 Array.Copy(StructTools.RawSerialize(items), 0, suppBytes, 14, 96);
                 //Temporarily store the file in unfinished state on disk, rest will be done on picking random item
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\supp\" + "suppData_" + (12000 + id) + ".supp", suppBytes);
-                SuppIDs.Add((12000 + id).ToString());
+                SupplyBoxIDs.Add((12000 + id).ToString());
             }
         }
 
+        //Supply item randomization step 1
         private static void GetSupplyIDs()
         {
             string[] suppFiles = ChunkOTF.files.Keys.Where(o => o.Contains(".supp")).ToArray();
+            SupplyBoxIDs = new List<string>();
             foreach (string supp in suppFiles)
-                SuppIDs.Add(supp.Split('_', '.')[1]);
+                SupplyBoxIDs.Add(supp.Split('_', '.')[1]);
         }
 
         private static void EditMaps()
