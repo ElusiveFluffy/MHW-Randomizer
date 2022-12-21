@@ -504,10 +504,14 @@ namespace MHW_Randomizer
                 if (captureQuest)
                     currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray() : MonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray();
                 else
+                {
                     currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs : MonsterIDs;
+                    if (questNumber == "00301")
+                        currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 33).ToArray();
+                }
 
-                //Was originally a arena quest incase the map randomizes to an arena again which could cause not all the monster to spawn
-                bool originallyArenaQuest = false;
+                //Was variable for if its a arena quest which could cause not all the monster to spawn
+                bool arenaQuest = false;
                 //Pick Random Map
                 if (IoC.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
                 {
@@ -517,7 +521,7 @@ namespace MHW_Randomizer
                     //    PSpawnIndex = 0;
                     //}
                     //else
-                    originallyArenaQuest = QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]);
+                    arenaQuest = QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]);
 
                     if (IoC.Settings.IncludeArenaMap)
                     {
@@ -544,7 +548,7 @@ namespace MHW_Randomizer
                 for (int m = 0; m < 7; m++)
                 {
                     //Should remove all other monsters if is in a arena
-                    if (IoC.Settings.RandomMaps && QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]) && !IoC.Settings.AllMonstersInArena && m != 0 && (!multiMonQuest || (duplicateMonQuest && m >= int.Parse(MObjC1Text))) && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap) && !originallyArenaQuest)
+                    if (IoC.Settings.RandomMaps && QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]) && !IoC.Settings.AllMonstersInArena && m != 0 && (!multiMonQuest || (duplicateMonQuest && m >= int.Parse(MObjC1Text))) && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap) && !arenaQuest)
                         MID[m] = 0;
 
                     //If there is no monster at that index skip unless the option for two monster quest is true
