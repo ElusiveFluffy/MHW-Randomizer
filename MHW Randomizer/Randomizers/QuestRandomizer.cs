@@ -607,6 +607,13 @@ namespace MHW_Randomizer
                     if (questNumber == "00103")
                         RandomMonsterIndex = monsterFor00103[m];
 
+                    //Witcher crosser over quest unbeatable if monster 3 isn't leshen
+                    if (questNumber == "50910" && m == 3)
+                    {
+                        currentRankMonsterIDs = currentRankMonsterIDs.Append(23).ToArray();
+                        RandomMonsterIndex = currentRankMonsterIDs.Length - 1;
+                    }
+
                     //Set the monster to the randomized monster
                     MID[m] = currentRankMonsterIDs[RandomMonsterIndex] + 1;
 
