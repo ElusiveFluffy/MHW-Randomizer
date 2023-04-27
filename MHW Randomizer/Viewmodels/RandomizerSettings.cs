@@ -57,6 +57,7 @@ namespace MHW_Randomizer
         public bool IncludeShara { get; set; }
         public bool IncludeAlatreon { get; set; }
         public bool IncludeFatalis { get; set; } //Fix fatalis
+        public bool IncludeIBInBase { get; set; }
 
         [DefaultValue(100)]
         public int MonsterMinSize { get; set; } = 100;

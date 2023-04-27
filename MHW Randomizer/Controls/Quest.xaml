@@ -173,7 +173,7 @@
                             </StackPanel>
                             <StackPanel Margin="19 0"
                                         VerticalAlignment="Center">
-                                <CheckBox Content="High Rank Monsters in Low Rank"
+                                <CheckBox Content="Master &amp; High Rank Monsters in Low Rank"
                                           IsChecked="{Binding HighRankMonInLowRank, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
                                           ToolTip="Includes monsters that don't appear in low rank quest, can be challenging &#xA;(they don't have any low rank drops so you will get high rank drops instead, and you won't get any rewards from them at the end of the quest)"
@@ -192,7 +192,7 @@
                                           ToolTip="Behemoth could get stuck in some spots due to their size &#xA;(hasn't really been tested) and has alot of health so could be hard if included in possible random monster"
                                           ToolTipService.ShowDuration="10000"/>
                             </StackPanel>
-                            <StackPanel Margin="13 -4 0 0"
+                            <StackPanel Margin="-20 -4 0 0"
                                         VerticalAlignment="Center">
                                 <TextBlock Text="Min Size Percent"
                                            FontSize="12"
@@ -299,10 +299,14 @@
                                   ToolTip="Good luck (WARNING: They are a bit buggy and the attack where meant to go behind a gate, that doesn't exist in any other stage, will one shot you)"
                                   ToolTipService.ShowDuration="10000"/>
                 </StackPanel>-->
-                <StackPanel Margin="0 77 0 0">
+                <StackPanel>
+                    <CheckBox Content="Include IB Monster in Base Game"
+                                  IsChecked="{Binding IncludeIBInBase, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 30 5 4"
+                                  ToolTip="Includes Iceborne monster in the base game, can cause some issues like materials not working"/>
                     <CheckBox Content="Include Shara Ishvalda"
                                   IsChecked="{Binding IncludeShara, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
+                                  Margin="5 31 5 4"
                                   ToolTip="May get stuck, has a custom think file that makes them transform to the second phase when they see you"
                                   ToolTipService.ShowDuration="10000"/>
                     <CheckBox Content="Include Alatreon"

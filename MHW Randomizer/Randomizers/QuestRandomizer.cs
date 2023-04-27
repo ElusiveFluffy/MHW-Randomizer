@@ -306,9 +306,17 @@ namespace MHW_Randomizer
 
             using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt"))
             {
+                MonsterIDs = QuestData.BigMonsterIDsIB;
+                if (IoC.Settings.IceborneOnlyMonsters)
+                    MonsterIDs = MonsterIDs.Where(mon => !QuestData.BigMonsterIDs.Contains(mon)).ToArray();
+                if (IoC.Settings.IncludeHighRankOnly)
+                    MonsterIDs = MonsterIDs.Concat(QuestData.IBHighRankOnlyMonsters).ToArray();
+                if (IoC.Settings.IncludeShara)
+                    MonsterIDs = MonsterIDs.Append(81).ToArray();
+                if (IoC.Settings.IncludeAlatreon)
+                    MonsterIDs = MonsterIDs.Append(87).ToArray();
                 //Set up IDs
                 LowRankMonsterIDs = QuestData.LowRankBigMonsterIDs;
-                MonsterIDs = QuestData.BigMonsterIDs;
 
                 if (IoC.Settings.IncludeLeshen)
                 {
@@ -530,7 +538,7 @@ namespace MHW_Randomizer
                         MapIDIndex = QuestData.ValidMapIndexes[PickMap.Next(5 + (Convert.ToInt32(iceborne) * 2))];
                 }
 
-                if (iceborne && MapIDIndex == 3)
+                if ((iceborne || IoC.Settings.IncludeIBInBase) && MapIDIndex == 3)
                     //Remove alatreon as a possible monster if map is coral highlands as it causes a blinding white light effect on that map
                     currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87).ToArray();
 
@@ -804,14 +812,6 @@ namespace MHW_Randomizer
                         if (QuestData.ForbiddenMapIDs[i] == QuestData.MapIDs[MapID])
                         {
                             MessageBox.Show("THIS MAP IS ILLEGAL FOR LOW AND HIGH RANK QUESTS");
-                            return;
-                        }
-                    }
-                    for (int i = 0; i < 7; i++)
-                    {
-                        if (MID[i] > 61)
-                        {
-                            MessageBox.Show("Monster #" + (i + 1).ToString() + " IS ILLEGAL FOR LOW AND HIGH RANK QUESTS");
                             return;
                         }
                     }
