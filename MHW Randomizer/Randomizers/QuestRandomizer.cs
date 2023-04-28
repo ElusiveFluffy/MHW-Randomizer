@@ -318,6 +318,9 @@ namespace MHW_Randomizer
                 //Set up IDs
                 LowRankMonsterIDs = QuestData.LowRankBigMonsterIDs;
 
+                //Remove Raging Brachydios because gets stuck going to their second phase
+                MonsterIDs = MonsterIDs.Where(o => o != 96).ToArray();
+
                 if (IoC.Settings.IncludeLeshen)
                 {
                     MonsterIDs = MonsterIDs.Append(23).ToArray();
