@@ -152,10 +152,10 @@
                                     Margin="0 5"
                                     IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
                             <StackPanel VerticalAlignment="Center">
-                                <CheckBox Content="Duplicate Monsters in a Quest"
+                                <CheckBox Content="Allow Duplicate Monsters"
                                           IsChecked="{Binding DuplicateMonster, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
-                                          ToolTip="Allow for there to be a chance to randomize multiple of the same monster in the same quest"/>
+                                          ToolTip="Allow for there to be a chance to randomize multiple of the same monster in a quest (just through regular chance)"/>
 
                                 <CheckBox Content="Every Quest a 2 Monster Quest"
                                           Margin="5, 4"
@@ -304,6 +304,11 @@
                                   IsChecked="{Binding IncludeShara, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="May get stuck, has a custom think file that makes them transform to the second phase when they see you"
+                                  ToolTipService.ShowDuration="10000"/>
+                    <CheckBox Content="Include Furious Rajang"
+                                  IsChecked="{Binding IncludeFuriousRajang, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  ToolTip="May get stuck, can be hard if include them"
                                   ToolTipService.ShowDuration="10000"/>
                     <CheckBox Content="Include Alatreon"
                                   IsChecked="{Binding IncludeAlatreon, Source={x:Static local:IoC.Settings}}"
