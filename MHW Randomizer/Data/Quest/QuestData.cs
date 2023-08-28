@@ -27,7 +27,7 @@ namespace MHW_Randomizer
         //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj. em118_00_st102_02.sobj (story one?), em103_00_st105_10.sobj (story one too maybe), em042_05_st109_60.sobj (in area that need to do the quest "Across the Lost Path", get the quest after beating the main story,
         //gonna exclude it because could cause a softlock and could be confusing where the monster is), em057_01_st109_00.sobj (in area that need to do the quest "Across the Lost Path"), em113_01_st109_50.sobj (Don't know, seems to be in another area that needs to be unlocked),
         //em057_01_st109_10.sobj (in area that need to do the quest "Across the Lost Path"), em042_00_st109_60.sobj (in area that need to do the quest "Across the Lost Path"), em043_05_st109_50.sobj (Don't know, seems to be in another area that needs to be unlocked)
-        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj", "em011_00_st105_02.sobj", "em103_00_st104_00.sobj" };
+        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj", "em011_00_st105_02.sobj", "em103_00_st104_00.sobj", "em127_00_st101_01.sobj" };
         //Possible one em043_05_st109_60.sobj
 
         public static string[] IconList = { "Anjanath", "Great Jagras", "Pukei-Pukei", "Nergigante", "Xeno'jiiva", "Xeno'jiiva", "Zorah Magdaros", "Kulu-Ya-Ku", "Tzitzi-Ya-Ku", "Jyuratodus", "Tobi-Kadachi", "Paolumu", "Legiana", "Great Girros", "Odogaron", "Radobaan", 
