@@ -86,10 +86,12 @@ namespace MHW_Randomizer
                             file.WriteLine("\tAttack Index: " + attack.Index);
 
                         //poison, deadly poison, para, sleep, blast, slime, stun, miasma, bleed
-                        for (int a = 0; a < 9; a++)
+                        for (int s = 0; s < 9; s++)
                         {
                             //Only check whole array if randomizing multiple statuses
-                            if (status[0] == a || (status.Contains(a) && IoC.Settings.MultipleStatusesPerAttack))
+                            //Don't let kestodons have blast or slime as it can break the first quest
+                            if ((status[0] == s || (status.Contains(s) && IoC.Settings.MultipleStatusesPerAttack)) &&
+                               !(col.Name == "ems051.col" && (s == 4 || s == 5)))
                             {
                                 //Bias towards lower numbers
                                 int roll1 = statusRandom.Next(25, 101);
@@ -97,13 +99,13 @@ namespace MHW_Randomizer
                                 int min = Math.Min(roll1, roll2);
 
                                 //Random chance to inflict it
-                                attack.Statuses[a] = min;
+                                attack.Statuses[s] = min;
 
-                                file.WriteLine("\t   " + statusNames[a] + " Chance: " + attack.Statuses[a] + "%");
+                                file.WriteLine("\t   " + statusNames[s] + " Chance: " + attack.Statuses[s] + "%");
                             }
                             //Don't remove stun (6)
-                            else if (a != 6)
-                                attack.Statuses[a] = 0;
+                            else if (s != 6)
+                                attack.Statuses[s] = 0;
                         }
                         if (IoC.Settings.EachAttackDifferentStatus)
                             for (int n = 0; n < status.Length; n++)
