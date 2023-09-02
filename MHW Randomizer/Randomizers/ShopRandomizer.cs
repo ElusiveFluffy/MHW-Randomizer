@@ -171,6 +171,9 @@ namespace MHW_Randomizer
                         LogGearShop(shopItemList, currentGear[shopItemList[r].Equip_Id], r);
                     }
                 }
+                //Insert 2 blank weapons at the top as there is a bug where the kinsects use the first two story unlock values from the weapon shop instead of the insect shop
+                shopItemList.Insert(0, new ShopStructs.ArmourShop { Equip_Id = 0, Equip_Type = 0, Story_Unlock = 0 });
+                shopItemList.Insert(0, new ShopStructs.ArmourShop { Equip_Id = 0, Equip_Type = 0, Story_Unlock = 0 });
 
                 byte[] randomizedBytes = StructTools.RawSerialize(shopItemList);
                 byte[] header = new byte[10];
