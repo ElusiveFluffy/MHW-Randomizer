@@ -648,10 +648,10 @@ namespace MHW_Randomizer
             "em050_00", "em001_02", "em002_02", "em018_00", "em023_00", "em023_05", "em032_01", "em057_00", "em057_01", "em063_05", "em104_00", "unused", "em018_05", "em042_05", "em013_00" };
 
         public static string[] MonsterVariantNumber = { "00", "00", "unused", "unused", "unused", "unused", "unused", "00", "unused", "00", "01", "01", "00", "01", "00", "00", "00", "00", "00", "00",
-            "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "unused", "00", "unused",
-            "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "unused", "01", "unused", "unused", "unused", "unused","unused", "unused", "unused", "unused", "unused", "00", "00", "00", "05", "00", "00", "01",
-            "01", "01", "05", "01", "01", "05", "01", "05", "05", "00", "00", "00", "00", "00", "unused", "unused", "unused", "unused", "unused", "00", "em001_02_st", "em002_02_st",
-            "em018_00_st", "em023_00_st", "em023_05_st", "em032_01_st", "em057_00_st", "em057_01_st", "em063_05_st", "em104_00_st", "unused", "em018_05_st", "em042_05_st", "em013_00_st" };
+            "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "unused", "00", "unused", "unused", "unused", "unused", "unused", "unused", "unused",
+            "unused", "unused", "unused", "unused", "01", "unused", "unused", "unused", "unused","unused", "unused", "unused", "unused", "unused", "00", "00", "00", "05", "00", "00", "01",
+            "01", "01", "05", "01", "01", "05", "01", "05", "05", "00", "00", "00", "00", "00", "unused", "unused", "unused", "unused", "unused", "00", "02", "02",
+            "00", "00", "05", "01", "00", "01", "05", "00", "unused", "05", "05", "00" };
 
         //======================
         //  Story Hunt Quests
@@ -796,7 +796,7 @@ namespace MHW_Randomizer
             { "01501", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 563, 564 } } }, //The Iceborne Wyvern
             { "01503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 574, 575 } } }, //Under the Veil of Death
             { "01504", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //A Light From The Abyss
-            { "01601", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 583 } } }, //To The Guided, A Paean
+            //{ "01601", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 583 } } }, //To The Guided, A Paean //Requires ruiner nergigante or it softlocks
             { "01602", new StoryQuestData { ChangeObjective = true } }, //Paean of Guidance
             { "01605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 598 } } }, //To the Very Ends with You
 
