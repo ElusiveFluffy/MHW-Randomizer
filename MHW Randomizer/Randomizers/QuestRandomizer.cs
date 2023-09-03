@@ -1122,6 +1122,10 @@ namespace MHW_Randomizer
                 #endregion
 
             }
+
+            //Override the zone file with a different one as a dummy to remove the soft locking custscene
+            if (iceborne && isStoryQuest)
+                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone\01601_qtev.zon", ChunkOTF.files["01602_qtev.zon"].Extract());
         }
 
         /// <summary>
