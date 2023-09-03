@@ -66,7 +66,7 @@
                                 <CheckBox Content="Randomize Maps"
                                           IsChecked="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
-                                          ToolTip="Randomize the map the quest will happen on (needs to use random sobjs for the map)&#xA;(Some story quests don't randomize maps because it softlocks)&#xA;(The blockades in the rotten vale and elder recess get moved out of the way so you can access those areas early)"
+                                          ToolTip="Randomize the map the quest will happen on (needs to use random spawn files for the map)&#xA;(Some story quests don't randomize maps because it softlocks)&#xA;(The blockades in the rotten vale and elder recess get moved out of the way so you can access those areas early)"
                                           Checked="MapOption_Checked"
                                           Unchecked="MapOption_Unchecked"
                                           ToolTipService.ShowDuration="10000"/>
@@ -161,11 +161,11 @@
                                           Margin="5, 4"
                                           IsChecked="{Binding TwoMonsterQuests, Source={x:Static local:IoC.Settings}}"
                                           ToolTip="Makes it so every quest you need to hunt/slay/capture 2 monsters (same objective as the first monster)"/>
-                                <CheckBox Content="Use Random sobj File"
+                                <CheckBox Content="Use Random Spawn Files"
                                           Margin="5, 4"
                                           x:Name="Rsobj"
                                           IsChecked="{Binding RandomSobj, Source={x:Static local:IoC.Settings}}"
-                                          ToolTip="The sobj file affects where the monster wander around and where they spawn"
+                                          ToolTip="The spawn file affects things like the monster spawn. &#xA;Random spawn files aren't used for monsters that have cutscenes to not break them"
                                           IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}, Converter={local:InverseBooleanConverter}}"/>
                                 <!-- <CheckBox Content="Shuffle Quest Names"
                                                   Margin="5"
