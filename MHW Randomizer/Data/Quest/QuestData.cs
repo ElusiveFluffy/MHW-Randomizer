@@ -796,8 +796,8 @@ namespace MHW_Randomizer
             { "01501", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 563, 564 } } }, //The Iceborne Wyvern
             { "01503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 574, 575 } } }, //Under the Veil of Death
             { "01504", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 578, 579 } } }, //A Light From The Abyss
-            { "01601", new StoryQuestData { ChangeObjective = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 583 } } }, //To The Guided, A Paean
-            { "01602", new StoryQuestData { ChangeObjective = true } }, //Paean of Guidance
+            { "01601", new StoryQuestData { ChangeObjective = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 583 } } }, //To The Guided, A Paean //Don't create fsm or the monster won't be there
+            { "01602", new StoryQuestData { ChangeObjective = true, CreateFSM = false } }, //Paean of Guidance //Don't make fsm or the monster gets stuck in cutscene mode
             { "01605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 598 } } }, //To the Very Ends with You
 
             //Special Assignments

@@ -571,8 +571,6 @@ namespace MHW_Randomizer
                         fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm"].Extract();
                     else if (isStoryQuest && m == 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\50910_em127_00.fsm"))
                         fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\50910_em127_00.fsm"].Extract();
-                    else if (isStoryQuest && StoryQuests[questNumber].CreateFSM)
-                        file.WriteLine("Skipped fsm!!");
 
                     //Pick a random size percent between range if both aren't 100
                     if (IoC.Settings.MonsterMinSize != 100 && IoC.Settings.MonsterMaxSize != 100)
@@ -630,11 +628,12 @@ namespace MHW_Randomizer
                     //Check if the new monster is also a variant
                     isVariant = int.Parse(QuestData.MonsterVariantNumber[MID[m] - 1]) != 0;
 
+                    //Delete the old fsm folders
+                    if (Directory.Exists(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\") && m == 0)
+                        Directory.Delete(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\", true);
                     if (fsm != null)
                     {
                         //Create a copy of the fsm file but with the name for the randomized monster
-                        if (Directory.Exists(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\") && m == 0)
-                            Directory.Delete(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\", true);
                         Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\");
                         if (questNumber != "50910")
                             File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm", fsm);
