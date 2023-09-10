@@ -1125,7 +1125,10 @@ namespace MHW_Randomizer
 
             //Override the zone file with a different one as a dummy to remove the softlocking cutscene
             if (iceborne && isStoryQuest)
+            {
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone\01601_qtev.zon", ChunkOTF.files["01602_qtev.zon"].Extract());
+            }
         }
 
         /// <summary>
