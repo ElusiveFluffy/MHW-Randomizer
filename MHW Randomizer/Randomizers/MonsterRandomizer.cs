@@ -7,7 +7,7 @@ namespace MHW_Randomizer
 {
     public class MonsterRandomizer
     {
-        public static void Randomizer()
+        public static void Randomize()
         {
             if (IoC.Settings.RandomMonsterAttackStatus || IoC.Settings.RandomMonsterElement)
                 RandomAttackDebuffs();
