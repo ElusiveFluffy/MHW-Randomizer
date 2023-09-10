@@ -558,12 +558,13 @@ namespace MHW_Randomizer
                     //if ((questNumber == "00401" && m == 0) || (questNumber == "00504" && m == 0))
                     //    continue;
 
-                    //Get the old monster fsm file if its a story quest
-                    if (MID[m] != 0 || !isStoryQuest)
-                        fsm = null;
+                    //Clear fsm file
+                    fsm = null;
 
-                    //Check if its a variant, if so need to add _00
-                    bool isVariant = int.Parse(QuestData.MonsterVariantNumber[MID[m] - 1]) != 0;
+                    bool isVariant = false;
+                    if (MID[m] != 0)
+                        //Check if its a variant, if so need to add _00
+                        isVariant = int.Parse(QuestData.MonsterVariantNumber[MID[m] - 1]) != 0;
 
                     if (isStoryQuest && StoryQuests[questNumber].CreateFSM && MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm"))
                         fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm"].Extract();
@@ -704,7 +705,7 @@ namespace MHW_Randomizer
 
                     if (IoC.Settings.RandomIcons && m < 5 && MonIcons[m] != 127)
                         MonIcons[m] = PickIcon.Next(QuestData.IconList.Length - 1);
-                    else if ((m < 5 && MonIcons[m] != 127 && changeIcon) || (IoC.Settings.TwoMonsterQuests && m == 1 && !isStoryQuest))
+                    else if ((m < 5 && MonIcons[m] != 127 && changeIcon) || (IoC.Settings.TwoMonsterQuests && m == 1 && changeIcon))
                         MonIcons[m] = Array.IndexOf(QuestData.IconList, QuestData.MonsterNames[currentRankMonsterIDs[RandomMonsterIndex] + 1]);
 
                     //Write monster info to the log
@@ -769,6 +770,9 @@ namespace MHW_Randomizer
                         }
                         else if (StoryQuests[questNumber].MultiObjectiveHunt)
                             value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[i]]);
+                        //add a and to the text if two monster quests is enabled to make it clear you need to kill 2 monsters
+                        else if (IoC.Settings.TwoMonsterQuests)
+                            value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]) + " and " + (IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[1]]);
                         else
                             value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
 
