@@ -403,6 +403,14 @@ namespace MHW_Randomizer
                         MonsterIDs = MonsterIDs.Append(92).ToArray();
                     if (IoC.Settings.IncludeAlatreon)
                         MonsterIDs = MonsterIDs.Append(87).ToArray();
+                    //Only add these ones
+                    if (IoC.Settings.IncludeLeshen && IoC.Settings.IncludeHighRankOnly)
+                    {
+                        MonsterIDs = MonsterIDs.Append(23).ToArray();
+                        MonsterIDs = MonsterIDs.Append(51).ToArray();
+                    }
+                    if (IoC.Settings.IncludeLeshen && IoC.Settings.IncludeHighRankOnly)
+                        MonsterIDs = MonsterIDs.Append(15).ToArray();
                     //if (IoC.Settings.IncludeFatalis)
                     //    MonsterIDs = MonsterIDs.Append(101).ToArray();
 

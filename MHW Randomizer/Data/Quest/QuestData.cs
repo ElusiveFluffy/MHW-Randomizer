@@ -842,7 +842,7 @@ namespace MHW_Randomizer
         public static string[] IBBigMonsterCaptureQuests = { "01123", "01155", "01222", "01253", "01322", "01394", "01482", "01492", "01594", "61803" };
 
 
-        public static int[] IBHighRankOnlyMonsters = { 7, 10, 15, 20, 23, 25, 26, 36, 39, 51 };
+        public static int[] IBHighRankOnlyMonsters = { 7, 10, 20, 25, 36, 39 };
 
         //Removed safi'jiiva because doesn't spawn on most maps
         public static int[] BigMonsterIDsIB = { 0, 1, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 88, 89, 90, 91, 93, 94, 95, 96, 99, 100 };
