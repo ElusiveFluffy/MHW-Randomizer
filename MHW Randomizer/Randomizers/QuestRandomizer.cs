@@ -172,7 +172,7 @@ namespace MHW_Randomizer
 
         #region Random Number Generators
 
-        private NR3Generator r;
+        private XorShift128Generator r;
         private NR3Generator PickSobj;
         private NR3Generator PickIcon;
         private NR3Generator PickMap;
@@ -284,7 +284,7 @@ namespace MHW_Randomizer
             SobjFilesBigMCache = SobjFilesCache.Where(o => !o.Name.Contains("em101_00_st101")).ToArray();
             File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt").Dispose();
 
-            r = new NR3Generator(IoC.Randomizer.Seed);
+            r = new XorShift128Generator(IoC.Randomizer.Seed);
             PickSobj = new NR3Generator(IoC.Randomizer.Seed);
             PickIcon = new NR3Generator(IoC.Randomizer.Seed);
             PickMap = new NR3Generator(IoC.Randomizer.Seed);
