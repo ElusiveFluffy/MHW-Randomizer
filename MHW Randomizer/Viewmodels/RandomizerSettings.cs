@@ -64,6 +64,20 @@ namespace MHW_Randomizer
         [DefaultValue(100)]
         public int MonsterMaxSize { get; set; } = 100;
 
+        //-------------------------
+        //  Expedition Settings
+        //-------------------------
+
+        public bool RandomizeExpeditions { get; set; }
+        public bool ExpeditionHighRankOnlyInHigh { get; set; }
+        public bool ExpeditionMasterRankOnlyInMaster { get; set; }
+        public bool ExpeditionIncludeHighRankInLow { get; set; }
+        public bool ExpeditionIncludeNonUsualMonsters { get; set; }
+        public bool ExpeditionIncludeLeshen { get; set; }
+        public bool ExpeditionIncludeFuriousRajang { get; set; }
+        public bool ExpeditionIncludeAlatreon { get; set; }
+        public bool ExpeditionIncludeShara { get; set; }
+
         //-------------------
         //  Gear Settings
         //-------------------
@@ -143,9 +157,9 @@ namespace MHW_Randomizer
         public bool RandomSupplyBoxItemAmount { get; set; } //Random amount for each supply box item
         public bool RandomQuestRewards { get; set; }
 
-        public bool RandomizeMissions { get; set; }
+        public bool RandomizeQuestObjective { get; set; } //Like could change it to a hunt/capture/slay quest
 
-        public bool RandomizeExpeditions { get; set; }
+        public bool RandomizeMissions { get; set; }
 
         //Monsters
         public bool RandomizeSmallMonsters { get; set; }

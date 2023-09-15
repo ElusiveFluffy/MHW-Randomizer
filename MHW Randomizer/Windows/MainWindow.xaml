@@ -68,6 +68,10 @@
                 <TabItem Header="Quests">
                     <local:Quest/>
                 </TabItem>
+
+                <TabItem Header="Expeditions">
+                    <local:Expedition/>
+                </TabItem>
                 
                 <TabItem Header="Monsters">
                     <local:Monster/>

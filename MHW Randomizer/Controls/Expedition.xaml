@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="MHW_Randomizer.Expedition"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MHW_Randomizer"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="450">
+    <Grid VerticalAlignment="Top">
+        <TextBlock Text="Expeditions"
+                   Margin="15 -4 0 0"
+                   Background="White"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Panel.ZIndex="1"
+                   FontWeight="Bold"
+                   Height="16"/>
+        <Border BorderBrush="Gray" 
+                BorderThickness="1"
+                Margin="5">
+            <StackPanel Margin="0 5">
+                <!--<TextBlock Text="A bit buggy some will have 'phantom' element attacks, where sometimes they will have a 'aura' &#xA;around them with certain actions that will inflict damage and elements onto you"
+                           Margin="5"/>-->
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <CheckBox Content="Randomize Expeditions"
+                                  IsChecked="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  ToolTip="Randomize the chances for monsters to appear in expeditions"
+                                  ToolTipService.ShowDuration="10000"/>
+                        <StackPanel IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}">
+                            <CheckBox Content="Include Leshen"
+                                      IsChecked="{Binding ExpeditionIncludeLeshen, Source={x:Static local:IoC.Settings}}"
+                                      Margin="12, 10, 5, 4"
+                                      ToolTip="Gives the monsters a random status and chance to inflict the player with on some attacks (30% chance to add it to an attack) &#xA;(eg. bleed, paralysis, stun, etc (Some monster don't get a status))(Will keep stun value)"
+                                      ToolTipService.ShowDuration="10000"/>
+                            <CheckBox Content="Include Alatreon"
+                                      IsChecked="{Binding ExpeditionIncludeAlatreon, Source={x:Static local:IoC.Settings}}"
+                                      Margin="12, 4"
+                                      ToolTip="Each attack that gets chosen to have a status inflicted, will have the status randomly selected again"
+                                      ToolTipService.ShowDuration="10000"/>
+                            <CheckBox Content="Include Shara"
+                                      IsChecked="{Binding ExpeditionIncludeShara, Source={x:Static local:IoC.Settings}}"
+                                      Margin="12, 4"
+                                      ToolTip="Makes is so there is a chance to get between 1-5 statuses on a attack"
+                                      ToolTipService.ShowDuration="10000"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Margin="40 30 0 0">
+                        <CheckBox Content="Random Monster Attack Element"
+                                  IsChecked="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  ToolTip="Gives the monsters a random attack element for some of their attacks (30% chance to add it to an attack) &#xA;(Inflicts stuff like frostblight, and burn)(Also increases the monster's attack a bit)"
+                                  ToolTipService.ShowDuration="10000"/>
+                        <CheckBox Content="Increase Element Damage"
+                                  IsChecked="{Binding IncreaseElementPower, Source={x:Static local:IoC.Settings}}"
+                                  Margin="12, 4"
+                                  ToolTip="Increases the random power from 10-30 to 20-50"
+                                  IsEnabled="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
+                                  ToolTipService.ShowDuration="10000"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
+

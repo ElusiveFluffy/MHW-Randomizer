@@ -348,6 +348,9 @@ namespace MHW_Randomizer
                 questRandomizer.Randomize();
             }
 
+            if (IoC.Settings.RandomizeExpeditions)
+                ExpeditionRandomizer.Randomize();
+
             MonsterRandomizer.Randomize();
 
             //Shuffle recipes

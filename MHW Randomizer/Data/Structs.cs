@@ -3,6 +3,29 @@ using System.Runtime.InteropServices;
 
 namespace MHW_Randomizer
 {
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class ExpeditionRank
+    {
+        public uint st101Chance;
+        public uint st102Chance;
+        public uint st103Chance;
+        public uint st104Chance;
+        public uint st105Chance;
+        public uint st108Chance;
+        public uint st000Chance;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+        public uint[] Transitions;
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class ExpeditionSpawn
+    {
+        public uint MonsterID;
+        public ExpeditionRank LowRank = new ExpeditionRank();
+        public ExpeditionRank HighRank = new ExpeditionRank();
+        public ExpeditionRank MasterRank = new ExpeditionRank();
+    }
+
     public static class RecipeStructs
     {
 

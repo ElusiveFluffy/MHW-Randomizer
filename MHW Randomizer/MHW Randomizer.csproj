@@ -129,6 +129,9 @@
     <Compile Include="Controls\Colours.xaml.cs">
       <DependentUpon>Colours.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Expedition.xaml.cs">
+      <DependentUpon>Expedition.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Misc.xaml.cs">
       <DependentUpon>Misc.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,7 @@
     <Compile Include="Controls\Weapon.xaml.cs">
       <DependentUpon>Weapon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\Expedition\ExpeditionData.cs" />
     <Compile Include="Data\ItemData.cs" />
     <Compile Include="Data\Quest\StoryQuestData.cs" />
     <Compile Include="Data\Structs.cs" />
@@ -158,6 +162,7 @@
     <Compile Include="GMD %28Cirilla%29\Extentions\StructExtensions.cs" />
     <Compile Include="GMD %28Cirilla%29\Structs\GMD.cs" />
     <Compile Include="IoC.cs" />
+    <Compile Include="Randomizers\ExpeditionRandomizer.cs" />
     <Compile Include="Randomizers\MonsterRandomizer.cs" />
     <Compile Include="Windows\ChoiceWindow.xaml.cs">
       <DependentUpon>ChoiceWindow.xaml</DependentUpon>
@@ -193,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Colours.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Expedition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
