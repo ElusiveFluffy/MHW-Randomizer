@@ -1476,7 +1476,11 @@ namespace MHW_Randomizer
             }
             //Add custom think table for Shara to transform
             if (IoC.Settings.IncludeShara)
+            {
+                //Add custom think file
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data/em126_00.thk", Properties.Resources.em126_00thk);
+            }
         }
     }
 }
