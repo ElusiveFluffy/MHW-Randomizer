@@ -19,8 +19,9 @@
                 BorderThickness="1"
                 Margin="5">
             <StackPanel Margin="0 5">
-                <TextBlock Text="A bit buggy some will have 'phantom' element attacks, where sometimes they will have a 'aura' &#xA;around them with certain actions that will inflict damage and elements onto you"
-                           Margin="5"/>
+                <TextBlock Text="A bit buggy some will have 'phantom' element attacks, where sometimes they will have a 'aura' around them with certain actions that will inflict damage and elements onto you"
+                           Margin="5"
+                           TextWrapping="Wrap"/>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
                         <CheckBox Content="Include Small Monsters"
