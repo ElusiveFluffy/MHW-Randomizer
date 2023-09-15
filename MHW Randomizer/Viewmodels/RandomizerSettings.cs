@@ -69,11 +69,14 @@ namespace MHW_Randomizer
         //-------------------------
 
         public bool RandomizeExpeditions { get; set; }
+        public bool RandomizeIceborneExpeditions { get; set; }
+        public bool ExpeditionHighRankInLow { get; set; }
         public bool ExpeditionHighRankOnlyInHigh { get; set; }
         public bool ExpeditionMasterRankOnlyInMaster { get; set; }
-        public bool ExpeditionIncludeHighRankInLow { get; set; }
         public bool ExpeditionIncludeNonUsualMonsters { get; set; }
+        public bool ExpeditionIncludeIBNonUsualMonsters { get; set; }
         public bool ExpeditionIncludeLeshen { get; set; }
+        public bool ExpeditionIncludeBehemoth { get; set; }
         public bool ExpeditionIncludeFuriousRajang { get; set; }
         public bool ExpeditionIncludeAlatreon { get; set; }
         public bool ExpeditionIncludeShara { get; set; }

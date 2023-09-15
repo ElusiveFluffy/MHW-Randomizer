@@ -5,63 +5,134 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MHW_Randomizer"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="450">
-    <Grid VerticalAlignment="Top">
-        <TextBlock Text="Expeditions"
-                   Margin="15 -4 0 0"
-                   Background="White"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Panel.ZIndex="1"
-                   FontWeight="Bold"
-                   Height="16"/>
-        <Border BorderBrush="Gray" 
-                BorderThickness="1"
-                Margin="5">
-            <StackPanel Margin="0 5">
-                <!--<TextBlock Text="A bit buggy some will have 'phantom' element attacks, where sometimes they will have a 'aura' &#xA;around them with certain actions that will inflict damage and elements onto you"
-                           Margin="5"/>-->
-                <StackPanel Orientation="Horizontal">
+             d:DesignHeight="450" d:DesignWidth="650">
+    <StackPanel>
+        <Grid VerticalAlignment="Top">
+            <TextBlock Text="Expeditions"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+            <Border BorderBrush="Gray" 
+                    BorderThickness="1"
+                    Margin="5">
+                <StackPanel Margin="0 5">
+                    <TextBlock Text="Doesn't randomize monsters in story expeditions, for them to be randomized after seeing the monster in the expedition just return and do the quest version of the hunt"
+                               Margin="5"
+                               TextWrapping="Wrap"/>
+                    <TextBlock Text="All based on chance and not guaranteed to appear, to check which are in expeditions can with the expedition log files"
+                               Margin="5"
+                               TextWrapping="Wrap"/>
                     <StackPanel>
                         <CheckBox Content="Randomize Expeditions"
                                   IsChecked="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
-                                  ToolTip="Randomize the chances for monsters to appear in expeditions"
+                                  ToolTip="Randomize the chances for monsters to appear in expeditions (doesn't randomize monsters in story expeditions)"
                                   ToolTipService.ShowDuration="10000"/>
-                        <StackPanel IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}">
-                            <CheckBox Content="Include Leshen"
-                                      IsChecked="{Binding ExpeditionIncludeLeshen, Source={x:Static local:IoC.Settings}}"
-                                      Margin="12, 10, 5, 4"
-                                      ToolTip="Gives the monsters a random status and chance to inflict the player with on some attacks (30% chance to add it to an attack) &#xA;(eg. bleed, paralysis, stun, etc (Some monster don't get a status))(Will keep stun value)"
-                                      ToolTipService.ShowDuration="10000"/>
-                            <CheckBox Content="Include Alatreon"
-                                      IsChecked="{Binding ExpeditionIncludeAlatreon, Source={x:Static local:IoC.Settings}}"
-                                      Margin="12, 4"
-                                      ToolTip="Each attack that gets chosen to have a status inflicted, will have the status randomly selected again"
-                                      ToolTipService.ShowDuration="10000"/>
-                            <CheckBox Content="Include Shara"
-                                      IsChecked="{Binding ExpeditionIncludeShara, Source={x:Static local:IoC.Settings}}"
-                                      Margin="12, 4"
-                                      ToolTip="Makes is so there is a chance to get between 1-5 statuses on a attack"
-                                      ToolTipService.ShowDuration="10000"/>
+
+                        <TextBlock Text="High Rank Monsters"
+                                   Margin="6, 8, 5, 2"
+                                   FontWeight="SemiBold"/>
+                        <StackPanel Orientation="Horizontal"
+                                    IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}">
+                            <StackPanel>
+                                <CheckBox Content="Include Non Usual Monsters"
+                                          IsChecked="{Binding ExpeditionIncludeNonUsualMonsters, Source={x:Static local:IoC.Settings}}"
+                                          Margin="12, 4"
+                                          ToolTip="Will include monsters that normally don't show up in expeditions (excluding the ones that have a option here or would break)&#xA;The monsters this includes is:&#xA;Nergigante and Vaal Hazak for high rank"
+                                          ToolTipService.ShowDuration="10000"/>
+                                <CheckBox Content="Include Leshen"
+                                          IsChecked="{Binding ExpeditionIncludeLeshen, Source={x:Static local:IoC.Settings}}"
+                                          Margin="12, 4"
+                                          ToolTip="Could be hard if included as a possible random monster"
+                                          ToolTipService.ShowDuration="10000"/>
+                                <CheckBox Content="Include Behemoth"
+                                          IsChecked="{Binding ExpeditionIncludeBehemoth, Source={x:Static local:IoC.Settings}}"
+                                          Margin="12, 4"
+                                          ToolTip="Behemoth could get stuck in some spots due to their size &#xA;(hasn't really been tested) and has alot of health so could be hard if included in possible random monster"
+                                          ToolTipService.ShowDuration="10000"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <CheckBox Content="High Rank Monsters in Low Rank"
+                                              IsChecked="{Binding ExpeditionHighRankInLow, Source={x:Static local:IoC.Settings}}"
+                                              Margin="12, 4"
+                                              ToolTip="Includes monsters that don't appear in low rank quest, will be scaled to low rank &#xA;(they don't have any low rank drops so you will get high rank drops instead)"
+                                              ToolTipService.ShowDuration="10000"/>
+                                <CheckBox Content="High Rank Only Monsters in High Rank"
+                                              IsChecked="{Binding ExpeditionHighRankOnlyInHigh, Source={x:Static local:IoC.Settings}}"
+                                              Margin="12, 4"
+                                              ToolTip="Will only include monsters that are introduced in high rank in high rank expeditions"
+                                              ToolTipService.ShowDuration="10000"/>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Margin="40 30 0 0">
-                        <CheckBox Content="Random Monster Attack Element"
-                                  IsChecked="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid VerticalAlignment="Top">
+            <TextBlock Text="Iceborne (Need Iceborne Installed)"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+            <Border BorderBrush="Gray" 
+                    BorderThickness="1"
+                    Margin="5">
+                <StackPanel Margin="0 5">
+                    <StackPanel>
+                        <CheckBox Content="Randomize Iceborne Expeditions"
+                                  IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomizeIceborneExpeditions, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
-                                  ToolTip="Gives the monsters a random attack element for some of their attacks (30% chance to add it to an attack) &#xA;(Inflicts stuff like frostblight, and burn)(Also increases the monster's attack a bit)"
+                                  ToolTip="Randomize the chances for monsters to appear in master rank expeditions (doesn't randomize monsters in story expeditions)"
                                   ToolTipService.ShowDuration="10000"/>
-                        <CheckBox Content="Increase Element Damage"
-                                  IsChecked="{Binding IncreaseElementPower, Source={x:Static local:IoC.Settings}}"
-                                  Margin="12, 4"
-                                  ToolTip="Increases the random power from 10-30 to 20-50"
-                                  IsEnabled="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
-                                  ToolTipService.ShowDuration="10000"/>
+
+                        <TextBlock Text="Master Rank Monsters"
+                                   Margin="6, 8, 5, 2"
+                                   FontWeight="SemiBold"/>
+                        <StackPanel Orientation="Horizontal"
+                                    IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}">
+                            <StackPanel>
+
+                                <CheckBox Content="Include Non Usual Monsters"
+                                      IsChecked="{Binding ExpeditionIncludeIBNonUsualMonsters, Source={x:Static local:IoC.Settings}}"
+                                      Margin="12, 4"
+                                      ToolTip="Will include monsters that normally don't show up in expeditions (excluding the ones that have a option here or would break)&#xA;The monsters this includes is:&#xA;Ruiner Nergigante, &#xA;Gold Rathian, &#xA;Silver Rathalos, &#xA;Yian Garuga, &#xA;Rajang, &#xA;Brute Tigrex, &#xA;Zinogre, &#xA;Stygian Zinogre, &#xA;Raging Brachydios, &#xA;Scarred Yian Garuga, &#xA;and FrostFang Barioth for master rank"
+                                      ToolTipService.ShowDuration="10000"/>
+                                <CheckBox Content="Include Shara Ishvalda"
+                                      IsChecked="{Binding ExpeditionIncludeShara, Source={x:Static local:IoC.Settings}}"
+                                      Margin="12, 4"
+                                      ToolTip="May get stuck, has a custom think file that makes them transform to the second phase when they see you"
+                                      ToolTipService.ShowDuration="10000"/>
+                                <CheckBox Content="Include Furious Rajang"
+                                      IsChecked="{Binding ExpeditionIncludeFuriousRajang, Source={x:Static local:IoC.Settings}}"
+                                      Margin="12, 4"
+                                      ToolTip="Can be hard if include them"
+                                      ToolTipService.ShowDuration="10000"/>
+                                <CheckBox Content="Include Alatreon"
+                                      IsChecked="{Binding ExpeditionIncludeAlatreon, Source={x:Static local:IoC.Settings}}"
+                                      Margin="12, 4"
+                                      ToolTip="May get stuck, can be hard if include them (Won't be in the pool of monsters for coral highlands because they make the screen completely white when in fire form on that map)"
+                                      ToolTipService.ShowDuration="10000"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <CheckBox Content="Master Rank Only Monsters in Master Rank"
+                                              IsChecked="{Binding ExpeditionMasterRankOnlyInMaster, Source={x:Static local:IoC.Settings}}"
+                                              Margin="12, 4"
+                                              ToolTip="Will only include monsters that are introduced in master rank in master rank expeditions"
+                                              ToolTipService.ShowDuration="10000"/>
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </Border>
-    </Grid>
+            </Border>
+        </Grid>
+    </StackPanel>
 </UserControl>
 
