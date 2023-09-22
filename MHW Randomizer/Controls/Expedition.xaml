@@ -20,7 +20,7 @@
                     BorderThickness="1"
                     Margin="5">
                 <StackPanel Margin="0 5">
-                    <TextBlock Text="Doesn't randomize monsters in story expeditions, for them to be randomized after seeing the monster in the expedition just return and do the quest version of the hunt"
+                    <TextBlock Text="Doesn't randomize the target monster in story expeditions (they are hard coded), for them to be randomized, after triggering the cutscene in the expedition just return and do the quest version of the hunt"
                                Margin="5"
                                TextWrapping="Wrap"/>
                     <TextBlock Text="All based on chance and not guaranteed to appear, to check which are in expeditions can with the expedition log files"
@@ -30,7 +30,7 @@
                         <CheckBox Content="Randomize Expeditions"
                                   IsChecked="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
-                                  ToolTip="Randomize the chances for monsters to appear in expeditions (doesn't randomize monsters in story expeditions)"
+                                  ToolTip="Randomize the chances for monsters to appear in expeditions (doesn't randomize monsters in story expeditions), &#xA;Will add 1% to monsters that need to spawn for story expeditions because they for some reason check if they can spawn even though they're hard coded"
                                   ToolTipService.ShowDuration="10000"/>
 
                         <TextBlock Text="High Rank Monsters"
