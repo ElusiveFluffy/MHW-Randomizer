@@ -264,6 +264,118 @@ namespace MHW_Randomizer
                     if (QuestData.MonsterNames[spawn.MonsterID + 1].Contains("[s]") || QuestData.MonsterNames[spawn.MonsterID + 1] == "NON-VALID")
                         continue;
 
+                    //Add the required monsters if they haven't been selected already
+                    if (ExpeditionData.LowRankRequiredMonsters.ContainsKey(spawn.MonsterID))
+                    {
+                        switch (ExpeditionData.LowRankRequiredMonsters[spawn.MonsterID])
+                        {
+                            case 101:
+                                {
+                                    if (spawn.LowRank.st101Chance == 0)
+                                        spawn.LowRank.st101Chance += 1;
+                                    break;
+                                }
+                            case 102:
+                                {
+                                    if (spawn.LowRank.st102Chance == 0)
+                                        spawn.LowRank.st102Chance += 1;
+                                    break;
+                                }
+                            case 103:
+                                {
+                                    if (spawn.LowRank.st103Chance == 0)
+                                        spawn.LowRank.st103Chance += 1;
+                                    break;
+                                }
+                            case 104:
+                                {
+                                    if (spawn.LowRank.st104Chance == 0)
+                                        spawn.LowRank.st104Chance += 1;
+                                    break;
+                                }
+                        }
+                    }
+                    if (ExpeditionData.HighRankRequiredMonsters.ContainsKey(spawn.MonsterID))
+                    {
+
+                        switch (ExpeditionData.HighRankRequiredMonsters[spawn.MonsterID])
+                        {
+                            case 101:
+                                {
+                                    if (spawn.HighRank.st101Chance == 0)
+                                        spawn.HighRank.st101Chance += 1;
+                                    break;
+                                }
+                            case 102:
+                                {
+                                    if (spawn.HighRank.st102Chance == 0)
+                                        spawn.HighRank.st102Chance += 1;
+                                    break;
+                                }
+                            case 103:
+                                {
+                                    if (spawn.HighRank.st103Chance == 0)
+                                        spawn.HighRank.st103Chance += 1;
+                                    break;
+                                }
+                            case 104:
+                                {
+                                    if (spawn.HighRank.st104Chance == 0)
+                                        spawn.HighRank.st104Chance += 1;
+                                    break;
+                                }
+                            case 105:
+                                {
+                                    if (spawn.HighRank.st105Chance == 0)
+                                        spawn.HighRank.st105Chance += 1;
+                                    break;
+                                }
+                        }
+                    }
+                    if (ExpeditionData.MasterRankRequiredMonsters.ContainsKey(spawn.MonsterID))
+                    {
+
+                        switch (ExpeditionData.MasterRankRequiredMonsters[spawn.MonsterID])
+                        {
+                            case 101:
+                                {
+                                    if (spawn.MasterRank.st101Chance == 0)
+                                        spawn.MasterRank.st101Chance += 1;
+                                    break;
+                                }
+                            case 102:
+                                {
+                                    if (spawn.MasterRank.st102Chance == 0)
+                                        spawn.MasterRank.st102Chance += 1;
+                                    break;
+                                }
+                            case 103:
+                                {
+                                    if (spawn.MasterRank.st103Chance == 0)
+                                        spawn.MasterRank.st103Chance += 1;
+                                    break;
+                                }
+                            case 104:
+                                {
+                                    if (spawn.MasterRank.st104Chance == 0)
+                                        spawn.MasterRank.st104Chance += 1;
+                                    break;
+                                }
+                            case 105:
+                                {
+                                    if (spawn.MasterRank.st105Chance == 0)
+                                        spawn.MasterRank.st105Chance += 1;
+                                    break;
+                                }
+                            case 108:
+                                {
+                                    if (spawn.MasterRank.st108Chance == 0)
+                                        spawn.MasterRank.st108Chance += 1;
+                                    break;
+                                }
+                        }
+                    }
+
                     file.WriteLine("-------------------------");
                     file.WriteLine(QuestData.MonsterNames[spawn.MonsterID + 1]);
 

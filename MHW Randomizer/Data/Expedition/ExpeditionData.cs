@@ -1,4 +1,6 @@
-﻿namespace MHW_Randomizer
+﻿using System.Collections.Generic;
+
+namespace MHW_Randomizer
 {
     public class ExpeditionData
     {
@@ -13,5 +15,21 @@
         public static int[] UnusedHighRankMonster = { 25, 36 };
         //Shara, furious rajang, and alatreon to add based on options (remember to make sobj if they don't have one!!)
         public static int[] UnusedMasterRankMonster = { 70, 87, 88, 89, 90, 91, 93, 94, 95, 96, 99, 100 };
+
+
+        //Required Monsters
+        /// <summary>
+        /// Key is the monster ID, and the value is the map they appear in for the expidition
+        /// </summary>
+        public static Dictionary<uint, int> LowRankRequiredMonsters = new Dictionary<uint, int> { { 27, 101 } };
+        /// <summary>
+        /// Key is the monster ID, and the value is the map they appear in for the expidition
+        /// </summary>
+        public static Dictionary<uint, int> HighRankRequiredMonsters = new Dictionary<uint, int> { { 9, 101 }, { 24, 102 }, { 35, 104 }, { 22, 105 }, { 19, 105 }, { 37, 105 }, { 39, 105 } };
+        /// <summary>
+        /// Key is the monster ID, and the value is the map they appear in for the expidition
+        /// </summary>
+        public static Dictionary<uint, int> MasterRankRequiredMonsters = new Dictionary<uint, int> { { 77, 108 }, { 78, 108 }, { 71, 108 }, { 73, 108 }, { 76, 108 } };
+
     }
 }
