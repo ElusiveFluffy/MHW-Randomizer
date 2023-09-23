@@ -553,6 +553,11 @@ namespace MHW_Randomizer
 
         public static int[,] MonsterMapSobjCount = new int[102, 43];
 
+        public static int[] MonsterChance = new int[102];
+        public static int CumulativeChance;
+        //Keeps track of the percentage to add back to the chance
+        public static HashSet<int> MonstersToAddChance = new HashSet<int>();
+
         public static string[] MonsterNames = { "None", "Anjanath" , "Rathalos" , "[s] Aptonoth" , "[s] Jagras" , "Zorah Magdaros" , "[s] Mosswine" , "[s] Gajau" , "Great Jagras" , "[s] Kestodon M" , "Rathian" , "Pink Rathian" , "Azure Rathalos" , "Diablos" ,
             "Black Diablos" , "Kirin" , "Behemoth" , "Kushala Daora" , "Lunastra" , "Teostra" , "Lavasioth" , "Deviljho" , "Barroth" , "Uragaan" , "Leshen" , "Pukei-Pukei" , "Nergigante" , "Xeno'jiiva" , "Kulu-Ya-Ku" , "Tzitzi-Ya-Ku" ,
             "Jyuratodus" , "Tobi-Kadachi" , "Paolumu" , "Legiana" , "Great Girros" , "Odogaron" , "Radobaan" , "Vaal Hazak" , "Dodogama" , "Kulve Taroth" , "Bazelgeuse" , "[s] Apceros" , "[s] Kelbi M" , "[s] Kelbi F" , "[s] Hornetaur" ,
