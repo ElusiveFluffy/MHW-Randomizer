@@ -371,7 +371,7 @@ namespace MHW_Randomizer
                     string[] multiObjQuests = QuestData.HuntMultiObjective;
                     if (!IoC.Settings.DontRandomizeSlay)
                         multiObjQuests = multiObjQuests.Concat(QuestData.SlayMultiObjective).ToArray();
-                    RandomizeQuests(false, false, file, multiObjQuests, null, false, false, true);
+                    RandomizeQuests(false, false, file, multiObjQuests, null, false, false);
                 }
 
                 if (IoC.Settings.RandomizeMultiMon)
@@ -382,7 +382,7 @@ namespace MHW_Randomizer
                     string[] multiMonQuests = QuestData.HuntMultiMonster;
                     if (!IoC.Settings.DontRandomizeSlay)
                         multiMonQuests = multiMonQuests.Concat(QuestData.SlayMultiMonster).ToArray();
-                    RandomizeQuests(false, false, file, multiMonQuests, null, false, false, true);
+                    RandomizeQuests(false, false, file, multiMonQuests, null, false, false);
                 }
 
                 if (IoC.Settings.RandomizeDuplicate)
@@ -463,7 +463,7 @@ namespace MHW_Randomizer
                         file.WriteLine("\n\n---------------------------------------------------------------------------");
                         file.WriteLine("                      Iceborne Multi-Objective Quests                      ");
                         file.WriteLine("---------------------------------------------------------------------------");
-                        RandomizeQuests(false, true, file, QuestData.IBHuntMultiObjective, null, false, false, true);
+                        RandomizeQuests(false, true, file, QuestData.IBHuntMultiObjective, null, false, false);
                     }
 
                     if (IoC.Settings.RandomizeMultiMon)
@@ -474,7 +474,7 @@ namespace MHW_Randomizer
                         string[] multiMonQuests = QuestData.IBHuntMultiMonster;
                         if (!IoC.Settings.DontRandomizeSlay)
                             multiMonQuests = multiMonQuests.Concat(QuestData.IBSlayMultiMonster).ToArray();
-                        RandomizeQuests(false, true, file, multiMonQuests, null, false, false, true);
+                        RandomizeQuests(false, true, file, multiMonQuests, null, false, false);
                     }
                     if (IoC.Settings.RandomizeDuplicate)
                     {
@@ -495,7 +495,7 @@ namespace MHW_Randomizer
             EditMaps();
         }
 
-        private void RandomizeQuests(bool isStoryQuest, bool iceborne, StreamWriter file, string[] Quests = null, Dictionary<string, StoryQuestData> StoryQuests = null, bool captureQuest = false, bool duplicateMonQuest = false, bool multiMonQuest = false)
+        private void RandomizeQuests(bool isStoryQuest, bool iceborne, StreamWriter file, string[] Quests = null, Dictionary<string, StoryQuestData> StoryQuests = null, bool captureQuest = false, bool duplicateMonQuest = false)
         {
             GMD GMDFile;
             int[] monsterFor00103 = new int[2];
@@ -566,7 +566,7 @@ namespace MHW_Randomizer
                 for (int m = 0; m < 7; m++)
                 {
                     //Should remove all unneeded monsters if is in a arena
-                    if (IoC.Settings.RandomMaps && !IoC.Settings.AllMonstersInArena && m != 0 && QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]) && (RemoveMultiMonster(multiMonQuest, m) || (duplicateMonQuest && m >= int.Parse(MObjC1Text))) && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
+                    if (IoC.Settings.RandomMaps && !IoC.Settings.AllMonstersInArena && m != 0 && QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]) && RemoveMultiMonster(MultiMon1IsChecked || MultiOjectiveIsChecked, duplicateMonQuest, m) && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
                         MID[m] = 0;
 
                     //If there is no monster at that index skip unless the option for two monster quest is true
@@ -762,7 +762,7 @@ namespace MHW_Randomizer
 
                     //Since in multi monster quests all monsters are the target ones make their chance 0
                     //Or if its a multiobjective quest can assume the second monster is a target one
-                    if (multiMonQuest || (MultiOjectiveIsChecked && monIDChance == 1))
+                    if (MultiMon1IsChecked || (MultiOjectiveIsChecked && monIDChance == 1))
                     {
                         QuestData.MonsterChance[MID[monIDChance] - 1] = 0;
                         QuestData.MonstersToAddChance.Add(MID[monIDChance] - 1);
@@ -1243,10 +1243,10 @@ namespace MHW_Randomizer
         /// <param name="multiMonster">Is it a multi monster quest</param>
         /// <param name="m">current monster index</param>
         /// <returns></returns>
-        private bool RemoveMultiMonster(bool multiMonster, int m)
+        private bool RemoveMultiMonster(bool multiMonster, bool duplicateMonster, int m)
         {
             //Check if its not a multi monster quest first
-            if (!multiMonster)
+            if (!multiMonster && !duplicateMonster)
                 return true;
 
             //Only include 2 monsters if multi objective
@@ -1254,8 +1254,8 @@ namespace MHW_Randomizer
                 //(only need to check if != 1 because already check if != 0)
                 return m != 1;
 
-            //Only include required monsters if multi monster
-            return MultiMon1IsChecked && m >= int.Parse(MObjC1Text);
+            //Only include required monsters if multi or duplicate monster
+            return (MultiMon1IsChecked || duplicateMonster) && m >= int.Parse(MObjC1Text);
         }
 
         //Supply item randomization step 3
