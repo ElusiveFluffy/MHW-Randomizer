@@ -554,7 +554,7 @@ namespace MHW_Randomizer
         public static int[,] MonsterMapSobjCount = new int[102, 43];
 
         public static int[] MonsterChance = new int[102];
-        public static int CumulativeChance;
+        public static int TotalMonsterChance;
         //Keeps track of the percentage to add back to the chance
         public static HashSet<int> MonstersToAddChance = new HashSet<int>();
 

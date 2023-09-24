@@ -327,7 +327,7 @@ namespace MHW_Randomizer
                     LowRankMonsterIDs = MonsterIDs;
 
                 //Set up the cumulative chance
-                QuestData.CumulativeChance = LowRankMonsterIDs.Length * 10;
+                QuestData.TotalMonsterChance = LowRankMonsterIDs.Length * 10;
 
                 file.WriteLine("---------------------------------------------------------------------------");
                 file.WriteLine("                             Story Hunt Quests                             ");
@@ -552,6 +552,9 @@ namespace MHW_Randomizer
                     //Remove alatreon as a possible monster if map is coral highlands as it causes a blinding white light effect on that map
                     currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87).ToArray();
 
+                //Just recalculate it each quest just as a failsafe as this doesn't take long
+                RecalculateTotalChance(currentRankMonsterIDs);
+
                 //Write quest info to log
                 file.WriteLine("\n---------------------- " + "Quest: " + QuestData.QuestName[questNumber == "66859" || questNumber == "66860" ? (questNumber == "66859" ? 64802 : 66835) : int.Parse(questNumber)] + ", Quest ID: " + QIDText + ", Map: " + QuestData.MapNames[MapIDIndex] + " ------------------------------");
 
@@ -735,7 +738,6 @@ namespace MHW_Randomizer
                 List<int> IDsToRemove = new List<int>();
                 foreach (int id in QuestData.MonstersToAddChance)
                 {
-                    QuestData.CumulativeChance += 1;
                     QuestData.MonsterChance[id] += 1;
 
                     //If the chance is 10 remove it
@@ -749,8 +751,6 @@ namespace MHW_Randomizer
                     QuestData.MonstersToAddChance.Remove(id);
 
                 //Set the first monster's chance to 0 since its guaranteed to be the target one
-                //Lower the cumulative chance by the amount in their chance
-                QuestData.CumulativeChance -= QuestData.MonsterChance[MID[0] - 1];
                 QuestData.MonsterChance[MID[0] - 1] = 0;
                 QuestData.MonstersToAddChance.Add(MID[0] - 1);
 
@@ -764,8 +764,6 @@ namespace MHW_Randomizer
                     //Or if its a multiobjective quest can assume the second monster is a target one
                     if (multiMonQuest || (MultiOjectiveIsChecked && monIDChance == 1))
                     {
-                        //Lower the cumulative chance by the amount in their chance
-                        QuestData.CumulativeChance -= QuestData.MonsterChance[MID[monIDChance] - 1];
                         QuestData.MonsterChance[MID[monIDChance] - 1] = 0;
                         QuestData.MonstersToAddChance.Add(MID[monIDChance] - 1);
                         continue;
@@ -774,15 +772,11 @@ namespace MHW_Randomizer
                     //For the non target ones just remove 50% until they are 0
                     if (QuestData.MonsterChance[MID[monIDChance] - 1] < 5)
                     {
-                        //Lower the cumulative chance by the amount in their chance
-                        QuestData.CumulativeChance -= QuestData.MonsterChance[MID[monIDChance] - 1];
                         QuestData.MonsterChance[MID[monIDChance] - 1] = 0;
                         QuestData.MonstersToAddChance.Add(MID[monIDChance] - 1);
                     }
                     else
                     {
-                        //Lower it by a set amount
-                        QuestData.CumulativeChance -= 5;
                         QuestData.MonsterChance[MID[monIDChance] - 1] -= 5;
                         QuestData.MonstersToAddChance.Add(MID[monIDChance] - 1);
                     }
@@ -1206,16 +1200,16 @@ namespace MHW_Randomizer
         }
 
         /// <summary>
-        /// Returns a monster ID from <paramref name="currentRankMonsterIDs"/> considering their chances. Returns -1 if a monster couldn't be chosen.
+        /// Returns a monster ID from <paramref name="monsterIDs"/> considering their chances. Returns -1 if a monster couldn't be chosen.
         /// Also uses QuestData.CumulativeChance for the selected chance
         /// </summary>
         /// <returns></returns>
-        private int PickMonsterID(int[] currentRankMonsterIDs)
+        private int PickMonsterID(int[] monsterIDs)
         {
-            int selectedChance = r.Next(QuestData.CumulativeChance + 1);
+            int selectedChance = r.Next(QuestData.TotalMonsterChance + 1);
             int addedChance = 0;
 
-            foreach (int id in currentRankMonsterIDs)
+            foreach (int id in monsterIDs)
             {
                 //Add on this monsters chance
                 addedChance += QuestData.MonsterChance[id];
@@ -1229,6 +1223,18 @@ namespace MHW_Randomizer
 
             //Return -1 if a monster wasn't found
             return -1;
+        }
+
+        /// <summary>
+        /// Loops through all the <paramref name="monsterIDs"/> and gets the total chance of all of them
+        /// </summary>
+        private void RecalculateTotalChance(int[] monsterIDs)
+        {
+            QuestData.TotalMonsterChance = 0;
+            foreach (int id in monsterIDs)
+            {
+                QuestData.TotalMonsterChance += QuestData.MonsterChance[id];
+            }
         }
 
         /// <summary>
