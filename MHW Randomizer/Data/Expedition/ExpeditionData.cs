@@ -29,7 +29,7 @@ namespace MHW_Randomizer
         /// <summary>
         /// Key is the monster ID, and the value is the map they appear in for the expidition
         /// </summary>
-        public static Dictionary<uint, int> MasterRankRequiredMonsters = new Dictionary<uint, int> { { 77, 108 }, { 78, 108 }, { 71, 108 }, { 73, 108 }, { 76, 108 } };
+        public static Dictionary<uint, int> MasterRankRequiredMonsters = new Dictionary<uint, int> { { 62, 101 }, { 77, 108 }, { 78, 108 }, { 71, 108 }, { 73, 108 }, { 76, 108 } };
 
     }
 }
