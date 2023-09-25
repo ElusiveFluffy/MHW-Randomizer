@@ -1206,7 +1206,7 @@ namespace MHW_Randomizer
         /// <returns></returns>
         private int PickMonsterID(int[] monsterIDs)
         {
-            int selectedChance = r.Next(QuestData.TotalMonsterChance + 1);
+            int selectedChance = r.Next(QuestData.TotalMonsterChance) + 1;
             int addedChance = 0;
 
             foreach (int id in monsterIDs)
