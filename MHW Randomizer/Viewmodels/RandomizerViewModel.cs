@@ -348,7 +348,7 @@ namespace MHW_Randomizer
                 questRandomizer.Randomize();
             }
 
-            if (IoC.Settings.RandomizeExpeditions)
+            if (IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
                 ExpeditionRandomizer.Randomize();
 
             MonsterRandomizer.Randomize();

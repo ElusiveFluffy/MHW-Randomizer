@@ -20,10 +20,10 @@
                     BorderThickness="1"
                     Margin="5">
                 <StackPanel Margin="0 5">
-                    <TextBlock Text="Doesn't randomize the target monster in story expeditions (they are hard coded), for them to be randomized, after triggering the cutscene in the expedition just return and do the quest version of the hunt"
+                    <TextBlock Text="Doesn't randomize the target monster in story expeditions (they seem to be hard coded), for them to be randomized, after triggering the cutscene in the expedition just return and do the quest version of the hunt"
                                Margin="5"
                                TextWrapping="Wrap"/>
-                    <TextBlock Text="All based on chance and not guaranteed to appear, to check which are in expeditions can with the expedition log files"
+                    <TextBlock Text="All based on chance and not guaranteed to appear, can check which are in expeditions with the expedition log files"
                                Margin="5"
                                TextWrapping="Wrap"/>
                     <StackPanel>
@@ -87,7 +87,6 @@
                 <StackPanel Margin="0 5">
                     <StackPanel>
                         <CheckBox Content="Randomize Iceborne Expeditions"
-                                  IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"
                                   IsChecked="{Binding RandomizeIceborneExpeditions, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomize the chances for monsters to appear in master rank expeditions (doesn't randomize monsters in story expeditions)"
@@ -97,7 +96,7 @@
                                    Margin="6, 8, 5, 2"
                                    FontWeight="SemiBold"/>
                         <StackPanel Orientation="Horizontal"
-                                    IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}">
+                                    IsEnabled="{Binding RandomizeIceborneExpeditions, Source={x:Static local:IoC.Settings}}">
                             <StackPanel>
 
                                 <CheckBox Content="Include Non Usual Monsters"

@@ -73,10 +73,6 @@ namespace MHW_Randomizer
                         }
                     case 2:
                         {
-                            //Skip the iceborne rank if not randomizing iceborne
-                            if (!IoC.Settings.RandomizeIceborneExpeditions)
-                                continue;
-
                             //Chose the base set of monsters
                             if (IoC.Settings.ExpeditionMasterRankOnlyInMaster)
                                 MonsterIDs = ExpeditionData.MasterRankOnlyMonster;
@@ -145,22 +141,34 @@ namespace MHW_Randomizer
                                     {
                                         case 0:
                                             {
-                                                newChances[monsterID].LowRank.st101Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeExpeditions)
+                                                    newChances[monsterID].LowRank.st101Chance += rollChances[index];
+                                                else
+                                                    newChances[monsterID].LowRank.st101Chance = expeditionSpawn[monsterID].LowRank.st101Chance;
                                                 break;
                                             }
                                         case 1:
                                             {
-                                                newChances[monsterID].LowRank.st102Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeExpeditions)
+                                                    newChances[monsterID].LowRank.st102Chance += rollChances[index];
+                                                else
+                                                    newChances[monsterID].LowRank.st102Chance = expeditionSpawn[monsterID].LowRank.st102Chance;
                                                 break;
                                             }
                                         case 2:
                                             {
-                                                newChances[monsterID].LowRank.st103Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeExpeditions)
+                                                    newChances[monsterID].LowRank.st103Chance += rollChances[index];
+                                                else
+                                                    newChances[monsterID].LowRank.st103Chance = expeditionSpawn[monsterID].LowRank.st103Chance;
                                                 break;
                                             }
                                         case 3:
                                             {
-                                                newChances[monsterID].LowRank.st104Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeExpeditions)
+                                                    newChances[monsterID].LowRank.st104Chance += rollChances[index];
+                                                else
+                                                    newChances[monsterID].LowRank.st104Chance = expeditionSpawn[monsterID].LowRank.st104Chance;
                                                 break;
                                             }
                                     }
@@ -179,27 +187,42 @@ namespace MHW_Randomizer
                                     {
                                         case 0:
                                             {
-                                                newChances[monsterID].HighRank.st101Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeExpeditions)
+                                                    newChances[monsterID].HighRank.st101Chance += rollChances[index];
+                                                else
+                                                    newChances[monsterID].HighRank.st101Chance = expeditionSpawn[monsterID].HighRank.st101Chance;
                                                 break;
                                             }
                                         case 1:
                                             {
-                                                newChances[monsterID].HighRank.st102Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeExpeditions)
+                                                    newChances[monsterID].HighRank.st102Chance += rollChances[index];
+                                                else
+                                                    newChances[monsterID].HighRank.st102Chance = expeditionSpawn[monsterID].HighRank.st102Chance;
                                                 break;
                                             }
                                         case 2:
                                             {
-                                                newChances[monsterID].HighRank.st103Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeExpeditions)
+                                                    newChances[monsterID].HighRank.st103Chance += rollChances[index];
+                                                else
+                                                    newChances[monsterID].HighRank.st103Chance = expeditionSpawn[monsterID].HighRank.st103Chance;
                                                 break;
                                             }
                                         case 3:
                                             {
-                                                newChances[monsterID].HighRank.st104Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeExpeditions)
+                                                    newChances[monsterID].HighRank.st104Chance += rollChances[index];
+                                                else
+                                                    newChances[monsterID].HighRank.st104Chance = expeditionSpawn[monsterID].HighRank.st104Chance;
                                                 break;
                                             }
                                         case 4:
                                             {
-                                                newChances[monsterID].HighRank.st105Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeExpeditions)
+                                                    newChances[monsterID].HighRank.st105Chance += rollChances[index];
+                                                else
+                                                    newChances[monsterID].HighRank.st105Chance = expeditionSpawn[monsterID].HighRank.st105Chance;
                                                 break;
                                             }
                                     }
@@ -218,32 +241,50 @@ namespace MHW_Randomizer
                                     {
                                         case 0:
                                             {
-                                                newChances[monsterID].MasterRank.st101Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeIceborneExpeditions)
+                                                    newChances[monsterID].MasterRank.st101Chance += rollChances[index];
+                                                else if (monsterID < 87)
+                                                    newChances[monsterID].MasterRank.st101Chance = expeditionSpawn[monsterID].MasterRank.st101Chance;
                                                 break;
                                             }
                                         case 1:
                                             {
-                                                newChances[monsterID].MasterRank.st102Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeIceborneExpeditions)
+                                                    newChances[monsterID].MasterRank.st102Chance += rollChances[index];
+                                                else if (monsterID < 87)
+                                                    newChances[monsterID].MasterRank.st102Chance = expeditionSpawn[monsterID].MasterRank.st102Chance;
                                                 break;
                                             }
                                         case 2:
                                             {
-                                                newChances[monsterID].MasterRank.st103Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeIceborneExpeditions)
+                                                    newChances[monsterID].MasterRank.st103Chance += rollChances[index];
+                                                else if (monsterID < 87)
+                                                    newChances[monsterID].MasterRank.st103Chance = expeditionSpawn[monsterID].MasterRank.st103Chance;
                                                 break;
                                             }
                                         case 3:
                                             {
-                                                newChances[monsterID].MasterRank.st104Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeIceborneExpeditions)
+                                                    newChances[monsterID].MasterRank.st104Chance += rollChances[index];
+                                                else if (monsterID < 87)
+                                                    newChances[monsterID].MasterRank.st104Chance = expeditionSpawn[monsterID].MasterRank.st104Chance;
                                                 break;
                                             }
                                         case 4:
                                             {
-                                                newChances[monsterID].MasterRank.st105Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeIceborneExpeditions)
+                                                    newChances[monsterID].MasterRank.st105Chance += rollChances[index];
+                                                else if (monsterID < 87)
+                                                    newChances[monsterID].MasterRank.st105Chance = expeditionSpawn[monsterID].MasterRank.st105Chance;
                                                 break;
                                             }
                                         case 5:
                                             {
-                                                newChances[monsterID].MasterRank.st108Chance += rollChances[index];
+                                                if (IoC.Settings.RandomizeIceborneExpeditions)
+                                                    newChances[monsterID].MasterRank.st108Chance += rollChances[index];
+                                                else if (monsterID < 87)
+                                                    newChances[monsterID].MasterRank.st108Chance = expeditionSpawn[monsterID].MasterRank.st108Chance;
                                                 break;
                                             }
                                     }
