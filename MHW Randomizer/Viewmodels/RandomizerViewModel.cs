@@ -351,6 +351,10 @@ namespace MHW_Randomizer
             if (IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
                 ExpeditionRandomizer.Randomize();
 
+            //If randomizing the quests or expeditions add in edited alnks for all maps and mosters
+            if (IoC.Settings.RandomizeQuests || IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
+                Alnk.CreateAlnks();
+
             MonsterRandomizer.Randomize();
 
             //Shuffle recipes

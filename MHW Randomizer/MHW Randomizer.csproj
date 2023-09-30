@@ -164,6 +164,7 @@
     <Compile Include="IoC.cs" />
     <Compile Include="Randomizers\ExpeditionRandomizer.cs" />
     <Compile Include="Randomizers\MonsterRandomizer.cs" />
+    <Compile Include="Monster Utility\Alnk.cs" />
     <Compile Include="Windows\ChoiceWindow.xaml.cs">
       <DependentUpon>ChoiceWindow.xaml</DependentUpon>
     </Compile>
