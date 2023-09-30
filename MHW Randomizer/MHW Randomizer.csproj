@@ -310,7 +310,6 @@
     <None Include="Data\Item Shop\Gear\ShopSword_and_Shield.json" />
     <None Include="Data\Palico\otomo_armourData.json" />
     <None Include="Data\Palico\otomo_weaponData.json" />
-    <None Include="Data\Settings.json" />
     <None Include="Data\Weapons\Bow.json" />
     <None Include="Data\Weapons\Charge_Blade.json" />
     <None Include="Data\Weapons\Dual_Blades.json" />
