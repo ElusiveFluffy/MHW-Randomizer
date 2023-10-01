@@ -668,6 +668,7 @@ namespace MHW_Randomizer
                     if ((m == 1 && IoC.Settings.TwoMonsterQuests && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap || oldMonsterID == -1)) || (IoC.Settings.RandomSobj && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap)))
                     {
                         Files[] SobjFiles;
+                        //Make it so xeno isn't in great jagras' den
                         if (RandomMonsterID == 26)
                             SobjFiles = SobjFilesBigMCache.Where(o => o.Name.Contains("st" + QuestData.MapIDs[MapIDIndex])).ToArray();
                         else
@@ -715,9 +716,9 @@ namespace MHW_Randomizer
                     }
                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[RandomMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj", sobj);
 
-                    #endregion
-
                     QuestData.MonsterMapSobjCount[RandomMonsterID, MapIDIndex]++;
+
+                    #endregion
 
                     bool changeIcon = true;
                     if (isStoryQuest)
