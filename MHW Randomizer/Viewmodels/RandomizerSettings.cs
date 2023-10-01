@@ -151,6 +151,9 @@ namespace MHW_Randomizer
         public bool CompletelyRandomScoutflyColour { get; set; }
         public bool DifferentTrackScoutflyColour { get; set; }
 
+        //Tweaks
+        public bool FasterKinsects { get; set; }
+
         //---------------------------
 
         //Extras for later maybe
@@ -175,6 +178,8 @@ namespace MHW_Randomizer
         public bool RandomArmourRecipes { get; set; }
         public bool RandomWeaponRecipes { get; set; }
         public bool RandomKinsectRecipes { get; set; }
+
+        public bool RandomKinsectStats { get; set; }
 
         public bool RandomItemCraftingRecipes { get; set; }
         public bool ShuffleItemCraftingRecipes { get; set; }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using MHW_Randomizer.Crypto;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using Troschuetz.Random.Generators;
 
@@ -14,8 +16,15 @@ namespace MHW_Randomizer
         public static void Randomize()
         {
             if (IoC.Settings.RandomScoutflyColour)
-            {
-                Colours = new List<byte[]> {
+                RandomizeScoutFlies();
+
+            if (IoC.Settings.FasterKinsects)
+                AddKinsectSpeed();
+        }
+
+        private static void RandomizeScoutFlies()
+        {
+            Colours = new List<byte[]> {
                                                 new byte[] { 147, 71, 213 }, //Purple
                                                 new byte[] { 180, 39, 125 }, //Pinky Purple
                                                 new byte[] { 227, 38, 190 }, //Pink
@@ -34,32 +43,61 @@ namespace MHW_Randomizer
                                                 new byte[] { 169, 0, 33 }, //Dark Red
                                                 new byte[] { 254, 231, 21 }, //Yellow
                                             };
-                byte[] scoutflyBytes = ChunkOTF.files["gi_param.gip"].Extract();
+            byte[] scoutflyBytes = ChunkOTF.files["gi_param.gip"].Extract();
 
-                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
-                //Scoutfly Colour
-                //Normal Monster/Tracking Anything
-                scoutflyBytes = scoutflyBytes.RandomColourPicker(220, r, 240);
-                //Elder Monster
-                scoutflyBytes = scoutflyBytes.RandomColourPicker(232, r, 244);
-                //Tempered Monster
-                scoutflyBytes = scoutflyBytes.RandomColourPicker(236, r, 248);
+            NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+            //Scoutfly Colour
+            //Normal Monster/Tracking Anything
+            scoutflyBytes = scoutflyBytes.RandomColourPicker(220, r, 240);
+            //Elder Monster
+            scoutflyBytes = scoutflyBytes.RandomColourPicker(232, r, 244);
+            //Tempered Monster
+            scoutflyBytes = scoutflyBytes.RandomColourPicker(236, r, 248);
 
-                if (IoC.Settings.DifferentTrackScoutflyColour)
-                {
-                    //Trace Colour
-                    //Normal Monster Trace
-                    scoutflyBytes = scoutflyBytes.RandomColourPicker(240, r);
-                    //Elder Monster Trace
-                    scoutflyBytes = scoutflyBytes.RandomColourPicker(244, r);
-                    //Tempered Monster Trace
-                    scoutflyBytes = scoutflyBytes.RandomColourPicker(248, r);
-                }
-
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\guide_insect\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\guide_insect\gi_param.gip", scoutflyBytes);
-
+            if (IoC.Settings.DifferentTrackScoutflyColour)
+            {
+                //Trace Colour
+                //Normal Monster Trace
+                scoutflyBytes = scoutflyBytes.RandomColourPicker(240, r);
+                //Elder Monster Trace
+                scoutflyBytes = scoutflyBytes.RandomColourPicker(244, r);
+                //Tempered Monster Trace
+                scoutflyBytes = scoutflyBytes.RandomColourPicker(248, r);
             }
+
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\guide_insect\");
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\guide_insect\gi_param.gip", scoutflyBytes);
+        }
+
+        public static void AddKinsectSpeed()
+        {
+            byte[] insectBytes;
+            //If the file has been randomized then just open the randomized one
+            if (IoC.Settings.ShuffleKinsectOrder || IoC.Settings.RandomKinsectType || IoC.Settings.RandomKinsectDust || IoC.Settings.RandomKinsectIconColour)
+                insectBytes = File.ReadAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse");
+            else
+            {
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                insectBytes = ChunkOTF.files["rod_insect.rod_inse"].Extract();
+            }
+
+            Cipher cipher = new Cipher("SFghFQVFJycHnypExurPwut98ZZq1cwvm7lpDpASeP4biRhstQgULzlb");
+            insectBytes = cipher.Decipher(insectBytes);
+
+            List<RecipeStructs.KinsectTree> insects = StructTools.RawDeserialize<RecipeStructs.KinsectTree>(insectBytes, 10);
+
+            foreach (RecipeStructs.KinsectTree insect in insects)
+            {
+                //If the speed is less than 3 then set it to 3
+                if (insect.Speed < 3)
+                    insect.Speed = 3;
+            }
+
+            //Length is 10 bytes for the header, another 10 for the ending bytes
+            Array.Copy(StructTools.RawSerialize(insects), 0, insectBytes, 10, insectBytes.Length - 20);
+            insectBytes = cipher.Encipher(insectBytes);
+
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse", insectBytes);
         }
 
         private static byte[] RandomColourPicker(this byte[] fileBytes, uint offset, NR3Generator r, uint traceOffset = 0)
