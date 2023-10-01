@@ -743,7 +743,8 @@ namespace MHW_Randomizer
 
                 NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
 
-                if (IoC.Settings.RandomKinsectType || IoC.Settings.RandomKinsectDust || IoC.Settings.RandomKinsectIconColour)
+                bool changeKinsectStats = IoC.Settings.RandomKinsectType || IoC.Settings.RandomKinsectDust || IoC.Settings.RandomKinsectIconColour;
+                if (changeKinsectStats)
                 {
                     NR3Generator ir = new NR3Generator(IoC.Randomizer.Seed);
                     for (int i = 0; i < weaponTree.Count; i++)
@@ -836,7 +837,7 @@ namespace MHW_Randomizer
 
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\insect.eq_cus", randomizedBytes);
-                if (IoC.Settings.ShuffleKinsectOrder || IoC.Settings.RandomKinsectType || IoC.Settings.RandomKinsectDust)
+                if (IoC.Settings.ShuffleKinsectOrder || changeKinsectStats)
                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse", randomizedTreeBytes);
             }
             #endregion
