@@ -9,9 +9,18 @@ namespace MHW_Randomizer
     public class ExpeditionRandomizer
     {
         private static int[] MonsterIDs = new int[] { };
+        private static Files[] SobjFilesCache;
+        private static NR3Generator PickSobj;
 
         public static void Randomize()
         {
+            SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !QuestData.BadSobjs.Contains(o.Name)).ToArray();
+            PickSobj = new NR3Generator(IoC.Randomizer.Seed);
+            //Create Sobj folder
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\");
+
+            File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt").Dispose();
+
             //Read in the bytes from the file for the header and transition bytes
             byte[] expeditionSpawnBytes = ChunkOTF.files["discoverEmSet.dems"].Extract();
             List<ExpeditionSpawn> expeditionSpawn = StructTools.RawDeserialize<ExpeditionSpawn>(expeditionSpawnBytes, 10);
@@ -49,6 +58,14 @@ namespace MHW_Randomizer
                             }
                             else
                                 MonsterIDs = ExpeditionData.UsualLowRankMonster;
+
+                            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                            {
+                                //Write monster info to the log
+                                file.WriteLine("----------------");
+                                file.WriteLine("Low Rank");
+                                file.WriteLine("----------------");
+                            }
                             break;
                         }
                     case 1:
@@ -69,6 +86,14 @@ namespace MHW_Randomizer
                             }
                             if (IoC.Settings.ExpeditionIncludeBehemoth)
                                 MonsterIDs = MonsterIDs.Append(15).ToArray();
+
+                            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                            {
+                                //Write monster info to the log
+                                file.WriteLine("\n----------------");
+                                file.WriteLine("High Rank");
+                                file.WriteLine("----------------");
+                            }
                             break;
                         }
                     case 2:
@@ -104,6 +129,14 @@ namespace MHW_Randomizer
                                 MonsterIDs = MonsterIDs.Append(23).ToArray();
                                 MonsterIDs = MonsterIDs.Append(51).ToArray();
                             }
+
+                            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                            {
+                                //Write monster info to the log
+                                file.WriteLine("\n----------------");
+                                file.WriteLine("Master Rank");
+                                file.WriteLine("----------------");
+                            }
                             break;
                         }
                 }
@@ -137,6 +170,7 @@ namespace MHW_Randomizer
                                     else
                                         newChances[monsterID].LowRank.Transitions = expeditionSpawn[0].LowRank.Transitions;
 
+                                    CreateSobj(monsterID, map + 1);
                                     switch (map)
                                     {
                                         case 0:
@@ -171,6 +205,7 @@ namespace MHW_Randomizer
                                     else
                                         newChances[monsterID].HighRank.Transitions = expeditionSpawn[0].HighRank.Transitions;
 
+                                    CreateSobj(monsterID, map + 1);
                                     switch (map)
                                     {
                                         case 0:
@@ -210,6 +245,8 @@ namespace MHW_Randomizer
                                     else
                                         newChances[monsterID].MasterRank.Transitions = expeditionSpawn[0].MasterRank.Transitions;
 
+                                    //If its 5 set the map index to 8 for hoarfrost reach
+                                    CreateSobj(monsterID, map == 5 ? 8 : map + 1);
                                     switch (map)
                                     {
                                         case 0:
@@ -500,7 +537,6 @@ namespace MHW_Randomizer
             header[6] = 101;
 
             //Write the file
-            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy");
             File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\discoverEmSet.dems", header);
 
             //CSV to more easily go through the values
@@ -520,6 +556,53 @@ namespace MHW_Randomizer
                                                                    spawn.MasterRank.st101Chance + "%", spawn.MasterRank.st102Chance + "%", spawn.MasterRank.st103Chance + "%", spawn.MasterRank.st104Chance + "%", spawn.MasterRank.st105Chance + "%", spawn.MasterRank.st108Chance + "%", }));
                 }
             }
+        }
+
+        private static void CreateSobj(int monsterID, int mapIDIndex)
+        {
+            //Expeditions default to sobj 00 for spawns usually, if the sobj index isn't 0 then we know 0 has already been created
+            if (QuestData.MonsterMapSobjCount[monsterID, mapIDIndex] != 0)
+                return;
+
+            string oldMSobj = "";
+            byte[] sobj;
+
+            //Pick random sobj
+            Files[] SobjFiles;
+            SobjFiles = SobjFilesCache.Where(o => o.Name.Contains("st" + QuestData.MapIDs[mapIDIndex])).ToArray();
+            int sobjIndex = PickSobj.Next(SobjFiles.Length);
+
+            sobj = SobjFiles[sobjIndex].Extract();
+            oldMSobj = SobjFiles[sobjIndex].Name;
+
+            //The count of hex byte CD
+            int CDCount = 0;
+            //Find where monster ID is located
+            for (int j = 0; j < sobj.Length; j++)
+            {
+                if (sobj[j] == 205)
+                {
+                    CDCount++;
+                }
+                else if (CDCount > 12)
+                {
+                    sobj[j + 13] = (byte)monsterID;
+                    break;
+                }
+                else
+                    CDCount = 0;
+            }
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[monsterID] + QuestData.MapIDs[mapIDIndex] + "_" + QuestData.MonsterMapSobjCount[monsterID, mapIDIndex].ToString("00") + ".sobj", sobj);
+
+
+            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+            {
+                //Write monster info to the log
+                file.WriteLine("Sobj File Name: " + QuestData.MonsterStageEmNumber[monsterID] + QuestData.MapIDs[mapIDIndex] + "_" + QuestData.MonsterMapSobjCount[monsterID, mapIDIndex].ToString("00") + ".sobj" + "\tOld sobj File Name: " + oldMSobj + "\tMonster: " + QuestData.MonsterNames[monsterID + 1]);
+            }
+
+            //Increment for the if check above
+            QuestData.MonsterMapSobjCount[monsterID, mapIDIndex]++;
         }
     }
 }

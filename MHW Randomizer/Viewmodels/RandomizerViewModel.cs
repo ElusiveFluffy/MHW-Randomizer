@@ -342,6 +342,9 @@ namespace MHW_Randomizer
                 File.WriteAllText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt",
                                   "Put the common, em, quest, and/or stage folders (some won't be there depending on what you randomized) into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");
 
+            //Reset the sobj index list
+            QuestData.MonsterMapSobjCount = new int[102, 43];
+
             if (IoC.Settings.RandomizeQuests)
             {
                 QuestRandomizer questRandomizer = new QuestRandomizer();
