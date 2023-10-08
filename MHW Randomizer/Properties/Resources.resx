@@ -289,6 +289,9 @@
   <data name="SupplyItems" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Item Shop\SupplyItems.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="SupplyItemsLimit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\item shop\supplyitemslimit.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Switch_Axe" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Weapons\Switch_Axe.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

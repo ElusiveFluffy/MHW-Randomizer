@@ -1261,7 +1261,9 @@ namespace MHW_Randomizer
         private static void RandomizeSupplyItems()
         {
             Dictionary<ushort, string> itemPool = JsonConvert.DeserializeObject<Dictionary<ushort, string>>(Encoding.UTF8.GetString(Properties.Resources.SupplyItems)).ToDictionary(x => x.Key, x => x.Value);
-            NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+            Dictionary<ushort, int> itemLimits = JsonConvert.DeserializeObject<Dictionary<ushort, int>>(Encoding.UTF8.GetString(Properties.Resources.SupplyItemsLimit)).ToDictionary(x => x.Key, x => x.Value);
+            XorShift128Generator r = new XorShift128Generator(IoC.Randomizer.Seed);
+            XorShift128Generator countRoll = new XorShift128Generator(IoC.Randomizer.Seed);
 
             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\supp");
             File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Supply Log.txt").Dispose();
@@ -1286,10 +1288,17 @@ namespace MHW_Randomizer
                     //Pick a random item
                     for (int i = 0; i < items.Count; i++)
                     {
+                        //If the item count is 0 there is no item in that slot
                         if (items[i].Item_Count > 0)
                         {
+                            //Pick one of the supply items
                             items[i].Item_Id = itemPool.ElementAt(r.Next(itemPool.Count)).Key;
-                            file.WriteLine("Item " + i + ": " + itemPool[items[i].Item_Id]);
+
+                            //Chose a count for it within the limit
+                            items[i].Item_Count = (ushort)r.Next(1, itemLimits[items[i].Item_Id] + 1);
+
+                            //Log it
+                            file.WriteLine("Item " + i + ": " + itemPool[items[i].Item_Id] + "\tCount: " + items[i].Item_Count);
                         }
                     }
 
@@ -1307,7 +1316,6 @@ namespace MHW_Randomizer
         {
             NR3Generator IDr = new NR3Generator(IoC.Randomizer.Seed);
             NR3Generator amountr = new NR3Generator(IoC.Randomizer.Seed);
-            NR3Generator dice = new NR3Generator(IoC.Randomizer.Seed);
 
             string[] localSuppIDs = SupplyBoxIDs.ToArray();
             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\supp");
@@ -1323,11 +1331,8 @@ namespace MHW_Randomizer
                 {
                     if (a < singlePlayAmount || (7 < a && a - 8 < multiPlayAmount))
                     {
-                        //Pick two random numbers for the item count and pick the lowest
-                        int roll1 = dice.Next(1, 31);
-                        int roll2 = dice.Next(1, 31);
-                        ushort lowest = (ushort)Math.Min(roll1, roll2);
-                        items.Add(new SuppItems { Item_Count = lowest });
+                        //Make the count 1 to have it valid for the last part
+                        items.Add(new SuppItems { Item_Count = 1 });
                     }
                     else
                         items.Add(new SuppItems());

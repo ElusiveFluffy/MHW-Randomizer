@@ -633,6 +633,16 @@ namespace MHW_Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] SupplyItemsLimit {
+            get {
+                object obj = ResourceManager.GetObject("SupplyItemsLimit", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Switch_Axe {
             get {
                 object obj = ResourceManager.GetObject("Switch_Axe", resourceCulture);

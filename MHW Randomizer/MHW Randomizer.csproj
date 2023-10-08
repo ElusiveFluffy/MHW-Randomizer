@@ -309,6 +309,7 @@
     <None Include="Data\Item Shop\SupplyItems.json" />
     <None Include="Data\Item Shop\Gear\ShopSwitch_Axe.json" />
     <None Include="Data\Item Shop\Gear\ShopSword_and_Shield.json" />
+    <None Include="Data\Item Shop\SupplyItemsLimit.json" />
     <None Include="Data\Palico\otomo_armourData.json" />
     <None Include="Data\Palico\otomo_weaponData.json" />
     <None Include="Data\Weapons\Bow.json" />
