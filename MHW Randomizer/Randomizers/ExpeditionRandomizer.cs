@@ -149,12 +149,25 @@ namespace MHW_Randomizer
 
                     List<uint> rollChances = new List<uint> { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10 };
 
-                    if (IoC.Settings.ExpeditionIncludeAlatreon && map == 3)
+                    if (rank == 2 && map == 3)
                         //Remove alatreon as a possible monster if map is coral highlands as it causes a blinding white light effect on that map
+                        //Remove leshen too as possible monster as they get stuck
+                        MonsterIDs = MonsterIDs.Where(o => o != 87 || (o != 23 || o != 51)).ToArray();
+                    else if (rank == 2 && map == 4)
+                    {
+                        if (IoC.Settings.ExpeditionIncludeAlatreon)
+                            //Add alatreon to the map after
+                            MonsterIDs = MonsterIDs.Append(87).ToArray();
+                        if (IoC.Settings.ExpeditionIncludeLeshen)
+                        {
+                            //Add the leshen back in
+                            MonsterIDs = MonsterIDs.Append(23).ToArray();
+                            MonsterIDs = MonsterIDs.Append(51).ToArray();
+                        }
+                    }
+                    else if (rank == 2 && map == 5)
+                        //Remove alatreon as a possible monster if map is hoarfrost reach as it causes them to get stuck
                         MonsterIDs = MonsterIDs.Where(o => o != 87).ToArray();
-                    else if (IoC.Settings.ExpeditionIncludeAlatreon && map == 4)
-                        //Add alatreon to the map after
-                        MonsterIDs = MonsterIDs.Append(87).ToArray();
 
                     for (int chanceRoll = 0; chanceRoll < 15; chanceRoll++)
                     {

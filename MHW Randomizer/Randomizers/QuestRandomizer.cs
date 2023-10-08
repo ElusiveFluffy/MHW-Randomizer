@@ -546,8 +546,12 @@ namespace MHW_Randomizer
                         MapIDIndex = QuestData.ValidMapIndexes[PickMap.Next(5 + (Convert.ToInt32(iceborne) * 2))];
                 }
 
-                if (iceborne && MapIDIndex == 3)
+                if (MapIDIndex == 3)
                     //Remove alatreon as a possible monster if map is coral highlands as it causes a blinding white light effect on that map
+                    //Remove leshen too as possible monster as they get stuck
+                    currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87 || (o != 23 || o != 51)).ToArray();
+                else if (iceborne && MapIDIndex == 8)
+                    //Remove alatreon as a possible monster if map is hoarfrost reach as it causes them to get stuck
                     currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87).ToArray();
 
                 //Just recalculate it each quest just as a failsafe as this doesn't take long
