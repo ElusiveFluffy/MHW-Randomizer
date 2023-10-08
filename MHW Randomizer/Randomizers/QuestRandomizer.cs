@@ -518,7 +518,7 @@ namespace MHW_Randomizer
 
                 int[] currentRankMonsterIDs;
                 if (captureQuest)
-                    currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray() : MonsterIDs.Where(o => !QuestData.ElderDragonIDs.Contains(o)).ToArray();
+                    currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs.Where(o => !QuestData.UncaptureableMonsterIDs.Contains(o)).ToArray() : MonsterIDs.Where(o => !QuestData.UncaptureableMonsterIDs.Contains(o)).ToArray();
                 else
                 {
                     currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs : MonsterIDs;

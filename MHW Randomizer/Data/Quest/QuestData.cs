@@ -751,7 +751,7 @@ namespace MHW_Randomizer
 
         public static int[] BigMonsterIDs = { 0, 1, 7, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19, 20, 21, 22, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 39 };
         public static int[] LowRankBigMonsterIDs = { 0, 1, 7, 9, 12, 14, 21, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35 };
-        public static int[] ElderDragonIDs = { 14, 15, 16, 17, 18, 25, 26, 36, 70, 75, 79, 80, 81, 87, 97, 101 };
+        public static int[] UncaptureableMonsterIDs = { 14, 15, 16, 17, 18, 23, 25, 26, 36, 51, 70, 75, 79, 80, 81, 87, 97, 101 };
 
         //15 (behemoth), 23 (leshen), 26 (xeno'jjiva), 51 (ancient leshen)
         //public static int[] HighRankMonsters = { 10, 11, 13, 16, 17, 18, 19, 20, 22, 25, 36, 37, 39 };
