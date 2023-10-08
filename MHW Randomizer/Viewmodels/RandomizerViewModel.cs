@@ -251,7 +251,7 @@ namespace MHW_Randomizer
             }
             catch (Exception ex)
             {
-                MessageWindow message = new MessageWindow("Error occured while analyzing chunks.\n" + ex.StackTrace);
+                MessageWindow message = new MessageWindow("Error occured while analyzing chunks:\n" + ex.Message);
 
                 message.Owner = MainWindow.window;
                 message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
