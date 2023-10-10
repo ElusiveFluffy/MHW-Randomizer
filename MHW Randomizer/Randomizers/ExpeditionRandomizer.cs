@@ -111,13 +111,7 @@ namespace MHW_Randomizer
                                 MonsterIDs = MonsterIDs.Concat(ExpeditionData.UnusedMasterRankMonster).ToArray();
 
                             if (IoC.Settings.ExpeditionIncludeShara)
-                            {
                                 MonsterIDs = MonsterIDs.Append(81).ToArray();
-
-                                //Add custom think file, just create it just incase it wasn't created with the quest
-                                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data");
-                                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data/em126_00.thk", Properties.Resources.em126_00thk);
-                            }
 
                             if (IoC.Settings.ExpeditionIncludeFuriousRajang)
                                 MonsterIDs = MonsterIDs.Append(92).ToArray();
