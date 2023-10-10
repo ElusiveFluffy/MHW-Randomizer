@@ -453,6 +453,7 @@ namespace MHW_Randomizer
                     message.ShowDialog();
                     return;
                 }
+                #region No Randomized File Json
 
                 //Check if the json file exists, if it does just continue out of this to the regular method
                 if (!File.Exists(IoC.Settings.SaveFolderPath + @"\Randomized Files.json"))
@@ -465,6 +466,60 @@ namespace MHW_Randomizer
                     };
                     if ((bool)warning.ShowDialog())
                     {
+                        try
+                        {
+                            foreach (int quest in QuestData.QuestName.Keys)
+                            {
+                                //Format it so it has 0s ahead of the number to make it match the files
+                                string fileQuestNumber = quest.ToString("D5");
+
+                                //Delete the quest file
+                                if (File.Exists(IoC.Settings.SaveFolderPath + @"\quest\questData_" + fileQuestNumber + ".mib"))
+                                    File.Delete(IoC.Settings.SaveFolderPath + @"\quest\questData_" + fileQuestNumber + ".mib");
+
+                                //Delete the folder containing all the fsm files
+                                if (Directory.Exists(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em"))
+                                    Directory.Delete(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em", true);
+
+                                //Delete the gmd text files
+                                if (File.Exists(IoC.Settings.SaveFolderPath + @"\common\text\quest\q" + fileQuestNumber + "_eng.gmd"))
+                                    File.Delete(IoC.Settings.SaveFolderPath + @"\common\text\quest\q" + fileQuestNumber + "_eng.gmd");
+                            }
+
+                            HashSet<string> filesToRemove = JsonConvert.DeserializeObject<HashSet<string>>(Encoding.UTF8.GetString(Properties.Resources.FilesToRemove));
+                            HashSet<string> foldersToRemove = JsonConvert.DeserializeObject<HashSet<string>>(Encoding.UTF8.GetString(Properties.Resources.FoldersToRemove));
+
+                            //Remove all the potential files
+                            foreach (string file in filesToRemove)
+                            {
+                                if (File.Exists(IoC.Settings.SaveFolderPath + file))
+                                    File.Delete(IoC.Settings.SaveFolderPath + file);
+                            }
+
+                            //Remove all the potential folders
+                            foreach (string folder in foldersToRemove)
+                            {
+                                if (Directory.Exists(IoC.Settings.SaveFolderPath + folder))
+                                    Directory.Delete(IoC.Settings.SaveFolderPath + folder, true);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageWindow errorMessage = new MessageWindow("Error Logging File:\n" + ex.Message)
+                            {
+                                Owner = MainWindow.window,
+                                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+                            };
+                            errorMessage.ShowDialog();
+                        }
+
+                        MessageWindow message = new MessageWindow("Successfully removed previous randomized files")
+                        {
+                            Owner = MainWindow.window,
+                            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+                        };
+                        message.ShowDialog();
 
                         return;
                     }
@@ -472,6 +527,7 @@ namespace MHW_Randomizer
                         return;
                 }
             }
+            #endregion
             //If only the file doesn't exist than return
             else if (!File.Exists(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
                 return;
@@ -484,7 +540,8 @@ namespace MHW_Randomizer
                 //Loop through and delete all the files
                 foreach (string relativeFilePath in RandomizedFiles)
                 {
-                    File.Delete(IoC.Settings.SaveFolderPath + RandomizeRootFolder + relativeFilePath);
+                    if (File.Exists(IoC.Settings.SaveFolderPath + RandomizeRootFolder + relativeFilePath))
+                        File.Delete(IoC.Settings.SaveFolderPath + RandomizeRootFolder + relativeFilePath);
                 }
             }
             catch (Exception ex)

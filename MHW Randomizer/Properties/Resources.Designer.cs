@@ -163,6 +163,26 @@ namespace MHW_Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] FilesToRemove {
+            get {
+                object obj = ResourceManager.GetObject("FilesToRemove", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] FoldersToRemove {
+            get {
+                object obj = ResourceManager.GetObject("FoldersToRemove", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Furnature {
             get {
                 object obj = ResourceManager.GetObject("Furnature", resourceCulture);

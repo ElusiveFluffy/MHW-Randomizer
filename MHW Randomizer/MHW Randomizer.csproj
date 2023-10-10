@@ -291,6 +291,7 @@
     <None Include="Data\eng_insectData.json" />
     <None Include="Data\eng_itemData.json" />
     <None Include="Data\eng_skillData.json" />
+    <None Include="Data\FileRemover\FilesToRemove.json" />
     <None Include="Data\FileRemover\FoldersToRemove.json" />
     <None Include="Data\Item Shop\Gear\ShopBow.json" />
     <None Include="Data\Item Shop\Gear\ShopCharge_Blade.json" />

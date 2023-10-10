@@ -148,6 +148,12 @@
   <data name="eng_skillData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\eng_skillData.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="FilesToRemove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\fileremover\filestoremove.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="FoldersToRemove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\fileremover\folderstoremove.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Furnature" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Item Shop\Furnature.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
