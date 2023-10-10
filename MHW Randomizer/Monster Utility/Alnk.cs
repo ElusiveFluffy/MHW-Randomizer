@@ -44,6 +44,7 @@ namespace MHW_Randomizer
 
                     Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName.Truncate(alnk.EntireName.Length - 14));
                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName, newAlnk);
+                    //Add alnks for variant monsters
                     if (alnk.Name.Contains("em018"))
                     {
                         //Edit the monster ID
