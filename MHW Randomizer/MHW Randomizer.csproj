@@ -165,6 +165,7 @@
     <Compile Include="Randomizers\ExpeditionRandomizer.cs" />
     <Compile Include="Randomizers\MonsterRandomizer.cs" />
     <Compile Include="Monster Utility\Alnk.cs" />
+    <Compile Include="RandomizedFileLogger.cs" />
     <Compile Include="Windows\ChoiceWindow.xaml.cs">
       <DependentUpon>ChoiceWindow.xaml</DependentUpon>
     </Compile>
@@ -290,6 +291,7 @@
     <None Include="Data\eng_insectData.json" />
     <None Include="Data\eng_itemData.json" />
     <None Include="Data\eng_skillData.json" />
+    <None Include="Data\FileRemover\FoldersToRemove.json" />
     <None Include="Data\Item Shop\Gear\ShopBow.json" />
     <None Include="Data\Item Shop\Gear\ShopCharge_Blade.json" />
     <None Include="Data\Item Shop\Gear\ShopDual_Blades.json" />

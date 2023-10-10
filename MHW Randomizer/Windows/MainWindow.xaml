@@ -37,6 +37,12 @@
                        Height="100"
                        HorizontalAlignment="Left"
                        Margin="80 0 40 -10"/>
+                <Button Content="Remove Randomized Files"
+                        Margin="10 0 0 5"
+                        Width="165"
+                        Height="20"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding RemoveFilesCommand, Source={x:Static local:IoC.Randomizer}}"/>
                 <Border HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Width="180"

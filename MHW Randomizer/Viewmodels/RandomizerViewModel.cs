@@ -10,6 +10,7 @@ using Troschuetz.Random.Generators;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MHW_Randomizer
 {
@@ -21,6 +22,8 @@ namespace MHW_Randomizer
         public ICommand RandomizeCommand { get; set; }
         public ICommand CreditsCommand { get; set; }
 
+        public ICommand RemoveFilesCommand { get; set; }
+
         public string MonsterIcon { get; set; }
 
         public BetterFolderBrowser FolderBrowser = new BetterFolderBrowser();
@@ -28,6 +31,8 @@ namespace MHW_Randomizer
         public bool SaveIsEnabled { get; set; }
         public string RandomizeRootFolder { get; set; }
         public bool Randomizing { get; set; }
+
+        public HashSet<string> RandomizedFiles = new HashSet<string>();
 
         public uint Seed;
 
@@ -37,6 +42,8 @@ namespace MHW_Randomizer
             OpenCommand = new RelayCommand(OpenFolder);
             RandomizeCommand = new RelayCommand(Randomize);
             CreditsCommand = new RelayCommand(Credits);
+
+            RemoveFilesCommand = new RelayCommand(RemoveOldRandomizedFiles);
 
             FolderBrowser.RootFolder = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -262,54 +269,9 @@ namespace MHW_Randomizer
 
         public async void Randomize()
         {
-            FolderBrowser = new BetterFolderBrowser();
-            if (!string.IsNullOrWhiteSpace(IoC.Settings.SaveFolderPath) && Directory.Exists(IoC.Settings.SaveFolderPath))
-                FolderBrowser.RootFolder = IoC.Settings.SaveFolderPath;
-            else
-                FolderBrowser.RootFolder = AppDomain.CurrentDomain.BaseDirectory;
-
-            FolderBrowser.Title = "Select Folder to Output Randomized Files (Will Also Add a Randomized Folder For the Files)";
-            FolderBrowser.Multiselect = false;
-
-            NativeWindow win32Parent = new NativeWindow();
-            win32Parent.AssignHandle(new WindowInteropHelper(MainWindow.window).Handle);
-            DialogResult result = FolderBrowser.ShowDialog(win32Parent);
-
-            if (!(result == DialogResult.OK && Directory.Exists(FolderBrowser.SelectedPath)))
-            {
-                if (!Directory.Exists(FolderBrowser.SelectedPath) && result == DialogResult.OK)
-                {
-                    //Message Window
-                    MessageWindow folderMessage = new MessageWindow("Error: Folder Doesn't Exist");
-
-                    folderMessage.Owner = MainWindow.window;
-                    folderMessage.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
-                    folderMessage.ShowDialog();
-                }
+            //Return if cannot pick a randomized folder
+            if (!PickRandomizedFolder("Select Folder to Output Randomized Files (Will Also Add a Randomized Folder For the Files)", true))
                 return;
-            }
-            else if (new DirectoryInfo(FolderBrowser.SelectedPath).Name == "nativePC")
-            {
-                ChoiceWindow warning = new ChoiceWindow("Warning randomizing directly into the nativePC folder will overide any files that get randomized. Are you sure you want to randomize there?")
-                {
-                    Owner = MainWindow.window,
-                    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner,
-                    Width = 450
-                };
-                if ((bool)warning.ShowDialog())
-                {
-                    IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
-                    RandomizeRootFolder = "";
-                }
-                else
-                    return;
-            }
-            else
-            {
-                IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized");
-                RandomizeRootFolder = @"\randomized";
-            }
 
             Randomizing = true;
             //Allow the UI to update instead of freezing
@@ -342,6 +304,12 @@ namespace MHW_Randomizer
                 File.WriteAllText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt",
                                   "Put the common, em, quest, and/or stage folders (some won't be there depending on what you randomized) into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");
 
+            //Clear out all the old randomized files
+            RemoveOldRandomizedFiles();
+
+            //Setup the file logger
+            RandomizedFileLogger.SetupWatcher();
+
             //Reset the sobj index list
             QuestData.MonsterMapSobjCount = new int[102, 43];
 
@@ -367,6 +335,22 @@ namespace MHW_Randomizer
 
             MiscRandomizer.Randomize();
 
+            //Dispose the watcher so it no longer gets fired
+            RandomizedFileLogger.DisposeWatcher();
+            //Write all the randomized files to a json file after disposing the logger
+            using (StreamWriter file = File.CreateText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer
+                {
+                    Formatting = Formatting.Indented,
+                    DefaultValueHandling = DefaultValueHandling.Ignore
+                };
+                //serialize objects directly into file stream
+                serializer.Serialize(file, RandomizedFiles);
+            }
+            //Clear out the randomized file set to free up some memory
+            RandomizedFiles = new HashSet<string>();
+
             Randomizing = false;
 
             //Message Window
@@ -380,6 +364,154 @@ namespace MHW_Randomizer
             message.Owner = MainWindow.window;
             message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
             message.ShowDialog();
+        }
+
+        /// <summary>
+        /// Opens the folder browser to pick a folder then set the folder directory
+        /// </summary>
+        /// <param name="folderBrowserTitle"></param>
+        /// <param name="randomizeButton"></param>
+        /// <returns>Returns true if successful</returns>
+        private bool PickRandomizedFolder(string folderBrowserTitle, bool randomizeButton = false)
+        {
+            FolderBrowser = new BetterFolderBrowser();
+            if (!string.IsNullOrWhiteSpace(IoC.Settings.SaveFolderPath) && Directory.Exists(IoC.Settings.SaveFolderPath))
+                FolderBrowser.RootFolder = IoC.Settings.SaveFolderPath;
+            else
+                FolderBrowser.RootFolder = AppDomain.CurrentDomain.BaseDirectory;
+
+            FolderBrowser.Title = folderBrowserTitle;
+            FolderBrowser.Multiselect = false;
+
+            NativeWindow win32Parent = new NativeWindow();
+            win32Parent.AssignHandle(new WindowInteropHelper(MainWindow.window).Handle);
+            DialogResult result = FolderBrowser.ShowDialog(win32Parent);
+
+            if (!(result == DialogResult.OK && Directory.Exists(FolderBrowser.SelectedPath)))
+            {
+                if (!Directory.Exists(FolderBrowser.SelectedPath) && result == DialogResult.OK)
+                {
+                    //Message Window
+                    MessageWindow folderMessage = new MessageWindow("Error: Folder Doesn't Exist");
+
+                    folderMessage.Owner = MainWindow.window;
+                    folderMessage.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+                    folderMessage.ShowDialog();
+                }
+                return false;
+            }
+            else if (!randomizeButton)
+            {
+                IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
+                RandomizeRootFolder = "";
+            }
+            else if (new DirectoryInfo(FolderBrowser.SelectedPath).Name == "nativePC")
+            {
+                ChoiceWindow warning = new ChoiceWindow("Warning randomizing directly into the nativePC folder will overide any files that get randomized. Are you sure you want to randomize there?")
+                {
+                    Owner = MainWindow.window,
+                    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner,
+                    Width = 450
+                };
+                if ((bool)warning.ShowDialog())
+                {
+                    IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
+                    RandomizeRootFolder = "";
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
+                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized");
+                RandomizeRootFolder = @"\randomized";
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Clears out the old randomized files for easy removal of the randomized files, and when randomizing with different settings it clears out the unneeded files
+        /// </summary>
+        private void RemoveOldRandomizedFiles()
+        {
+            //Only run this when the remove old files button is pressed
+            if (!Randomizing)
+            {
+                //Only continue if this succeeds
+                if (!PickRandomizedFolder("Pick the nativePC folder to remove the randomized files from"))
+                    return;
+
+                if (!IoC.Settings.SaveFolderPath.Contains("nativePC"))
+                {
+                    MessageWindow message = new MessageWindow("Error, nativePC folder wasn't selected!")
+                    {
+                        Owner = MainWindow.window,
+                        WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+                    };
+                    message.ShowDialog();
+                    return;
+                }
+
+                //Check if the json file exists, if it does just continue out of this to the regular method
+                if (!File.Exists(IoC.Settings.SaveFolderPath + @"\Randomized Files.json"))
+                {
+                    ChoiceWindow warning = new ChoiceWindow("Could not find the \"Randomized Files.json\" file in selected directory. Would you like to remove all possible randomized files? (Could include other mods files)")
+                    {
+                        Owner = MainWindow.window,
+                        WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner,
+                        Width = 450
+                    };
+                    if ((bool)warning.ShowDialog())
+                    {
+
+                        return;
+                    }
+                    else
+                        return;
+                }
+            }
+            //If only the file doesn't exist than return
+            else if (!File.Exists(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
+                return;
+
+            //Read in all the files
+            RandomizedFiles = JsonConvert.DeserializeObject<HashSet<string>>(File.ReadAllText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"));
+
+            try
+            {
+                //Loop through and delete all the files
+                foreach (string relativeFilePath in RandomizedFiles)
+                {
+                    File.Delete(IoC.Settings.SaveFolderPath + RandomizeRootFolder + relativeFilePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageWindow message = new MessageWindow("Error Logging File:\n" + ex.Message)
+                {
+                    Owner = MainWindow.window,
+                    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+                };
+                message.ShowDialog();
+            }
+
+            //Delete the old randomized files json file
+            File.Delete(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json");
+
+            //Clear the hash set
+            RandomizedFiles = new HashSet<string>();
+
+            if (!Randomizing)
+            {
+                MessageWindow message = new MessageWindow("Successfully removed previous randomized files")
+                {
+                    Owner = MainWindow.window,
+                    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+                };
+                message.ShowDialog();
+            }
         }
 
     }
