@@ -52,7 +52,7 @@
                                 <CheckBox Content="Include Behemoth"
                                           IsChecked="{Binding ExpeditionIncludeBehemoth, Source={x:Static local:IoC.Settings}}"
                                           Margin="12, 4"
-                                          ToolTip="Behemoth could get stuck in some spots due to their size &#xA;(hasn't really been tested) and has alot of health so could be hard if included in possible random monster"
+                                          ToolTip="Behemoth could get stuck in some spots due to their size &#xA;(hasn't really been tested)"
                                           ToolTipService.ShowDuration="10000"/>
                             </StackPanel>
                             <StackPanel>
