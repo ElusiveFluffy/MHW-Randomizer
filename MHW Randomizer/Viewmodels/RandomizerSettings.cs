@@ -25,6 +25,7 @@ namespace MHW_Randomizer
         public bool RandomSobj { get; set; }
         public bool RandomMaps { get; set; }
         public bool IncludeArenaMap { get; set; } //Maybe including the shara stage //For if random maps is checked
+        public bool IncludeIBArenaMaps { get; set; }
         public bool AllMonstersInArena { get; set; }
         public bool RandomIcons { get; set; }
         public bool RandomizeMusic { get; set; }
@@ -152,6 +153,7 @@ namespace MHW_Randomizer
         public bool DifferentTrackScoutflyColour { get; set; }
 
         //Tweaks
+        public bool OnePlayerQuests { get; set; }
         public bool FasterKinsects { get; set; }
 
         //---------------------------

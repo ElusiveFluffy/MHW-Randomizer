@@ -73,7 +73,7 @@
                                 <CheckBox Content="Include Arenas"
                                           IsChecked="{Binding IncludeArenaMap, Source={x:Static local:IoC.Settings}}"
                                           Margin="12, 4"
-                                          ToolTip="Includes all the arena maps in the pool of maps to randomly chose from &#xA;(includes arenas like Shara's and Fatalis') &#xA;(only the required monsters will be in the arena)"
+                                          ToolTip="Includes the arena maps in the pool of maps to randomly chose from &#xA;(only the required monsters will be in the arena)"
                                           ToolTipService.ShowDuration="10000"
                                           IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"/>
                                 <CheckBox Content="All Monster In Arenas"
@@ -316,6 +316,12 @@
                                   ToolTip="May get stuck, can be hard if include them (Won't be in the pool of monsters for coral highlands because they make the screen completely white when in fire form on that map)"
                                   ToolTipService.ShowDuration="10000"/>
                 </StackPanel>
+                <CheckBox Content="Include Iceborne Arenas"
+                          IsChecked="{Binding IncludeIBArenaMaps, Source={x:Static local:IoC.Settings}}"
+                          Margin="15 33 0 0"
+                          ToolTip="Includes the Iceborne arena maps in the pool of maps to randomly chose from &#xA;(includes arenas like Shara's and Alatreon's) &#xA;(only the required monsters will be in the arena) &#xA;(Will use a unique music track otherwise there will be no music unless the monster has their own theme)"
+                          ToolTipService.ShowDuration="10000"
+                          IsEnabled="{Binding IncludeArenaMap, Source={x:Static local:IoC.Settings}}"/>
             </StackPanel>
         </Border>
     </Grid>

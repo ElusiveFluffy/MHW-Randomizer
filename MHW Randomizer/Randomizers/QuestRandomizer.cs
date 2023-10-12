@@ -538,9 +538,14 @@ namespace MHW_Randomizer
 
                     if (IoC.Settings.IncludeArenaMap)
                     {
-                        MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne) * 6))];
+                        MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne) * 2) + (Convert.ToInt32(iceborne && IoC.Settings.IncludeIBArenaMaps) * 4))];
                         if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
+                        {
                             PSpawnIndex = 0;
+                            //If its a iceborne arena then change the bgm to 22 since its the only one with nice music for them
+                            if (MapIDIndex > 30)
+                                BGMIndex = 22;
+                        }
                     }
                     else
                         MapIDIndex = QuestData.ValidMapIndexes[PickMap.Next(5 + (Convert.ToInt32(iceborne) * 2))];

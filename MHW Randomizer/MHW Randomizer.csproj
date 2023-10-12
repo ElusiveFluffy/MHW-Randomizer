@@ -267,6 +267,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Chunk\keyseq.key" />
+    <None Include="Data\alnk\Iceborne Arenas" />
     <None Include="Data\alnk\m101 Flying" />
     <None Include="Data\alnk\m101 Ground" />
     <None Include="Data\alnk\m102 Flying" />

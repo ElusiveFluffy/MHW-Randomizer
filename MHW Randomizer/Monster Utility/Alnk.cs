@@ -14,13 +14,16 @@ namespace MHW_Randomizer
                 for (int a = 0; a < alnkFiles.Length; a++)
                 {
                     Files alnk = alnkFiles[a];
-                    if (alnk.Name.Contains("ems"))
+                    //Don't change small monsters, safi, xeno, or fatalis
+                    if (alnk.Name.Contains("ems") || alnk.Name.Contains("em104") || alnk.Name.Contains("em105") || alnk.Name.Contains("em013"))
                         continue;
 
                     byte[] alnkBytes = alnk.Extract();
                     byte[] newAlnk = new byte[44];
+                    //Copy the Header
                     Array.Copy(alnkBytes, newAlnk, 44);
-                    newAlnk[40] = 7;
+                    //Something to do with path count maybe???
+                    newAlnk[40] = 22;
                     if (QuestData.IsGroundMonster[a])
                     {
                         newAlnk = newAlnk.Concat(Properties.Resources.m101_Ground).ToArray();
@@ -41,6 +44,9 @@ namespace MHW_Randomizer
                         newAlnk = newAlnk.Concat(Properties.Resources.m108_Flying).ToArray();
                         newAlnk = newAlnk.Concat(Properties.Resources.m109_Flying).ToArray();
                     }
+
+                    //Add map entries for the arenas so the monsters don't try to run
+                    newAlnk = newAlnk.Concat(Properties.Resources.Iceborne_Arenas).ToArray();
 
                     Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName.Truncate(alnk.EntireName.Length - 14));
                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + alnk.EntireName, newAlnk);

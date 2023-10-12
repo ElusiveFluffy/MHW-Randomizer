@@ -12,12 +12,12 @@ namespace MHW_Randomizer
         public static byte[] QuestTypeIDs = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20 };
 
         // 415,
-        public static int[] ArenaMaps = { 201, 202, 405, 409, 412, 413, 416, 417 };
+        public static int[] ArenaMaps = { 201, 202, 405, 409, 412, 413, 415, 416, 417 };
 
         public static int[] ValidMapIndexes = { 1, 2, 3, 4, 5, 8, 9 };
 
         // 34,
-        public static int[] ValidArenaMapIndexes = { 1, 2, 3, 4, 5, 11, 12, 8, 9, 31, 32, 35, 36 };
+        public static int[] ValidArenaMapIndexes = { 1, 2, 3, 4, 5, 11, 12, 8, 9, 31, 32, 34, 35 };
 
         public static string[] MapNames = {"Infinity of Nothing", "Ancient Forest", "Wildspire Waste", "Coral Highlands", "Rotten Vale", "Elder Recess" , "Great Ravine" , "Great Ravine (Story Map to Coral Highlands)" , "Hoarfrost Reach", "Guiding Lands", "Infinity of Nothing" ,
             "Special Arena" , "Arena (Challenge)" ,"IB Arena (Seliana Supply Cache)",  "Astera" , "Gathering Hub (Astera)" , "Research Base" , "Seliana", "Gathering Hub (Seliana)", "307 Unconfirmed/To Be Tested","311 Unconfirmed/To Be Tested","Crashes game" , "Ancient Forest (Flooded / Intro)" ,
@@ -27,7 +27,7 @@ namespace MHW_Randomizer
         //Sobj's that spawn the monster out of bounds or don't work properly: em102_00_st101_61.sobj. em118_00_st102_02.sobj (story one?), em103_00_st105_10.sobj (story one too maybe), em042_05_st109_60.sobj (in area that need to do the quest "Across the Lost Path", get the quest after beating the main story,
         //gonna exclude it because could cause a softlock and could be confusing where the monster is), em057_01_st109_00.sobj (in area that need to do the quest "Across the Lost Path"), em113_01_st109_50.sobj (Don't know, seems to be in another area that needs to be unlocked),
         //em057_01_st109_10.sobj (in area that need to do the quest "Across the Lost Path"), em042_00_st109_60.sobj (in area that need to do the quest "Across the Lost Path"), em043_05_st109_50.sobj (Don't know, seems to be in another area that needs to be unlocked)
-        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj", "em011_00_st105_02.sobj", "em103_00_st104_00.sobj", "em127_00_st101_01.sobj" };
+        public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj", "em011_00_st105_02.sobj", "em103_00_st104_00.sobj", "em127_00_st101_01.sobj", "em063_00_st108_02.sobj", "em063_00_st108_00.sobj" };
         //Possible one em043_05_st109_60.sobj
 
         public static string[] IconList = { "Anjanath", "Great Jagras", "Pukei-Pukei", "Nergigante", "Xeno'jiiva", "Xeno'jiiva", "Zorah Magdaros", "Kulu-Ya-Ku", "Tzitzi-Ya-Ku", "Jyuratodus", "Tobi-Kadachi", "Paolumu", "Legiana", "Great Girros", "Odogaron", "Radobaan", 

@@ -253,6 +253,16 @@ namespace MHW_Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] Iceborne_Arenas {
+            get {
+                object obj = ResourceManager.GetObject("Iceborne_Arenas", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Insect_Glaive {
             get {
                 object obj = ResourceManager.GetObject("Insect_Glaive", resourceCulture);

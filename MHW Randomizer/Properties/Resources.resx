@@ -175,6 +175,9 @@
   <data name="Hunting_Horn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Weapons\Hunting_Horn.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Iceborne_Arenas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\alnk\iceborne arenas;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Insect_Glaive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Weapons\Insect_Glaive.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
