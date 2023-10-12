@@ -30,8 +30,8 @@ namespace MHW_Randomizer
 
         private static void OnChanged(object sender, FileSystemEventArgs e)
         {
-            //Make sure its not one of the log text files or a folder
-            if (e.ChangeType == WatcherChangeTypes.Changed && Path.GetExtension(e.FullPath) != ".txt" && Path.GetExtension(e.FullPath) != ".csv" && !File.GetAttributes(e.FullPath).HasFlag(FileAttributes.Directory))
+            //Make sure its not one of the log text files or a folder (file exists will filter out folders)
+            if (e.ChangeType == WatcherChangeTypes.Changed && File.Exists(e.FullPath) && Path.GetExtension(e.FullPath) != ".txt" && Path.GetExtension(e.FullPath) != ".csv")
                 //Add it to the file list
                 IoC.Randomizer.RandomizedFiles.Add(e.FullPath.Replace(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder, ""));
         }
