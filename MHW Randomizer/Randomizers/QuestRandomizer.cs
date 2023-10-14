@@ -150,6 +150,22 @@ namespace MHW_Randomizer
         public string MPModText;
 
         #endregion
+
+        #region Spawn, Map Icons, and Arena
+
+        public byte[] SpawnChances = new byte[7];
+        public int[] MapIcons = new int[51];
+        public int[] SmallMonIcons = new int[5];
+
+        public int SetID;
+        public int NumberOfPlayers;
+
+        public int[] ArenaTimers = new int[3];
+        public int FenceCooldown;
+        public int FenceUptime;
+        public bool FenceSwitch;
+
+        #endregion
         #endregion
 
         private readonly string key = "TZNgJfzyD2WKiuV4SglmI6oN5jP2hhRJcBwzUooyfIUTM4ptDYGjuRTP";
@@ -274,6 +290,35 @@ namespace MHW_Randomizer
             sMAtIndex = BitConverter.ToInt32(data2, 635);
             sMDeIndex = BitConverter.ToInt32(data2, 639);
             MPModText = BitConverter.ToInt32(data2, 644).ToString();
+            #endregion
+            #region Spawn, Map Icons, and Arena
+            for (int i = 0; i < 5; i++)
+                MSSpw[i] = data2[652 + 4 * i];
+            for (int i = 0; i < SpawnChances.Length; i++)
+                SpawnChances[i] = data2[672 + (4 * i)];
+            for (int i = 0; i < MapIcons.Length; i++)
+                MapIcons[i] = BitConverter.ToInt32(data2, 704 + (4 * i));
+            for (int i = 0; i < 5; i++)
+            {
+                //Set it to 127 to be able to differenciate it between there being a icon and not being a icon as there is a icon at index 0
+                //The flag at this offset used in this if is 0 if there is no icon, and 1 if there is a icon
+                if (data2[908 + (4 * i)] == 0)
+                    SmallMonIcons[i] = 127;
+                else 
+                    SmallMonIcons[i] = data2[928 + (4 * i)];
+            }
+            SetID = BitConverter.ToInt32(data2, 948);
+            RV = BitConverter.ToInt32(data2, 952);
+            if (RV == 0)
+                NumberOfPlayers = 4;
+            else 
+                NumberOfPlayers = RV;
+            for (int i = 0; i < 3; i++)
+                ArenaTimers[i] = BitConverter.ToInt32(data2, 956 + (4 * i));
+
+            FenceSwitch = data2[980] == 128;
+            FenceCooldown = BitConverter.ToInt32(data2, 988);
+            FenceUptime = BitConverter.ToInt32(data2, 992);
             #endregion
         }
 
@@ -558,6 +603,9 @@ namespace MHW_Randomizer
                 else if (iceborne && MapIDIndex == 8)
                     //Remove alatreon as a possible monster if map is hoarfrost reach as it causes them to get stuck
                     currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87).ToArray();
+
+                if (IoC.Settings.OnePlayerQuests)
+                    NumberOfPlayers = 1;
 
                 //Just recalculate it each quest just as a failsafe as this doesn't take long
                 RecalculateTotalChance(currentRankMonsterIDs);
@@ -909,8 +957,9 @@ namespace MHW_Randomizer
                 }
                 data = ChunkOTF.files["questData_" + questNumber + ".mib"].Extract();
                 WriteData = cipher.Decipher(data);
-                for (int i = 4; i < WriteData.Length; i++)
-                    data3[i - 4] = WriteData[i];
+                data3 = new byte[WriteData.Length - 4];
+                Array.Copy(WriteData, 4, data3, 0, WriteData.Length - 4);
+
                 #region Common and Objectives
                 byte[] buffer = BitConverter.GetBytes(Convert.ToInt32(QIDText));
                 data3[6] = buffer[0];
@@ -934,7 +983,7 @@ namespace MHW_Randomizer
                 }
                 buffer = BitConverter.GetBytes(Convert.ToByte(PSpawnIndex));
                 data3[27] = buffer[0];
-                if (FSpawnIsChecked == true)
+                if (FSpawnIsChecked)
                     data3[31] = 0;
                 else data3[31] = 1;
                 buffer = BitConverter.GetBytes(Convert.ToByte(TimeIndex));
@@ -972,7 +1021,7 @@ namespace MHW_Randomizer
                         data3[83] = buffer[0];
                     }
                 }
-                if (MultiMon1IsChecked == true)
+                if (MultiMon1IsChecked)
                     data3[84] = 04;
                 else data3[84] = 0;
                 buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjID1));
@@ -989,7 +1038,7 @@ namespace MHW_Randomizer
                         data3[91] = buffer[0];
                     }
                 }
-                if (MultiMon2IsChecked == true)
+                if (MultiMon2IsChecked)
                     data3[92] = 04;
                 else data3[92] = 0;
                 buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjID2));
@@ -998,7 +1047,7 @@ namespace MHW_Randomizer
                 buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjC2Text));
                 data3[97] = buffer[0];
                 data3[98] = buffer[1];
-                if (MultiOjectiveIsChecked == true)
+                if (MultiOjectiveIsChecked)
                     data3[99] = 2;
                 else data3[99] = 1;
                 for (int i = 0; i < QuestData.ObjectiveIDs.Length; i++)
@@ -1009,7 +1058,7 @@ namespace MHW_Randomizer
                         data3[100] = buffer[0];
                     }
                 }
-                if (SObj1MMIsChecked == true)
+                if (SObj1MMIsChecked)
                     data3[100] = 04;
                 else data3[100] = 0;
                 buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjID1Index));
@@ -1026,7 +1075,7 @@ namespace MHW_Randomizer
                         data3[108] = buffer[0];
                     }
                 }
-                if (SObj2MMIsChecked == true)
+                if (SObj2MMIsChecked)
                     data3[109] = 04;
                 else data3[109] = 0;
                 buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjID2Index));
@@ -1097,7 +1146,7 @@ namespace MHW_Randomizer
                     data3[177 + 65 * i] = buffer[1];
                     data3[178 + 65 * i] = buffer[2];
                     data3[179 + 65 * i] = buffer[3];
-                    if (Tempered[i] == true)
+                    if (Tempered[i])
                         data3[184 + 65 * i] = 1;
                     else data3[184 + 65 * i] = 0;
                     buffer = BitConverter.GetBytes(Convert.ToInt32(MHtP[i]));
@@ -1188,9 +1237,80 @@ namespace MHW_Randomizer
                 data3[646] = buffer[2];
                 data3[647] = buffer[3];
                 #endregion
+                #region Spawn, Map Icons, and Arena
+                for (int i = 0; i < 5; i++)
+                    data3[652 + 4 * i] = Convert.ToByte(MSSpw[i]);
+                for (int i = 0; i < SpawnChances.Length; i++)
+                    data3[672 + 4 * i] = SpawnChances[i];
+                for (int i = 0; i < MapIcons.Length; i++)
+                {
+                    buffer = BitConverter.GetBytes(MapIcons[i]);
+                    data3[704 + 4 * i] = buffer[0];
+                    data3[705 + 4 * i] = buffer[1];
+                    data3[706 + 4 * i] = buffer[2];
+                    data3[707 + 4 * i] = buffer[3];
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    if (SmallMonIcons[i] == 127)
+                    {
+                        //Set the flag to 0 if there is no icon
+                        data3[908 + 4 * i] = 0;
+                        data3[928 + 4 * i] = 0;
+                    }
+                    else
+                    {
+                        //Set the flag to 1 if there is a icon
+                        data3[908 + 4 * i] = 1;
+                        data3[928 + 4 * i] = Convert.ToByte(SmallMonIcons[i]);
+                    }
+                }
+                buffer = BitConverter.GetBytes(SetID);
+                data3[948] = buffer[0];
+                data3[949] = buffer[1];
+                data3[950] = buffer[2];
+                data3[951] = buffer[3];
+                if (NumberOfPlayers == 4)
+                {
+                    data3[952] = 0;
+                    data3[953] = 0;
+                    data3[954] = 0;
+                    data3[955] = 0;
+                }
+                else
+                {
+                    buffer = BitConverter.GetBytes(NumberOfPlayers);
+                    data3[952] = buffer[0];
+                    data3[953] = buffer[1];
+                    data3[954] = buffer[2];
+                    data3[955] = buffer[3];
+                }
+                for (int i = 0; i < 3; i++)
+                {
+                    buffer = BitConverter.GetBytes(ArenaTimers[i]);
+                    data3[956 + 4 * i] = buffer[0];
+                    data3[957 + 4 * i] = buffer[1];
+                    data3[958 + 4 * i] = buffer[2];
+                    data3[959 + 4 * i] = buffer[3];
+                }
+                if (MultiMon2IsChecked)
+                    data3[980] = 128;
+                else data3[980] = 0;
 
-                for (int i = 4; i < WriteData.Length; i++)
-                    WriteData[i] = data3[i - 4];
+                buffer = BitConverter.GetBytes(FenceCooldown);
+                data3[988] = buffer[0];
+                data3[989] = buffer[1];
+                data3[990] = buffer[2];
+                data3[991] = buffer[3];
+
+                buffer = BitConverter.GetBytes(FenceUptime);
+                data3[992] = buffer[0];
+                data3[993] = buffer[1];
+                data3[994] = buffer[2];
+                data3[995] = buffer[3];
+                #endregion
+
+                Array.Copy(data3, 0, WriteData, 4, WriteData.Length - 4);
                 data4 = cipher.Encipher(WriteData);
 
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\questData_" + questNumber + ".mib", data4);
