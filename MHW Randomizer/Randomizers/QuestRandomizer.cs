@@ -751,7 +751,8 @@ namespace MHW_Randomizer
                         else
                             sobj = ChunkOTF.files[oldMSobj].Extract();
                     }
-                    MSobj[m] = QuestData.MonsterMapSobjCount[RandomMonsterID, MapIDIndex];
+                    //Add 1 so the expedition randomizer creates ones for 0, and makes it so the bad sobjs don't get potentially used if they're one used for a story
+                    MSobj[m] = QuestData.MonsterMapSobjCount[RandomMonsterID, MapIDIndex] + 1;
 
                     //The count of hex byte CD
                     int CDCount = 0;

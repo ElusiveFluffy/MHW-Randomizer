@@ -567,8 +567,8 @@ namespace MHW_Randomizer
 
         private static void CreateSobj(int monsterID, int mapIDIndex)
         {
-            //Expeditions default to sobj 00 for spawns usually, if the sobj index isn't 0 then we know 0 has already been created
-            if (QuestData.MonsterMapSobjCount[monsterID, mapIDIndex] != 0)
+            //Expeditions default to sobj 00 for spawns usually, if that sobj exists then we know 0 has already been created
+            if (File.Exists(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[monsterID] + QuestData.MapIDs[mapIDIndex] + "_00.sobj"))
                 return;
 
             string oldMSobj = "";
@@ -599,17 +599,14 @@ namespace MHW_Randomizer
                 else
                     CDCount = 0;
             }
-            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[monsterID] + QuestData.MapIDs[mapIDIndex] + "_" + QuestData.MonsterMapSobjCount[monsterID, mapIDIndex].ToString("00") + ".sobj", sobj);
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[monsterID] + QuestData.MapIDs[mapIDIndex] + "_00.sobj", sobj);
 
 
             using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
             {
                 //Write monster info to the log
-                file.WriteLine("Sobj File Name: " + QuestData.MonsterStageEmNumber[monsterID] + QuestData.MapIDs[mapIDIndex] + "_" + QuestData.MonsterMapSobjCount[monsterID, mapIDIndex].ToString("00") + ".sobj" + "\tOld sobj File Name: " + oldMSobj + "\tMonster: " + QuestData.MonsterNames[monsterID + 1]);
+                file.WriteLine("Sobj File Name: " + QuestData.MonsterStageEmNumber[monsterID] + QuestData.MapIDs[mapIDIndex] + "_00.sobj" + "\tOld sobj File Name: " + oldMSobj + "\tMonster: " + QuestData.MonsterNames[monsterID + 1]);
             }
-
-            //Increment for the if check above
-            QuestData.MonsterMapSobjCount[monsterID, mapIDIndex]++;
         }
     }
 }
