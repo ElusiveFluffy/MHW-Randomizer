@@ -166,7 +166,7 @@ namespace MHW_Randomizer
                 return;
             }
 
-            if (Directory.GetFiles(IoC.Settings.ChunkFolderPath, "chunk*.bin", SearchOption.TopDirectoryOnly).ToArray().Length == 10)
+            if (Directory.GetFiles(IoC.Settings.ChunkFolderPath, "chunk*.bin", SearchOption.TopDirectoryOnly).ToArray().Length == 11)
             {
                 Analyze(IoC.Settings.ChunkFolderPath);
                 SaveIsEnabled = true;
@@ -214,7 +214,7 @@ namespace MHW_Randomizer
             win32Parent.AssignHandle(new WindowInteropHelper(MainWindow.window).Handle);
             DialogResult result = FolderBrowser.ShowDialog(win32Parent);
 
-            if (!(result == DialogResult.OK && Directory.GetFiles(FolderBrowser.SelectedPath, "chunk*.bin", SearchOption.TopDirectoryOnly).ToArray().Length == 10))
+            if (!(result == DialogResult.OK && Directory.GetFiles(FolderBrowser.SelectedPath, "chunk*.bin", SearchOption.TopDirectoryOnly).ToArray().Length == 11))
             {
                 if (!string.IsNullOrWhiteSpace(FolderBrowser.SelectedPath) && result == DialogResult.OK)
                 {
