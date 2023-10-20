@@ -194,6 +194,7 @@ namespace MHW_Randomizer
         private NR3Generator PickIcon;
         private NR3Generator PickMap;
         private NR3Generator PickSize;
+        private NR3Generator PickFenceTime;
         private NR3Generator PickSupplyID;
 
         #endregion
@@ -334,6 +335,7 @@ namespace MHW_Randomizer
             PickIcon = new NR3Generator(IoC.Randomizer.Seed);
             PickMap = new NR3Generator(IoC.Randomizer.Seed);
             PickSize = new NR3Generator(IoC.Randomizer.Seed);
+            PickFenceTime = new NR3Generator(IoC.Randomizer.Seed);
             PickSupplyID = new NR3Generator(IoC.Randomizer.Seed);
 
             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\");
@@ -587,9 +589,19 @@ namespace MHW_Randomizer
                         MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne) * 2) + (Convert.ToInt32(iceborne && IoC.Settings.IncludeIBArenaMaps) * 4))];
                         if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
                         {
+                            //Force spawn to be at camp 1 or the game crashes
                             PSpawnIndex = 0;
+
+                            //If its the special arena set up the fence timers, have a 50% chance of adding a fence timer
+                            if (MapIDIndex == 12 && (IoC.Settings.AllMonstersInArena || MultiMon1IsChecked || MultiOjectiveIsChecked || duplicateMonQuest))
+                            {
+                                FenceSwitch = true;
+                                //Round to the nearest 5
+                                FenceUptime = 5 * (int)Math.Round(PickFenceTime.Next(30, 101) / 5.0f);
+                                FenceCooldown = FenceUptime * 2;
+                            }
                             //If its a iceborne arena then change the bgm to 22 since its the only one with nice music for them
-                            if (MapIDIndex > 30)
+                            else if (MapIDIndex > 30)
                                 BGMIndex = 22;
                         }
                     }
@@ -613,6 +625,10 @@ namespace MHW_Randomizer
 
                 //Write quest info to log
                 file.WriteLine("\n---------------------- " + "Quest: " + QuestData.QuestName[questNumber == "66859" || questNumber == "66860" ? (questNumber == "66859" ? 64802 : 66835) : int.Parse(questNumber)] + ", Quest ID: " + QIDText + ", Map: " + QuestData.MapNames[MapIDIndex] + " ------------------------------");
+
+                //Write it to the log if the current map is the arena (challenge) map and the fence switch is enabled
+                if (MapIDIndex == 12 && FenceSwitch)
+                    file.WriteLine("\t\tArena Fence Uptime: " + FenceUptime + " Seconds\t\tArena Fence Cooldown: " + FenceCooldown + " Seconds");
 
                 byte[] fsm = null;
 
@@ -1295,9 +1311,7 @@ namespace MHW_Randomizer
                     data3[958 + 4 * i] = buffer[2];
                     data3[959 + 4 * i] = buffer[3];
                 }
-                if (MultiMon2IsChecked)
-                    data3[980] = 128;
-                else data3[980] = 0;
+                data3[980] = FenceSwitch ? (byte)128 : (byte)0;
 
                 buffer = BitConverter.GetBytes(FenceCooldown);
                 data3[988] = buffer[0];
