@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Troschuetz.Random.Generators;
 
 namespace MHW_Randomizer
@@ -14,7 +15,7 @@ namespace MHW_Randomizer
 
         public static void Randomize()
         {
-            SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !QuestData.BadSobjs.Contains(o.Name)).ToArray();
+            SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !QuestData.BadSobjs.Contains(o.Name) && !Regex.IsMatch(o.Name, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(o.Name)).ToArray();
             PickSobj = new NR3Generator(IoC.Randomizer.Seed);
             //Create Sobj folder
             Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\");

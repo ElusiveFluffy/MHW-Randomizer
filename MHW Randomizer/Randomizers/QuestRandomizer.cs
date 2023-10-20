@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using Troschuetz.Random.Generators;
 
@@ -324,7 +325,7 @@ namespace MHW_Randomizer
 
         public void Randomize()
         {
-            SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !QuestData.BadSobjs.Contains(o.Name)).ToArray();
+            SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !QuestData.BadSobjs.Contains(o.Name) && !Regex.IsMatch(o.Name, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(o.Name)).ToArray();
             SobjFilesBigMCache = SobjFilesCache.Where(o => !o.Name.Contains("em101_00_st101")).ToArray();
             File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt").Dispose();
 

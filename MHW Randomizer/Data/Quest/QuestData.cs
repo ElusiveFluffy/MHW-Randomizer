@@ -30,6 +30,9 @@ namespace MHW_Randomizer
         public static string[] BadSobjs = { "em102_00_st101_61.sobj", "em118_00_st102_02.sobj", "em103_00_st105_10.sobj", "em011_00_st105_02.sobj", "em103_00_st104_00.sobj", "em127_00_st101_01.sobj", "em063_00_st108_02.sobj", "em063_00_st108_00.sobj" };
         //Possible one em043_05_st109_60.sobj
 
+        //Sobjs that spawn monsters in the snow or lava area in the guiding lands, can't find a way to unlock them early and have the pathing work properly (the monsters just get stuck running into the wall trying to go to another area, as they think they can't go through the open entrance/exit)
+        public static string[] BadGuidingSobjs = { "em023_05_st109_00.sobj" };
+
         public static string[] IconList = { "Anjanath", "Great Jagras", "Pukei-Pukei", "Nergigante", "Xeno'jiiva", "Xeno'jiiva", "Zorah Magdaros", "Kulu-Ya-Ku", "Tzitzi-Ya-Ku", "Jyuratodus", "Tobi-Kadachi", "Paolumu", "Legiana", "Great Girros", "Odogaron", "Radobaan", 
             "Vaal Hazak", "Dodogama", "Kulve Tarroth", "Bazelgeuse", "Behemoth", "Leshen", "Ancient Leshen", "17 EMPTY", "Rathian", "Pink Rathian", "Rathalos", "Azure Rathalos", "Diablos", "Black Diablos", "Kirin", "1F EMPTY", "Kushala Daora", "Lunastra", "Teostra", 
             "Lavasioth", "Deviljho", "Barroth", "Uragaan", "27 EMPTY", "Beotodus", "Coral Pukei-Pukei", "Viper Tobi-Kadachi", "Fulgur Anjanath", "Nightshade Paolumu", "Ebony Odogaron", "Barioth", "Nargacuga", "Skull (Monster near death)", "Hungry/Exhausted (Monster)", 
