@@ -764,7 +764,7 @@ namespace MHW_Randomizer
         //================
         //  Slay Quests
         //================
-        public static string[] IBBigMonsterSlayQuests = { "01521", "01551", "01552", "01561", "01571", "01572", "01581", "01591", "01592", "01641", "01661", "01691", "03071", "03072", "03073", "03091", "03171", "51622", "63073", "63074", "63143", "63150", "66836", "67801",
+        public static string[] IBBigMonsterSlayQuests = { "01521", "01551", "01552", "01561", "01571", "01572", "01581", "01591", "01592", "01661", "01691", "03071", "03072", "03073", "03091", "03171", "51622", "63073", "63074", "63143", "63150", "66836", "67801",
            "66847", "66840", "66841", "66842", "66843", "66844", "66850", "66858", "66863", "67806" };
 
         //66815 (multimonster (3 monsters)), 66816 (multimonster (2 monsters)), 01651 (multimonster (2 monsters)), 01671 (multimonster (2 monsters)), 01692 (multimonster (4 monsters)), 03092 (multimonster (2 monsters)), 61807 (multimonster (2 monsters)), 63071 (mulitmonster (2 monsters)), 63072 (multimonster (2 monsters))
