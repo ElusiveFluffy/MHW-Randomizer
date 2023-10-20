@@ -147,6 +147,7 @@
     <Compile Include="Controls\Weapon.xaml.cs">
       <DependentUpon>Weapon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\alnk\AlnkPaths.cs" />
     <Compile Include="Data\Expedition\ExpeditionData.cs" />
     <Compile Include="Data\ItemData.cs" />
     <Compile Include="Data\Quest\StoryQuestData.cs" />
