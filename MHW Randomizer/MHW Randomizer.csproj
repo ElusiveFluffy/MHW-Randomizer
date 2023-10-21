@@ -163,6 +163,7 @@
     <Compile Include="GMD %28Cirilla%29\Extentions\StructExtensions.cs" />
     <Compile Include="GMD %28Cirilla%29\Structs\GMD.cs" />
     <Compile Include="IoC.cs" />
+    <Compile Include="Monster Utility\Maps.cs" />
     <Compile Include="Randomizers\ExpeditionRandomizer.cs" />
     <Compile Include="Randomizers\MonsterRandomizer.cs" />
     <Compile Include="Monster Utility\Alnk.cs" />
