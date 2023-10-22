@@ -93,6 +93,12 @@
                                   Margin="5, 4"
                                   ToolTip="Randomizes elements and element power on weapons &#x0a;(element power scales with rarity)"
                                   ToolTipService.ShowDuration="10000"/>
+                        <CheckBox Content="Random Bowgun Element"
+                                  IsChecked="{Binding RandomBowgunElement, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomWeaponElement, Source={x:Static local:IoC.Settings}}"
+                                  Margin="12, 4"
+                                  ToolTip="Gives bowguns a random element which applies to all shots &#x0a;(Can be quite over powered, tried to nerf it a bit by giving them a much lower element power range for the randomization)"
+                                  ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Random Amount of Decoration Slots"
                                   IsChecked="{Binding RandomWeaponDecoSlots, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"

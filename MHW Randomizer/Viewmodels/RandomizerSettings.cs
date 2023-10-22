@@ -110,6 +110,7 @@ namespace MHW_Randomizer
         public bool RandomWeaponDecoSlots { get; set; }
         public bool RandomWeaponDecoSlotSize { get; set; }
         public bool RandomWeaponElement { get; set; }
+        public bool RandomBowgunElement { get; set; }
 
         //Palico
         public bool ShufflePalicoArmour { get; set; }

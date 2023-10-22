@@ -629,7 +629,7 @@ namespace MHW_Randomizer
                                 }
 
                                 treeBytes = ChunkOTF.files["bow.wp_dat_g"].Extract();
-                                weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Heavy_Bowgun));
+                                weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Bow));
                                 rangedWeaponTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
                                 rangedWeaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
                                 int[] badIndex = { 2368, 2373, 2441, 2501, 2507, 2514, 2517, 2520, 2521, 2522, 2523, 2530, 2532, 2533, 2535, 2536, 2538, 2540, 2542 };
@@ -1111,7 +1111,7 @@ namespace MHW_Randomizer
             ShuffleWeaponRecipes(recipeList, r, validHighRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
             ShuffleWeaponRecipes(recipeList, r, validMasterRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
 
-            LogWeaponShuffle(firstIndex, lastIndex, (int)equipCategory, badIndex, weaponCraft, recipeList, recipeNonRandomList, weaponTree, weaponNonRandomTree, weaponNames);
+            ShuffleWeapons(firstIndex, lastIndex, (int)equipCategory, badIndex, weaponCraft, recipeList, recipeNonRandomList, weaponTree, weaponNonRandomTree, weaponNames);
         }
 
         private static void RandomizeRangedWeapon(int firstIndex, int lastIndex, int[] badIndex, WeaponCategory equipCategory, List<RecipeStructs.Armour> weaponCraft, List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList,
@@ -1148,7 +1148,7 @@ namespace MHW_Randomizer
             ShuffleWeaponRecipes(recipeList, r, validHighRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
             ShuffleWeaponRecipes(recipeList, r, validMasterRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
 
-            LogRangedWeaponShuffle(firstIndex, lastIndex, (int)equipCategory, badIndex, weaponCraft, recipeList, recipeNonRandomList, weaponTree, weaponNonRandomTree, weaponNames);
+            ShuffleRangedWeapon(firstIndex, lastIndex, (int)equipCategory, badIndex, weaponCraft, recipeList, recipeNonRandomList, weaponTree, weaponNonRandomTree, weaponNames);
         }
 
         private static void ShuffleWeaponRecipes(List<RecipeStructs.Weapon> recipeList, NR3Generator r, List<int> validIDs, bool shuffleOrder, bool shuffleRecipe)
@@ -1222,7 +1222,7 @@ namespace MHW_Randomizer
         }
 
 
-        private static void LogWeaponShuffle(int firstIndex, int lastIndex, int equipCategory, int[] badIndex, List<RecipeStructs.Armour> weaponCraft, List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList, List<RecipeStructs.WeaponTree> weaponTree, List<RecipeStructs.WeaponTree> weaponNonRandomTree,
+        private static void ShuffleWeapons(int firstIndex, int lastIndex, int equipCategory, int[] badIndex, List<RecipeStructs.Armour> weaponCraft, List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList, List<RecipeStructs.WeaponTree> weaponTree, List<RecipeStructs.WeaponTree> weaponNonRandomTree,
                                       Dictionary<int, string> weaponNames)
         {
             Dictionary<int, string> itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
@@ -1508,7 +1508,7 @@ namespace MHW_Randomizer
             }
         }
 
-        private static void LogRangedWeaponShuffle(int firstIndex, int lastIndex, int equipCategory, int[] badIndex, List<RecipeStructs.Armour> weaponCraft, List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList, List<RecipeStructs.RangedWeaponTree> weaponTree, List<RecipeStructs.RangedWeaponTree> weaponNonRandomTree,
+        private static void ShuffleRangedWeapon(int firstIndex, int lastIndex, int equipCategory, int[] badIndex, List<RecipeStructs.Armour> weaponCraft, List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList, List<RecipeStructs.RangedWeaponTree> weaponTree, List<RecipeStructs.RangedWeaponTree> weaponNonRandomTree,
                                       Dictionary<int, string> weaponNames)
         {
             Dictionary<int, string> itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
@@ -1571,15 +1571,18 @@ namespace MHW_Randomizer
                             original = original + "\t";
                         log += original + "\tShuffled Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw];
                     }
-                    if (IoC.Settings.RandomWeaponElement)
+                    bool isBowgun = equipCategory == (int)WeaponCategory.Light_Bowgun || equipCategory == (int)WeaponCategory.Heavy_Bowgun;
+                    //Don't add a random element to bowguns as its OP, unless a setting is checked
+                    if (IoC.Settings.RandomWeaponElement && (!isBowgun || IoC.Settings.RandomBowgunElement))
                     {
                         weaponTreePos.Element = (byte)re.Next(10);
                         if (weaponTreePos.Element == 0)
                             weaponTreePos.Element_Damage = 0;
                         else
                         {
-                            int roll1 = dice.Next(6 + (weaponTreePos.Rarity * 2), 22 + (weaponTreePos.Rarity * 3));
-                            int roll2 = dice.Next(6 + (weaponTreePos.Rarity * 2), 22 + (weaponTreePos.Rarity * 3));
+                            //Lower the range for bowguns to try to make them a bit less OP
+                            int roll1 = dice.Next(isBowgun ? 2 : 6 + (weaponTreePos.Rarity * 2), isBowgun ? 6 : 22 + (weaponTreePos.Rarity * 3));
+                            int roll2 = dice.Next(isBowgun ? 2 : 6 + (weaponTreePos.Rarity * 2), isBowgun ? 6 : 22 + (weaponTreePos.Rarity * 3));
                             ushort lowest = (ushort)Math.Min(roll1, roll2);
                             weaponTreePos.Element_Damage = lowest;
                             log += "\n\tElement: " + Element[weaponTreePos.Element];
