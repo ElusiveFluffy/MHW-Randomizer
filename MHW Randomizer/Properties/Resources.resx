@@ -205,44 +205,23 @@
   <data name="m101_Flying" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\alnk\m101 Flying;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="m101_Ground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\alnk\m101 Ground;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="m102_Flying" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\alnk\m102 Flying;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="m102_Ground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\alnk\m102 Ground;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="m103_Flying" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\alnk\m103 Flying;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="m103_Ground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\alnk\m103 Ground;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="m104_Flying" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\alnk\m104 Flying;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="m104_Ground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\alnk\m104 Ground;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="m105_Flying" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\alnk\m105 Flying;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="m105_Ground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\alnk\m105 Ground;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="m108_Flying" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\alnk\m108 Flying;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="m108_Ground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\alnk\m108 Ground;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="m109_Flying" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\alnk\m109 Flying;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="m109_Ground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\alnk\m109 Ground;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="MaterialsForShopData" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Item Shop\MaterialsForShopData.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

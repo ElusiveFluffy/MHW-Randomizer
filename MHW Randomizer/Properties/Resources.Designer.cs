@@ -353,29 +353,9 @@ namespace MHW_Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] m101_Ground {
-            get {
-                object obj = ResourceManager.GetObject("m101_Ground", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] m102_Flying {
             get {
                 object obj = ResourceManager.GetObject("m102_Flying", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] m102_Ground {
-            get {
-                object obj = ResourceManager.GetObject("m102_Ground", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -393,29 +373,9 @@ namespace MHW_Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] m103_Ground {
-            get {
-                object obj = ResourceManager.GetObject("m103_Ground", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] m104_Flying {
             get {
                 object obj = ResourceManager.GetObject("m104_Flying", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] m104_Ground {
-            get {
-                object obj = ResourceManager.GetObject("m104_Ground", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -433,16 +393,6 @@ namespace MHW_Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] m105_Ground {
-            get {
-                object obj = ResourceManager.GetObject("m105_Ground", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] m108_Flying {
             get {
                 object obj = ResourceManager.GetObject("m108_Flying", resourceCulture);
@@ -453,29 +403,9 @@ namespace MHW_Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] m108_Ground {
-            get {
-                object obj = ResourceManager.GetObject("m108_Ground", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] m109_Flying {
             get {
                 object obj = ResourceManager.GetObject("m109_Flying", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] m109_Ground {
-            get {
-                object obj = ResourceManager.GetObject("m109_Ground", resourceCulture);
                 return ((byte[])(obj));
             }
         }
