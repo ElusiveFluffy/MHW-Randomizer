@@ -41,29 +41,35 @@ namespace MHW_Randomizer
                     int[] status = new int[statusRandom.Next(1, 5)];
                     for (int n = 0; n < status.Length; n++)
                     {
-                        status[n] = statusRandom.Next(9);
+                        status[n] = statusRandom.Next(n == 0 ? 1 : 0, 9);
                     }
-                    uint elementIndex = elementRandom.NextUInt(6);
+                    uint elementIndex = elementRandom.NextUInt(1, 6);
                     foreach (var attack in atk2List)
                     {
                         #region Element
 
-                        bool randomEle = false;
-                        if (IoC.Settings.RandomMonsterElement && 30 >= elementRandom.Next(101))
+                        bool loggedAttackIndex = false;
+                        bool giveRandomElement = !IoC.Settings.OnlyChangeExistingElement && 30 >= elementRandom.Next(101);
+                        bool changeExistingElement = IoC.Settings.OnlyChangeExistingElement && attack.Element_Id != 0;
+                        if (IoC.Settings.RandomMonsterElement && (giveRandomElement || changeExistingElement))
                         {
                             attack.Element_Id = elementIndex;
-                            if (elementIndex != 0)
+                            if (attack.Element_Id != 0)
                             {
                                 file.WriteLine("\tAttack Index: " + attack.Index);
                                 if (IoC.Settings.IncreaseElementPower)
                                     attack.Element_Dmg = elementRandom.Next(20, 50);
                                 else
                                     attack.Element_Dmg = elementRandom.Next(10, 30);
-                                file.WriteLine("\t   " + elementNames[elementIndex] + " Damage: " + attack.Element_Dmg);
-                                randomEle = true;
+                                file.WriteLine("\t   " + elementNames[attack.Element_Id] + " Damage: " + attack.Element_Dmg);
+                                loggedAttackIndex = true;
                             }
                             else
                                 attack.Element_Dmg = 0;
+
+                            //Chose a new element if having a different one per attack
+                            if (IoC.Settings.EachAttackDifferentElement)
+                                elementIndex = elementRandom.NextUInt(1, 6);
                         }
 
                         #endregion
@@ -74,6 +80,7 @@ namespace MHW_Randomizer
                         //30% chance to give a random status/change the status
                         if (30 <= statusRandom.Next(101))
                         {
+                            //Clear all the statuses if its not within the 30% chance
                             for (int a = 0; a < 9; a++)
                             {
                                 //Clear status if stun is the same as one randomly chosen so there isn't alot of stun
@@ -82,20 +89,27 @@ namespace MHW_Randomizer
                             }
                             continue;
                         }
-                        if (!randomEle)
-                            file.WriteLine("\tAttack Index: " + attack.Index);
 
                         //poison, deadly poison, para, sleep, blast, slime, stun, miasma, bleed
                         for (int s = 0; s < 9; s++)
                         {
                             //Only check whole array if randomizing multiple statuses
+                            bool giveRandomStatus = !IoC.Settings.OnlyChangeExistingStatus && (status[0] == s || (IoC.Settings.MultipleStatusesPerAttack && status.Contains(s)));
+                            //attack.Statuses.All(o => o == 0) checks if the array is all 0s
+                            bool changeExistingStatus = (IoC.Settings.OnlyChangeExistingStatus && !attack.Statuses.All(o => o == 0) && status[0] == s) || (IoC.Settings.MultipleStatusesPerAttack && !attack.Statuses.All(o => o == 0) && status.Contains(s));
                             //Don't let kestodons have blast or slime as it can break the first quest
-                            if ((status[0] == s || (status.Contains(s) && IoC.Settings.MultipleStatusesPerAttack)) &&
-                               !(col.Name == "ems051.col" && (s == 4 || s == 5)))
+                            bool kestodonBlast = col.Name == "ems051.col" && (s == 4 || s == 5);
+                            if ((giveRandomStatus || changeExistingStatus) && !kestodonBlast)
                             {
+                                if (!loggedAttackIndex)
+                                {
+                                    file.WriteLine("\tAttack Index: " + attack.Index);
+                                    //Make it so it doesn't write this multiple times
+                                    loggedAttackIndex = true;
+                                }
                                 //Bias towards lower numbers
-                                int roll1 = statusRandom.Next(25, 101);
-                                int roll2 = statusRandom.Next(25, 101);
+                                int roll1 = statusRandom.Next(10, 101);
+                                int roll2 = statusRandom.Next(10, 101);
                                 int min = Math.Min(roll1, roll2);
 
                                 //Random chance to inflict it
