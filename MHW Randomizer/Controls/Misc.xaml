@@ -9,6 +9,7 @@
     <StackPanel>
         <Grid>
             <TextBlock Text="Misc"
+                       Padding="1.5 0"
                        Margin="15 -4 0 0"
                        Background="White"
                        HorizontalAlignment="Left"
@@ -48,30 +49,31 @@
         
         <Grid>
             <TextBlock Text="Tweaks"
-                   Margin="15 -4 0 0"
-                   Background="White"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Panel.ZIndex="1"
-                   FontWeight="Bold"
-                   Height="16"/>
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
             <Border BorderBrush="Gray"
-                BorderThickness="1"
-                Margin="5"
-                VerticalAlignment="Top">
+                    BorderThickness="1"
+                    Margin="5"
+                    VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal"
                         Margin="0 5">
                     <StackPanel>
                         <CheckBox Content="Make All Quests 1 Player"
-                              IsChecked="{Binding OnePlayerQuests, Source={x:Static local:IoC.Settings}}"
-                              Margin="5 4"
-                              ToolTip="Makes it so if you're playing solo you don't need to change player count to 1 so the prep message doesn't appear"
-                              ToolTipService.ShowDuration="10000"/>
+                                  IsChecked="{Binding OnePlayerQuests, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 4"
+                                  ToolTip="Makes it so if you're playing solo you don't need to change player count to 1 so the prep message doesn't appear"
+                                  ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Faster Starter Kinsects"
-                              IsChecked="{Binding FasterKinsects, Source={x:Static local:IoC.Settings}}"
-                              Margin="5 4"
-                              ToolTip="Sets kinsects to have a speed of atleast 3 to make them a bit more bearable to start with"
-                              ToolTipService.ShowDuration="10000"/>
+                                  IsChecked="{Binding FasterKinsects, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 4"
+                                  ToolTip="Sets kinsects to have a speed of atleast 3 to make them a bit more bearable to start with"
+                                  ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
                 </StackPanel>
             </Border>

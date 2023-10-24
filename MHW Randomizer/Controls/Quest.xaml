@@ -15,6 +15,7 @@
             <StackPanel DockPanel.Dock="Left">
                 <Grid>
                     <TextBlock Text="Quests"
+                               Padding="1.5 0"
                                Margin="15 -4 0 0"
                                Background="White"
                                HorizontalAlignment="Left"
@@ -94,6 +95,7 @@
 
                 <Grid>
                     <TextBlock Text="Supply Box"
+                               Padding="1.5 0"
                                Margin="15 -3 0 0"
                                Background="White"
                                HorizontalAlignment="Left"
@@ -139,6 +141,7 @@
 
                 <Grid>
                     <TextBlock Text="Monsters"
+                               Padding="1.5 0"
                                Margin="15 -3 0 0"
                                Background="White"
                                HorizontalAlignment="Left"
@@ -247,10 +250,11 @@
                         IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
                 <StackPanel>
                     <TextBlock Text="Iceborne (Need Iceborne Installed)"
-                                       Margin="10 -10 0 0"
-                                       Background="White"
-                                       HorizontalAlignment="Left"
-                                       FontWeight="Bold"/>
+                               Padding="1.5 0"
+                               Margin="10 -10 0 0"
+                               Background="White"
+                               HorizontalAlignment="Left"
+                               FontWeight="Bold"/>
                     <TextBlock Text="Options Above Apply to Iceborne Quests too"
                                    TextWrapping="Wrap"
                                    FontWeight="SemiBold"

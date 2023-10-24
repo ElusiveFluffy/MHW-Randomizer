@@ -9,6 +9,7 @@
     <StackPanel>
         <Grid VerticalAlignment="Top">
             <TextBlock Text="Expeditions"
+                       Padding="1.5 0"
                        Margin="15 -4 0 0"
                        Background="White"
                        HorizontalAlignment="Left"
@@ -74,6 +75,7 @@
         </Grid>
         <Grid VerticalAlignment="Top">
             <TextBlock Text="Iceborne (Need Iceborne Installed)"
+                       Padding="1.5 0"
                        Margin="15 -4 0 0"
                        Background="White"
                        HorizontalAlignment="Left"

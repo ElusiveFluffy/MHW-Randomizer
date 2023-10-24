@@ -8,6 +8,7 @@
              d:DesignHeight="450">
     <Grid VerticalAlignment="Top">
         <TextBlock Text="Monster Attacks"
+                   Padding="1.5 0"
                    Margin="15 -4 0 0"
                    Background="White"
                    HorizontalAlignment="Left"
