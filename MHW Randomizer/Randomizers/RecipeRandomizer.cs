@@ -15,6 +15,7 @@ namespace MHW_Randomizer
         public enum WeaponCategory { Greatsword, Sword_and_Shield, Dual_Blades, LongSword, Hammer, Hunting_Horn, Lance, GunLance, Switch_Axe, Charge_Blade, Insect_Glaive, Bow, Heavy_Bowgun, Light_Bowgun }
 
         public static string[] Element = { "None", "Fire", "Water", "Ice", "Thunder", "Dragon", "Poison", "Paralysis", "Sleep", "Blast" };
+        public static string[] Elderseal = { "None", "Low", "Average", "High" };
 
         //For checking and shuffling recipes
         public static void RandomizeRecipes()
@@ -1298,6 +1299,17 @@ namespace MHW_Randomizer
                             weaponTreePos.Element_Damage = lowest;
                             log += "\n\tElement: " + Element[weaponTreePos.Element];
                             log += "\n\tElement Power: " + (weaponTreePos.Element_Damage * 10);
+
+                            //If the random element is dragon then pick a random elderseal value
+                            if (weaponTreePos.Element == 5)
+                            {
+                                weaponTreePos.Elderseal = (byte)dice.Next(1, 4);
+                                log += "\n\tElderseal: " + Elderseal[weaponTreePos.Elderseal];
+                            }
+                            //Else make sure there is no elderseal
+                            else
+                                weaponTreePos.Elderseal = 0;
+
                         }
                         weaponTreePos.Element_Hidden = 0;
                         weaponTreePos.Element_Hidden_Damage = 0;
@@ -1587,6 +1599,17 @@ namespace MHW_Randomizer
                             weaponTreePos.Element_Damage = lowest;
                             log += "\n\tElement: " + Element[weaponTreePos.Element];
                             log += "\n\tElement Power: " + (weaponTreePos.Element_Damage * 10);
+
+                            //If the random element is dragon then pick a random elderseal value
+                            if (weaponTreePos.Element == 5)
+                            {
+                                //If its a bowgun always set it to low elderseal to nerf it a bit so its less op
+                                weaponTreePos.Elderseal = (byte)(isBowgun ? 1 : dice.Next(1, 4));
+                                log += "\n\tElderseal: " + Elderseal[weaponTreePos.Elderseal];
+                            }
+                            //Else make sure there is no elderseal
+                            else
+                                weaponTreePos.Elderseal = 0;
                         }
                         weaponTreePos.Element_Hidden = 0;
                         weaponTreePos.Element_Hidden_Damage = 0;
