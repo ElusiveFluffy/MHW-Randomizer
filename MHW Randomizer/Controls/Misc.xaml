@@ -78,5 +78,50 @@
                 </StackPanel>
             </Border>
         </Grid>
+
+        <Grid Margin="0 50 0 0">
+            <TextBlock Text="Experimental Features (Need Iceborne Installed)"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+            <Border BorderBrush="Gray"
+                BorderThickness="1"
+                Margin="5"
+                VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal"
+                        Margin="0 5">
+                    <StackPanel>
+                        <TextBlock Text="These options haven't been tested much so may run into issues"
+                                   Margin="5 0 5 4"
+                                   TextWrapping="Wrap"/>
+                        <CheckBox Content="Iceborne Monsters in Low Rank"
+                                  IsChecked="{Binding IBMonstersInLowRank, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 4"
+                                  ToolTip="Adds iceborne monsters to the pool of monsters for low rank, could be hard if include them"
+                                  ToolTipService.ShowDuration="10000"/>
+                        <CheckBox Content="Iceborne Monsters in High Rank"
+                                  IsChecked="{Binding IBMonstersInHighRank, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 4"
+                                  ToolTip="Adds iceborne monsters to the pool of monsters for high rank"
+                                  ToolTipService.ShowDuration="10000"/>
+                        <TextBlock Text="Requires random maps enabled on the quest settings"
+                                   TextWrapping="Wrap"
+                                   FontWeight="SemiBold"
+                                   Margin="5 4 5 0"/>
+                        <CheckBox Content="Iceborne Maps in Base Game Map Pool"
+                                  IsChecked="{Binding IBMapsInBaseGame, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 4"
+                                  ToolTip="Adds the iceborne maps to the low/high rank random map pool"
+                                  ToolTipService.ShowDuration="10000"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
     </StackPanel>
 </UserControl>

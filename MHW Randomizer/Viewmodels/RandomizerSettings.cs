@@ -160,6 +160,11 @@ namespace MHW_Randomizer
         public bool OnePlayerQuests { get; set; }
         public bool FasterKinsects { get; set; }
 
+        //Experimental
+        public bool IBMonstersInLowRank { get; set; }
+        public bool IBMonstersInHighRank { get; set; }
+        public bool IBMapsInBaseGame { get; set; }
+
         //---------------------------
 
         //Extras for later maybe

@@ -373,6 +373,12 @@ namespace MHW_Randomizer
                 if (IoC.Settings.HighRankMonInLowRank)
                     LowRankMonsterIDs = MonsterIDs;
 
+                //Remove Raging Brachydios because gets stuck going to their second phase
+                if (IoC.Settings.IBMonstersInLowRank)
+                    LowRankMonsterIDs = LowRankMonsterIDs.Concat(QuestData.BigMonsterIDsIB.Where(mon => !QuestData.BigMonsterIDs.Contains(mon) && mon != 96)).ToArray();
+                if (IoC.Settings.IBMonstersInHighRank)
+                    MonsterIDs = MonsterIDs.Concat(QuestData.BigMonsterIDsIB.Where(mon => !QuestData.BigMonsterIDs.Contains(mon) && mon != 96)).ToArray();
+
                 //Set up the cumulative chance
                 QuestData.TotalMonsterChance = LowRankMonsterIDs.Length * 10;
 
@@ -585,7 +591,7 @@ namespace MHW_Randomizer
 
                     if (IoC.Settings.IncludeArenaMap)
                     {
-                        MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne) * 2) + (Convert.ToInt32(iceborne && IoC.Settings.IncludeIBArenaMaps) * 4))];
+                        MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne || IoC.Settings.IBMapsInBaseGame) * 2) + (Convert.ToInt32((iceborne || IoC.Settings.IBMapsInBaseGame) && IoC.Settings.IncludeIBArenaMaps) * 4))];
                         if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
                         {
                             //Force spawn to be at camp 1 or the game crashes
@@ -605,14 +611,14 @@ namespace MHW_Randomizer
                         }
                     }
                     else
-                        MapIDIndex = QuestData.ValidMapIndexes[PickMap.Next(5 + (Convert.ToInt32(iceborne) * 2))];
+                        MapIDIndex = QuestData.ValidMapIndexes[PickMap.Next(5 + (Convert.ToInt32(iceborne || IoC.Settings.IBMapsInBaseGame) * 2))];
                 }
 
                 if (MapIDIndex == 3)
                     //Remove alatreon as a possible monster if map is coral highlands as it causes a blinding white light effect on that map
                     //Remove leshen too as possible monster as they get stuck
                     currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87 || (o != 23 || o != 51)).ToArray();
-                else if (iceborne && MapIDIndex == 8)
+                else if (MapIDIndex == 8)
                     //Remove alatreon as a possible monster if map is hoarfrost reach as it causes them to get stuck
                     currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87).ToArray();
 
@@ -953,25 +959,6 @@ namespace MHW_Randomizer
                 data4 = null;
                 cipher = new Cipher(key);
                 int MapID = MapIDIndex;
-                if (StarsIndex < 11)
-                {
-                    for (int i = 0; i < QuestData.ForbiddenMapIDs.Length; i++)
-                    {
-                        if (QuestData.ForbiddenMapIDs[i] == QuestData.MapIDs[MapID])
-                        {
-                            MessageBox.Show("THIS MAP IS ILLEGAL FOR LOW AND HIGH RANK QUESTS");
-                            return;
-                        }
-                    }
-                    for (int i = 0; i < 7; i++)
-                    {
-                        if (MID[i] > 61)
-                        {
-                            MessageBox.Show("Monster #" + (i + 1).ToString() + " IS ILLEGAL FOR LOW AND HIGH RANK QUESTS");
-                            return;
-                        }
-                    }
-                }
                 data = ChunkOTF.files["questData_" + questNumber + ".mib"].Extract();
                 WriteData = cipher.Decipher(data);
                 data3 = new byte[WriteData.Length - 4];
