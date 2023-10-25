@@ -974,17 +974,13 @@ namespace MHW_Randomizer
                 data3[10] = buffer[0];
                 buffer = BitConverter.GetBytes(Convert.ToByte(RankIndex));
                 data3[19] = buffer[0];
-                for (int i = 0; i < QuestData.MapIDs.Length; i++)
-                {
-                    if (MapIDIndex == i)
-                    {
-                        buffer = BitConverter.GetBytes(QuestData.MapIDs[i]);
-                        data3[23] = buffer[0];
-                        data3[24] = buffer[1];
-                        data3[25] = buffer[2];
-                        data3[26] = buffer[3];
-                    }
-                }
+
+                buffer = BitConverter.GetBytes(QuestData.MapIDs[MapIDIndex]);
+                data3[23] = buffer[0];
+                data3[24] = buffer[1];
+                data3[25] = buffer[2];
+                data3[26] = buffer[3];
+
                 buffer = BitConverter.GetBytes(Convert.ToByte(PSpawnIndex));
                 data3[27] = buffer[0];
                 if (FSpawnIsChecked)
@@ -1017,14 +1013,9 @@ namespace MHW_Randomizer
                 }
                 buffer = BitConverter.GetBytes(Convert.ToByte(HRReqIndex));
                 data3[78] = buffer[0];
-                for (int i = 0; i < QuestData.ObjectiveIDs.Length; i++)
-                {
-                    if (MObjT1Index == i)
-                    {
-                        buffer = BitConverter.GetBytes(QuestData.ObjectiveIDs[i]);
-                        data3[83] = buffer[0];
-                    }
-                }
+
+                //Objective 1
+                data3[83] = QuestData.ObjectiveIDs[MObjT1Index];
                 if (MultiMon1IsChecked)
                     data3[84] = 04;
                 else data3[84] = 0;
@@ -1034,14 +1025,9 @@ namespace MHW_Randomizer
                 buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjC1Text));
                 data3[89] = buffer[0];
                 data3[90] = buffer[1];
-                for (int i = 0; i < QuestData.ObjectiveIDs.Length; i++)
-                {
-                    if (MObjT2Index == i)
-                    {
-                        buffer = BitConverter.GetBytes(QuestData.ObjectiveIDs[i]);
-                        data3[91] = buffer[0];
-                    }
-                }
+
+                //Objective 2
+                data3[91] = QuestData.ObjectiveIDs[MObjT2Index];
                 if (MultiMon2IsChecked)
                     data3[92] = 04;
                 else data3[92] = 0;
@@ -1054,31 +1040,22 @@ namespace MHW_Randomizer
                 if (MultiOjectiveIsChecked)
                     data3[99] = 2;
                 else data3[99] = 1;
-                for (int i = 0; i < QuestData.ObjectiveIDs.Length; i++)
-                {
-                    if (SObjT1Index == i)
-                    {
-                        buffer = BitConverter.GetBytes(QuestData.ObjectiveIDs[i]);
-                        data3[100] = buffer[0];
-                    }
-                }
+
+                //Sub objective 1
+                data3[100] = QuestData.ObjectiveIDs[SObjT1Index];
+
                 if (SObj1MMIsChecked)
-                    data3[100] = 04;
-                else data3[100] = 0;
+                    data3[101] = 04;
+                else data3[101] = 0;
                 buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjID1Index));
                 data3[104] = buffer[0];
                 data3[105] = buffer[1];
                 buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjC1Text));
                 data3[106] = buffer[0];
                 data3[107] = buffer[1];
-                for (int i = 0; i < QuestData.ObjectiveIDs.Length; i++)
-                {
-                    if (SObjT2Index == i)
-                    {
-                        buffer = BitConverter.GetBytes(QuestData.ObjectiveIDs[i]);
-                        data3[108] = buffer[0];
-                    }
-                }
+
+                //Sub objective 2
+                data3[108] = QuestData.ObjectiveIDs[SObjT2Index];
                 if (SObj2MMIsChecked)
                     data3[109] = 04;
                 else data3[109] = 0;
