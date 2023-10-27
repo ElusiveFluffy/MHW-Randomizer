@@ -518,6 +518,8 @@ namespace MHW_Randomizer
                             errorMessage.ShowDialog();
                         }
 
+                        DeleteEmptyFolders(IoC.Settings.SaveFolderPath);
+
                         MessageWindow message = new MessageWindow("Successfully removed previous randomized files")
                         {
                             Owner = MainWindow.window,
@@ -566,12 +568,28 @@ namespace MHW_Randomizer
 
             if (!Randomizing)
             {
+                DeleteEmptyFolders(IoC.Settings.SaveFolderPath);
                 MessageWindow message = new MessageWindow("Successfully removed previous randomized files")
                 {
                     Owner = MainWindow.window,
                     WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
                 };
                 message.ShowDialog();
+            }
+        }
+
+        private static void DeleteEmptyFolders(string startLocation)
+        {
+            foreach (string directory in Directory.GetDirectories(startLocation))
+            {
+                //Go through to the sub folder
+                DeleteEmptyFolders(directory);
+                //If it doesn't contain any files or folders, delete the directory
+                //Checking for .Any() with enumerate makes it exit the check early on the first file or folder found, rather than getting all files and folders
+                if (!Directory.EnumerateFileSystemEntries(directory).Any())
+                {
+                    Directory.Delete(directory, false);
+                }
             }
         }
 
