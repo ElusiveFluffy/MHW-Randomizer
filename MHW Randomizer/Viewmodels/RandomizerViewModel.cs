@@ -570,9 +570,9 @@ namespace MHW_Randomizer
             //Clear the hash set
             RandomizedFiles = new HashSet<string>();
 
+            DeleteEmptyFolders(IoC.Settings.SaveFolderPath);
             if (!Randomizing)
             {
-                DeleteEmptyFolders(IoC.Settings.SaveFolderPath);
                 MessageWindow message = new MessageWindow("Successfully removed previous randomized files")
                 {
                     Owner = MainWindow.window,
