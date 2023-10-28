@@ -8,25 +8,24 @@
              d:DesignHeight="450" d:DesignWidth="600">
     <StackPanel>
         <Grid>
-            <TextBlock Text="Recipes"
-                       Padding="1.5 0"
-                       Margin="15 -4 0 0"
-                       Background="White"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Panel.ZIndex="1"
-                       FontWeight="Bold"
-                       Height="16"/>
-            <Border BorderBrush="Gray" 
-                    BorderThickness="1"
-                    Margin="5">
-                <StackPanel Orientation="Horizontal"
-                            Margin="0 10">
-                    <StackPanel>
-                        <TextBlock Text="Player"
-                                   Margin="5 -5 0 -2"
-                                   FontSize="11"
-                                   FontWeight="SemiBold"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <TextBlock Text="Player Recipes"
+                           Padding="1.5 0"
+                           Margin="15 -4 0 0"
+                           Background="White"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Panel.ZIndex="1"
+                           FontWeight="Bold"
+                           Height="16"/>
+                <Border BorderBrush="Gray" 
+                        BorderThickness="1"
+                        Margin="5">
+                    <StackPanel Margin="0 5">
                         <!-- Armour -->
                         <CheckBox Content="Shuffle Armour Recipes"
                                   IsChecked="{Binding ShuffleArmourRecipes, Source={x:Static local:IoC.Settings}}"
@@ -40,27 +39,34 @@
                                   x:Name="IronCB"
                                   IsEnabled="{Binding ShuffleArmourRecipes, Source={x:Static local:IoC.Settings}}"
                                   ToolTip="Shuffles the first two low rank armour recipes that have iron (could make some later low rank armour easier to get)"/>
-
-                        <TextBlock Text="Palico"
-                                   Margin="5 5 0 -2"
-                                   FontSize="11"
-                                   FontWeight="SemiBold"/>
-                        <CheckBox Content="Shuffle Palico Armour Recipes"
-                              IsChecked="{Binding ShufflePalicoArmour, Source={x:Static local:IoC.Settings}}"
-                              Margin="5 0 0 4"
-                              ToolTip="Shuffles palico armour recipies and makes them all avaliable at the start of the game &#x0a;(low rank recipes shuffle with low rank, high with high, and master with master. Doesn't shuffle between different types of armour pieces eg. head, chest)"
-                              ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
-                    <CheckBox Content="Shuffle Charms"
-                              IsChecked="{Binding ShuffleCharms, Source={x:Static local:IoC.Settings}}"
-                              Margin="15, 12 0 0"
-                              ToolTip="Shuffles the charms recipies"
-                              VerticalAlignment="Top"/>
-                </StackPanel>
-            </Border>
+                </Border>
+            </Grid>
+            <Grid Grid.Column="1">
+                <TextBlock Text="Charm Recipes"
+                           Padding="1.5 0"
+                           Margin="15 -4 0 0"
+                           Background="White"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Panel.ZIndex="1"
+                           FontWeight="Bold"
+                           Height="16"/>
+                <Border BorderBrush="Gray" 
+                        BorderThickness="1"
+                        Margin="5">
+                    <StackPanel Margin="0 5">
+                            <CheckBox Content="Shuffle Charms"
+                                      IsChecked="{Binding ShuffleCharms, Source={x:Static local:IoC.Settings}}"
+                                      Margin="5 4"
+                                      ToolTip="Shuffles the charms recipies"
+                                      VerticalAlignment="Top"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Grid>
         <Grid>
-            <TextBlock Text="Stats"
+            <TextBlock Text="Palico Recipes"
                        Padding="1.5 0"
                        Margin="15 -4 0 0"
                        Background="White"
@@ -72,77 +78,145 @@
             <Border BorderBrush="Gray" 
                     BorderThickness="1"
                     Margin="5">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0 10">
-                        <StackPanel>
-                            <CheckBox Content="Random Armour Skills"
-                                  IsChecked="{Binding RandomArmourSkill, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  ToolTip="Randomizes armour to have random skills &#x0a;(Doesn't add more skill or add skills to armour that didn't have them)"/>
-                            <CheckBox Content="Random Armour Skill Levels"
-                                  IsChecked="{Binding RandomArmourSkillLevels, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  ToolTip="Randomizes armour to have random skill levels &#x0a;(Skill level has bias for lower numbers)"/>
-                        </StackPanel>
-                        <StackPanel Margin="15 0 4 0">
-                            <CheckBox Content="Randomize Charm Skills"
-                                  IsChecked="{Binding RandomCharmSkill, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  ToolTip="Randomizes the skill charms give"/>
-                            <CheckBox Content="Randomize Charm Skill Levels"
-                                  IsChecked="{Binding RandomCharmSkillLevels, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  ToolTip="Randomizes charm skills to have a random level &#x0a;(Skill level has bias for lower numbers)"/>
-                        </StackPanel>
-                        <StackPanel>
-                            <CheckBox Content="Shuffle Armour Set Bonus"
-                                  IsChecked="{Binding ShuffleArmourSetBonus, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  ToolTip="Shuffles armour set bonuses &#x0a;(Shuffles each rank seperately, armour that didn't previous have a bonus won't be shuffled to have one)"/>
-                            <CheckBox Content="Shuffle Bonus Between Ranks"
-                                  IsChecked="{Binding NonRankSpecificSetBonusShuffle, Source={x:Static local:IoC.Settings}}"
-                                  Margin="12, 4"
-                                  ToolTip="Shuffles armour set bonuses across all ranks &#x0a;(Armour that didn't previous have a bonus won't be shuffled to have one)"
-                                  IsEnabled="{Binding ShuffleArmourSetBonus, Source={x:Static local:IoC.Settings}}"/>
-                        </StackPanel>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal"
-                                Grid.Row="1">
-                        <StackPanel Margin="0 10 0 0">
-                            <TextBlock Text="Decorations"
-                                       Margin="5 4 0 2"
-                                       FontSize="11"
-                                       FontWeight="SemiBold"/>
-                            <CheckBox Content="Random Amount of Decoration Slots"
-                                      IsChecked="{Binding RandomArmourDecoSlots, Source={x:Static local:IoC.Settings}}"
-                                      Margin="5, 4"
-                                      ToolTip="Randomizes armour to have between 0-3 decoration slots &#x0a;(Chance of getting higher amount of slots increases as rarity increases eg. low rarity stuff will mostly be 0 and 1 slots while high rarity will mostly be 2 and 3 slots)&#x0a;(if don't check random slot size new slots will default to 1)"
-                                      ToolTipService.ShowDuration="10000"/>
-                            <CheckBox Content="Give Charms a Decoration Slot"
-                                      IsChecked="{Binding GiveCharmDecoSlot, Source={x:Static local:IoC.Settings}}"
-                                      Margin="5, 4"
-                                      ToolTip="Gives Charms 1 decoration slots (1 is max amount can have on charm) &#x0a;(if don't check random slot size will default to size of 1)"/>
-                            <CheckBox Content="Random Decoration Slot Size"
-                                      IsChecked="{Binding RandomDecoSlotSize, Source={x:Static local:IoC.Settings}}"
-                                      Margin="5, 4"
-                                      ToolTip="Randomizes all avaliable slot sizes between 1-4 on armour &#x0a;(Chance of getting bigger slots increases as rarity increases)"
-                                      ToolTipService.ShowDuration="10000"/>
-                        </StackPanel>
-
-                        <CheckBox Content="Random Armour Icon Colour"
-                              IsChecked="{Binding RandomArmourIconColour, Source={x:Static local:IoC.Settings}}"
-                              Margin="20 37 5 0"
-                                  VerticalAlignment="Bottom"
-                              ToolTip="Randomizes the colour of the armour icon &#x0a;(Done through randomizing rarity value, doesn't seem to have any negative effect, seems to just be a visual thing)"/>
-                    </StackPanel>
-                </Grid>
+                <StackPanel Margin="0 5">
+                    <CheckBox Content="Shuffle Palico Armour Recipes"
+                              IsChecked="{Binding ShufflePalicoArmour, Source={x:Static local:IoC.Settings}}"
+                              Margin="5 4"
+                              ToolTip="Shuffles palico armour recipies and makes them all avaliable at the start of the game &#x0a;(low rank recipes shuffle with low rank, high with high, and master with master. Doesn't shuffle between different types of armour pieces eg. head, chest)"
+                              ToolTipService.ShowDuration="10000"/>
+                </StackPanel>
             </Border>
         </Grid>
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <TextBlock Text="Armour Skills"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+                <Border BorderBrush="Gray" 
+                    BorderThickness="1"
+                    Margin="5">
+                    <StackPanel Margin="0 5">
+                        <CheckBox Content="Random Armour Skills"
+                                          IsChecked="{Binding RandomArmourSkill, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Randomizes armour to have random skills &#x0a;(Doesn't add more skill or add skills to armour that didn't have them)"/>
+                        <CheckBox Content="Random Armour Skill Levels"
+                                      IsChecked="{Binding RandomArmourSkillLevels, Source={x:Static local:IoC.Settings}}"
+                                      Margin="5, 4"
+                                      ToolTip="Randomizes armour to have random skill levels &#x0a;(Skill level has bias for lower numbers)"/>
+
+                        <CheckBox Content="Shuffle Armour Set Bonus"
+                                      IsChecked="{Binding ShuffleArmourSetBonus, Source={x:Static local:IoC.Settings}}"
+                                      Margin="5 10 5 4"
+                                      ToolTip="Shuffles armour set bonuses &#x0a;(Shuffles each rank seperately, armour that didn't previous have a bonus won't be shuffled to have one)"/>
+                        <CheckBox Content="Shuffle Bonus Between Ranks"
+                                      IsChecked="{Binding NonRankSpecificSetBonusShuffle, Source={x:Static local:IoC.Settings}}"
+                                      Margin="12, 4 0 0"
+                                      ToolTip="Shuffles armour set bonuses across all ranks &#x0a;(Armour that didn't previous have a bonus won't be shuffled to have one)"
+                                      IsEnabled="{Binding ShuffleArmourSetBonus, Source={x:Static local:IoC.Settings}}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <StackPanel Grid.Column="1">
+                <Grid Grid.Column="1">
+                    <TextBlock Text="Charm Skills"
+                               Padding="1.5 0"
+                               Margin="15 -4 0 0"
+                               Background="White"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Panel.ZIndex="1"
+                               FontWeight="Bold"
+                               Height="16"/>
+                    <Border BorderBrush="Gray" 
+                            BorderThickness="1"
+                            Margin="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Margin="5 4">
+                                <CheckBox Content="Randomize Charm Skills"
+                                          IsChecked="{Binding RandomCharmSkill, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Randomizes the skill charms give"/>
+                                <CheckBox Content="Randomize Charm Skill Levels"
+                                          IsChecked="{Binding RandomCharmSkillLevels, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Randomizes charm skills to have a random level &#x0a;(Skill level has bias for lower numbers)"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Grid Margin="0 5 0 0">
+                    <TextBlock Text="Armour Icon"
+                               Padding="1.5 0"
+                               Margin="15 -4 0 0"
+                               Background="White"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Panel.ZIndex="1"
+                               FontWeight="Bold"
+                               Height="16"/>
+                    <Border BorderBrush="Gray" 
+                            BorderThickness="1"
+                            Margin="5">
+                        <StackPanel Margin="0 5">
+                            <CheckBox Content="Random Armour Icon Colour"
+                                      IsChecked="{Binding RandomArmourIconColour, Source={x:Static local:IoC.Settings}}"
+                                      Margin="5 4"
+                                      VerticalAlignment="Bottom"
+                                      ToolTip="Randomizes the colour of the armour icon &#x0a;(Done through randomizing rarity value, doesn't seem to have any negative effect, seems to just be a visual thing)"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <Grid>
+            <TextBlock Text="Decorations"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+            <Border BorderBrush="Gray" 
+                    BorderThickness="1"
+                    Margin="5">
+                <StackPanel Margin="0 5">
+                    <CheckBox Content="Random Amount of Decoration Slots"
+                                          IsChecked="{Binding RandomArmourDecoSlots, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Randomizes armour to have between 0-3 decoration slots &#x0a;(Chance of getting higher amount of slots increases as rarity increases eg. low rarity stuff will mostly be 0 and 1 slots while high rarity will mostly be 2 and 3 slots)&#x0a;(if don't check random slot size new slots will default to 1)"
+                                          ToolTipService.ShowDuration="10000"/>
+                    <CheckBox Content="Give Charms a Decoration Slot"
+                                          IsChecked="{Binding GiveCharmDecoSlot, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Gives Charms 1 decoration slots (1 is max amount can have on charm) &#x0a;(if don't check random slot size will default to size of 1)"/>
+                    <CheckBox Content="Random Decoration Slot Size"
+                                          IsChecked="{Binding RandomDecoSlotSize, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="Randomizes all avaliable slot sizes between 1-4 on armour &#x0a;(Chance of getting bigger slots increases as rarity increases)"
+                                          ToolTipService.ShowDuration="10000"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        
     </StackPanel>
 </UserControl>

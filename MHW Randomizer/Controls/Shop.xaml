@@ -6,22 +6,26 @@
              xmlns:local="clr-namespace:MHW_Randomizer"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="600">
-    <Grid VerticalAlignment="Top">
-        <TextBlock Text="Shop"
-                   Padding="1.5 0"
-                   Margin="15 -4 0 0"
-                   Background="White"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Panel.ZIndex="1"
-                   FontWeight="Bold"
-                   Height="16"/>
-        <Border BorderBrush="Gray"
-                BorderThickness="1"
-                Margin="5">
-            <StackPanel Orientation="Horizontal"
-                        Margin="0 10">
-                <StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid VerticalAlignment="Top">
+            <TextBlock Text="Item Shop"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+            <Border BorderBrush="Gray"
+                    BorderThickness="1"
+                    Margin="5"
+                    Padding="0 0 40 0">
+                <StackPanel Margin="0 5">
                     <CheckBox Content="Random Shop Items"
                               IsChecked="{Binding RandomShopItems, Source={x:Static local:IoC.Settings}}"
                               Margin="5, 4"
@@ -61,7 +65,24 @@
                              ToolTip="How many items are in the shop (Default of 56, max of 255 (game doesn't allow more than 255))"
                              KeyDown="EnterKeyRemoveFocus"/>
                 </StackPanel>
-                <StackPanel Margin="40 0">
+            </Border>
+        </Grid>
+        <Grid VerticalAlignment="Top"
+              Grid.Column="1">
+            <TextBlock Text="Gear Shop"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+            <Border BorderBrush="Gray"
+                    BorderThickness="1"
+                    Margin="5"
+                    Padding="0 0 0 57">
+                <StackPanel Margin="0 5">
                     <CheckBox Content="Random Gear Shop Items"
                               IsChecked="{Binding RandomShopWepArmour, Source={x:Static local:IoC.Settings}}"
                               Margin="5, 4"
@@ -87,7 +108,7 @@
                              ToolTip="How many items are in the shop (Default of 97, max of 4259 items)"
                              KeyDown="EnterKeyRemoveFocus"/>
                 </StackPanel>
-            </StackPanel>
-        </Border>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

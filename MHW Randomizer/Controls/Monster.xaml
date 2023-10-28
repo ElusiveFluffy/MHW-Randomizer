@@ -5,34 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MHW_Randomizer"
              mc:Ignorable="d" 
-             d:DesignHeight="450">
-    <Grid VerticalAlignment="Top">
-        <TextBlock Text="Monster Attacks"
-                   Padding="1.5 0"
-                   Margin="15 -4 0 0"
-                   Background="White"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Panel.ZIndex="1"
-                   FontWeight="Bold"
-                   Height="16"/>
-        <Border BorderBrush="Gray" 
-                BorderThickness="1"
-                Margin="5">
-            <StackPanel Margin="0 5">
-                <TextBlock Text='A bit buggy some will have "phantom" element attacks, where sometimes they will have a "aura" around them with certain actions that will inflict damage and elements onto you. &#xA;Its less buggy and chaotic with the only changing existing elements/statuses options'
-                           Margin="5"
-                           TextWrapping="Wrap"/>
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel>
-                        <CheckBox Content="Include Small Monsters"
-                                  IsChecked="{Binding IncludeSmallMonsterDebuffs, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  ToolTip="Includes small monster with getting the random attack status and element &#xA;(Still need to check those below)"
-                                  ToolTipService.ShowDuration="10000"/>
+             d:DesignHeight="450"
+             d:DesignWidth="600">
+    <StackPanel>
+        <Grid VerticalAlignment="Top">
+            <TextBlock Text="Monster Attacks"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+            <Border BorderBrush="Gray" 
+                    BorderThickness="1"
+                    Margin="5">
+                <StackPanel Margin="0 5">
+                    <TextBlock Text='A bit buggy some will have "phantom" element attacks, where sometimes they will have a "aura" around them with certain actions that will inflict damage and elements onto you. &#xA;Its less buggy and chaotic with the only changing existing elements/statuses options'
+                               Margin="5"
+                               TextWrapping="Wrap"/>
+                    <CheckBox Content="Include Small Monsters"
+                              IsChecked="{Binding IncludeSmallMonsterDebuffs, Source={x:Static local:IoC.Settings}}"
+                              Margin="5, 4"
+                              ToolTip="Includes small monster with getting the random attack status and element &#xA;(Still need to check those below)"
+                              ToolTipService.ShowDuration="10000"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <TextBlock Text="Monster Statuses"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+                <Border BorderBrush="Gray" 
+                        BorderThickness="1"
+                        Margin="5">
+                    <StackPanel Margin="0 5">
                         <CheckBox Content="Random Monster Status Effect"
                                   IsChecked="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 10, 5, 4"
+                                  Margin="5 4"
                                   ToolTip="Gives the monsters a random status and chance to inflict the player with on some attacks (30% chance to add it to an attack) &#xA;(Doesn't affect projectile attacks) &#xA;(eg. bleed, paralysis, stun, etc (Some monster don't get a status))(Will keep stun value)"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Only Change Existing Statuses"
@@ -54,7 +77,22 @@
                                   IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
-                    <StackPanel Margin="40 30 0 0">
+                </Border>
+            </Grid>
+            <Grid Grid.Column="1">
+                <TextBlock Text="Monster Elements"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+                <Border BorderBrush="Gray" 
+                        BorderThickness="1"
+                        Margin="5">
+                    <StackPanel Margin="0 5">
                         <CheckBox Content="Random Monster Attack Element"
                                   IsChecked="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
@@ -79,8 +117,8 @@
                                   IsEnabled="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
-                </StackPanel>
-            </StackPanel>
-        </Border>
-    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </StackPanel>
 </UserControl>

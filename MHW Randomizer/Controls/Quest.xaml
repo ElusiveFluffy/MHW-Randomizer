@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MHW_Randomizer"
              mc:Ignorable="d" 
-             d:DesignHeight="450">
+             d:DesignHeight="440">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -283,92 +283,126 @@
                                       Margin="5"/> -->
             </StackPanel>
         </DockPanel>
-        <Border BorderBrush="Gray"
-                BorderThickness="1"
-                Margin="5"
-                Grid.Row="1">
-            <StackPanel Orientation="Horizontal"
-                        Margin="0 0 0 5"
-                        IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
-                <StackPanel>
-                    <TextBlock Text="Iceborne (Need Iceborne Installed)"
-                               Padding="1.5 0"
-                               Margin="10 -10 0 0"
-                               Background="White"
-                               HorizontalAlignment="Left"
-                               FontWeight="Bold"/>
-                    <TextBlock Text="Options Above Apply to Iceborne Quests too"
+        <StackPanel Grid.Row="1">
+            <Grid>
+                <Border BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5"
+                        Grid.Row="1">
+                    <StackPanel Margin="0 0 0 5" 
+                                IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
+                        <TextBlock Text="Iceborne (Need Iceborne Installed)"
+                                   Padding="1.5 0"
+                                   Margin="10 -10 0 0"
+                                   Background="White"
+                                   HorizontalAlignment="Left"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="Options Above Apply to Iceborne Quests too"
                                    TextWrapping="Wrap"
                                    FontWeight="SemiBold"
                                    Margin="5 0 5 4"/>
-                    <CheckBox Content="Randomize Iceborne Quests"
+                        <CheckBox Content="Randomize Iceborne Quests"
                                   IsChecked="{Binding RandomizeIBQuests, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
-                                  ToolTip="Does exactly what it says"/>
-
+                                  ToolTip="Randomizes all Iceborne quests except for the shara rerun, safi, and fatalis quests"/>
+                        
+                        
+                    </StackPanel>
+                    <!--<StackPanel VerticalAlignment="Center"
+                                Margin="0 31 0 0">
+                        <CheckBox Content="Include Fatalis"
+                                      IsChecked="{Binding IncludeFatalis, Source={x:Static local:IoC.Settings}}"
+                                      Margin="5, 4"
+                                      Foreground="Red"
+                                      ToolTip="Good luck (WARNING: They are a bit buggy and the attack where meant to go behind a gate, that doesn't exist in any other stage, will one shot you)"
+                                      ToolTipService.ShowDuration="10000"/>
+                    </StackPanel>-->
+                </Border>
+            </Grid>
+            <DockPanel>
+                <Grid>
                     <TextBlock Text="Iceborne Monsters"
-                               Margin="5 10 5 2"
-                               FontSize="11"
-                               FontWeight="SemiBold"/>
-                    <CheckBox Content="Monsters Found in Iceborne Quests"
-                                  IsChecked="{Binding MonstersFoundInIB, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  x:Name="MonstersFoundInIB"
-                                  Checked="MonstersFoundInIB_Checked"
-                                  ToolTip="Randomizes monsters that appear in iceborne quests"
-                              Style="{StaticResource Circle}"
-                              Unchecked="MonstersFoundInIB_Unchecked"/>
-                    <CheckBox Content="Only Monsters Added in Iceborne"
-                                  IsChecked="{Binding IceborneOnlyMonsters, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  x:Name="OnlyIBMonsters"
-                                  Checked="OnlyIBMonsters_Checked"
-                              Unchecked="OnlyIBMonsters_Unchecked"
-                                  ToolTip="Only randomizes monsters added in iceborne for iceborne quests"
-                              Style="{StaticResource Circle}"/>
-                    <CheckBox Content="Include Non-Iceborne Monsters"
-                                  IsChecked="{Binding IncludeHighRankOnly, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  x:Name="NonIBMonsters"
-                                  Checked="NonIBMonsters_Checked"
-                              Unchecked="NonIBMonsters_Unchecked"
-                                  ToolTip="Includes monster that don't appear in any iceborne quests. Use with caution, will progress the research bar in hunters note when hunting high rank only monsters, it doesn't seem to have any negative consequences yet though."
+                               Padding="1.5 0"
+                               Margin="15 -3 0 0"
+                               Background="White"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Panel.ZIndex="1"
+                               FontWeight="Bold"/>
+                    <Border BorderBrush="Gray" 
+                            BorderThickness="1"
+                            Margin="5 6 5 0"
+                            Padding="2">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel>
+                                <CheckBox Content="Monsters Found in Iceborne Quests"
+                                          IsChecked="{Binding MonstersFoundInIB, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          x:Name="MonstersFoundInIB"
+                                          Checked="MonstersFoundInIB_Checked"
+                                          ToolTip="Randomizes monsters that appear in iceborne quests"
+                                          Style="{StaticResource Circle}"
+                                          Unchecked="MonstersFoundInIB_Unchecked"/>
+                                <CheckBox Content="Only Monsters Added in Iceborne"
+                                          IsChecked="{Binding IceborneOnlyMonsters, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          x:Name="OnlyIBMonsters"
+                                          Checked="OnlyIBMonsters_Checked"
+                                          Unchecked="OnlyIBMonsters_Unchecked"
+                                          ToolTip="Only randomizes monsters added in iceborne for iceborne quests"
+                                          Style="{StaticResource Circle}"/>
+                                <CheckBox Content="Include Non-Iceborne Monsters"
+                                          IsChecked="{Binding IncludeHighRankOnly, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          x:Name="NonIBMonsters"
+                                          Checked="NonIBMonsters_Checked"
+                                          Unchecked="NonIBMonsters_Unchecked"
+                                          ToolTip="Includes monster that don't appear in any iceborne quests. Use with caution, will progress the research bar in hunters note when hunting high rank only monsters, it doesn't seem to have any negative consequences yet though."
+                                          ToolTipService.ShowDuration="10000"
+                                          Style="{StaticResource Circle}"/>
+                            </StackPanel>
+                            <StackPanel Margin="10 0">
+                                <CheckBox Content="Include Shara Ishvalda"
+                                          IsChecked="{Binding IncludeShara, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="May get stuck, has a custom think file that makes them transform to the second phase when they see you"
+                                          ToolTipService.ShowDuration="10000"/>
+                                <CheckBox Content="Include Furious Rajang"
+                                          IsChecked="{Binding IncludeFuriousRajang, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="May get stuck, can be hard if include them"
+                                          ToolTipService.ShowDuration="10000"/>
+                                <CheckBox Content="Include Alatreon"
+                                          IsChecked="{Binding IncludeAlatreon, Source={x:Static local:IoC.Settings}}"
+                                          Margin="5, 4"
+                                          ToolTip="May get stuck, can be hard if include them (Won't be in the pool of monsters for coral highlands because they make the screen completely white when in fire form on that map)"
+                                          ToolTipService.ShowDuration="10000"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <Grid>
+                    <TextBlock Text="Iceborne Maps"
+                               Padding="1.5 0"
+                               Margin="15 -3 0 0"
+                               Background="White"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Panel.ZIndex="1"
+                               FontWeight="Bold"/>
+                    <Border BorderBrush="Gray" 
+                        BorderThickness="1"
+                        Margin="5 6 5 0"
+                        Padding="2">
+                        <CheckBox Content="Include Iceborne Arenas"
+                                  IsChecked="{Binding IncludeIBArenaMaps, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 10 8 0"
+                                  ToolTip="Includes the Iceborne arena maps in the pool of maps to randomly chose from &#xA;(includes arenas like Shara's and Alatreon's) &#xA;(The monsters will try to run but they don't have anywhere to go so will just go back to fighting, couldn't seem to fix this) &#xA;(only the required monsters will be in the arena unless the all monster in arenas option is checked) &#xA;(Will use a unique music track otherwise there will be no music unless the monster has their own theme)"
                                   ToolTipService.ShowDuration="10000"
-                              Style="{StaticResource Circle}"/>
-                </StackPanel>
-                <!--<StackPanel VerticalAlignment="Center"
-                            Margin="0 31 0 0">
-                    <CheckBox Content="Include Fatalis"
-                                  IsChecked="{Binding IncludeFatalis, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  Foreground="Red"
-                                  ToolTip="Good luck (WARNING: They are a bit buggy and the attack where meant to go behind a gate, that doesn't exist in any other stage, will one shot you)"
-                                  ToolTipService.ShowDuration="10000"/>
-                </StackPanel>-->
-                <StackPanel Margin="-5 77 0 0">
-                    <CheckBox Content="Include Shara Ishvalda"
-                                  IsChecked="{Binding IncludeShara, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  ToolTip="May get stuck, has a custom think file that makes them transform to the second phase when they see you"
-                                  ToolTipService.ShowDuration="10000"/>
-                    <CheckBox Content="Include Furious Rajang"
-                                  IsChecked="{Binding IncludeFuriousRajang, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  ToolTip="May get stuck, can be hard if include them"
-                                  ToolTipService.ShowDuration="10000"/>
-                    <CheckBox Content="Include Alatreon"
-                                  IsChecked="{Binding IncludeAlatreon, Source={x:Static local:IoC.Settings}}"
-                                  Margin="5, 4"
-                                  ToolTip="May get stuck, can be hard if include them (Won't be in the pool of monsters for coral highlands because they make the screen completely white when in fire form on that map)"
-                                  ToolTipService.ShowDuration="10000"/>
-                </StackPanel>
-                <CheckBox Content="Include Iceborne Arenas"
-                          IsChecked="{Binding IncludeIBArenaMaps, Source={x:Static local:IoC.Settings}}"
-                          Margin="15 33 0 0"
-                          ToolTip="Includes the Iceborne arena maps in the pool of maps to randomly chose from &#xA;(includes arenas like Shara's and Alatreon's) &#xA;(The monsters will try to run but they don't have anywhere to go so will just go back to fighting, couldn't seem to fix this) &#xA;(only the required monsters will be in the arena unless the all monster in arenas option is checked) &#xA;(Will use a unique music track otherwise there will be no music unless the monster has their own theme)"
-                          ToolTipService.ShowDuration="10000"
-                          IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"/>
-            </StackPanel>
-        </Border>
+                                  IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"/>
+                    </Border>
+                </Grid>
+            </DockPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -8,26 +8,24 @@
              d:DesignHeight="450" d:DesignWidth="600">
     <StackPanel>
         <Grid>
-            <TextBlock Text="Recipes"
-                       Padding="1.5 0"
-                       Margin="15 -4 0 0"
-                       Background="White"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Panel.ZIndex="1"
-                       FontWeight="Bold"
-                       Height="16"/>
-            <Border BorderBrush="Gray"
-                    BorderThickness="1"
-                    Margin="5">
-                <StackPanel Orientation="Horizontal"
-                        Margin="0 10">
-                    <StackPanel>
-                        <TextBlock Text="Player"
-                                   Margin="5 -5 0 -2"
-                                   FontSize="11"
-                                   FontWeight="SemiBold"/>
-                        <!-- Weapons -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <TextBlock Text="Player Recipes"
+                           Padding="1.5 0"
+                           Margin="15 -4 0 0"
+                           Background="White"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Panel.ZIndex="1"
+                           FontWeight="Bold"
+                           Height="16"/>
+                <Border BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5">
+                    <StackPanel Margin="0 5">
                         <CheckBox Content="Shuffle Weapon Recipes"
                                   IsChecked="{Binding ShuffleWeaponRecipes, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
@@ -38,40 +36,39 @@
                                   Margin="5, 4"
                                   ToolTip="Shuffles the order of the weapon upgrade tree (low rank shuffle with low rank, high with high, and master with master)&#x0a;(The materials won't change spots only the output if shuffle weapon recpies is not ticked (no chance to shuffle to be the same recipe))"
                                   ToolTipService.ShowDuration="10000"/>
-
-                        <StackPanel Margin="0 10 0 0">
-                            <TextBlock Text="Kinsect"
-                                       Margin="5 0 0 -2"
-                                       FontSize="11"
-                                       FontWeight="SemiBold"/>
-                            <CheckBox Content="Shuffle Kinsect Recipes"
-                                      IsChecked="{Binding ShuffleKinsectRecipes, Source={x:Static local:IoC.Settings}}"
-                                      Margin="5 4"
-                                      ToolTip="Shuffles the kinsect nurturing recipies and makes them all avaliable at the start of the game &#x0a;(low rank recipes shuffle with low rank, high with high, and master with master)"
-                                      ToolTipService.ShowDuration="10000"/>
-                            <CheckBox Content="Shuffle Kinsect Recipe Tree Order"
-                                      IsChecked="{Binding ShuffleKinsectOrder, Source={x:Static local:IoC.Settings}}"
-                                      Margin="5, 4"
-                                      ToolTip="Shuffles the order of the kinsect nurturing tree (low rank shuffle with low rank, high with high, and master with master)&#x0a;(The materials won't change spots only the output if shuffle kinsect recpies is not ticked (no chance to shuffle to be the same recipe))"
-                                      ToolTipService.ShowDuration="10000"/>
-                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Margin="35 0">
-                        <TextBlock Text="Palico"
-                                       Margin="5 -5 0 -2"
-                                       FontSize="11"
-                                       FontWeight="SemiBold"/>
-                        <CheckBox Content="Shuffle Palico Weapon Recipes"
-                                  IsChecked="{Binding ShufflePalicoWeapons, Source={x:Static local:IoC.Settings}}"
+                </Border>
+            </Grid>
+            <Grid Grid.Column="1">
+                <TextBlock Text="Kinsect Recipes"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+                <Border BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5">
+                    <StackPanel Margin="0 5">
+                        <CheckBox Content="Shuffle Kinsect Recipes"
+                                  IsChecked="{Binding ShuffleKinsectRecipes, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
-                                  ToolTip="Shuffles the materials for palico weapon recipes &#x0a;(low rank recipes shuffle with low rank, high with high, and master with master)"
+                                  ToolTip="Shuffles the kinsect nurturing recipies and makes them all avaliable at the start of the game &#x0a;(low rank recipes shuffle with low rank, high with high, and master with master)"
+                                  ToolTipService.ShowDuration="10000"/>
+                        <CheckBox Content="Shuffle Kinsect Recipe Tree Order"
+                                  IsChecked="{Binding ShuffleKinsectOrder, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5, 4"
+                                  ToolTip="Shuffles the order of the kinsect nurturing tree (low rank shuffle with low rank, high with high, and master with master)&#x0a;(The materials won't change spots only the output if shuffle kinsect recpies is not ticked (no chance to shuffle to be the same recipe))"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
-                </StackPanel>
-            </Border>
+                </Border>
+            </Grid>
         </Grid>
         <Grid>
-            <TextBlock Text="Stats"
+            <TextBlock Text="Palico Recipes"
                        Padding="1.5 0"
                        Margin="15 -4 0 0"
                        Background="White"
@@ -83,13 +80,34 @@
             <Border BorderBrush="Gray"
                     BorderThickness="1"
                     Margin="5">
-                <StackPanel Orientation="Horizontal"
-                            Margin="0 10 0 5">
-                    <StackPanel>
-                        <TextBlock Text="Player"
-                                   Margin="5 -5 0 -2"
-                                   FontSize="11"
-                                   FontWeight="SemiBold"/>
+                <StackPanel Margin="0 5">
+                    <CheckBox Content="Shuffle Palico Weapon Recipes"
+                              IsChecked="{Binding ShufflePalicoWeapons, Source={x:Static local:IoC.Settings}}"
+                              Margin="5 4"
+                              ToolTip="Shuffles the materials for palico weapon recipes &#x0a;(low rank recipes shuffle with low rank, high with high, and master with master)"
+                              ToolTipService.ShowDuration="10000"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <TextBlock Text="Player Stats"
+                           Padding="1.5 0"
+                           Margin="15 -4 0 0"
+                           Background="White"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Panel.ZIndex="1"
+                           FontWeight="Bold"
+                           Height="16"/>
+                <Border BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5">
+                    <StackPanel Margin="0 5">
                         <CheckBox Content="Random Weapon Element"
                                   IsChecked="{Binding RandomWeaponElement, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
@@ -116,47 +134,66 @@
                                   Margin="5, 4"
                                   ToolTip="Randomizes the colour of the weapon icon &#x0a;(Done through randomizing rarity value, can cause some upgrade paths to be marked as you've reached the max upgrade path until you are a rank high enough for that rarity)&#x0a;(Rarity 1-4 for low rank, 5-9 for high, 10-12 for master)"
                                   ToolTipService.ShowDuration="10000"/>
-
-                        <StackPanel Margin="0 10 0 0">
-                            <!-- Kinsects -->
-                            <TextBlock Text="Kinsect"
-                                       Margin="5 4 0 -2"
-                                       FontSize="11"
-                                       FontWeight="SemiBold"/>
-                            <CheckBox Content="Random Kinsect Dust Effect"
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <Grid Grid.Column="1">
+                <TextBlock Text="Kinsect Stats"
+                           Padding="1.5 0"
+                           Margin="15 -4 0 0"
+                           Background="White"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           Panel.ZIndex="1"
+                           FontWeight="Bold"
+                           Height="16"/>
+                <Border BorderBrush="Gray"
+                        BorderThickness="1"
+                        Margin="5">
+                    <StackPanel Margin="0 5">
+                        <CheckBox Content="Random Kinsect Dust Effect"
                                   IsChecked="{Binding RandomKinsectDust, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes the kinsect's dust effect"/>
-                            <CheckBox Content="Random Kinsect Type"
+                        <CheckBox Content="Random Kinsect Type"
                                   IsChecked="{Binding RandomKinsectType, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes if the kinsect is a sever or blunt type"/>
-                            <CheckBox Content="Random Kinsect Icon Colour"
+                        <CheckBox Content="Random Kinsect Icon Colour"
                                   IsChecked="{Binding RandomKinsectIconColour, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Randomizes the colour of the kinsect icon &#x0a;(Done through randomizing rarity value, can cause some upgrade paths to be marked as you've reached the max upgrade path until you are a rank high enough for that rarity)&#x0a;(Rarity 1-4 for low rank, 5-9 for high, 10-12 for master)"/>
-                        </StackPanel>
-
                     </StackPanel>
-                    <StackPanel Margin="20 0">
-                        <TextBlock Text="Palico"
-                                       Margin="5 -5 0 -2"
-                                       FontSize="11"
-                                       FontWeight="SemiBold"/>
-                        <CheckBox Content="Random Palico Weapon Element"
+                </Border>
+            </Grid>
+        </Grid>
+        <Grid>
+            <TextBlock Text="Palico Stats"
+                       Padding="1.5 0"
+                       Margin="15 -4 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"
+                       Height="16"/>
+            <Border BorderBrush="Gray"
+                    BorderThickness="1"
+                    Margin="5">
+                <StackPanel Margin="0 5">
+                    <CheckBox Content="Random Palico Weapon Element"
                                   IsChecked="{Binding RandomPalicoWeaponElement, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Randomizes elements and element power on palico weapons &#x0a;(element power scales with rarity)"/>
-                        <CheckBox Content="Random Palico Weapon Type"
+                    <CheckBox Content="Random Palico Weapon Type"
                                   IsChecked="{Binding RandomPalicoWeaponType, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Randomizes if the weapon is a severing or blunt type weapon"/>
-                        <CheckBox Content="Random Palico Weapon Icon Colour"
+                    <CheckBox Content="Random Palico Weapon Icon Colour"
                                   IsChecked="{Binding RandomPalicoWeaponColour, Source={x:Static local:IoC.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes the colour of palico weapon icons &#x0a;(Done through randomizing rarity value, doesn't seem to have any negative effect, seems to just be a visual thing)"
                                   ToolTipService.ShowDuration="10000"/>
-                    </StackPanel>
                 </StackPanel>
             </Border>
         </Grid>
