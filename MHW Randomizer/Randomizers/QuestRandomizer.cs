@@ -24,7 +24,7 @@ namespace MHW_Randomizer
         public int StarsIndex;
         public int RankIndex;
         public int MapIDIndex;
-        public int PSpawnIndex;
+        public int PlayerSpawnIndex;
         public int TimeIndex;
         public int WeatherIndex;
         public int HRReqIndex;
@@ -204,6 +204,9 @@ namespace MHW_Randomizer
 
         private GMD StoryTargetText;
 
+        private byte[] XenoMapWarpBytes = ChunkOTF.files["00991.sobjl"].Extract();
+        private List<int> ValidMapIndexes = new List<int>();
+
         public void OpenMIBFIle(byte[] mibFile)
         {
             cipher = new Cipher(key);
@@ -219,7 +222,7 @@ namespace MHW_Randomizer
             RankIndex = data2[19];
             RV = BitConverter.ToInt32(data2, 23);
             MapIDIndex = Array.IndexOf(QuestData.MapIDs, RV);
-            PSpawnIndex = data2[27];
+            PlayerSpawnIndex = data2[27];
             FSpawnIsChecked = data2[31] == 0;
             TimeIndex = data2[39];
             WeatherIndex = data2[43];
@@ -351,8 +354,26 @@ namespace MHW_Randomizer
             if (IoC.Settings.ExtraSupplyBoxes > 0)
                 AddSupplyBoxIDs();
 
+            //Set the folder to q00991, for some reason this one uses q00804's one
+            XenoMapWarpBytes[33] = 0x39;
+            XenoMapWarpBytes[34] = 0x39;
+            XenoMapWarpBytes[35] = 0x31;
+
             using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Quest Log.txt"))
             {
+                ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidMapIndexes).ToList();
+
+                if (IoC.Settings.IncludeArenaMap)
+                    ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidArenaMapIndexes).ToList();
+                if (IoC.Settings.IncludeXenoArena)
+                    ValidMapIndexes.Add(QuestData.XenoArena);
+                if (IoC.Settings.IBMapsInBaseGame)
+                {
+                    ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidIBMapIndexes).ToList();
+                    if (IoC.Settings.IncludeIBArenaMaps)
+                        ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidIBArenaMapIndexes).ToList();
+                }
+
                 //Set all the values to 10
                 for (int i = 0; i < QuestData.MonsterChance.Length; i++)
                     QuestData.MonsterChance[i] = 10;
@@ -451,6 +472,14 @@ namespace MHW_Randomizer
 
                 if (IoC.Settings.RandomizeIBQuests)
                 {
+                    //If the IB maps have been included in the base game don't need to add the iceborne maps here
+                    if (!IoC.Settings.IBMapsInBaseGame)
+                    {
+                        ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidIBMapIndexes).ToList();
+                        if (IoC.Settings.IncludeIBArenaMaps)
+                            ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidIBArenaMapIndexes).ToList();
+                    }
+
                     //Iceborne story quests
                     MonsterIDs = QuestData.BigMonsterIDsIB;
                     if (IoC.Settings.IceborneOnlyMonsters)
@@ -582,36 +611,30 @@ namespace MHW_Randomizer
                 //Pick Random Map
                 if (IoC.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
                 {
-                    //if (iceborne)
-                    //{
-                    //    MapIDIndex = Array.IndexOf(QuestData.MapIDs, QuestData.TestMaps[PickMap.Next(QuestData.TestMaps.Length)]);
-                    //    PSpawnIndex = 0;
-                    //}
-                    //else
-
-                    if (IoC.Settings.IncludeArenaMap)
+                    MapIDIndex = ValidMapIndexes[PickMap.Next(ValidMapIndexes.Count())];
+                    if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
                     {
-                        MapIDIndex = QuestData.ValidArenaMapIndexes[PickMap.Next(7 + (Convert.ToInt32(iceborne || IoC.Settings.IBMapsInBaseGame) * 2) + (Convert.ToInt32((iceborne || IoC.Settings.IBMapsInBaseGame) && IoC.Settings.IncludeIBArenaMaps) * 4))];
-                        if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
-                        {
-                            //Force spawn to be at camp 1 or the game crashes
-                            PSpawnIndex = 0;
+                        //Force spawn to be at camp 1 or the game crashes
+                        PlayerSpawnIndex = 0;
 
-                            //If its the special arena set up the fence timers, have a 50% chance of adding a fence timer
-                            if (MapIDIndex == 12 && (IoC.Settings.AllMonstersInArena || MultiMon1IsChecked || MultiOjectiveIsChecked || duplicateMonQuest))
-                            {
-                                FenceSwitch = true;
-                                //Round to the nearest 5
-                                FenceUptime = 5 * (int)Math.Round(PickFenceTime.Next(30, 101) / 5.0f);
-                                FenceCooldown = FenceUptime * 2;
-                            }
-                            //If its a iceborne arena then change the bgm to 22 since its the only one with nice music for them
-                            else if (MapIDIndex > 30)
-                                BGMIndex = 22;
+                        //If its the special arena set up the fence timers only if there is more than one monster in the arena
+                        if (MapIDIndex == 12 && (IoC.Settings.AllMonstersInArena || MultiMon1IsChecked || MultiOjectiveIsChecked || duplicateMonQuest))
+                        {
+                            FenceSwitch = true;
+                            //Round to the nearest 5
+                            FenceUptime = 5 * (int)Math.Round(PickFenceTime.Next(30, 101) / 5.0f);
+                            FenceCooldown = FenceUptime * 2;
                         }
+                        //If its xeno's arena add the hitching post
+                        else if (MapIDIndex == 24)
+                        {
+                            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\set\");
+                            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\set\" + questNumber + ".sobjl", XenoMapWarpBytes);
+                        }
+                        //If its Xeno or a iceborne arena then change the bgm to 22 since its the only one with nice music for them
+                        if (MapIDIndex > 23)
+                            BGMIndex = 22;
                     }
-                    else
-                        MapIDIndex = QuestData.ValidMapIndexes[PickMap.Next(5 + (Convert.ToInt32(iceborne || IoC.Settings.IBMapsInBaseGame) * 2))];
                 }
 
                 if (MapIDIndex == 3)
@@ -981,7 +1004,7 @@ namespace MHW_Randomizer
                 data3[25] = buffer[2];
                 data3[26] = buffer[3];
 
-                buffer = BitConverter.GetBytes(Convert.ToByte(PSpawnIndex));
+                buffer = BitConverter.GetBytes(Convert.ToByte(PlayerSpawnIndex));
                 data3[27] = buffer[0];
                 if (FSpawnIsChecked)
                     data3[31] = 0;

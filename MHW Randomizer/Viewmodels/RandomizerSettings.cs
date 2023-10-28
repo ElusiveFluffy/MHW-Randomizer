@@ -25,6 +25,7 @@ namespace MHW_Randomizer
         public bool RandomSobj { get; set; }
         public bool RandomMaps { get; set; }
         public bool IncludeArenaMap { get; set; } //Maybe including the shara stage //For if random maps is checked
+        public bool IncludeXenoArena { get; set; }
         public bool IncludeIBArenaMaps { get; set; }
         public bool AllMonstersInArena { get; set; }
         public bool RandomIcons { get; set; }

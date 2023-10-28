@@ -485,6 +485,10 @@ namespace MHW_Randomizer
                                 if (Directory.Exists(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em"))
                                     Directory.Delete(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em", true);
 
+                                //Delete the Xeno map hitching post file
+                                if (Directory.Exists(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\set\"))
+                                    File.Delete(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\set\" + fileQuestNumber + ".sobjl");
+
                                 //Delete the gmd text files
                                 if (File.Exists(IoC.Settings.SaveFolderPath + @"\common\text\quest\q" + fileQuestNumber + "_eng.gmd"))
                                     File.Delete(IoC.Settings.SaveFolderPath + @"\common\text\quest\q" + fileQuestNumber + "_eng.gmd");

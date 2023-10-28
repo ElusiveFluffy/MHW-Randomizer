@@ -13,10 +13,13 @@ namespace MHW_Randomizer
         // 415,
         public static int[] ArenaMaps = { 201, 202, 405, 409, 412, 413, 415, 416, 417 };
 
-        public static int[] ValidMapIndexes = { 1, 2, 3, 4, 5, 8, 9 };
+        public static int[] ValidMapIndexes = { 1, 2, 3, 4, 5 };
+        public static int[] ValidIBMapIndexes = { 8, 9 };
 
         // 34,
-        public static int[] ValidArenaMapIndexes = { 1, 2, 3, 4, 5, 11, 12, 8, 9, 31, 32, 34, 35 };
+        public static int[] ValidArenaMapIndexes = { 11, 12 };
+        public static int XenoArena = 24;
+        public static int[] ValidIBArenaMapIndexes = { 31, 32, 34, 35 };
 
         public static string[] MapNames = {"Infinity of Nothing", "Ancient Forest", "Wildspire Waste", "Coral Highlands", "Rotten Vale", "Elder Recess" , "Great Ravine" , "Great Ravine (Story Map to Coral Highlands)" , "Hoarfrost Reach", "Guiding Lands", "Infinity of Nothing" ,
             "Special Arena" , "Arena (Challenge)" ,"IB Arena (Seliana Supply Cache)",  "Astera" , "Gathering Hub (Astera)" , "Research Base" , "Seliana", "Gathering Hub (Seliana)", "307 Unconfirmed/To Be Tested","311 Unconfirmed/To Be Tested","Crashes game" , "Ancient Forest (Flooded / Intro)" ,
