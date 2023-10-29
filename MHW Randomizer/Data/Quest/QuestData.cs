@@ -584,7 +584,7 @@ namespace MHW_Randomizer
             "em042_00", "em043_05", "em063_00", "em080_00", "em080_01", "em100_01", "em102_01", "em103_05", "em109_01", "em110_01", "em111_05", "em113_01", "em115_05", "em118_05", "em122_00", "em123_00", "em124_00", "em125_00", "em126_00", "ems014_00", "ems016_00", "ems063_00", "ems064_00", "ems061_01",
             "em050_00", "em001_02", "em002_02", "em018_00", "em023_00", "em023_05", "em032_01", "em057_00", "em057_01", "em063_05", "em104_00", "unused", "em018_05", "em042_05", "em013_00" };
 
-        public static string[] MonsterVariantNumber = { "00", "00", "unused", "unused", "unused", "unused", "unused", "00", "unused", "00", "01", "01", "00", "01", "00", "00", "00", "00", "00", "00",
+        public static string[] MonsterVariantNumber = { "00", "00", "unused", "unused", "00", "unused", "unused", "00", "unused", "00", "01", "01", "00", "01", "00", "00", "00", "00", "00", "00",
             "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "unused", "00", "unused", "unused", "unused", "unused", "unused", "unused", "unused",
             "unused", "unused", "unused", "unused", "01", "unused", "unused", "unused", "unused","unused", "unused", "unused", "unused", "unused", "00", "00", "00", "05", "00", "00", "01",
             "01", "01", "05", "01", "01", "05", "01", "05", "05", "00", "00", "00", "00", "00", "unused", "unused", "unused", "unused", "unused", "00", "02", "02",
@@ -609,13 +609,14 @@ namespace MHW_Randomizer
             { "00302", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 175 } } }, //Sinister Shadows in the Swamp
             { "00305", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 178 } } }, //Flying Sparks: Tobi-Kadachi
             { "00306", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 181 } } }, //The Encroaching Anjanath
+            { "00401", new StoryQuestData { ChangeQuestIcon = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 153 } } }, //One for the History Books
             { "00405", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 191 } } }, //Ballooning Problems
             { "00407", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 199 } } }, //Radobaan Roadblock
             { "00408", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 202 } } }, //Legiana: Embodiment of Elegance
             { "00501", new StoryQuestData { ChangeObjective = true, QuestObjTextIndexs = new int[] { 205, 207 } } }, //Into the Bowels of the Vale
             { "00502", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 213 } } }, //A Fiery Throne Atop the Forest
             { "00503", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 216 } } }, //Horned Tyrant Below the Sands
-            //{ "00504", new StoryQuestData { QuestObjTextIndexs = new int[] { 219, 235 } } }, //A Colossal Task
+            { "00504", new StoryQuestData { ChangeQuestIcon = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 218 } } }, //A Colossal Task
             { "00601", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 227 } } }, //Invader in the Waste
             { "00605", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, CanRandomizeMap = true, CreateFSM = false, QuestObjTextIndexs = new int[] { 230 } } }, //Tickled Pink
             { "00607", new StoryQuestData { ChangeObjective = true, CanRandomizeMap = true, QuestObjTextIndexs = new int[] { 233 } } }, //Old World Monster in the New World

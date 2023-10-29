@@ -162,6 +162,7 @@ namespace MHW_Randomizer
         public bool FasterKinsects { get; set; }
 
         //Experimental
+        public bool RandomizeZorahStoryQuests { get; set; }
         public bool IBMonstersInLowRank { get; set; }
         public bool IBMonstersInHighRank { get; set; }
         public bool IBMapsInBaseGame { get; set; }

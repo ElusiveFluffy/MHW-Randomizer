@@ -596,6 +596,32 @@ namespace MHW_Randomizer
 
                 OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].Extract());
 
+                //If Zorah Magdaros quest set the objective
+                if (questNumber == "00401" || questNumber == "00504")
+                {
+                    //If this setting is false then don't change the Zorah Quests
+                    if (!IoC.Settings.RandomizeZorahStoryQuests)
+                        continue;
+
+                    //Change the objective
+                    MObjT1Index = 5;
+                    MObjC1Text = "1";
+
+                    //If not randomizing maps then pick a random one here
+                    if (!IoC.Settings.RandomMaps)
+                        PickRandomMap(questNumber, duplicateMonQuest);
+
+                    //Remove all the NPCs
+                    byte[] zorahSobjl = ChunkOTF.files["00401.sobjl"].Extract();
+                    zorahSobjl[8] = 0;
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q00401\set\");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q00401\set\00401.sobjl", zorahSobjl);
+                    zorahSobjl = ChunkOTF.files["00504.sobjl"].Extract();
+                    zorahSobjl[8] = 0;
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q00504\set\");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q00504\set\00504.sobjl", zorahSobjl);
+                }
+
                 bool isLowRank = RankIndex == 0;
 
                 int[] currentRankMonsterIDs;
@@ -611,30 +637,7 @@ namespace MHW_Randomizer
                 //Pick Random Map
                 if (IoC.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
                 {
-                    MapIDIndex = ValidMapIndexes[PickMap.Next(ValidMapIndexes.Count())];
-                    if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
-                    {
-                        //Force spawn to be at camp 1 or the game crashes
-                        PlayerSpawnIndex = 0;
-
-                        //If its the special arena set up the fence timers only if there is more than one monster in the arena
-                        if (MapIDIndex == 12 && (IoC.Settings.AllMonstersInArena || MultiMon1IsChecked || MultiOjectiveIsChecked || duplicateMonQuest))
-                        {
-                            FenceSwitch = true;
-                            //Round to the nearest 5
-                            FenceUptime = 5 * (int)Math.Round(PickFenceTime.Next(30, 101) / 5.0f);
-                            FenceCooldown = FenceUptime * 2;
-                        }
-                        //If its xeno's arena add the hitching post
-                        else if (MapIDIndex == 24)
-                        {
-                            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\set\");
-                            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\set\" + questNumber + ".sobjl", XenoMapWarpBytes);
-                        }
-                        //If its Xeno or a iceborne arena then change the bgm to 22 since its the only one with nice music for them
-                        if (MapIDIndex > 23)
-                            BGMIndex = 22;
-                    }
+                    PickRandomMap(questNumber, duplicateMonQuest);
                 }
 
                 if (MapIDIndex == 3)
@@ -672,10 +675,6 @@ namespace MHW_Randomizer
                     //If there is no monster at that index skip unless the option for two monster quest is true
                     if (MID[m] == 0 && !(IoC.Settings.TwoMonsterQuests && m == 1))
                         continue;
-
-                    //If Zorah Magdaros quest only randomize the second monster (First is Zorah)
-                    //if ((questNumber == "00401" && m == 0) || (questNumber == "00504" && m == 0))
-                    //    continue;
 
                     //Clear fsm file
                     fsm = null;
@@ -765,8 +764,8 @@ namespace MHW_Randomizer
                     string oldMSobj = "";
                     byte[] sobj;
 
-                    //Pick random sobj
-                    if ((m == 1 && IoC.Settings.TwoMonsterQuests && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap || oldMonsterID == -1)) || (IoC.Settings.RandomSobj && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap)))
+                    //Pick random sobj (always give the zorah quests a random one)
+                    if ((m == 1 && IoC.Settings.TwoMonsterQuests && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap || oldMonsterID == -1)) || ((IoC.Settings.RandomSobj || questNumber == "00401" || questNumber == "00504") && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap)))
                     {
                         Files[] SobjFiles;
                         //Make it so xeno isn't in great jagras' den
@@ -933,9 +932,15 @@ namespace MHW_Randomizer
                         int entryIndex = StoryQuests[questNumber].QuestObjTextIndexs[i];
                         string value = "";
                         List<string> textToReplace = QuestData.MonsterNames.Where(o => StoryTargetText.Entries[entryIndex].Value.Contains(o, StringComparison.OrdinalIgnoreCase)).ToList();
+                        //Change the Zorah quest text to say hunt the monster
+                        if (questNumber == "00401" || questNumber == "00504")
+                        {
+                            StoryTargetText.Entries[entryIndex].Value = "Hunt a " + QuestData.MonsterNames[MID[0]];
+                        }
+                        //If its not velkhana then change the text
                         if (questNumber == "01404" && MID[0] != 80)
                         {
-                            value = "Slay " + QuestData.MonsterNames[MID[0]];
+                            value = "Slay a " + QuestData.MonsterNames[MID[0]];
                             StoryTargetText.Entries[560].Value = "(Don't need to load Dragonrazer)";
                         }
                         else if (StoryQuests[questNumber].MultiObjectiveHunt)
@@ -1326,6 +1331,34 @@ namespace MHW_Randomizer
             {
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone\01601_qtev.zon", ChunkOTF.files["01602_qtev.zon"].Extract());
+            }
+        }
+
+        private void PickRandomMap(string questNumber, bool duplicateMonQuest)
+        {
+            MapIDIndex = ValidMapIndexes[PickMap.Next(ValidMapIndexes.Count())];
+            if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
+            {
+                //Force spawn to be at camp 1 or the game crashes
+                PlayerSpawnIndex = 0;
+
+                //If its the special arena set up the fence timers only if there is more than one monster in the arena
+                if (MapIDIndex == 12 && (IoC.Settings.AllMonstersInArena || MultiMon1IsChecked || MultiOjectiveIsChecked || duplicateMonQuest))
+                {
+                    FenceSwitch = true;
+                    //Round to the nearest 5
+                    FenceUptime = 5 * (int)Math.Round(PickFenceTime.Next(30, 101) / 5.0f);
+                    FenceCooldown = FenceUptime * 2;
+                }
+                //If its xeno's arena add the hitching post
+                else if (MapIDIndex == 24)
+                {
+                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\set\");
+                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\set\" + questNumber + ".sobjl", XenoMapWarpBytes);
+                }
+                //If its Xeno or a iceborne arena then change the bgm to 22 since its the only one with nice music for them
+                if (MapIDIndex > 23)
+                    BGMIndex = 22;
             }
         }
 
