@@ -23,14 +23,18 @@ namespace MHW_Randomizer
                     if (alnk.Name.Contains("ems") || alnk.Name.Contains("em104") || alnk.Name.Contains("em105") || alnk.Name.Contains("em013") || alnk.Name.Contains("em106"))
                         continue;
 
-                    file.WriteLine(alnk.Name);
+                    string[] folderNames = alnk.EntireName.Split('\\');
+                    file.WriteLine(QuestData.MonsterNames[Array.IndexOf(QuestData.MonsterEmNumber, folderNames[2] + "_" + folderNames[3]) + 1] + ": " + folderNames[2] + "_" + folderNames[3]);
+                    file.WriteLine(Alnks.IsGroundMonster[a]);
+                    file.WriteLine("Chosen Paths:");
+
 
                     byte[] alnkBytes = alnk.Extract();
                     byte[] newAlnk = new byte[44];
                     //Copy the Header
                     Array.Copy(alnkBytes, newAlnk, 44);
 
-                    int chosenAlnk = 0;
+                    AlnkPaths chosenAlnk = new AlnkPaths();
                     byte pathCount = 0;
                     int[] chosenIndexes = new int[7];
                     if (Alnks.IsGroundMonster[a])
@@ -38,13 +42,14 @@ namespace MHW_Randomizer
                         for (int map = 0; map < 7; map++)
                         {
                             //Chose a alnk and extract it
-                            chosenAlnk = r.Next(Alnks.GroundOffsets[map].Length);
-                            byte[] chosenAlnkData = ChunkOTF.files[Alnks.GroundOffsets[map][chosenAlnk].TargetAlnk].Extract();
-                            chosenIndexes[map] = chosenAlnk;
+                            chosenAlnk = Alnks.GroundOffsets[map][r.Next(Alnks.GroundOffsets[map].Length)];
+                            byte[] chosenAlnkData = ChunkOTF.files[chosenAlnk.TargetAlnk].Extract();
+                            file.WriteLine(chosenAlnk.TargetAlnk);
+                            chosenIndexes[map] = Array.IndexOf(Alnks.GroundOffsets[map], chosenAlnk);
 
                             //Make a new byte array to be able to copy the path to
-                            byte[] copyBuffer = new byte[Alnks.GroundOffsets[map][chosenAlnk].PathLength];
-                            Array.Copy(chosenAlnkData, Alnks.GroundOffsets[map][chosenAlnk].PathOffset, copyBuffer, 0, Alnks.GroundOffsets[map][chosenAlnk].PathLength);
+                            byte[] copyBuffer = new byte[chosenAlnk.PathLength];
+                            Array.Copy(chosenAlnkData, chosenAlnk.PathOffset, copyBuffer, 0, chosenAlnk.PathLength);
 
                             //Add the path count
                             pathCount += copyBuffer[4];
@@ -55,13 +60,24 @@ namespace MHW_Randomizer
                     }
                     else
                     {
-                        newAlnk = newAlnk.Concat(Properties.Resources.m101_Flying).ToArray();
-                        newAlnk = newAlnk.Concat(Properties.Resources.m102_Flying).ToArray();
-                        newAlnk = newAlnk.Concat(Properties.Resources.m103_Flying).ToArray();
-                        newAlnk = newAlnk.Concat(Properties.Resources.m104_Flying).ToArray();
-                        newAlnk = newAlnk.Concat(Properties.Resources.m105_Flying).ToArray();
-                        newAlnk = newAlnk.Concat(Properties.Resources.m108_Flying).ToArray();
-                        newAlnk = newAlnk.Concat(Properties.Resources.m109_Flying).ToArray();
+                        for (int map = 0; map < 7; map++)
+                        {
+                            //Chose a alnk and extract it
+                            chosenAlnk = Alnks.FlyingOffsets[map][r.Next(Alnks.FlyingOffsets[map].Length)];
+                            byte[] chosenAlnkData = ChunkOTF.files[chosenAlnk.TargetAlnk].Extract();
+                            file.WriteLine(chosenAlnk.TargetAlnk);
+                            chosenIndexes[map] = Array.IndexOf(Alnks.FlyingOffsets[map], chosenAlnk);
+
+                            //Make a new byte array to be able to copy the path to
+                            byte[] copyBuffer = new byte[chosenAlnk.PathLength];
+                            Array.Copy(chosenAlnkData, chosenAlnk.PathOffset, copyBuffer, 0, chosenAlnk.PathLength);
+
+                            //Add the path count
+                            pathCount += copyBuffer[4];
+
+                            //Concat the path to the new alnk
+                            newAlnk = newAlnk.Concat(copyBuffer).ToArray();
+                        }
                     }
 
                     //Add map entries for the arenas so the monsters don't try to run...hopefully
@@ -73,7 +89,7 @@ namespace MHW_Randomizer
                     //Something to do with path count maybe???
                     newAlnk[40] = pathCount;
 
-                    file.WriteLine("Chosen Paths: " + string.Join(", ", chosenIndexes));
+                    file.WriteLine("Chosen Indexes: " + string.Join(", ", chosenIndexes));
                     file.WriteLine("Path Count: " + pathCount);
                     file.WriteLine("\n--------------------------");
 

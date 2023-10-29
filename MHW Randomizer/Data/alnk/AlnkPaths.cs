@@ -191,5 +191,85 @@
                 new AlnkPaths { PathOffset = 0x1836, PathLength = 5261, TargetAlnk = @"\em\em100\01\data\em100.dtt_alnk" },
             }
         };
+
+        public static AlnkPaths[][] FlyingOffsets =
+        {
+            //101
+            new AlnkPaths[]
+            {
+                new AlnkPaths { PathOffset = 0x58C, PathLength = 697, TargetAlnk = @"\em\em001\00\data\em001.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 1242, TargetAlnk = @"\em\em002\00\data\em002.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x5F0, PathLength = 1354, TargetAlnk = @"\em\em024\00\data\em024.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 705, TargetAlnk = @"\em\em102\00\data\em102.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2E0, PathLength = 737, TargetAlnk = @"\em\em110\01\data\em110.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 697, TargetAlnk = @"\em\em118\00\data\em118.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 729, TargetAlnk = @"\em\em124\00\data\em124.dtt_alnk" },
+            },
+            
+            //102
+            new AlnkPaths[]
+            {
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 1376, TargetAlnk = @"\em\em001\00\data\em001.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x38C, PathLength = 708, TargetAlnk = @"\em\em102\00\data\em102.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x770, PathLength = 652, TargetAlnk = @"\em\em103\00\data\em103.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 692, TargetAlnk = @"\em\em110\01\data\em110.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2E5, PathLength = 628, TargetAlnk = @"\em\em118\00\data\em118.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x305, PathLength = 628, TargetAlnk = @"\em\em124\00\data\em124.dtt_alnk" },
+            },
+            
+            //103
+            new AlnkPaths[]
+            {
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 492, TargetAlnk = @"\em\em110\00\data\em110.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 764, TargetAlnk = @"\em\em111\00\data\em111.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x559, PathLength = 628, TargetAlnk = @"\em\em118\00\data\em118.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 724, TargetAlnk = @"\em\em102\01\data\em102.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x579, PathLength = 732, TargetAlnk = @"\em\em124\00\data\em124.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 1216, TargetAlnk = @"\em\em125\00\data\em125.dtt_alnk" },
+            },
+            
+            //104
+            new AlnkPaths[]
+            {
+                new AlnkPaths { PathOffset = 0x7CD, PathLength = 633, TargetAlnk = @"\em\em118\00\data\em118.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x855, PathLength = 713, TargetAlnk = @"\em\em124\00\data\em124.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 1002, TargetAlnk = @"\em\em115\00\data\em115.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 1234, TargetAlnk = @"\em\em115\05\data\em115.dtt_alnk" },
+            },
+            
+            //105
+            new AlnkPaths[]
+            {
+                new AlnkPaths { PathOffset = 0x5A5, PathLength = 742, TargetAlnk = @"\em\em002\00\data\em002.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 1476, TargetAlnk = @"\em\em024\00\data\em024.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x252, PathLength = 1310, TargetAlnk = @"\em\em103\00\data\em103.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0xA46, PathLength = 686, TargetAlnk = @"\em\em118\00\data\em118.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2C, PathLength = 1214, TargetAlnk = @"\em\em118\05\data\em118.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0xB1E, PathLength = 1578, TargetAlnk = @"\em\em124\00\data\em124.dtt_alnk" },
+            },
+            
+            //108
+            new AlnkPaths[]
+            {
+                new AlnkPaths { PathOffset = 0x3C7, PathLength = 1025, TargetAlnk = @"\em\em111\00\data\em111.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x3C7, PathLength = 2138, TargetAlnk = @"\em\em111\05\data\em111.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x11B7, PathLength = 761, TargetAlnk = @"\em\em124\00\data\em124.dtt_alnk" },
+            },
+            
+            //109
+            new AlnkPaths[]
+            {
+                new AlnkPaths { PathOffset = 0x14F2, PathLength = 4410, TargetAlnk = @"\em\em124\00\data\em124.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0xA2C, PathLength = 2112, TargetAlnk = @"\em\em001\02\data\em001.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x2D9, PathLength = 2224, TargetAlnk = @"\em\em002\02\data\em002.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x559, PathLength = 1310, TargetAlnk = @"\em\em118\05\data\em118.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x7C8, PathLength = 1855, TargetAlnk = @"\em\em111\00\data\em111.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x5C1, PathLength = 1619, TargetAlnk = @"\em\em110\01\data\em110.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x650, PathLength = 1739, TargetAlnk = @"\em\em102\00\data\em102.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0xB3A, PathLength = 1493, TargetAlnk = @"\em\em024\00\data\em024.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x88B, PathLength = 1629, TargetAlnk = @"\em\em002\00\data\em002.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x8E4, PathLength = 1595, TargetAlnk = @"\em\em001\00\data\em001.dtt_alnk" },
+            },
+        };
     }
 }
