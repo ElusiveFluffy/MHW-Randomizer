@@ -485,7 +485,7 @@ namespace MHW_Randomizer
                                 if (Directory.Exists(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em"))
                                     Directory.Delete(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em", true);
 
-                                //Delete the Xeno map hitching post file
+                                //Delete the Xeno map hitching post file or the blank Zorah one
                                 if (Directory.Exists(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\set\"))
                                     File.Delete(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\set\" + fileQuestNumber + ".sobjl");
 

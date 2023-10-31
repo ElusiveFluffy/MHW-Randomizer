@@ -109,7 +109,7 @@
                         <CheckBox Content="Randomize Zorah Story Quests (Changes Map and Zorah)"
                                   IsChecked="{Binding RandomizeZorahStoryQuests, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
-                                  ToolTip="Will change the map and randomize Zorah to be something else making it just like a regular hunt quest, instead of a slow autoscroller &#x0a;(Only changes the Zorah quests required for the story, so can still get Zorah materials from the optional quest version) &#x0a;(Your Palico will be frozen but just fast travel to a camp to fix them)"
+                                  ToolTip="Will pick a random map and randomize Zorah to be something else making it just like a regular hunt quest, instead of a slow autoscroller &#x0a;(Only changes the Zorah quests required for the story, so can still get Zorah materials from the optional quest version) &#x0a;(Your Palico will be frozen but just fast travel to a camp to fix them)"
                                   ToolTipService.ShowDuration="10000"
                                   IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
                     </StackPanel>

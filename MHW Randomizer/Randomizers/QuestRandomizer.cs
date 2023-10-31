@@ -607,10 +607,6 @@ namespace MHW_Randomizer
                     MObjT1Index = 5;
                     MObjC1Text = "1";
 
-                    //If not randomizing maps then pick a random one here
-                    if (!IoC.Settings.RandomMaps)
-                        PickRandomMap(questNumber, duplicateMonQuest);
-
                     //Remove all the NPCs
                     byte[] zorahSobjl = ChunkOTF.files["00401.sobjl"].Extract();
                     zorahSobjl[8] = 0;
@@ -620,6 +616,11 @@ namespace MHW_Randomizer
                     zorahSobjl[8] = 0;
                     Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q00504\set\");
                     File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q00504\set\00504.sobjl", zorahSobjl);
+
+                    //If not randomizing maps then pick a random one here
+                    //Pick a random map after creating the zorah sobjl just incase it gets overwritten with the xeno one
+                    if (!IoC.Settings.RandomMaps)
+                        PickRandomMap(questNumber, duplicateMonQuest);
                 }
 
                 bool isLowRank = RankIndex == 0;
