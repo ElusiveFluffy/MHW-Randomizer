@@ -351,6 +351,43 @@ namespace MHW_Randomizer
         }
     }
 
+    /// <summary>
+    /// For .rem files (header is 18 bytes)
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class QuestRewards
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+        public uint[] Items;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+        public byte[] ItemCounts;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+        public byte[] ItemWeights;
+    }
+
+    /// <summary>
+    /// For .itlot files (header is 10 bytes)
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class MonsterDrops
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        public ushort[] Items;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        public byte[] ItemCounts;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        public byte[] ItemWeights;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        public CarveAnimations[] CarveAnimation;
+    }
+
+    public enum CarveAnimations
+    {
+        Regular = 0,
+        Plate = 1,
+        Gem = 2
+    }
+
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class SuppItems
     {
