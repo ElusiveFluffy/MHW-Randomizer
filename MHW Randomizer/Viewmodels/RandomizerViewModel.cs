@@ -302,7 +302,7 @@ namespace MHW_Randomizer
             }
             if (!string.IsNullOrWhiteSpace(RandomizeRootFolder))
                 File.WriteAllText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt",
-                                  "Put the common, em, quest, and/or stage folders (some won't be there depending on what you randomized) into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");
+                                  "Put the \"Randomized Files.json\" file (for when deleting the files with the randomizer), common, em, quest, and/or stage folders (some won't be there depending on what you randomized) into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");
 
             //Clear out all the old randomized files
             RemoveOldRandomizedFiles();
