@@ -51,6 +51,12 @@ namespace MHW_Randomizer
                             byte[] copyBuffer = new byte[chosenAlnk.PathLength];
                             Array.Copy(chosenAlnkData, chosenAlnk.PathOffset, copyBuffer, 0, chosenAlnk.PathLength);
 
+                            //Check if the first path has been cut off (due to it causing the path to not work)
+                            if (chosenAlnk.TrimmedMapIdentifier)
+                            {
+                                copyBuffer = AddIdentifier(chosenAlnk, copyBuffer);
+                            }
+
                             //Add the path count
                             pathCount += copyBuffer[4];
 
@@ -71,6 +77,12 @@ namespace MHW_Randomizer
                             //Make a new byte array to be able to copy the path to
                             byte[] copyBuffer = new byte[chosenAlnk.PathLength];
                             Array.Copy(chosenAlnkData, chosenAlnk.PathOffset, copyBuffer, 0, chosenAlnk.PathLength);
+
+                            //Check if the first path has been cut off (due to it causing the path to not work)
+                            if (chosenAlnk.TrimmedMapIdentifier)
+                            {
+                                copyBuffer = AddIdentifier(chosenAlnk, copyBuffer);
+                            }
 
                             //Add the path count
                             pathCount += copyBuffer[4];
@@ -120,6 +132,18 @@ namespace MHW_Randomizer
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data/em126_00.thk", Properties.Resources.em126_00thk);
             }
+        }
+
+        private static byte[] AddIdentifier(AlnkPaths chosenAlnk, byte[] copyBuffer)
+        {
+            byte[] identifier = new byte[8];
+            //Copy the map number
+            Array.Copy(copyBuffer, identifier, 4);
+            //Set the new path count
+            identifier[4] = chosenAlnk.PathCount;
+            //Insert the identifier bytes to the start
+            copyBuffer = identifier.Concat(copyBuffer).ToArray();
+            return copyBuffer;
         }
     }
 }

@@ -7,6 +7,10 @@
         public int PathLength;
         //The alnk the path is from
         public string TargetAlnk;
+
+        //For alnk paths that have a path that doesn't seem to work as the first one
+        public bool TrimmedMapIdentifier;
+        public byte PathCount;
     }
 
     public class Alnks
@@ -175,19 +179,18 @@
             //109
             new AlnkPaths[]
             {
-                //new AlnkPaths { PathOffset = 0x86A, PathLength = 1619, TargetAlnk = @"\em\em100\00\data\em100.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x993, PathLength = 1322, TargetAlnk = @"\em\em100\00\data\em100.dtt_alnk", TrimmedMapIdentifier = true, PathCount = 2 },
                 //new AlnkPaths { PathOffset = 0x34D, PathLength = 1642, TargetAlnk = @"\em\em120\00\data\em120.dtt_alnk" },
                 //new AlnkPaths { PathOffset = 0x3C4, PathLength = 970, TargetAlnk = @"\em\em109\00\data\em109.dtt_alnk" },
                 new AlnkPaths { PathOffset = 0x1ED8, PathLength = 4781, TargetAlnk = @"\em\em123\00\data\em123.dtt_alnk" },
                 new AlnkPaths { PathOffset = 0x1F27, PathLength = 6304, TargetAlnk = @"\em\em023\00\data\em023.dtt_alnk" },
                 new AlnkPaths { PathOffset = 0x355, PathLength = 1875, TargetAlnk = @"\em\em057\00\data\em057.dtt_alnk" },
-                new AlnkPaths { PathOffset = 0x5E9, PathLength = 1547, TargetAlnk = @"\em\em037\00\data\em037.dtt_alnk" },
-                new AlnkPaths { PathOffset = 0x720, PathLength = 1595, TargetAlnk = @"\em\em113\00\data\em113.dtt_alnk" },
-                new AlnkPaths { PathOffset = 0x397, PathLength = 1022, TargetAlnk = @"\em\em116\00\data\em116.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x712, PathLength = 1250, TargetAlnk = @"\em\em037\00\data\em037.dtt_alnk", TrimmedMapIdentifier = true, PathCount = 2 },
+                new AlnkPaths { PathOffset = 0x849, PathLength = 1298, TargetAlnk = @"\em\em113\00\data\em113.dtt_alnk", TrimmedMapIdentifier = true, PathCount = 2 },
+                //new AlnkPaths { PathOffset = 0x397, PathLength = 1022, TargetAlnk = @"\em\em116\00\data\em116.dtt_alnk" },
                 new AlnkPaths { PathOffset = 0x2A7, PathLength = 1354, TargetAlnk = @"\em\em007\00\data\em007.dtt_alnk" },
                 new AlnkPaths { PathOffset = 0x86F, PathLength = 2015, TargetAlnk = @"\em\em011\00\data\em011.dtt_alnk" },
-                new AlnkPaths { PathOffset = 0x7E3, PathLength = 978, TargetAlnk = @"\em\em044\00\data\em044.dtt_alnk" },
-                new AlnkPaths { PathOffset = 0x19DA, PathLength = 4060, TargetAlnk = @"\em\em032\00\data\em032.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x1B03, PathLength = 3763, TargetAlnk = @"\em\em032\00\data\em032.dtt_alnk", TrimmedMapIdentifier = true, PathCount = 5 },
                 new AlnkPaths { PathOffset = 0x1836, PathLength = 5261, TargetAlnk = @"\em\em100\01\data\em100.dtt_alnk" },
             }
         };
@@ -263,12 +266,12 @@
                 new AlnkPaths { PathOffset = 0xA2C, PathLength = 2112, TargetAlnk = @"\em\em001\02\data\em001.dtt_alnk" },
                 new AlnkPaths { PathOffset = 0x2D9, PathLength = 2224, TargetAlnk = @"\em\em002\02\data\em002.dtt_alnk" },
                 new AlnkPaths { PathOffset = 0x559, PathLength = 1310, TargetAlnk = @"\em\em118\05\data\em118.dtt_alnk" },
-                new AlnkPaths { PathOffset = 0x7C8, PathLength = 1855, TargetAlnk = @"\em\em111\00\data\em111.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x8F1, PathLength = 1558, TargetAlnk = @"\em\em111\00\data\em111.dtt_alnk", TrimmedMapIdentifier = true, PathCount = 2 },
                 new AlnkPaths { PathOffset = 0x5C1, PathLength = 1619, TargetAlnk = @"\em\em110\01\data\em110.dtt_alnk" },
-                new AlnkPaths { PathOffset = 0x650, PathLength = 1739, TargetAlnk = @"\em\em102\00\data\em102.dtt_alnk" },
-                new AlnkPaths { PathOffset = 0xB3A, PathLength = 1493, TargetAlnk = @"\em\em024\00\data\em024.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0x779, PathLength = 1442, TargetAlnk = @"\em\em102\00\data\em102.dtt_alnk", TrimmedMapIdentifier = true, PathCount = 2 },
+                new AlnkPaths { PathOffset = 0xC63, PathLength = 1196, TargetAlnk = @"\em\em024\00\data\em024.dtt_alnk", TrimmedMapIdentifier = true, PathCount = 2 },
                 new AlnkPaths { PathOffset = 0x88B, PathLength = 1629, TargetAlnk = @"\em\em002\00\data\em002.dtt_alnk" },
-                new AlnkPaths { PathOffset = 0x8E4, PathLength = 1595, TargetAlnk = @"\em\em001\00\data\em001.dtt_alnk" },
+                new AlnkPaths { PathOffset = 0xA0D, PathLength = 1298, TargetAlnk = @"\em\em001\00\data\em001.dtt_alnk", TrimmedMapIdentifier = true, PathCount = 2 },
             },
         };
     }
