@@ -173,5 +173,22 @@ namespace MHW_Randomizer
             #endregion
 
         }
+
+        /// <summary>
+        /// Always raise this since otherwise if the monster isn't teostra in the quest Teostra the Infernal it won't be removed for some reason
+        /// </summary>
+        public static void RaiseLavaWall()
+        {
+            byte[] levelObjects = ChunkOTF.files["st105_gm.sobj"].Extract();
+
+            //Raise the lava wall blockade
+            levelObjects[0x9AAA] = 0x00;
+            levelObjects[0x9AAB] = 0x00;
+            levelObjects[0x9AAC] = 0x00;
+            levelObjects[0x9AAD] = 0x00;
+
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set");
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set\st105_gm.sobj", levelObjects);
+        }
     }
 }

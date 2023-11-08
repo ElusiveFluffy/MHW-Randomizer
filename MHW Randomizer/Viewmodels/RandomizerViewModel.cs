@@ -326,6 +326,9 @@ namespace MHW_Randomizer
             if (IoC.Settings.RandomizeQuests || IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
                 Alnk.CreateAlnks();
 
+            //Raise the lava wall to avoid a softlock
+            Maps.RaiseLavaWall();
+
             //Remove the blockades on the maps if using any random spawn files incase a monster spawns behind them
             if (IoC.Settings.RandomSobj || IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
                 Maps.Edit();
