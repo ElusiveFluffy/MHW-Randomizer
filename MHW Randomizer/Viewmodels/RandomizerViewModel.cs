@@ -517,7 +517,7 @@ namespace MHW_Randomizer
                         }
                         catch (Exception ex)
                         {
-                            MessageWindow errorMessage = new MessageWindow("Error Logging File:\n" + ex.Message)
+                            MessageWindow errorMessage = new MessageWindow("Error Deleting Old Files:\n" + ex.Message)
                             {
                                 Owner = MainWindow.window,
                                 WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
@@ -545,8 +545,13 @@ namespace MHW_Randomizer
             else if (!File.Exists(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
                 return;
 
+            string randomFilesJson = File.ReadAllText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json");
+            //Check if its a incomplete json due to something like a crash
+            if (!randomFilesJson.EndsWith("]"))
+                randomFilesJson += "\r\n]";
+
             //Read in all the files
-            RandomizedFiles = JsonConvert.DeserializeObject<HashSet<string>>(File.ReadAllText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"));
+            RandomizedFiles = JsonConvert.DeserializeObject<HashSet<string>>(randomFilesJson);
 
             try
             {
@@ -559,7 +564,7 @@ namespace MHW_Randomizer
             }
             catch (Exception ex)
             {
-                MessageWindow message = new MessageWindow("Error Logging File:\n" + ex.Message)
+                MessageWindow message = new MessageWindow("Error Deleting Old Files:\n" + ex.Message)
                 {
                     Owner = MainWindow.window,
                     WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
