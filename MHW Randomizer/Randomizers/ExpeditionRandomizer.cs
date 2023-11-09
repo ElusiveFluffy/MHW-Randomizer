@@ -37,14 +37,48 @@ namespace MHW_Randomizer
             //Loop through all the ranks
             for (int rank = 0; rank < 3; rank++)
             {
-                switch (rank)
+                //Check if randomizing expeditions and check currently on the right rank
+                if ((IoC.Settings.RandomizeExpeditions && rank < 2) || (IoC.Settings.RandomizeIceborneExpeditions && rank == 2))
                 {
-                    case 0:
-                        {
-                            //Chose the base set of monsters
-                            if (IoC.Settings.ExpeditionHighRankInLow)
+                    switch (rank)
+                    {
+                        case 0:
                             {
-                                MonsterIDs = ExpeditionData.UsualHighRankMonster;
+                                //Chose the base set of monsters
+                                if (IoC.Settings.ExpeditionHighRankInLow)
+                                {
+                                    MonsterIDs = ExpeditionData.UsualHighRankMonster;
+
+                                    //Add any additional monsters
+                                    if (IoC.Settings.ExpeditionIncludeNonUsualMonsters)
+                                        MonsterIDs = MonsterIDs.Concat(ExpeditionData.UnusedHighRankMonster).ToArray();
+                                    if (IoC.Settings.ExpeditionIncludeLeshen)
+                                    {
+                                        MonsterIDs = MonsterIDs.Append(23).ToArray();
+                                        MonsterIDs = MonsterIDs.Append(51).ToArray();
+                                    }
+                                    if (IoC.Settings.ExpeditionIncludeBehemoth)
+                                        MonsterIDs = MonsterIDs.Append(15).ToArray();
+                                }
+                                else
+                                    MonsterIDs = ExpeditionData.UsualLowRankMonster;
+
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                                {
+                                    //Write monster info to the log
+                                    file.WriteLine("----------------");
+                                    file.WriteLine("Low Rank");
+                                    file.WriteLine("----------------");
+                                }
+                                break;
+                            }
+                        case 1:
+                            {
+                                //Chose the base set of monsters
+                                if (IoC.Settings.ExpeditionHighRankOnlyInHigh)
+                                    MonsterIDs = ExpeditionData.HighRankOnlyMonster;
+                                else
+                                    MonsterIDs = ExpeditionData.UsualHighRankMonster;
 
                                 //Add any additional monsters
                                 if (IoC.Settings.ExpeditionIncludeNonUsualMonsters)
@@ -56,242 +90,212 @@ namespace MHW_Randomizer
                                 }
                                 if (IoC.Settings.ExpeditionIncludeBehemoth)
                                     MonsterIDs = MonsterIDs.Append(15).ToArray();
-                            }
-                            else
-                                MonsterIDs = ExpeditionData.UsualLowRankMonster;
 
-                            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                                {
+                                    //Write monster info to the log
+                                    file.WriteLine("\n----------------");
+                                    file.WriteLine("High Rank");
+                                    file.WriteLine("----------------");
+                                }
+                                break;
+                            }
+                        case 2:
                             {
-                                //Write monster info to the log
-                                file.WriteLine("----------------");
-                                file.WriteLine("Low Rank");
-                                file.WriteLine("----------------");
-                            }
-                            break;
-                        }
-                    case 1:
-                        {
-                            //Chose the base set of monsters
-                            if (IoC.Settings.ExpeditionHighRankOnlyInHigh)
-                                MonsterIDs = ExpeditionData.HighRankOnlyMonster;
-                            else
-                                MonsterIDs = ExpeditionData.UsualHighRankMonster;
+                                //Chose the base set of monsters
+                                if (IoC.Settings.ExpeditionMasterRankOnlyInMaster)
+                                    MonsterIDs = ExpeditionData.MasterRankOnlyMonster;
+                                else
+                                    MonsterIDs = ExpeditionData.UsualMasterRankMonster;
 
-                            //Add any additional monsters
-                            if (IoC.Settings.ExpeditionIncludeNonUsualMonsters)
-                                MonsterIDs = MonsterIDs.Concat(ExpeditionData.UnusedHighRankMonster).ToArray();
+                                //Add any additional monsters
+                                if (IoC.Settings.ExpeditionIncludeNonUsualMonsters)
+                                    MonsterIDs = MonsterIDs.Concat(ExpeditionData.UnusedHighRankMonster).ToArray();
+                                if (IoC.Settings.ExpeditionIncludeIBNonUsualMonsters)
+                                    MonsterIDs = MonsterIDs.Concat(ExpeditionData.UnusedMasterRankMonster).ToArray();
+
+                                if (IoC.Settings.ExpeditionIncludeShara)
+                                    MonsterIDs = MonsterIDs.Append(81).ToArray();
+
+                                if (IoC.Settings.ExpeditionIncludeFuriousRajang)
+                                    MonsterIDs = MonsterIDs.Append(92).ToArray();
+                                if (IoC.Settings.ExpeditionIncludeAlatreon)
+                                    MonsterIDs = MonsterIDs.Append(87).ToArray();
+
+                                if (IoC.Settings.ExpeditionIncludeLeshen && !IoC.Settings.ExpeditionMasterRankOnlyInMaster)
+                                {
+                                    MonsterIDs = MonsterIDs.Append(23).ToArray();
+                                    MonsterIDs = MonsterIDs.Append(51).ToArray();
+                                }
+
+                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                                {
+                                    //Write monster info to the log
+                                    file.WriteLine("\n----------------");
+                                    file.WriteLine("Master Rank");
+                                    file.WriteLine("----------------");
+                                }
+                                break;
+                            }
+                    }
+                    //Loop through every map
+                    for (int map = 0; map < 6; map++)
+                    {
+                        //Skip the maps that aren't used for low and high rank
+                        if ((rank == 0 && map > 3) || (rank == 1 && map > 4))
+                            continue;
+
+                        List<uint> rollChances = new List<uint> { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10 };
+
+                        if (rank == 2 && map == 3)
+                            //Remove alatreon as a possible monster if map is coral highlands as it causes a blinding white light effect on that map
+                            //Remove leshen too as possible monster as they get stuck
+                            MonsterIDs = MonsterIDs.Where(o => o != 87 || (o != 23 || o != 51)).ToArray();
+                        else if (rank == 2 && map == 4)
+                        {
+                            if (IoC.Settings.ExpeditionIncludeAlatreon)
+                                //Add alatreon to the map after
+                                MonsterIDs = MonsterIDs.Append(87).ToArray();
                             if (IoC.Settings.ExpeditionIncludeLeshen)
                             {
+                                //Add the leshen back in
                                 MonsterIDs = MonsterIDs.Append(23).ToArray();
                                 MonsterIDs = MonsterIDs.Append(51).ToArray();
                             }
-                            if (IoC.Settings.ExpeditionIncludeBehemoth)
-                                MonsterIDs = MonsterIDs.Append(15).ToArray();
-
-                            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
-                            {
-                                //Write monster info to the log
-                                file.WriteLine("\n----------------");
-                                file.WriteLine("High Rank");
-                                file.WriteLine("----------------");
-                            }
-                            break;
                         }
-                    case 2:
+                        else if (rank == 2 && map == 5)
+                            //Remove alatreon as a possible monster if map is hoarfrost reach as it causes them to get stuck
+                            MonsterIDs = MonsterIDs.Where(o => o != 87).ToArray();
+
+                        for (int chanceRoll = 0; chanceRoll < 15; chanceRoll++)
                         {
-                            //Chose the base set of monsters
-                            if (IoC.Settings.ExpeditionMasterRankOnlyInMaster)
-                                MonsterIDs = ExpeditionData.MasterRankOnlyMonster;
-                            else
-                                MonsterIDs = ExpeditionData.UsualMasterRankMonster;
-
-                            //Add any additional monsters
-                            if (IoC.Settings.ExpeditionIncludeNonUsualMonsters)
-                                MonsterIDs = MonsterIDs.Concat(ExpeditionData.UnusedHighRankMonster).ToArray();
-                            if (IoC.Settings.ExpeditionIncludeIBNonUsualMonsters)
-                                MonsterIDs = MonsterIDs.Concat(ExpeditionData.UnusedMasterRankMonster).ToArray();
-
-                            if (IoC.Settings.ExpeditionIncludeShara)
-                                MonsterIDs = MonsterIDs.Append(81).ToArray();
-
-                            if (IoC.Settings.ExpeditionIncludeFuriousRajang)
-                                MonsterIDs = MonsterIDs.Append(92).ToArray();
-                            if (IoC.Settings.ExpeditionIncludeAlatreon)
-                                MonsterIDs = MonsterIDs.Append(87).ToArray();
-
-                            if (IoC.Settings.ExpeditionIncludeLeshen && !IoC.Settings.ExpeditionMasterRankOnlyInMaster)
+                            int index = indexPicker.Next(rollChances.Count());
+                            switch (rank)
                             {
-                                MonsterIDs = MonsterIDs.Append(23).ToArray();
-                                MonsterIDs = MonsterIDs.Append(51).ToArray();
+                                //Low rank
+                                case 0:
+                                    {
+                                        int monsterID = MonsterIDs[monsterPicker.Next(MonsterIDs.Length)];
+                                        if (monsterID < 87)
+                                            newChances[monsterID].LowRank.Transitions = expeditionSpawn[monsterID].LowRank.Transitions;
+                                        else
+                                            newChances[monsterID].LowRank.Transitions = expeditionSpawn[0].LowRank.Transitions;
+
+                                        CreateSobj(monsterID, map + 1);
+                                        switch (map)
+                                        {
+                                            case 0:
+                                                {
+                                                    newChances[monsterID].LowRank.st101Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 1:
+                                                {
+                                                    newChances[monsterID].LowRank.st102Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 2:
+                                                {
+                                                    newChances[monsterID].LowRank.st103Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 3:
+                                                {
+                                                    newChances[monsterID].LowRank.st104Chance += rollChances[index];
+                                                    break;
+                                                }
+                                        }
+                                        break;
+                                    }
+                                //High rank
+                                case 1:
+                                    {
+                                        int monsterID = MonsterIDs[monsterPicker.Next(MonsterIDs.Length)];
+                                        if (monsterID < 87)
+                                            newChances[monsterID].HighRank.Transitions = expeditionSpawn[monsterID].HighRank.Transitions;
+                                        else
+                                            newChances[monsterID].HighRank.Transitions = expeditionSpawn[0].HighRank.Transitions;
+
+                                        CreateSobj(monsterID, map + 1);
+                                        switch (map)
+                                        {
+                                            case 0:
+                                                {
+                                                    newChances[monsterID].HighRank.st101Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 1:
+                                                {
+                                                    newChances[monsterID].HighRank.st102Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 2:
+                                                {
+                                                    newChances[monsterID].HighRank.st103Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 3:
+                                                {
+                                                    newChances[monsterID].HighRank.st104Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 4:
+                                                {
+                                                    newChances[monsterID].HighRank.st105Chance += rollChances[index];
+                                                    break;
+                                                }
+                                        }
+                                        break;
+                                    }
+                                //Master rank
+                                case 2:
+                                    {
+                                        int monsterID = MonsterIDs[monsterPicker.Next(MonsterIDs.Length)];
+                                        if (monsterID < 87)
+                                            newChances[monsterID].MasterRank.Transitions = expeditionSpawn[monsterID].MasterRank.Transitions;
+                                        else
+                                            newChances[monsterID].MasterRank.Transitions = expeditionSpawn[0].MasterRank.Transitions;
+
+                                        //If its 5 set the map index to 8 for hoarfrost reach
+                                        CreateSobj(monsterID, map == 5 ? 8 : map + 1);
+                                        switch (map)
+                                        {
+                                            case 0:
+                                                {
+                                                    newChances[monsterID].MasterRank.st101Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 1:
+                                                {
+                                                    newChances[monsterID].MasterRank.st102Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 2:
+                                                {
+                                                    newChances[monsterID].MasterRank.st103Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 3:
+                                                {
+                                                    newChances[monsterID].MasterRank.st104Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 4:
+                                                {
+                                                    newChances[monsterID].MasterRank.st105Chance += rollChances[index];
+                                                    break;
+                                                }
+                                            case 5:
+                                                {
+                                                    newChances[monsterID].MasterRank.st108Chance += rollChances[index];
+                                                    break;
+                                                }
+                                        }
+                                        break;
+                                    }
                             }
-
-                            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
-                            {
-                                //Write monster info to the log
-                                file.WriteLine("\n----------------");
-                                file.WriteLine("Master Rank");
-                                file.WriteLine("----------------");
-                            }
-                            break;
+                            rollChances.RemoveAt(index);
                         }
-                }
-                //Loop through every map
-                for (int map = 0; map < 6; map++)
-                {
-                    //Skip the maps that aren't used for low and high rank
-                    if ((rank == 0 && map > 3) || (rank == 1 && map > 4))
-                        continue;
-
-                    List<uint> rollChances = new List<uint> { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10, 10 };
-
-                    if (rank == 2 && map == 3)
-                        //Remove alatreon as a possible monster if map is coral highlands as it causes a blinding white light effect on that map
-                        //Remove leshen too as possible monster as they get stuck
-                        MonsterIDs = MonsterIDs.Where(o => o != 87 || (o != 23 || o != 51)).ToArray();
-                    else if (rank == 2 && map == 4)
-                    {
-                        if (IoC.Settings.ExpeditionIncludeAlatreon)
-                            //Add alatreon to the map after
-                            MonsterIDs = MonsterIDs.Append(87).ToArray();
-                        if (IoC.Settings.ExpeditionIncludeLeshen)
-                        {
-                            //Add the leshen back in
-                            MonsterIDs = MonsterIDs.Append(23).ToArray();
-                            MonsterIDs = MonsterIDs.Append(51).ToArray();
-                        }
-                    }
-                    else if (rank == 2 && map == 5)
-                        //Remove alatreon as a possible monster if map is hoarfrost reach as it causes them to get stuck
-                        MonsterIDs = MonsterIDs.Where(o => o != 87).ToArray();
-
-                    for (int chanceRoll = 0; chanceRoll < 15; chanceRoll++)
-                    {
-                        int index = indexPicker.Next(rollChances.Count());
-                        switch (rank)
-                        {
-                            //Low rank
-                            case 0:
-                                {
-                                    int monsterID = MonsterIDs[monsterPicker.Next(MonsterIDs.Length)];
-                                    if (monsterID < 87)
-                                        newChances[monsterID].LowRank.Transitions = expeditionSpawn[monsterID].LowRank.Transitions;
-                                    else
-                                        newChances[monsterID].LowRank.Transitions = expeditionSpawn[0].LowRank.Transitions;
-
-                                    CreateSobj(monsterID, map + 1);
-                                    switch (map)
-                                    {
-                                        case 0:
-                                            {
-                                                newChances[monsterID].LowRank.st101Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 1:
-                                            {
-                                                newChances[monsterID].LowRank.st102Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 2:
-                                            {
-                                                newChances[monsterID].LowRank.st103Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 3:
-                                            {
-                                                newChances[monsterID].LowRank.st104Chance += rollChances[index];
-                                                break;
-                                            }
-                                    }
-                                    break;
-                                }
-                            //High rank
-                            case 1:
-                                {
-                                    int monsterID = MonsterIDs[monsterPicker.Next(MonsterIDs.Length)];
-                                    if (monsterID < 87)
-                                        newChances[monsterID].HighRank.Transitions = expeditionSpawn[monsterID].HighRank.Transitions;
-                                    else
-                                        newChances[monsterID].HighRank.Transitions = expeditionSpawn[0].HighRank.Transitions;
-
-                                    CreateSobj(monsterID, map + 1);
-                                    switch (map)
-                                    {
-                                        case 0:
-                                            {
-                                                newChances[monsterID].HighRank.st101Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 1:
-                                            {
-                                                newChances[monsterID].HighRank.st102Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 2:
-                                            {
-                                                newChances[monsterID].HighRank.st103Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 3:
-                                            {
-                                                newChances[monsterID].HighRank.st104Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 4:
-                                            {
-                                                newChances[monsterID].HighRank.st105Chance += rollChances[index];
-                                                break;
-                                            }
-                                    }
-                                    break;
-                                }
-                            //Master rank
-                            case 2:
-                                {
-                                    int monsterID = MonsterIDs[monsterPicker.Next(MonsterIDs.Length)];
-                                    if (monsterID < 87)
-                                        newChances[monsterID].MasterRank.Transitions = expeditionSpawn[monsterID].MasterRank.Transitions;
-                                    else
-                                        newChances[monsterID].MasterRank.Transitions = expeditionSpawn[0].MasterRank.Transitions;
-
-                                    //If its 5 set the map index to 8 for hoarfrost reach
-                                    CreateSobj(monsterID, map == 5 ? 8 : map + 1);
-                                    switch (map)
-                                    {
-                                        case 0:
-                                            {
-                                                newChances[monsterID].MasterRank.st101Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 1:
-                                            {
-                                                newChances[monsterID].MasterRank.st102Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 2:
-                                            {
-                                                newChances[monsterID].MasterRank.st103Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 3:
-                                            {
-                                                newChances[monsterID].MasterRank.st104Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 4:
-                                            {
-                                                newChances[monsterID].MasterRank.st105Chance += rollChances[index];
-                                                break;
-                                            }
-                                        case 5:
-                                            {
-                                                newChances[monsterID].MasterRank.st108Chance += rollChances[index];
-                                                break;
-                                            }
-                                    }
-                                    break;
-                                }
-                        }
-                        rollChances.RemoveAt(index);
                     }
                 }
             }
@@ -300,6 +304,69 @@ namespace MHW_Randomizer
             File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Log.txt").Dispose();
             using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Log.txt"))
             {
+                if (IoC.Settings.ExpeditionRandomSobj || IoC.Settings.ExpeditionRandomIBSobj)
+                    for (int map = 1; map < 7; map++)
+                    {
+                        using (StreamWriter sobjFile = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                        {
+                            //Write monster info to the log
+                            sobjFile.WriteLine("\n----------------");
+                            sobjFile.WriteLine(QuestData.MapNames[map == 6 ? 8 : map] + " Sobjs");
+                            sobjFile.WriteLine("----------------");
+                        }
+                        foreach (ExpeditionSpawn spawn in newChances)
+                        {
+                            //Stop after the 86th one since usually there is only 86
+                            if (spawn.MonsterID > 86)
+                                break;
+
+                            bool giveMonsterRandomSobj = false;
+                            switch (map)
+                            {
+                                case 1:
+                                    {
+                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (expeditionSpawn[(int)spawn.MonsterID].LowRank.st101Chance > 0 || expeditionSpawn[(int)spawn.MonsterID].HighRank.st101Chance > 0)) ||
+                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st101Chance > 0);
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (expeditionSpawn[(int)spawn.MonsterID].LowRank.st102Chance > 0 || expeditionSpawn[(int)spawn.MonsterID].HighRank.st102Chance > 0)) ||
+                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st102Chance > 0);
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (expeditionSpawn[(int)spawn.MonsterID].LowRank.st103Chance > 0 || expeditionSpawn[(int)spawn.MonsterID].HighRank.st103Chance > 0)) ||
+                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st103Chance > 0);
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (expeditionSpawn[(int)spawn.MonsterID].LowRank.st104Chance > 0 || expeditionSpawn[(int)spawn.MonsterID].HighRank.st104Chance > 0)) ||
+                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st104Chance > 0);
+                                        break;
+                                    }
+                                case 5:
+                                    {
+                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && expeditionSpawn[(int)spawn.MonsterID].HighRank.st105Chance > 0) ||
+                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st105Chance > 0);
+                                        break;
+                                    }
+                                case 6:
+                                    {
+                                        if (IoC.Settings.ExpeditionRandomIBSobj)
+                                        {
+                                            giveMonsterRandomSobj = expeditionSpawn[(int)spawn.MonsterID].MasterRank.st108Chance > 0;
+                                        }
+                                        break;
+                                    }
+                            }
+                            if (giveMonsterRandomSobj)
+                                CreateSobj((int)spawn.MonsterID, map == 6 ? 8 : map);
+                        }
+                    }
+
                 foreach (ExpeditionSpawn spawn in newChances)
                 {
                     if (QuestData.MonsterNames[spawn.MonsterID + 1].Contains("[s]") || QuestData.MonsterNames[spawn.MonsterID + 1] == "NON-VALID")
@@ -337,6 +404,7 @@ namespace MHW_Randomizer
                             newChances[(int)spawn.MonsterID].HighRank.st103Chance = expeditionSpawn[(int)spawn.MonsterID].HighRank.st103Chance;
                             newChances[(int)spawn.MonsterID].HighRank.st104Chance = expeditionSpawn[(int)spawn.MonsterID].HighRank.st104Chance;
                             newChances[(int)spawn.MonsterID].HighRank.st105Chance = expeditionSpawn[(int)spawn.MonsterID].HighRank.st105Chance;
+
                         }
                     }
 

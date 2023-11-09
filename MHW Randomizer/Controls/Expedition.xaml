@@ -27,11 +27,22 @@
                     <TextBlock Text="All based on chance and not guaranteed to appear, can check which are in expeditions with the expedition log files"
                                Margin="5"
                                TextWrapping="Wrap"/>
-                    <CheckBox Content="Randomize Expeditions"
-                              IsChecked="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"
-                              Margin="5, 4"
-                              ToolTip="Randomize the chances for monsters to appear in expeditions (doesn't randomize monsters in story expeditions), &#xA;Will add 1% to monsters that need to spawn for story expeditions because they for some reason check if they can spawn even though they're hard coded"
-                              ToolTipService.ShowDuration="10000"/>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Content="Random Expedition Spawn Chances"
+                                  IsChecked="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"
+                                  Checked="RandomExpeditions_Checked"
+                                  Unchecked="RandomExpeditions_Unchecked"
+                                  Margin="5, 4"
+                                  ToolTip="Randomize the chances for monsters to appear in expeditions (doesn't randomize monsters in story expeditions), &#xA;Will add 1% to monsters that need to spawn for story expeditions because they for some reason check if they can spawn even though they're hard coded"
+                                  ToolTipService.ShowDuration="10000"/>
+                        <CheckBox Content="Random Spawn Files"
+                                  IsChecked="{Binding ExpeditionRandomSobj, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}, Converter={local:InverseBooleanConverter}}"
+                                  Margin="30, 4"
+                                  ToolTip="Will give the monsters random spawn files for expedtions (Don't need to check randomize expeditions if you only want this)"
+                                  ToolTipService.ShowDuration="10000"/>
+                    </StackPanel>
+                   
                 </StackPanel>
             </Border>
         </Grid>
@@ -102,11 +113,21 @@
                                TextWrapping="Wrap"
                                FontWeight="SemiBold"
                                Margin="5 0 5 4"/>
-                    <CheckBox Content="Randomize Iceborne Expeditions"
-                              IsChecked="{Binding RandomizeIceborneExpeditions, Source={x:Static local:IoC.Settings}}"
-                              Margin="5, 4"
-                              ToolTip="Randomize the chances for monsters to appear in master rank expeditions (doesn't randomize monsters in story expeditions)"
-                              ToolTipService.ShowDuration="10000"/>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Content="Random Iceborne Expedition Spawn Chances"
+                                  IsChecked="{Binding RandomizeIceborneExpeditions, Source={x:Static local:IoC.Settings}}"
+                                  Checked="RandomIBExpeditions_Checked"
+                                  Unchecked="RandomIBExpeditions_Unchecked"
+                                  Margin="5, 4"
+                                  ToolTip="Randomize the chances for monsters to appear in master rank expeditions (doesn't randomize monsters in story expeditions)"
+                                  ToolTipService.ShowDuration="10000"/>
+                        <CheckBox Content="Random Spawn Files"
+                                  IsChecked="{Binding ExpeditionRandomIBSobj, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomizeIceborneExpeditions, Source={x:Static local:IoC.Settings}, Converter={local:InverseBooleanConverter}}"
+                                  Margin="30, 4"
+                                  ToolTip="Will give the monsters random spawn files for expedtions (Don't need to check randomize expeditions if you only want this)"
+                                  ToolTipService.ShowDuration="10000"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </Grid>

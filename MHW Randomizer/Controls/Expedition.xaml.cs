@@ -24,5 +24,25 @@ namespace MHW_Randomizer
         {
             InitializeComponent();
         }
+
+        private void RandomExpeditions_Checked(object sender, RoutedEventArgs e)
+        {
+            IoC.Settings.ExpeditionRandomSobj = true;
+        }
+
+        private void RandomExpeditions_Unchecked(object sender, RoutedEventArgs e)
+        {
+            IoC.Settings.ExpeditionRandomSobj = false;
+        }
+
+        private void RandomIBExpeditions_Checked(object sender, RoutedEventArgs e)
+        {
+            IoC.Settings.ExpeditionRandomIBSobj = true;
+        }
+
+        private void RandomIBExpeditions_Unchecked(object sender, RoutedEventArgs e)
+        {
+            IoC.Settings.ExpeditionRandomIBSobj = false;
+        }
     }
 }

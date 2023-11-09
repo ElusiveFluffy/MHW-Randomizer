@@ -319,7 +319,7 @@ namespace MHW_Randomizer
                 questRandomizer.Randomize();
             }
 
-            if (IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
+            if (IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions || IoC.Settings.ExpeditionRandomSobj || IoC.Settings.ExpeditionRandomIBSobj)
                 ExpeditionRandomizer.Randomize();
 
             //If randomizing the quests or expeditions add in edited alnks for all maps and mosters

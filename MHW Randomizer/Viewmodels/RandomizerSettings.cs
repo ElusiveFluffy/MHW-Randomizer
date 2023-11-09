@@ -75,6 +75,8 @@ namespace MHW_Randomizer
 
         public bool RandomizeExpeditions { get; set; }
         public bool RandomizeIceborneExpeditions { get; set; }
+        public bool ExpeditionRandomSobj { get; set; }
+        public bool ExpeditionRandomIBSobj { get; set; }
         public bool ExpeditionHighRankInLow { get; set; }
         public bool ExpeditionHighRankOnlyInHigh { get; set; }
         public bool ExpeditionMasterRankOnlyInMaster { get; set; }
