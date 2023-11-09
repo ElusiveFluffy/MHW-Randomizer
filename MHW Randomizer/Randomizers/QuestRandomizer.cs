@@ -365,14 +365,9 @@ namespace MHW_Randomizer
 
                 if (IoC.Settings.IncludeArenaMap)
                     ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidArenaMapIndexes).ToList();
-                if (IoC.Settings.IncludeXenoArena)
-                    ValidMapIndexes.Add(QuestData.XenoArena);
+
                 if (IoC.Settings.IBMapsInBaseGame)
-                {
                     ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidIBMapIndexes).ToList();
-                    if (IoC.Settings.IncludeIBArenaMaps)
-                        ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidIBArenaMapIndexes).ToList();
-                }
 
                 //Set all the values to 10
                 for (int i = 0; i < QuestData.MonsterChance.Length; i++)
@@ -474,11 +469,7 @@ namespace MHW_Randomizer
                 {
                     //If the IB maps have been included in the base game don't need to add the iceborne maps here
                     if (!IoC.Settings.IBMapsInBaseGame)
-                    {
                         ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidIBMapIndexes).ToList();
-                        if (IoC.Settings.IncludeIBArenaMaps)
-                            ValidMapIndexes = ValidMapIndexes.Concat(QuestData.ValidIBArenaMapIndexes).ToList();
-                    }
 
                     //Iceborne story quests
                     MonsterIDs = QuestData.BigMonsterIDsIB;
@@ -638,7 +629,7 @@ namespace MHW_Randomizer
                 //Pick Random Map
                 if (IoC.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
                 {
-                    PickRandomMap(questNumber, duplicateMonQuest);
+                    PickRandomMap(questNumber, duplicateMonQuest, captureQuest, iceborne);
                 }
 
                 if (MapIDIndex == 3)
@@ -1335,9 +1326,21 @@ namespace MHW_Randomizer
             }
         }
 
-        private void PickRandomMap(string questNumber, bool duplicateMonQuest)
+        private void PickRandomMap(string questNumber, bool duplicateMonQuest, bool captureQuest = false, bool iceborne = false)
         {
-            MapIDIndex = ValidMapIndexes[PickMap.Next(ValidMapIndexes.Count())];
+            //Make it a copy not a reference
+            List<int> currentValidMapIndexs = new List<int>().Concat(ValidMapIndexes).ToList();
+            //Don't include the special arena maps if its a capture quest as you can't place traps in them
+            if (!captureQuest)
+            {
+                if (IoC.Settings.IncludeXenoArena)
+                    currentValidMapIndexs.Add(QuestData.XenoArena);
+
+                if ((IoC.Settings.IBMapsInBaseGame || iceborne) && IoC.Settings.IncludeIBArenaMaps)
+                    currentValidMapIndexs = currentValidMapIndexs.Concat(QuestData.ValidIBArenaMapIndexes).ToList();
+            }
+
+            MapIDIndex = currentValidMapIndexs[PickMap.Next(currentValidMapIndexs.Count())];
             if (QuestData.ArenaMaps.Contains(QuestData.MapIDs[MapIDIndex]))
             {
                 //Force spawn to be at camp 1 or the game crashes
