@@ -372,6 +372,8 @@ namespace MHW_Randomizer
                 //Set all the values to 10
                 for (int i = 0; i < QuestData.MonsterChance.Length; i++)
                     QuestData.MonsterChance[i] = 10;
+                //Clear the hash set so it doesn't add onto the chances from the last randomization
+                QuestData.MonstersToAddChance = new HashSet<int>();
 
                 //Set up IDs
                 LowRankMonsterIDs = QuestData.LowRankBigMonsterIDs;
