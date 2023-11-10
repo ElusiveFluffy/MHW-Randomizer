@@ -626,6 +626,9 @@ namespace MHW_Randomizer
             { "50701", new StoryQuestData { ChangeQuestIcon = true, ChangeQuestBookObjText = true, ChangeObjective = true, QuestObjTextIndexs = new int[] { 305 } } }, //The Food Chain Dominator
         };
 
+        //======================
+        //  Story Slay Quests
+        //======================
         //May need some testing for 00804, 50601, 50802, and 50906 //May need special text case for 50802
         //Done doing first check for these (check if has cutscene if so don't randomize the map)
         public static Dictionary<string, StoryQuestData> StorySlayQuest = new Dictionary<string, StoryQuestData>()

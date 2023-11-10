@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid>
-                <TextBlock Text="Misc"
+                <TextBlock Text="Scoutfly"
                            Padding="1.5 0"
                            Margin="15 -4 0 0"
                            Background="White"
@@ -65,8 +65,13 @@
                         BorderThickness="1"
                         Margin="5"
                         VerticalAlignment="Top"
-                        Padding="0 0 0 42">
+                        Height="100">
                     <StackPanel Margin="0 5">
+                        <CheckBox Content="Make &quot;Pandora's Arena&quot; Timer 30 Mins"
+                                  IsChecked="{Binding MakePandorasArena30Minutes, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 4"
+                                  ToolTip="The timer is usually 15 minutes but you repel Lunastra, if its a different monster then you need to slay then because of how repeling works, &#x0a;and 15 minutes can be tight for the quest"
+                                  ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Make All Quests 1 Player"
                                   IsChecked="{Binding OnePlayerQuests, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"

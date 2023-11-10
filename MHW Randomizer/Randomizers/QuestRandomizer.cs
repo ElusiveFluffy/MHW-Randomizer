@@ -614,6 +614,9 @@ namespace MHW_Randomizer
                         PickRandomMap(questNumber, duplicateMonQuest);
                 }
 
+                if (questNumber == "50802" && IoC.Settings.MakePandorasArena30Minutes)
+                    TimerText = "30";
+
                 bool isLowRank = RankIndex == 0;
 
                 int[] currentRankMonsterIDs;
@@ -926,16 +929,18 @@ namespace MHW_Randomizer
                         List<string> textToReplace = QuestData.MonsterNames.Where(o => StoryTargetText.Entries[entryIndex].Value.Contains(o, StringComparison.OrdinalIgnoreCase)).ToList();
                         //Change the Zorah quest text to say hunt the monster
                         if (questNumber == "00401" || questNumber == "00504")
-                        {
                             StoryTargetText.Entries[entryIndex].Value = "Hunt a " + QuestData.MonsterNames[MID[0]];
-                        }
+                        //If its not lunastra then change the text
+                        else if (questNumber == "50802" && MID[0] != 18)
+                            StoryTargetText.Entries[entryIndex].Value = "Slay a " + QuestData.MonsterNames[MID[0]];
                         //If its not velkhana then change the text
-                        if (questNumber == "01404" && MID[0] != 80)
+                        else if (questNumber == "01404" && MID[0] != 80)
                         {
-                            value = "Slay a " + QuestData.MonsterNames[MID[0]];
+                            StoryTargetText.Entries[entryIndex].Value = "Slay a " + QuestData.MonsterNames[MID[0]];
                             StoryTargetText.Entries[560].Value = "(Don't need to load Dragonrazer)";
                         }
-                        else if (StoryQuests[questNumber].MultiObjectiveHunt)
+
+                        if (StoryQuests[questNumber].MultiObjectiveHunt)
                             value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[i]]);
                         //add a and to the text if two monster quests is enabled to make it clear you need to kill 2 monsters
                         else if (IoC.Settings.TwoMonsterQuests)

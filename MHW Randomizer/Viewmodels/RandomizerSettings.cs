@@ -161,6 +161,7 @@ namespace MHW_Randomizer
 
         //Tweaks
         public bool OnePlayerQuests { get; set; }
+        public bool MakePandorasArena30Minutes { get; set; }
         public bool FasterKinsects { get; set; }
 
         //Experimental
