@@ -62,14 +62,6 @@ namespace MHW_Randomizer
                                 }
                                 else
                                     MonsterIDs = ExpeditionData.UsualLowRankMonster;
-
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
-                                {
-                                    //Write monster info to the log
-                                    file.WriteLine("----------------");
-                                    file.WriteLine("Low Rank");
-                                    file.WriteLine("----------------");
-                                }
                                 break;
                             }
                         case 1:
@@ -90,14 +82,6 @@ namespace MHW_Randomizer
                                 }
                                 if (IoC.Settings.ExpeditionIncludeBehemoth)
                                     MonsterIDs = MonsterIDs.Append(15).ToArray();
-
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
-                                {
-                                    //Write monster info to the log
-                                    file.WriteLine("\n----------------");
-                                    file.WriteLine("High Rank");
-                                    file.WriteLine("----------------");
-                                }
                                 break;
                             }
                         case 2:
@@ -126,14 +110,6 @@ namespace MHW_Randomizer
                                 {
                                     MonsterIDs = MonsterIDs.Append(23).ToArray();
                                     MonsterIDs = MonsterIDs.Append(51).ToArray();
-                                }
-
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
-                                {
-                                    //Write monster info to the log
-                                    file.WriteLine("\n----------------");
-                                    file.WriteLine("Master Rank");
-                                    file.WriteLine("----------------");
                                 }
                                 break;
                             }
@@ -181,7 +157,6 @@ namespace MHW_Randomizer
                                         else
                                             newChances[monsterID].LowRank.Transitions = expeditionSpawn[0].LowRank.Transitions;
 
-                                        CreateSobj(monsterID, map + 1);
                                         switch (map)
                                         {
                                             case 0:
@@ -216,7 +191,6 @@ namespace MHW_Randomizer
                                         else
                                             newChances[monsterID].HighRank.Transitions = expeditionSpawn[0].HighRank.Transitions;
 
-                                        CreateSobj(monsterID, map + 1);
                                         switch (map)
                                         {
                                             case 0:
@@ -256,8 +230,6 @@ namespace MHW_Randomizer
                                         else
                                             newChances[monsterID].MasterRank.Transitions = expeditionSpawn[0].MasterRank.Transitions;
 
-                                        //If its 5 set the map index to 8 for hoarfrost reach
-                                        CreateSobj(monsterID, map == 5 ? 8 : map + 1);
                                         switch (map)
                                         {
                                             case 0:
@@ -304,69 +276,6 @@ namespace MHW_Randomizer
             File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Log.txt").Dispose();
             using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Log.txt"))
             {
-                if (IoC.Settings.ExpeditionRandomSobj || IoC.Settings.ExpeditionRandomIBSobj)
-                    for (int map = 1; map < 7; map++)
-                    {
-                        using (StreamWriter sobjFile = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
-                        {
-                            //Write monster info to the log
-                            sobjFile.WriteLine("\n----------------");
-                            sobjFile.WriteLine(QuestData.MapNames[map == 6 ? 8 : map] + " Sobjs");
-                            sobjFile.WriteLine("----------------");
-                        }
-                        foreach (ExpeditionSpawn spawn in newChances)
-                        {
-                            //Stop after the 86th one since usually there is only 86
-                            if (spawn.MonsterID > 86)
-                                break;
-
-                            bool giveMonsterRandomSobj = false;
-                            switch (map)
-                            {
-                                case 1:
-                                    {
-                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (expeditionSpawn[(int)spawn.MonsterID].LowRank.st101Chance > 0 || expeditionSpawn[(int)spawn.MonsterID].HighRank.st101Chance > 0)) ||
-                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st101Chance > 0);
-                                        break;
-                                    }
-                                case 2:
-                                    {
-                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (expeditionSpawn[(int)spawn.MonsterID].LowRank.st102Chance > 0 || expeditionSpawn[(int)spawn.MonsterID].HighRank.st102Chance > 0)) ||
-                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st102Chance > 0);
-                                        break;
-                                    }
-                                case 3:
-                                    {
-                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (expeditionSpawn[(int)spawn.MonsterID].LowRank.st103Chance > 0 || expeditionSpawn[(int)spawn.MonsterID].HighRank.st103Chance > 0)) ||
-                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st103Chance > 0);
-                                        break;
-                                    }
-                                case 4:
-                                    {
-                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (expeditionSpawn[(int)spawn.MonsterID].LowRank.st104Chance > 0 || expeditionSpawn[(int)spawn.MonsterID].HighRank.st104Chance > 0)) ||
-                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st104Chance > 0);
-                                        break;
-                                    }
-                                case 5:
-                                    {
-                                        giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && expeditionSpawn[(int)spawn.MonsterID].HighRank.st105Chance > 0) ||
-                                                                (IoC.Settings.ExpeditionRandomIBSobj && expeditionSpawn[(int)spawn.MonsterID].MasterRank.st105Chance > 0);
-                                        break;
-                                    }
-                                case 6:
-                                    {
-                                        if (IoC.Settings.ExpeditionRandomIBSobj)
-                                        {
-                                            giveMonsterRandomSobj = expeditionSpawn[(int)spawn.MonsterID].MasterRank.st108Chance > 0;
-                                        }
-                                        break;
-                                    }
-                            }
-                            if (giveMonsterRandomSobj)
-                                CreateSobj((int)spawn.MonsterID, map == 6 ? 8 : map);
-                        }
-                    }
-
                 foreach (ExpeditionSpawn spawn in newChances)
                 {
                     if (QuestData.MonsterNames[spawn.MonsterID + 1].Contains("[s]") || QuestData.MonsterNames[spawn.MonsterID + 1] == "NON-VALID")
@@ -603,6 +512,77 @@ namespace MHW_Randomizer
                 }
 
             }
+            //Create the sobjs
+            //Check if the base game expeditions need a new sobj, if not then skip to iceborne
+            for (int map = (IoC.Settings.RandomizeExpeditions || IoC.Settings.ExpeditionRandomSobj) ? 1 : 6; map < 7; map++)
+            {
+                //Skip checking if not randomizing iceborne sobjs
+                if (!IoC.Settings.ExpeditionRandomIBSobj && map == 6)
+                    break;
+
+                using (StreamWriter sobjFile = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                {
+                    //Write monster info to the log
+                    sobjFile.WriteLine("-----------------------");
+                    sobjFile.WriteLine(QuestData.MapNames[map == 6 ? 8 : map] + " Sobjs");
+                    sobjFile.WriteLine("-----------------------");
+                }
+                foreach (ExpeditionSpawn spawn in newChances)
+                {
+                    bool giveMonsterRandomSobj = false;
+                    switch (map)
+                    {
+                        case 1:
+                            {
+                                giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (newChances[(int)spawn.MonsterID].LowRank.st101Chance > 0 || newChances[(int)spawn.MonsterID].HighRank.st101Chance > 0)) ||
+                                                        (IoC.Settings.ExpeditionRandomIBSobj && newChances[(int)spawn.MonsterID].MasterRank.st101Chance > 0);
+                                break;
+                            }
+                        case 2:
+                            {
+                                giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (newChances[(int)spawn.MonsterID].LowRank.st102Chance > 0 || newChances[(int)spawn.MonsterID].HighRank.st102Chance > 0)) ||
+                                                        (IoC.Settings.ExpeditionRandomIBSobj && newChances[(int)spawn.MonsterID].MasterRank.st102Chance > 0);
+                                break;
+                            }
+                        case 3:
+                            {
+                                giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (newChances[(int)spawn.MonsterID].LowRank.st103Chance > 0 || newChances[(int)spawn.MonsterID].HighRank.st103Chance > 0)) ||
+                                                        (IoC.Settings.ExpeditionRandomIBSobj && newChances[(int)spawn.MonsterID].MasterRank.st103Chance > 0);
+                                break;
+                            }
+                        case 4:
+                            {
+                                giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && (newChances[(int)spawn.MonsterID].LowRank.st104Chance > 0 || newChances[(int)spawn.MonsterID].HighRank.st104Chance > 0)) ||
+                                                        (IoC.Settings.ExpeditionRandomIBSobj && newChances[(int)spawn.MonsterID].MasterRank.st104Chance > 0);
+                                break;
+                            }
+                        case 5:
+                            {
+                                giveMonsterRandomSobj = (IoC.Settings.ExpeditionRandomSobj && newChances[(int)spawn.MonsterID].HighRank.st105Chance > 0) ||
+                                                        (IoC.Settings.ExpeditionRandomIBSobj && newChances[(int)spawn.MonsterID].MasterRank.st105Chance > 0);
+                                break;
+                            }
+                        case 6:
+                            {
+                                if (IoC.Settings.ExpeditionRandomIBSobj)
+                                {
+                                    giveMonsterRandomSobj = newChances[(int)spawn.MonsterID].MasterRank.st108Chance > 0;
+                                }
+                                break;
+                            }
+                    }
+                    if (giveMonsterRandomSobj)
+                        //If its 6 set the map index to 8 for hoarfrost reach
+                        CreateSobj((int)spawn.MonsterID, map == 6 ? 8 : map);
+                }
+
+                using (StreamWriter sobjFile = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))
+                {
+                    //Add a blank line inbetween each map
+                    sobjFile.WriteLine("");
+                }
+            }
+
             //Copy the header and then add the edited spawn bytes to it
             byte[] editedSpawnBytes = StructTools.RawSerialize<ExpeditionSpawn>(newChances);
             byte[] header = new byte[10];
