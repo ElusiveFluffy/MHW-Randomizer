@@ -138,16 +138,16 @@
                 <StackPanel Orientation="Horizontal"
                         Margin="0 5">
                     <StackPanel>
-                        <CheckBox Content="Iceborne Monsters in Low Rank"
+                        <CheckBox Content="Iceborne Monsters in Low Rank Quests"
                                   IsChecked="{Binding IBMonstersInLowRank, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
-                                  ToolTip="Adds iceborne monsters to the pool of monsters for low rank, could be hard if include them"
+                                  ToolTip="Adds iceborne monsters to the pool of monsters for low rank quests, could be hard if include them"
                                   ToolTipService.ShowDuration="10000"
                                   IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
-                        <CheckBox Content="Iceborne Monsters in High Rank"
+                        <CheckBox Content="Iceborne Monsters in High Rank Quests"
                                   IsChecked="{Binding IBMonstersInHighRank, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
-                                  ToolTip="Adds iceborne monsters to the pool of monsters for high rank"
+                                  ToolTip="Adds iceborne monsters to the pool of monsters for high rank quests"
                                   ToolTipService.ShowDuration="10000"
                                   IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
                         <TextBlock Text="Requires random maps enabled on the quests tab"
