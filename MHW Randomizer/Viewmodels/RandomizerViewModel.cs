@@ -313,11 +313,12 @@ namespace MHW_Randomizer
             //Reset the sobj index list
             QuestData.MonsterMapSobjCount = new int[102, 43];
 
+            QuestRandomizer questRandomizer = new QuestRandomizer();
             if (IoC.Settings.RandomizeQuests)
-            {
-                QuestRandomizer questRandomizer = new QuestRandomizer();
                 questRandomizer.Randomize();
-            }
+            //Just so you can apply the tweak even without randomizing quests
+            if (IoC.Settings.OnePlayerQuests)
+                questRandomizer.MakeNonRandomQuests1Player();
 
             if (IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions || IoC.Settings.ExpeditionRandomSobj || IoC.Settings.ExpeditionRandomIBSobj)
                 ExpeditionRandomizer.Randomize();

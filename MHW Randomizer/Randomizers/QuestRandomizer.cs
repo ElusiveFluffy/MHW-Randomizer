@@ -978,351 +978,7 @@ namespace MHW_Randomizer
                 }
 
                 #endregion
-
-                #region Save mib File
-
-                data = null;
-                //data3 = null;
-                data4 = null;
-                cipher = new Cipher(key);
-                int MapID = MapIDIndex;
-                data = ChunkOTF.files["questData_" + questNumber + ".mib"].Extract();
-                WriteData = cipher.Decipher(data);
-                data3 = new byte[WriteData.Length - 4];
-                Array.Copy(WriteData, 4, data3, 0, WriteData.Length - 4);
-
-                #region Common and Objectives
-                byte[] buffer = BitConverter.GetBytes(Convert.ToInt32(QIDText));
-                data3[6] = buffer[0];
-                data3[7] = buffer[1];
-                data3[8] = buffer[2];
-                data3[9] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToByte(StarsIndex));
-                data3[10] = buffer[0];
-                buffer = BitConverter.GetBytes(Convert.ToByte(RankIndex));
-                data3[19] = buffer[0];
-
-                buffer = BitConverter.GetBytes(QuestData.MapIDs[MapIDIndex]);
-                data3[23] = buffer[0];
-                data3[24] = buffer[1];
-                data3[25] = buffer[2];
-                data3[26] = buffer[3];
-
-                buffer = BitConverter.GetBytes(Convert.ToByte(PlayerSpawnIndex));
-                data3[27] = buffer[0];
-                if (FSpawnIsChecked)
-                    data3[31] = 0;
-                else data3[31] = 1;
-                buffer = BitConverter.GetBytes(Convert.ToByte(TimeIndex));
-                data3[39] = buffer[0];
-                buffer = BitConverter.GetBytes(Convert.ToByte(WeatherIndex));
-                data3[43] = buffer[0];
-                buffer = BitConverter.GetBytes(RewardMoney);
-                data3[51] = buffer[0];
-                data3[52] = buffer[1];
-                data3[53] = buffer[2];
-                data3[54] = buffer[3];
-                buffer = BitConverter.GetBytes(PenaltyMoney);
-                data3[55] = buffer[0];
-                data3[56] = buffer[1];
-                data3[57] = buffer[2];
-                data3[58] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToInt32(TimerText));
-                data3[63] = buffer[0];
-                data3[64] = buffer[1];
-                data3[65] = buffer[2];
-                data3[66] = buffer[3];
-                for (int i = 0; i < 5; i++)
-                {
-                    buffer = BitConverter.GetBytes(Convert.ToUInt16(MonIcons[i]));
-                    data3[68 + 2 * i] = buffer[0];
-                    data3[69 + 2 * i] = buffer[1];
-                }
-                buffer = BitConverter.GetBytes(Convert.ToByte(HRReqIndex));
-                data3[78] = buffer[0];
-
-                //Objective 1
-                data3[83] = QuestData.ObjectiveIDs[MObjT1Index];
-                if (MultiMon1IsChecked)
-                    data3[84] = 04;
-                else data3[84] = 0;
-                buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjID1));
-                data3[87] = buffer[0];
-                data3[88] = buffer[1];
-                buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjC1Text));
-                data3[89] = buffer[0];
-                data3[90] = buffer[1];
-
-                //Objective 2
-                data3[91] = QuestData.ObjectiveIDs[MObjT2Index];
-                if (MultiMon2IsChecked)
-                    data3[92] = 04;
-                else data3[92] = 0;
-                buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjID2));
-                data3[95] = buffer[0];
-                data3[96] = buffer[1];
-                buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjC2Text));
-                data3[97] = buffer[0];
-                data3[98] = buffer[1];
-                if (MultiOjectiveIsChecked)
-                    data3[99] = 2;
-                else data3[99] = 1;
-
-                //Sub objective 1
-                data3[100] = QuestData.ObjectiveIDs[SObjT1Index];
-
-                if (SObj1MMIsChecked)
-                    data3[101] = 04;
-                else data3[101] = 0;
-                buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjID1Index));
-                data3[104] = buffer[0];
-                data3[105] = buffer[1];
-                buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjC1Text));
-                data3[106] = buffer[0];
-                data3[107] = buffer[1];
-
-                //Sub objective 2
-                data3[108] = QuestData.ObjectiveIDs[SObjT2Index];
-                if (SObj2MMIsChecked)
-                    data3[109] = 04;
-                else data3[109] = 0;
-                buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjID2Index));
-                data3[112] = buffer[0];
-                data3[113] = buffer[1];
-                buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjC2Text));
-                data3[114] = buffer[0];
-                data3[115] = buffer[1];
-                buffer = BitConverter.GetBytes(Convert.ToByte(BGMIndex));
-                data3[120] = buffer[0];
-                buffer = BitConverter.GetBytes(Convert.ToByte(QCMusicIndex));
-                data3[124] = buffer[0];
-                for (int i = 0; i < QuestData.QuestTypeIDs.Length; i++)
-                {
-                    if (QTypeIndex == i)
-                    {
-                        buffer = BitConverter.GetBytes(QuestData.QuestTypeIDs[i]);
-                        data3[128] = buffer[0];
-                    }
-                }
-                data3[130] = Convert.ToByte(2 * Convert.ToInt32(ATFlagIsChecked) + Convert.ToInt32(PSGearIsChecked));
-                buffer = BitConverter.GetBytes(Convert.ToInt32(RRemIDText));
-                data3[132] = buffer[0];
-                data3[133] = buffer[1];
-                data3[134] = buffer[2];
-                data3[135] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToInt32(S1RRemIDText));
-                data3[136] = buffer[0];
-                data3[137] = buffer[1];
-                data3[138] = buffer[2];
-                data3[139] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToInt32(S2RRemIDText));
-                data3[140] = buffer[0];
-                data3[141] = buffer[1];
-                data3[142] = buffer[2];
-                data3[143] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToInt32(SRemIDText));
-                data3[144] = buffer[0];
-                data3[145] = buffer[1];
-                data3[146] = buffer[2];
-                data3[147] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToInt32(HRpointText));
-                data3[160] = buffer[0];
-                data3[161] = buffer[1];
-                data3[162] = buffer[2];
-                data3[163] = buffer[3];
-                #endregion
-                #region Monsters
-                for (int i = 0; i < 7; i++)
-                {
-                    if (MID[i] == 0)
-                    {
-                        data3[172 + 65 * i] = 255;
-                        data3[173 + 65 * i] = 255;
-                        data3[174 + 65 * i] = 255;
-                        data3[175 + 65 * i] = 255;
-                    }
-                    else
-                    {
-                        buffer = BitConverter.GetBytes(Convert.ToInt32(MID[i] - 1));
-                        data3[172 + 65 * i] = buffer[0];
-                        data3[173 + 65 * i] = buffer[1];
-                        data3[174 + 65 * i] = buffer[2];
-                        data3[175 + 65 * i] = buffer[3];
-                    }
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MSobj[i]));
-                    data3[176 + 65 * i] = buffer[0];
-                    data3[177 + 65 * i] = buffer[1];
-                    data3[178 + 65 * i] = buffer[2];
-                    data3[179 + 65 * i] = buffer[3];
-                    if (Tempered[i])
-                        data3[184 + 65 * i] = 1;
-                    else data3[184 + 65 * i] = 0;
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MHtP[i]));
-                    data3[185 + 65 * i] = buffer[0];
-                    data3[186 + 65 * i] = buffer[1];
-                    data3[187 + 65 * i] = buffer[2];
-                    data3[188 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MAtk[i]));
-                    data3[189 + 65 * i] = buffer[0];
-                    data3[190 + 65 * i] = buffer[1];
-                    data3[191 + 65 * i] = buffer[2];
-                    data3[192 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MDef[i]));
-                    data3[193 + 65 * i] = buffer[0];
-                    data3[194 + 65 * i] = buffer[1];
-                    data3[195 + 65 * i] = buffer[2];
-                    data3[196 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MHAR[i]));
-                    data3[197 + 65 * i] = buffer[0];
-                    data3[198 + 65 * i] = buffer[1];
-                    data3[199 + 65 * i] = buffer[2];
-                    data3[200 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MSeT[i]));
-                    data3[205 + 65 * i] = buffer[0];
-                    data3[206 + 65 * i] = buffer[1];
-                    data3[207 + 65 * i] = buffer[2];
-                    data3[208 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MPHP[i]));
-                    data3[213 + 65 * i] = buffer[0];
-                    data3[214 + 65 * i] = buffer[1];
-                    data3[215 + 65 * i] = buffer[2];
-                    data3[216 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MBSt[i]));
-                    data3[217 + 65 * i] = buffer[0];
-                    data3[218 + 65 * i] = buffer[1];
-                    data3[219 + 65 * i] = buffer[2];
-                    data3[220 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MStB[i]));
-                    data3[221 + 65 * i] = buffer[0];
-                    data3[222 + 65 * i] = buffer[1];
-                    data3[223 + 65 * i] = buffer[2];
-                    data3[224 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MBKO[i]));
-                    data3[225 + 65 * i] = buffer[0];
-                    data3[226 + 65 * i] = buffer[1];
-                    data3[227 + 65 * i] = buffer[2];
-                    data3[228 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MBEx[i]));
-                    data3[229 + 65 * i] = buffer[0];
-                    data3[230 + 65 * i] = buffer[1];
-                    data3[231 + 65 * i] = buffer[2];
-                    data3[232 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MBMo[i]));
-                    data3[233 + 65 * i] = buffer[0];
-                    data3[234 + 65 * i] = buffer[1];
-                    data3[235 + 65 * i] = buffer[2];
-                    data3[236 + 65 * i] = buffer[3];
-                    buffer = BitConverter.GetBytes(Convert.ToInt32(MonsterSize[i]));
-                    data3[201 + 65 * i] = buffer[0];
-                    data3[202 + 65 * i] = buffer[1];
-                    data3[203 + 65 * i] = buffer[2];
-                    data3[204 + 65 * i] = buffer[3];
-                }
-
-                buffer = BitConverter.GetBytes(Convert.ToInt32(sMsobj));
-                data3[627] = buffer[0];
-                data3[628] = buffer[1];
-                data3[629] = buffer[2];
-                data3[630] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToInt32(sMHPIndex));
-                data3[631] = buffer[0];
-                data3[632] = buffer[1];
-                data3[633] = buffer[2];
-                data3[634] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToInt32(sMAtIndex));
-                data3[635] = buffer[0];
-                data3[636] = buffer[1];
-                data3[637] = buffer[2];
-                data3[638] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToInt32(sMDeIndex));
-                data3[639] = buffer[0];
-                data3[640] = buffer[1];
-                data3[641] = buffer[2];
-                data3[642] = buffer[3];
-                buffer = BitConverter.GetBytes(Convert.ToInt32(MPModText));
-                data3[644] = buffer[0];
-                data3[645] = buffer[1];
-                data3[646] = buffer[2];
-                data3[647] = buffer[3];
-                #endregion
-                #region Spawn, Map Icons, and Arena
-                for (int i = 0; i < 5; i++)
-                    data3[652 + 4 * i] = Convert.ToByte(MSSpw[i]);
-                for (int i = 0; i < SpawnChances.Length; i++)
-                    data3[672 + 4 * i] = SpawnChances[i];
-                for (int i = 0; i < MapIcons.Length; i++)
-                {
-                    buffer = BitConverter.GetBytes(MapIcons[i]);
-                    data3[704 + 4 * i] = buffer[0];
-                    data3[705 + 4 * i] = buffer[1];
-                    data3[706 + 4 * i] = buffer[2];
-                    data3[707 + 4 * i] = buffer[3];
-                }
-                for (int i = 0; i < 5; i++)
-                {
-                    if (SmallMonIcons[i] == 127)
-                    {
-                        //Set the flag to 0 if there is no icon
-                        data3[908 + 4 * i] = 0;
-                        data3[928 + 4 * i] = 0;
-                    }
-                    else
-                    {
-                        //Set the flag to 1 if there is a icon
-                        data3[908 + 4 * i] = 1;
-                        data3[928 + 4 * i] = Convert.ToByte(SmallMonIcons[i]);
-                    }
-                }
-                buffer = BitConverter.GetBytes(SetID);
-                data3[948] = buffer[0];
-                data3[949] = buffer[1];
-                data3[950] = buffer[2];
-                data3[951] = buffer[3];
-                if (NumberOfPlayers == 4)
-                {
-                    data3[952] = 0;
-                    data3[953] = 0;
-                    data3[954] = 0;
-                    data3[955] = 0;
-                }
-                else
-                {
-                    buffer = BitConverter.GetBytes(NumberOfPlayers);
-                    data3[952] = buffer[0];
-                    data3[953] = buffer[1];
-                    data3[954] = buffer[2];
-                    data3[955] = buffer[3];
-                }
-                for (int i = 0; i < 3; i++)
-                {
-                    buffer = BitConverter.GetBytes(ArenaTimers[i]);
-                    data3[956 + 4 * i] = buffer[0];
-                    data3[957 + 4 * i] = buffer[1];
-                    data3[958 + 4 * i] = buffer[2];
-                    data3[959 + 4 * i] = buffer[3];
-                }
-                data3[980] = FenceSwitch ? (byte)128 : (byte)0;
-
-                buffer = BitConverter.GetBytes(FenceCooldown);
-                data3[988] = buffer[0];
-                data3[989] = buffer[1];
-                data3[990] = buffer[2];
-                data3[991] = buffer[3];
-
-                buffer = BitConverter.GetBytes(FenceUptime);
-                data3[992] = buffer[0];
-                data3[993] = buffer[1];
-                data3[994] = buffer[2];
-                data3[995] = buffer[3];
-                #endregion
-
-                Array.Copy(data3, 0, WriteData, 4, WriteData.Length - 4);
-                data4 = cipher.Encipher(WriteData);
-
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\questData_" + questNumber + ".mib", data4);
-
-                #endregion
-
+                SaveMibFile(questNumber);
             }
 
             //Override the zone file with a different one as a dummy to remove the softlocking cutscene
@@ -1331,6 +987,349 @@ namespace MHW_Randomizer
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone\01601_qtev.zon", ChunkOTF.files["01602_qtev.zon"].Extract());
             }
+        }
+
+        private void SaveMibFile(string questNumber)
+        {
+            data = null;
+            //data3 = null;
+            data4 = null;
+            cipher = new Cipher(key);
+            int MapID = MapIDIndex;
+            data = ChunkOTF.files["questData_" + questNumber + ".mib"].Extract();
+            WriteData = cipher.Decipher(data);
+            data3 = new byte[WriteData.Length - 4];
+            Array.Copy(WriteData, 4, data3, 0, WriteData.Length - 4);
+
+            #region Common and Objectives
+            byte[] buffer = BitConverter.GetBytes(Convert.ToInt32(QIDText));
+            data3[6] = buffer[0];
+            data3[7] = buffer[1];
+            data3[8] = buffer[2];
+            data3[9] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToByte(StarsIndex));
+            data3[10] = buffer[0];
+            buffer = BitConverter.GetBytes(Convert.ToByte(RankIndex));
+            data3[19] = buffer[0];
+
+            buffer = BitConverter.GetBytes(QuestData.MapIDs[MapIDIndex]);
+            data3[23] = buffer[0];
+            data3[24] = buffer[1];
+            data3[25] = buffer[2];
+            data3[26] = buffer[3];
+
+            buffer = BitConverter.GetBytes(Convert.ToByte(PlayerSpawnIndex));
+            data3[27] = buffer[0];
+            if (FSpawnIsChecked)
+                data3[31] = 0;
+            else data3[31] = 1;
+            buffer = BitConverter.GetBytes(Convert.ToByte(TimeIndex));
+            data3[39] = buffer[0];
+            buffer = BitConverter.GetBytes(Convert.ToByte(WeatherIndex));
+            data3[43] = buffer[0];
+            buffer = BitConverter.GetBytes(RewardMoney);
+            data3[51] = buffer[0];
+            data3[52] = buffer[1];
+            data3[53] = buffer[2];
+            data3[54] = buffer[3];
+            buffer = BitConverter.GetBytes(PenaltyMoney);
+            data3[55] = buffer[0];
+            data3[56] = buffer[1];
+            data3[57] = buffer[2];
+            data3[58] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToInt32(TimerText));
+            data3[63] = buffer[0];
+            data3[64] = buffer[1];
+            data3[65] = buffer[2];
+            data3[66] = buffer[3];
+            for (int i = 0; i < 5; i++)
+            {
+                buffer = BitConverter.GetBytes(Convert.ToUInt16(MonIcons[i]));
+                data3[68 + 2 * i] = buffer[0];
+                data3[69 + 2 * i] = buffer[1];
+            }
+            buffer = BitConverter.GetBytes(Convert.ToByte(HRReqIndex));
+            data3[78] = buffer[0];
+
+            //Objective 1
+            data3[83] = QuestData.ObjectiveIDs[MObjT1Index];
+            if (MultiMon1IsChecked)
+                data3[84] = 04;
+            else data3[84] = 0;
+            buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjID1));
+            data3[87] = buffer[0];
+            data3[88] = buffer[1];
+            buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjC1Text));
+            data3[89] = buffer[0];
+            data3[90] = buffer[1];
+
+            //Objective 2
+            data3[91] = QuestData.ObjectiveIDs[MObjT2Index];
+            if (MultiMon2IsChecked)
+                data3[92] = 04;
+            else data3[92] = 0;
+            buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjID2));
+            data3[95] = buffer[0];
+            data3[96] = buffer[1];
+            buffer = BitConverter.GetBytes(Convert.ToUInt16(MObjC2Text));
+            data3[97] = buffer[0];
+            data3[98] = buffer[1];
+            if (MultiOjectiveIsChecked)
+                data3[99] = 2;
+            else data3[99] = 1;
+
+            //Sub objective 1
+            data3[100] = QuestData.ObjectiveIDs[SObjT1Index];
+
+            if (SObj1MMIsChecked)
+                data3[101] = 04;
+            else data3[101] = 0;
+            buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjID1Index));
+            data3[104] = buffer[0];
+            data3[105] = buffer[1];
+            buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjC1Text));
+            data3[106] = buffer[0];
+            data3[107] = buffer[1];
+
+            //Sub objective 2
+            data3[108] = QuestData.ObjectiveIDs[SObjT2Index];
+            if (SObj2MMIsChecked)
+                data3[109] = 04;
+            else data3[109] = 0;
+            buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjID2Index));
+            data3[112] = buffer[0];
+            data3[113] = buffer[1];
+            buffer = BitConverter.GetBytes(Convert.ToUInt16(SObjC2Text));
+            data3[114] = buffer[0];
+            data3[115] = buffer[1];
+            buffer = BitConverter.GetBytes(Convert.ToByte(BGMIndex));
+            data3[120] = buffer[0];
+            buffer = BitConverter.GetBytes(Convert.ToByte(QCMusicIndex));
+            data3[124] = buffer[0];
+            for (int i = 0; i < QuestData.QuestTypeIDs.Length; i++)
+            {
+                if (QTypeIndex == i)
+                {
+                    buffer = BitConverter.GetBytes(QuestData.QuestTypeIDs[i]);
+                    data3[128] = buffer[0];
+                }
+            }
+            data3[130] = Convert.ToByte(2 * Convert.ToInt32(ATFlagIsChecked) + Convert.ToInt32(PSGearIsChecked));
+            buffer = BitConverter.GetBytes(Convert.ToInt32(RRemIDText));
+            data3[132] = buffer[0];
+            data3[133] = buffer[1];
+            data3[134] = buffer[2];
+            data3[135] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToInt32(S1RRemIDText));
+            data3[136] = buffer[0];
+            data3[137] = buffer[1];
+            data3[138] = buffer[2];
+            data3[139] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToInt32(S2RRemIDText));
+            data3[140] = buffer[0];
+            data3[141] = buffer[1];
+            data3[142] = buffer[2];
+            data3[143] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToInt32(SRemIDText));
+            data3[144] = buffer[0];
+            data3[145] = buffer[1];
+            data3[146] = buffer[2];
+            data3[147] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToInt32(HRpointText));
+            data3[160] = buffer[0];
+            data3[161] = buffer[1];
+            data3[162] = buffer[2];
+            data3[163] = buffer[3];
+            #endregion
+            #region Monsters
+            for (int i = 0; i < 7; i++)
+            {
+                if (MID[i] == 0)
+                {
+                    data3[172 + 65 * i] = 255;
+                    data3[173 + 65 * i] = 255;
+                    data3[174 + 65 * i] = 255;
+                    data3[175 + 65 * i] = 255;
+                }
+                else
+                {
+                    buffer = BitConverter.GetBytes(Convert.ToInt32(MID[i] - 1));
+                    data3[172 + 65 * i] = buffer[0];
+                    data3[173 + 65 * i] = buffer[1];
+                    data3[174 + 65 * i] = buffer[2];
+                    data3[175 + 65 * i] = buffer[3];
+                }
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MSobj[i]));
+                data3[176 + 65 * i] = buffer[0];
+                data3[177 + 65 * i] = buffer[1];
+                data3[178 + 65 * i] = buffer[2];
+                data3[179 + 65 * i] = buffer[3];
+                if (Tempered[i])
+                    data3[184 + 65 * i] = 1;
+                else data3[184 + 65 * i] = 0;
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MHtP[i]));
+                data3[185 + 65 * i] = buffer[0];
+                data3[186 + 65 * i] = buffer[1];
+                data3[187 + 65 * i] = buffer[2];
+                data3[188 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MAtk[i]));
+                data3[189 + 65 * i] = buffer[0];
+                data3[190 + 65 * i] = buffer[1];
+                data3[191 + 65 * i] = buffer[2];
+                data3[192 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MDef[i]));
+                data3[193 + 65 * i] = buffer[0];
+                data3[194 + 65 * i] = buffer[1];
+                data3[195 + 65 * i] = buffer[2];
+                data3[196 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MHAR[i]));
+                data3[197 + 65 * i] = buffer[0];
+                data3[198 + 65 * i] = buffer[1];
+                data3[199 + 65 * i] = buffer[2];
+                data3[200 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MSeT[i]));
+                data3[205 + 65 * i] = buffer[0];
+                data3[206 + 65 * i] = buffer[1];
+                data3[207 + 65 * i] = buffer[2];
+                data3[208 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MPHP[i]));
+                data3[213 + 65 * i] = buffer[0];
+                data3[214 + 65 * i] = buffer[1];
+                data3[215 + 65 * i] = buffer[2];
+                data3[216 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MBSt[i]));
+                data3[217 + 65 * i] = buffer[0];
+                data3[218 + 65 * i] = buffer[1];
+                data3[219 + 65 * i] = buffer[2];
+                data3[220 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MStB[i]));
+                data3[221 + 65 * i] = buffer[0];
+                data3[222 + 65 * i] = buffer[1];
+                data3[223 + 65 * i] = buffer[2];
+                data3[224 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MBKO[i]));
+                data3[225 + 65 * i] = buffer[0];
+                data3[226 + 65 * i] = buffer[1];
+                data3[227 + 65 * i] = buffer[2];
+                data3[228 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MBEx[i]));
+                data3[229 + 65 * i] = buffer[0];
+                data3[230 + 65 * i] = buffer[1];
+                data3[231 + 65 * i] = buffer[2];
+                data3[232 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MBMo[i]));
+                data3[233 + 65 * i] = buffer[0];
+                data3[234 + 65 * i] = buffer[1];
+                data3[235 + 65 * i] = buffer[2];
+                data3[236 + 65 * i] = buffer[3];
+                buffer = BitConverter.GetBytes(Convert.ToInt32(MonsterSize[i]));
+                data3[201 + 65 * i] = buffer[0];
+                data3[202 + 65 * i] = buffer[1];
+                data3[203 + 65 * i] = buffer[2];
+                data3[204 + 65 * i] = buffer[3];
+            }
+
+            buffer = BitConverter.GetBytes(Convert.ToInt32(sMsobj));
+            data3[627] = buffer[0];
+            data3[628] = buffer[1];
+            data3[629] = buffer[2];
+            data3[630] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToInt32(sMHPIndex));
+            data3[631] = buffer[0];
+            data3[632] = buffer[1];
+            data3[633] = buffer[2];
+            data3[634] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToInt32(sMAtIndex));
+            data3[635] = buffer[0];
+            data3[636] = buffer[1];
+            data3[637] = buffer[2];
+            data3[638] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToInt32(sMDeIndex));
+            data3[639] = buffer[0];
+            data3[640] = buffer[1];
+            data3[641] = buffer[2];
+            data3[642] = buffer[3];
+            buffer = BitConverter.GetBytes(Convert.ToInt32(MPModText));
+            data3[644] = buffer[0];
+            data3[645] = buffer[1];
+            data3[646] = buffer[2];
+            data3[647] = buffer[3];
+            #endregion
+            #region Spawn, Map Icons, and Arena
+            for (int i = 0; i < 5; i++)
+                data3[652 + 4 * i] = Convert.ToByte(MSSpw[i]);
+            for (int i = 0; i < SpawnChances.Length; i++)
+                data3[672 + 4 * i] = SpawnChances[i];
+            for (int i = 0; i < MapIcons.Length; i++)
+            {
+                buffer = BitConverter.GetBytes(MapIcons[i]);
+                data3[704 + 4 * i] = buffer[0];
+                data3[705 + 4 * i] = buffer[1];
+                data3[706 + 4 * i] = buffer[2];
+                data3[707 + 4 * i] = buffer[3];
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                if (SmallMonIcons[i] == 127)
+                {
+                    //Set the flag to 0 if there is no icon
+                    data3[908 + 4 * i] = 0;
+                    data3[928 + 4 * i] = 0;
+                }
+                else
+                {
+                    //Set the flag to 1 if there is a icon
+                    data3[908 + 4 * i] = 1;
+                    data3[928 + 4 * i] = Convert.ToByte(SmallMonIcons[i]);
+                }
+            }
+            buffer = BitConverter.GetBytes(SetID);
+            data3[948] = buffer[0];
+            data3[949] = buffer[1];
+            data3[950] = buffer[2];
+            data3[951] = buffer[3];
+            if (NumberOfPlayers == 4)
+            {
+                data3[952] = 0;
+                data3[953] = 0;
+                data3[954] = 0;
+                data3[955] = 0;
+            }
+            else
+            {
+                buffer = BitConverter.GetBytes(NumberOfPlayers);
+                data3[952] = buffer[0];
+                data3[953] = buffer[1];
+                data3[954] = buffer[2];
+                data3[955] = buffer[3];
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                buffer = BitConverter.GetBytes(ArenaTimers[i]);
+                data3[956 + 4 * i] = buffer[0];
+                data3[957 + 4 * i] = buffer[1];
+                data3[958 + 4 * i] = buffer[2];
+                data3[959 + 4 * i] = buffer[3];
+            }
+            data3[980] = FenceSwitch ? (byte)128 : (byte)0;
+
+            buffer = BitConverter.GetBytes(FenceCooldown);
+            data3[988] = buffer[0];
+            data3[989] = buffer[1];
+            data3[990] = buffer[2];
+            data3[991] = buffer[3];
+
+            buffer = BitConverter.GetBytes(FenceUptime);
+            data3[992] = buffer[0];
+            data3[993] = buffer[1];
+            data3[994] = buffer[2];
+            data3[995] = buffer[3];
+            #endregion
+
+            Array.Copy(data3, 0, WriteData, 4, WriteData.Length - 4);
+            data4 = cipher.Encipher(WriteData);
+
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\questData_" + questNumber + ".mib", data4);
         }
 
         private void PickRandomMap(string questNumber, bool duplicateMonQuest, bool captureQuest = false, bool iceborne = false)
@@ -1430,6 +1429,29 @@ namespace MHW_Randomizer
 
             //Only include required monsters if multi or duplicate monster
             return (MultiMon1IsChecked || duplicateMonster) && m >= int.Parse(MObjC1Text);
+        }
+
+        public void MakeNonRandomQuests1Player()
+        {
+            foreach (int questNumber in QuestData.QuestName.Keys)
+            {
+                //Format it so it has 0s ahead of the number to make it match the files
+                string fileQuestNumber = questNumber.ToString("D5");
+
+                //If the file has been randomized then skip it
+                if (File.Exists(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\questData_" + fileQuestNumber + ".mib"))
+                    continue;
+
+                //Continue if the quest doesn't exist
+                if (!ChunkOTF.files.ContainsKey("questData_" + fileQuestNumber + ".mib"))
+                    continue;
+
+                OpenMIBFIle(ChunkOTF.files["questData_" + fileQuestNumber + ".mib"].Extract());
+
+                NumberOfPlayers = 1;
+
+                SaveMibFile(fileQuestNumber);
+            }
         }
 
         //Supply item randomization step 3
