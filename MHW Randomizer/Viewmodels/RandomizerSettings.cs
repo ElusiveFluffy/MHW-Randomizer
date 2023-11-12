@@ -168,6 +168,8 @@ namespace MHW_Randomizer
         public bool RandomizeZorahStoryQuests { get; set; }
         public bool IBMonstersInLowRank { get; set; }
         public bool IBMonstersInHighRank { get; set; }
+        public bool ExpeditionIBMonstersInLowRank { get; set; }
+        public bool ExpeditionIBMonstersInHighRank { get; set; }
         public bool IBMapsInBaseGame { get; set; }
 
         //---------------------------

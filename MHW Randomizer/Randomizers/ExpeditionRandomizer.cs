@@ -62,6 +62,13 @@ namespace MHW_Randomizer
                                 }
                                 else
                                     MonsterIDs = ExpeditionData.UsualLowRankMonster;
+
+                                if (IoC.Settings.ExpeditionIBMonstersInLowRank)
+                                {
+                                    MonsterIDs = MonsterIDs.Concat(ExpeditionData.MasterRankOnlyMonster).ToArray();
+                                    if (IoC.Settings.ExpeditionIncludeIBNonUsualMonsters)
+                                        MonsterIDs = MonsterIDs.Concat(ExpeditionData.UnusedMasterRankMonster).ToArray();
+                                }
                                 break;
                             }
                         case 1:
@@ -82,6 +89,13 @@ namespace MHW_Randomizer
                                 }
                                 if (IoC.Settings.ExpeditionIncludeBehemoth)
                                     MonsterIDs = MonsterIDs.Append(15).ToArray();
+
+                                if (IoC.Settings.ExpeditionIBMonstersInHighRank)
+                                {
+                                    MonsterIDs = MonsterIDs.Concat(ExpeditionData.MasterRankOnlyMonster).ToArray();
+                                    if (IoC.Settings.ExpeditionIncludeIBNonUsualMonsters)
+                                        MonsterIDs = MonsterIDs.Concat(ExpeditionData.UnusedMasterRankMonster).ToArray();
+                                }
                                 break;
                             }
                         case 2:

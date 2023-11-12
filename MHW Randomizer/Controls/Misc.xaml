@@ -135,19 +135,22 @@
                 BorderThickness="1"
                 Margin="5"
                 VerticalAlignment="Top">
-                <StackPanel Orientation="Horizontal"
-                        Margin="0 5">
+                <Grid Margin="0 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
                     <StackPanel>
                         <CheckBox Content="Iceborne Monsters in Low Rank Quests"
                                   IsChecked="{Binding IBMonstersInLowRank, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
-                                  ToolTip="Adds iceborne monsters to the pool of monsters for low rank quests, could be hard if include them"
+                                  ToolTip="Adds iceborne monsters to the pool of monsters for low rank quests, could be hard if include them &#x0a;They won't give any drops in the quest reward screen and some won't let you carve them"
                                   ToolTipService.ShowDuration="10000"
                                   IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
                         <CheckBox Content="Iceborne Monsters in High Rank Quests"
                                   IsChecked="{Binding IBMonstersInHighRank, Source={x:Static local:IoC.Settings}}"
                                   Margin="5 4"
-                                  ToolTip="Adds iceborne monsters to the pool of monsters for high rank quests"
+                                  ToolTip="Adds iceborne monsters to the pool of monsters for high rank quests &#x0a;They won't give any drops in the quest reward screen and some won't let you carve them"
                                   ToolTipService.ShowDuration="10000"
                                   IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
                         <TextBlock Text="Requires random maps enabled on the quests tab"
@@ -161,7 +164,22 @@
                                   ToolTip="Adds the iceborne maps to the low/high rank random map pool"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
-                </StackPanel>
+                    <StackPanel Grid.Column="1"
+                                Margin="7 0 0 0">
+                        <CheckBox Content="Iceborne Monsters in Low Rank Expeditions"
+                                  IsChecked="{Binding ExpeditionIBMonstersInLowRank, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 4"
+                                  ToolTip="Adds iceborne monsters to the pool of monsters for low rank expeditions, could make the pool too big &#x0a;They won't give any drops in the quest reward screen and some won't let you carve them"
+                                  ToolTipService.ShowDuration="10000"
+                                  IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"/>
+                        <CheckBox Content="Iceborne Monsters in High Rank Expeditions"
+                                  IsChecked="{Binding ExpeditionIBMonstersInHighRank, Source={x:Static local:IoC.Settings}}"
+                                  Margin="5 4"
+                                  ToolTip="Adds iceborne monsters to the pool of monsters for high rank expeditions, could make the pool too big &#x0a;They won't give any drops in the quest reward screen and some won't let you carve them"
+                                  ToolTipService.ShowDuration="10000"
+                                  IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"/>
+                    </StackPanel>
+                </Grid>
             </Border>
         </Grid>
     </StackPanel>
