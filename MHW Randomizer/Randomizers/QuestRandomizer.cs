@@ -1433,6 +1433,7 @@ namespace MHW_Randomizer
 
         public void MakeNonRandomQuests1Player()
         {
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\quest\");
             foreach (int questNumber in QuestData.QuestName.Keys)
             {
                 //Format it so it has 0s ahead of the number to make it match the files
