@@ -85,10 +85,10 @@
                                   Margin="12, 4"
                                   ToolTip="Includes monsters that don't appear in low rank quest, will be scaled to low rank &#xA;(they don't have any low rank drops so you will get high rank drops instead)"
                                   ToolTipService.ShowDuration="10000"/>
-                        <CheckBox Content="High Rank Only Monsters in High Rank"
+                        <CheckBox Content="Only Include High Rank Monsters in High Rank"
                                   IsChecked="{Binding ExpeditionHighRankOnlyInHigh, Source={x:Static local:IoC.Settings}}"
                                   Margin="12, 4"
-                                  ToolTip="Will only include monsters that are introduced in high rank in high rank expeditions"
+                                  ToolTip="Will only include monsters that are introduced in high rank for high rank expeditions"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
                 </StackPanel>
@@ -171,10 +171,10 @@
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
                     <StackPanel>
-                        <CheckBox Content="Master Rank Only Monsters in Master Rank"
+                        <CheckBox Content="Only Include Master Rank Monsters"
                                   IsChecked="{Binding ExpeditionMasterRankOnlyInMaster, Source={x:Static local:IoC.Settings}}"
                                   Margin="12, 4"
-                                  ToolTip="Will only include monsters that are introduced in master rank in master rank expeditions"
+                                  ToolTip="Will only include monsters that are introduced in master rank for master rank expeditions"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
                 </StackPanel>
