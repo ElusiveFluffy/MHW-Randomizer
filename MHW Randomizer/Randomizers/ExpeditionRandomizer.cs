@@ -120,10 +120,15 @@ namespace MHW_Randomizer
                                 if (IoC.Settings.ExpeditionIncludeAlatreon)
                                     MonsterIDs = MonsterIDs.Append(87).ToArray();
 
-                                if (IoC.Settings.ExpeditionIncludeLeshen && !IoC.Settings.ExpeditionMasterRankOnlyInMaster)
+                                if (!IoC.Settings.ExpeditionMasterRankOnlyInMaster)
                                 {
-                                    MonsterIDs = MonsterIDs.Append(23).ToArray();
-                                    MonsterIDs = MonsterIDs.Append(51).ToArray();
+                                    if (IoC.Settings.ExpeditionIncludeLeshen)
+                                    {
+                                        MonsterIDs = MonsterIDs.Append(23).ToArray();
+                                        MonsterIDs = MonsterIDs.Append(51).ToArray();
+                                    }
+                                    if (IoC.Settings.ExpeditionIncludeBehemoth)
+                                        MonsterIDs = MonsterIDs.Append(15).ToArray();
                                 }
                                 break;
                             }
