@@ -221,7 +221,7 @@
                                 <CheckBox Content="High Rank Monsters in Low Rank"
                                           IsChecked="{Binding HighRankMonInLowRank, Source={x:Static local:IoC.Settings}}"
                                           Margin="5, 4"
-                                          ToolTip="Includes monsters that don't appear in low rank quest, can be challenging &#xA;(they don't have any low rank drops so you will get high rank drops instead, and you won't get any rewards from them at the end of the quest)"
+                                          ToolTip="Includes monsters that don't appear in low rank quest, can be challenging &#xA;(they don't have any low rank drops so you will get high rank drops instead (some can't be carved though), and you won't get any rewards from them at the end of the quest)"
                                           ToolTipService.ShowDuration="10000"/>
                                 <CheckBox Content="Include Leshen"
                                           IsChecked="{Binding IncludeLeshen, Source={x:Static local:IoC.Settings}}"
