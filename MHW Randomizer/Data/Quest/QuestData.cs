@@ -590,6 +590,8 @@ namespace MHW_Randomizer
             "01", "01", "05", "01", "01", "05", "01", "05", "05", "00", "00", "00", "00", "00", "unused", "unused", "unused", "unused", "unused", "00", "02", "02",
             "00", "00", "05", "01", "00", "01", "05", "00", "unused", "05", "05", "00" };
 
+        #endregion
+
         //======================
         //  Story Hunt Quests
         //======================
@@ -787,7 +789,5 @@ namespace MHW_Randomizer
 
         //Removed safi'jiiva because doesn't spawn on most maps
         public static int[] BigMonsterIDsIB = { 0, 1, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 24, 27, 28, 29, 30, 31, 32, 33, 34, 35, 37, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 88, 89, 90, 91, 93, 94, 95, 96, 99, 100 };
-
-        #endregion
     }
 }
