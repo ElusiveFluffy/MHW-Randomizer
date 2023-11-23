@@ -392,6 +392,7 @@ namespace MHW_Randomizer
             FolderBrowser.Multiselect = false;
 
             NativeWindow win32Parent = new NativeWindow();
+            //Make it so you can't interact with the randomizer window while the file browser is open
             win32Parent.AssignHandle(new WindowInteropHelper(MainWindow.window).Handle);
             DialogResult result = FolderBrowser.ShowDialog(win32Parent);
 
