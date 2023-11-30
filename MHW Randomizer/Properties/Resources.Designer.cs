@@ -113,6 +113,16 @@ namespace MHW_Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] em063_55thk {
+            get {
+                object obj = ResourceManager.GetObject("em063_55thk", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] em126_00thk {
             get {
                 object obj = ResourceManager.GetObject("em126_00thk", resourceCulture);

@@ -132,6 +132,9 @@ namespace MHW_Randomizer
                 Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data");
                 File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em126/00/data/em126_00.thk", Properties.Resources.em126_00thk);
             }
+            //Write custom think file for Raging Brachydios otherwise they will get stuck at 30% HP
+            //Credit to Fandirus for finding a way to make Raging Brachydios work
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"/em/em063/05/data/em063_55.thk", Properties.Resources.em063_55thk);
         }
 
         private static byte[] AddIdentifier(AlnkPaths chosenAlnk, byte[] copyBuffer)
