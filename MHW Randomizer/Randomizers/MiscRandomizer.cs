@@ -73,7 +73,7 @@ namespace MHW_Randomizer
         {
             byte[] insectBytes;
             //If the file has been randomized then just open the randomized one
-            if (IoC.Settings.ShuffleKinsectOrder || IoC.Settings.RandomKinsectType || IoC.Settings.RandomKinsectDust || IoC.Settings.RandomKinsectIconColour)
+            if (File.Exists(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse"))
                 insectBytes = File.ReadAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse");
             else
             {
