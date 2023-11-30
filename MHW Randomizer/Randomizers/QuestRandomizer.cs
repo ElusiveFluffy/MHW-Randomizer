@@ -645,6 +645,10 @@ namespace MHW_Randomizer
                     //Remove alatreon as a possible monster if map is hoarfrost reach as it causes them to get stuck
                     currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87).ToArray();
 
+                //Remove jyuratodus from being pick in the quest "Hellish Fiend Vaal Hazak" otherwise they will get stuck trying to leave
+                if (questNumber == "00803")
+                    currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 29).ToArray();
+
                 if (IoC.Settings.OnePlayerQuests)
                     NumberOfPlayers = 1;
 
