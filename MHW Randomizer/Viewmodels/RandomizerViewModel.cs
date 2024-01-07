@@ -258,11 +258,7 @@ namespace MHW_Randomizer
             }
             catch (Exception ex)
             {
-                MessageWindow message = new MessageWindow("Error occured while analyzing chunks:\n" + ex.Message);
-
-                message.Owner = MainWindow.window;
-                message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
-                message.ShowDialog();
+                ErrorMessageWindow("Error occured while analyzing chunks", ex.Message);
             }
         }
 
@@ -273,20 +269,28 @@ namespace MHW_Randomizer
             if (!PickRandomizedFolder("Select Folder to Output Randomized Files (Will Also Add a Randomized Folder For the Files)", true))
                 return;
 
+            bool FailedToRandomizeSomething = false;
             Randomizing = true;
             //Allow the UI to update instead of freezing
             await Task.Delay(20);
 
-            //Save the settings here just incase the randomizer crashes during the randomization so then the settings will get saved instead of being blank or not being stored
-            using (StreamWriter file = File.CreateText(AppDomain.CurrentDomain.BaseDirectory + "Settings.json"))
+            try
             {
-                JsonSerializer serializer = new JsonSerializer
+                //Save the settings here just incase the randomizer crashes during the randomization so then the settings will get saved instead of being blank or not being stored
+                using (StreamWriter file = File.CreateText(AppDomain.CurrentDomain.BaseDirectory + "Settings.json"))
                 {
-                    Formatting = Formatting.Indented,
-                    DefaultValueHandling = DefaultValueHandling.Ignore
-                };
-                //serialize objects directly into file stream
-                serializer.Serialize(file, IoC.Settings);
+                    JsonSerializer serializer = new JsonSerializer
+                    {
+                        Formatting = Formatting.Indented,
+                        DefaultValueHandling = DefaultValueHandling.Ignore
+                    };
+                    //serialize objects directly into file stream
+                    serializer.Serialize(file, IoC.Settings);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while trying to save settings file", ex.Message);
             }
 
             Seed = TMath.Seed();
@@ -308,9 +312,16 @@ namespace MHW_Randomizer
                     Seed = total;
                 }
             }
-            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Seed.txt"))
+            try
             {
-                file.WriteLine("Seed: " + Seed.ToString());
+                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Seed.txt"))
+                {
+                    file.WriteLine("Seed: " + Seed.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while trying to write to seed file", ex.Message);
             }
             if (!string.IsNullOrWhiteSpace(RandomizeRootFolder))
                 File.WriteAllText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt",
@@ -325,51 +336,122 @@ namespace MHW_Randomizer
             //Reset the sobj index list
             QuestData.MonsterMapSobjCount = new int[102, 43];
 
-            QuestRandomizer questRandomizer = new QuestRandomizer();
-            if (IoC.Settings.RandomizeQuests)
-                questRandomizer.Randomize();
-            //Just so you can apply the tweak even without randomizing quests
-            if (IoC.Settings.OnePlayerQuests)
-                questRandomizer.MakeNonRandomQuests1Player();
+            try
+            {
+                QuestRandomizer questRandomizer = new QuestRandomizer();
+                if (IoC.Settings.RandomizeQuests)
+                    questRandomizer.Randomize();
+                //Just so you can apply the tweak even without randomizing quests
+                if (IoC.Settings.OnePlayerQuests)
+                    questRandomizer.MakeNonRandomQuests1Player();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while randomizing quests, skipping rest of quest randomization", ex.Message);
+                FailedToRandomizeSomething = true;
+            }
 
-            if (IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions || IoC.Settings.ExpeditionRandomSobj || IoC.Settings.ExpeditionRandomIBSobj)
-                ExpeditionRandomizer.Randomize();
+            try
+            {
+                if (IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions || IoC.Settings.ExpeditionRandomSobj || IoC.Settings.ExpeditionRandomIBSobj)
+                    ExpeditionRandomizer.Randomize();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while randomizing expeditions, skipping rest of expedition randomization", ex.Message);
+                FailedToRandomizeSomething = true;
+            }
 
-            //If randomizing the quests or expeditions add in edited alnks for all maps and mosters
-            if (IoC.Settings.RandomizeQuests || IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
-                Alnk.CreateAlnks();
+            try
+            {
+                //If randomizing the quests or expeditions add in edited alnks for all maps and mosters
+                if (IoC.Settings.RandomizeQuests || IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
+                    Alnk.CreateAlnks();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while creating alnk files, skipping rest of alnk creation (monster pathing won't fully work)", ex.Message);
+                FailedToRandomizeSomething = true;
+            }
 
-            //Raise the lava wall to avoid a softlock
-            Maps.RaiseLavaWall();
+            try
+            {
+                //Raise the lava wall to avoid a softlock
+                Maps.RaiseLavaWall();
 
-            //Remove the blockades on the maps if using any random spawn files incase a monster spawns behind them
-            if (IoC.Settings.RandomSobj || IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
-                Maps.Edit();
+                //Remove the blockades on the maps if using any random spawn files incase a monster spawns behind them
+                if (IoC.Settings.RandomSobj || IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
+                    Maps.Edit();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while removing map blockades, skipping map editing", ex.Message);
+                FailedToRandomizeSomething = true;
+            }
 
-            MonsterRandomizer.Randomize();
+            try
+            {
+                MonsterRandomizer.Randomize();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while randomizing monster stats, skipping rest of monster randomization", ex.Message);
+                FailedToRandomizeSomething = true;
+            }
 
-            //Shuffle recipes
-            RecipeRandomizer.RandomizeRecipes();
+            try
+            {
+                //Shuffle recipes
+                RecipeRandomizer.RandomizeRecipes();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while randomizing recipes, skipping rest of recipe randomization", ex.Message);
+                FailedToRandomizeSomething = true;
+            }
 
-            ShopRandomizer.Randomize();
+            try
+            {
+                ShopRandomizer.Randomize();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while randomizing shops, skipping rest of shop randomization", ex.Message);
+                FailedToRandomizeSomething = true;
+            }
 
-            MiscRandomizer.Randomize();
+            try
+            {
+                MiscRandomizer.Randomize();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while randomizing misc settings, skipping rest of misc randomization", ex.Message);
+                FailedToRandomizeSomething = true;
+            }
 
             //Dispose the watcher so it no longer gets fired
             RandomizedFileLogger.DisposeWatcher();
-            //Write all the randomized files to a json file after disposing the logger
-            using (StreamWriter file = File.CreateText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
+            try
             {
-                JsonSerializer serializer = new JsonSerializer
+                //Write all the randomized files to a json file after disposing the logger
+                using (StreamWriter file = File.CreateText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
                 {
-                    Formatting = Formatting.Indented,
-                    DefaultValueHandling = DefaultValueHandling.Ignore
-                };
-                //serialize objects directly into file stream
-                serializer.Serialize(file, RandomizedFiles);
+                    JsonSerializer serializer = new JsonSerializer
+                    {
+                        Formatting = Formatting.Indented,
+                        DefaultValueHandling = DefaultValueHandling.Ignore
+                    };
+                    //serialize objects directly into file stream
+                    serializer.Serialize(file, RandomizedFiles);
+                }
+                //Clear out the randomized file set to free up some memory
+                RandomizedFiles = new HashSet<string>();
             }
-            //Clear out the randomized file set to free up some memory
-            RandomizedFiles = new HashSet<string>();
+            catch (Exception ex)
+            {
+                ErrorMessageWindow("Error occured while trying to save randomized files file", ex.Message);
+            }
 
             Randomizing = false;
 
@@ -377,13 +459,29 @@ namespace MHW_Randomizer
             MessageWindow message;
 
             if (MissingMIBFiles.Count == 0)
-                message = new MessageWindow("Successfully Randomized");
+            {
+                message = FailedToRandomizeSomething
+                    ? new MessageWindow("Completed Randomization But a Error Occured While Randomizing")
+                    : new MessageWindow("Successfully Randomized");
+            }
             else
                 message = new MessageWindow("Successfully Randomized but Missing Some Files: " + string.Join(", ", MissingMIBFiles));
 
             message.Owner = MainWindow.window;
             message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
             message.ShowDialog();
+        }
+
+        private static void ErrorMessageWindow(string errorMessage, string exMessage)
+        {
+            MessageWindow errorMessageWindow = new MessageWindow(errorMessage + ":\n" + exMessage)
+            {
+                Height = 200,
+                Width = 300,
+                Owner = MainWindow.window,
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+            };
+            errorMessageWindow.ShowDialog();
         }
 
         /// <summary>
@@ -531,12 +629,7 @@ namespace MHW_Randomizer
                         }
                         catch (Exception ex)
                         {
-                            MessageWindow errorMessage = new MessageWindow("Error Deleting Old Files:\n" + ex.Message)
-                            {
-                                Owner = MainWindow.window,
-                                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
-                            };
-                            errorMessage.ShowDialog();
+                            ErrorMessageWindow("Error Deleting Old Files", ex.Message);
                         }
 
                         DeleteEmptyFolders(IoC.Settings.SaveFolderPath);
@@ -578,12 +671,7 @@ namespace MHW_Randomizer
             }
             catch (Exception ex)
             {
-                MessageWindow message = new MessageWindow("Error Deleting Old Files:\n" + ex.Message)
-                {
-                    Owner = MainWindow.window,
-                    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
-                };
-                message.ShowDialog();
+                ErrorMessageWindow("Error Deleting Old Files", ex.Message);
             }
 
             //Delete the old randomized files json file
