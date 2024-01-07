@@ -827,9 +827,14 @@ namespace MHW_Randomizer
                     if (isStoryQuest)
                         changeIcon = StoryQuests[questNumber].ChangeQuestIcon;
 
+                    if (IoC.Settings.UnknownMonsterIcons && m < 5 && MonIcons[m] != 127)
+                        //Set it to the unknown monster icon as the regular ones aren't always fully aligned right
+                        MonIcons[m] = 55;
+                    
+                    //Still do this if its chosen though
                     if (IoC.Settings.RandomIcons && m < 5 && MonIcons[m] != 127)
                         MonIcons[m] = PickIcon.Next(QuestData.IconList.Length - 1);
-                    else if ((m < 5 && MonIcons[m] != 127 && changeIcon) || (IoC.Settings.TwoMonsterQuests && m == 1 && changeIcon))
+                    else if (!IoC.Settings.UnknownMonsterIcons && ((m < 5 && MonIcons[m] != 127 && changeIcon) || (IoC.Settings.TwoMonsterQuests && m == 1 && changeIcon)))
                         MonIcons[m] = Array.IndexOf(QuestData.IconList, QuestData.MonsterNames[RandomMonsterID + 1]);
 
                     //Write monster info to the log
@@ -948,12 +953,12 @@ namespace MHW_Randomizer
                         }
 
                         if (StoryQuests[questNumber].MultiObjectiveHunt)
-                            value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[i]]);
+                            value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons || IoC.Settings.UnknownMonsterIcons ? "???" : QuestData.MonsterNames[MID[i]]);
                         //add a and to the text if two monster quests is enabled to make it clear you need to kill 2 monsters
                         else if (IoC.Settings.TwoMonsterQuests)
-                            value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]) + " and " + (IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[1]]);
+                            value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons || IoC.Settings.UnknownMonsterIcons ? "???" : QuestData.MonsterNames[MID[0]]) + " and " + (IoC.Settings.RandomIcons || IoC.Settings.UnknownMonsterIcons ? "???" : QuestData.MonsterNames[MID[1]]);
                         else
-                            value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
+                            value = StoryTargetText.Entries[entryIndex].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons || IoC.Settings.UnknownMonsterIcons ? "???" : QuestData.MonsterNames[MID[0]]);
 
                         StoryTargetText.Entries[entryIndex].Value = value;
                     }
@@ -966,11 +971,11 @@ namespace MHW_Randomizer
                     if (IoC.Settings.TwoMonsterQuests)
                         GMDFile.Entries[1].Value = "Hunt all target monsters";
                     else if (questNumber == "66801" || questNumber == "66803")
-                        GMDFile.Entries[1].Value = "Hunt 2 " + (IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
+                        GMDFile.Entries[1].Value = "Hunt 2 " + (IoC.Settings.RandomIcons || IoC.Settings.UnknownMonsterIcons ? "???" : QuestData.MonsterNames[MID[0]]);
                     else
                     {
                         var textToReplace = QuestData.MonsterNames.Where(o => GMDFile.Entries[1].Value.Contains(o)).ToList();
-                        GMDFile.Entries[1].Value = GMDFile.Entries[1].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons ? "???" : QuestData.MonsterNames[MID[0]]);
+                        GMDFile.Entries[1].Value = GMDFile.Entries[1].Value.Replace(textToReplace[textToReplace.Count - 1], IoC.Settings.RandomIcons || IoC.Settings.UnknownMonsterIcons ? "???" : QuestData.MonsterNames[MID[0]]);
                     }
 
                     GMDFile.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\quest\" + GMDFile.Filename + "_eng.gmd");

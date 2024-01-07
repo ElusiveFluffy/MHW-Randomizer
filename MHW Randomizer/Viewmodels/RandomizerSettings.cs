@@ -164,6 +164,9 @@ namespace MHW_Randomizer
         public bool MakePandorasArena30Minutes { get; set; }
         public bool FasterKinsects { get; set; }
 
+        //Icons
+        public bool UnknownMonsterIcons { get; set; }
+
         //Experimental
         public bool RandomizeZorahStoryQuests { get; set; }
         public bool IBMonstersInLowRank { get; set; }

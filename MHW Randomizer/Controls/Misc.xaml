@@ -25,7 +25,7 @@
                 <Border BorderBrush="Gray"
                         BorderThickness="1"
                         Margin="5"
-                        Height="100"
+                        Height="80"
                         VerticalAlignment="Top">
                     <StackPanel Orientation="Horizontal"
                                 Margin="0 5">
@@ -65,7 +65,7 @@
                         BorderThickness="1"
                         Margin="5"
                         VerticalAlignment="Top"
-                        Height="100">
+                        Height="80">
                     <StackPanel Margin="0 5">
                         <CheckBox Content="Make &quot;Pandora's Arena&quot; Timer 30 Mins"
                                   IsChecked="{Binding MakePandorasArena30Minutes, Source={x:Static local:IoC.Settings}}"
@@ -85,6 +85,27 @@
                     </StackPanel>
                 </Border>
             </Grid>
+        </Grid>
+        <Grid>
+            <TextBlock Text="Icons"
+                       Padding="1.5 0"
+                       Margin="15 -3 0 0"
+                       Background="White"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="1"
+                       FontWeight="Bold"/>
+            <Border BorderBrush="Gray" 
+                            BorderThickness="1"
+                            Margin="5">
+                <StackPanel Margin="0 5">
+                    <CheckBox Content="Unknown Monster Icons"
+                              IsChecked="{Binding UnknownMonsterIcons, Source={x:Static local:IoC.Settings}}"
+                              Margin="5 4"
+                              ToolTip="Makes it so the all monster icons are the ? monster icon, &#xA;and also changes the name of the monsters to ??? to add some more mystery to which monsters are in a quest or expedition &#xA;(This will replace any icon mod you have installed)"
+                              ToolTipService.ShowDuration="10000"/>
+                </StackPanel>
+            </Border>
         </Grid>
 
         <TextBlock Margin="5 50 5 4"

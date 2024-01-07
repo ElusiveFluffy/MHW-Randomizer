@@ -214,5 +214,10 @@
   "\\common\\equip\\shop.sed",
   "\\common\\guide_insect\\gi_param.gip",
 
-  "\\common\\text\\storyTarget_eng.gmd"
+  "\\common\\text\\storyTarget_eng.gmd",
+
+  "\\common\\text\\em_names_eng.gmd",
+  "\\ui\\common\\tex\\cmn_micon00_ID.tex",
+  "\\ui\\common\\tex\\cmn_micon01_ID.tex",
+  "\\ui\\common\\tex\\cmn_micon00M_ID.tex"
 ]

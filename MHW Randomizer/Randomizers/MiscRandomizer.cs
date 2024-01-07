@@ -20,6 +20,24 @@ namespace MHW_Randomizer
 
             if (IoC.Settings.FasterKinsects)
                 AddKinsectSpeed();
+            if (IoC.Settings.UnknownMonsterIcons)
+                HideMonsters();
+        }
+
+        private static void HideMonsters()
+        {
+            GMD monsterNames = new GMD(ChunkOTF.files["em_names_eng.gmd"].Extract());
+            for (int entry = 0; entry < monsterNames.Entries.Count; entry++)
+            {
+                monsterNames.Entries[entry].Value = "???";
+            }
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\");
+            monsterNames.Save(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\text\em_names_eng.gmd");
+
+            Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\ui\common\tex\");
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\ui\common\tex\cmn_micon00_ID.tex", Properties.Resources.cmn_micon00_ID);
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\ui\common\tex\cmn_micon01_ID.tex", Properties.Resources.cmn_micon01_ID);
+            File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\ui\common\tex\cmn_micon00M_ID.tex", Properties.Resources.cmn_micon00M_ID);
         }
 
         private static void RandomizeScoutFlies()
