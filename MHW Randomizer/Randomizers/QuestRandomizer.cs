@@ -391,7 +391,7 @@ namespace MHW_Randomizer
                 if (IoC.Settings.HighRankMonInLowRank)
                     LowRankMonsterIDs = MonsterIDs;
 
-                //Remove Raging Brachydios because gets stuck going to their second phase
+                //Remove Raging Brachydios just in case they gets stuck going to their second phase by doing too much damage
                 if (IoC.Settings.IBMonstersInLowRank)
                     LowRankMonsterIDs = LowRankMonsterIDs.Concat(QuestData.BigMonsterIDsIB.Where(mon => !QuestData.BigMonsterIDs.Contains(mon) && mon != 96)).ToArray();
                 if (IoC.Settings.IBMonstersInHighRank)
@@ -576,6 +576,7 @@ namespace MHW_Randomizer
             {
                 List<int> previousQuestMonsters = new List<int>();
 
+                //Quest number changed later on
                 if (!ChunkOTF.files.ContainsKey("questData_" + questNumber + ".mib"))
                 {
                     if (questNumber == "64802" && ChunkOTF.files.ContainsKey("questData_66859.mib"))
