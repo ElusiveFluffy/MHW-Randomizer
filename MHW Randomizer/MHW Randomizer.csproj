@@ -284,6 +284,9 @@
     <None Include="Data\eng_skillData.json" />
     <None Include="Data\FileRemover\FilesToRemove.json" />
     <None Include="Data\FileRemover\FoldersToRemove.json" />
+    <None Include="Data\HiddenMonsterIcons\cmn_micon00M_ID.tex" />
+    <None Include="Data\HiddenMonsterIcons\cmn_micon00_ID.tex" />
+    <None Include="Data\HiddenMonsterIcons\cmn_micon01_ID.tex" />
     <None Include="Data\Item Shop\Gear\ShopBow.json" />
     <None Include="Data\Item Shop\Gear\ShopCharge_Blade.json" />
     <None Include="Data\Item Shop\Gear\ShopDual_Blades.json" />

@@ -130,6 +130,15 @@
   <data name="Chest" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Armour\Chest.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="cmn_micon00M_ID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\hiddenmonstericons\cmn_micon00m_id.tex;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cmn_micon00_ID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\hiddenmonstericons\cmn_micon00_id.tex;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cmn_micon01_ID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\hiddenmonstericons\cmn_micon01_id.tex;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Dual_Blades" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Weapons\Dual_Blades.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

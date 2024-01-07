@@ -103,6 +103,36 @@ namespace MHW_Randomizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] cmn_micon00_ID {
+            get {
+                object obj = ResourceManager.GetObject("cmn_micon00_ID", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] cmn_micon00M_ID {
+            get {
+                object obj = ResourceManager.GetObject("cmn_micon00M_ID", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] cmn_micon01_ID {
+            get {
+                object obj = ResourceManager.GetObject("cmn_micon01_ID", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Dual_Blades {
             get {
                 object obj = ResourceManager.GetObject("Dual_Blades", resourceCulture);
