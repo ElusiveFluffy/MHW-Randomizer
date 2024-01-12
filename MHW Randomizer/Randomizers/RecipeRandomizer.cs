@@ -2028,15 +2028,22 @@ namespace MHW_Randomizer
                     //Armour Skill
                     if ((IoC.Settings.RandomArmourSkill && armourDats[c].Equip_Slot != 5) || (IoC.Settings.RandomCharmSkill && armourDats[c].Equip_Slot == 5))
                     {
+                        bool guardianArmour = c == 442 || c == 1061 || c == 1678 || c == 2287 || c == 2902;
                         if (armourDats[c].Skill_1 != 0)
                         {
                             int index = skillR.Next(ItemData.ArmourSkills.Length);
+                            //Make sure the guardian armour can't have the intimidator skill so it doesn't softlock at the start of the game with the jagras
+                            while (guardianArmour && ItemData.ArmourSkills[index] == 124)
+                                index = skillR.Next(ItemData.ArmourSkills.Length);
                             armourDats[c].Skill_1 = ItemData.ArmourSkills[index];
                             logText += "\n\tSkill 1: " + skillNames[(uint)armourDats[c].Skill_1 * 3];
                         }
                         if (armourDats[c].Skill_2 != 0)
                         {
                             int index = skillR.Next(ItemData.ArmourSkills.Length);
+                            //Make sure the guardian armour can't have the intimidator skill so it doesn't softlock at the start of the game with the jagras
+                            while (guardianArmour && ItemData.ArmourSkills[index] == 124)
+                                index = skillR.Next(ItemData.ArmourSkills.Length);
                             armourDats[c].Skill_2 = ItemData.ArmourSkills[index];
                             logText += "\n\tSkill 2: " + skillNames[(uint)armourDats[c].Skill_2 * 3];
                         }
