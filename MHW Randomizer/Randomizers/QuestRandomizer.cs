@@ -393,9 +393,26 @@ namespace MHW_Randomizer
 
                 //Remove Raging Brachydios just in case they gets stuck going to their second phase by doing too much damage
                 if (IoC.Settings.IBMonstersInLowRank)
+                {
                     LowRankMonsterIDs = LowRankMonsterIDs.Concat(QuestData.BigMonsterIDsIB.Where(mon => !QuestData.BigMonsterIDs.Contains(mon) && mon != 96)).ToArray();
+                    if (IoC.Settings.IncludeShara)
+                        LowRankMonsterIDs = LowRankMonsterIDs.Append(81).ToArray();
+                    if (IoC.Settings.IncludeFuriousRajang)
+                        LowRankMonsterIDs = LowRankMonsterIDs.Append(92).ToArray();
+                    if (IoC.Settings.IncludeAlatreon)
+                        LowRankMonsterIDs = LowRankMonsterIDs.Append(87).ToArray();
+                }
+
                 if (IoC.Settings.IBMonstersInHighRank)
+                {
                     MonsterIDs = MonsterIDs.Concat(QuestData.BigMonsterIDsIB.Where(mon => !QuestData.BigMonsterIDs.Contains(mon) && mon != 96)).ToArray();
+                    if (IoC.Settings.IncludeShara)
+                        MonsterIDs = MonsterIDs.Append(81).ToArray();
+                    if (IoC.Settings.IncludeFuriousRajang)
+                        MonsterIDs = MonsterIDs.Append(92).ToArray();
+                    if (IoC.Settings.IncludeAlatreon)
+                        MonsterIDs = MonsterIDs.Append(87).ToArray();
+                }
 
                 //Set up the cumulative chance
                 QuestData.TotalMonsterChance = LowRankMonsterIDs.Length * 10;
