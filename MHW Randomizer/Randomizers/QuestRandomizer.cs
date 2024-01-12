@@ -626,11 +626,11 @@ namespace MHW_Randomizer
                 if (captureQuest)
                     currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs.Where(o => !QuestData.UncaptureableMonsterIDs.Contains(o)).ToArray() : MonsterIDs.Where(o => !QuestData.UncaptureableMonsterIDs.Contains(o)).ToArray();
                 else
-                {
                     currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs : MonsterIDs;
-                    if (questNumber == "00301")
-                        currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 33).ToArray();
-                }
+                //Great giros spawns dead in this quest making it unbeatable
+                //Nergigante is unkillable (gets stuck at 1 HP)
+                if (questNumber == "00301")
+                    currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 33 && o != 25).ToArray();
 
                 //Pick Random Map
                 if (IoC.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
