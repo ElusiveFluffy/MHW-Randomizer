@@ -641,7 +641,7 @@ namespace MHW_Randomizer
                 if (MapIDIndex == 3)
                     //Remove alatreon as a possible monster if map is coral highlands as it causes a blinding white light effect on that map
                     //Remove leshen too as possible monster as they get stuck
-                    currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87 || (o != 23 || o != 51)).ToArray();
+                    currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87 && (o != 23 && o != 51)).ToArray();
                 else if (MapIDIndex == 8)
                     //Remove alatreon as a possible monster if map is hoarfrost reach as it causes them to get stuck
                     currentRankMonsterIDs = currentRankMonsterIDs.Where(o => o != 87).ToArray();
