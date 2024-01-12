@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Closing="Window_Closing"
         ResizeMode="CanMinimize"
-        Title="MHW Randomizer - v1.3.4" Height="610" Width="610"
+        Title="MHW Randomizer - v1.3.5" Height="610" Width="610"
         MinHeight="610"
         MinWidth="610">
     <Grid>
