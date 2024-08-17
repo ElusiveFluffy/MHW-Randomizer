@@ -187,8 +187,8 @@ namespace MHW_Randomizer
         {
             //Message Window
             MessageWindow message = new MessageWindow("Credits\nThank you to:\nAradi147 for the source code for the quest editor,\nSynthlight for the 010 templates which helped me serialize and deserialize a lot of the files, and also for their editor to help check values," +
-                "\nFusionR for the source code for cirilla to be able to edit the GMD text files,\nMHVuze for the source code of WorldChunkTool without it I wouldn't have been able to have it read the chunk files for a more streamlined process,\nFandirus for the fix for Raging Brachydios,\nand everyone else who worked on these programs,\nand the Monster Hunter modding discord and MHW modding wiki." +
-                "\n\nPackages used:\nBetter Folder Browser by WillyKimura\nFody Property Changed by Simon Cropp\nNewtonsoft.Json by James Newton-King\nNinject by Ninject Project Contributors\nTroschuetz.Random by Stefan Troschütz and Alessio Parma\nCRC32.NET by Force")
+                "\nFusionR for the source code for cirilla to be able to edit the GMD text files,\nMHVuze for the source code of WorldChunkTool without it I wouldn't have been able to have it read the chunk files,\nFandirus for the fix for Raging Brachydios,\nand everyone else who worked on these programs,\nand the Monster Hunter modding discord and MHW modding wiki." +
+                "\n\nPackages used:\nFody Property Changed by Simon Cropp\nNewtonsoft.Json by James Newton-King\nTroschuetz.Random by Stefan Troschütz and Alessio Parma\nCRC32.NET by Force")
             {
                 Width = 500,
                 Height = 370,
