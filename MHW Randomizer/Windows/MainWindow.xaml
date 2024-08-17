@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Closing="Window_Closing"
         ResizeMode="CanMinimize"
-        Title="MHW Randomizer - v1.3.5" Height="610" Width="610"
-        MinHeight="610"
+        Title="MHW Randomizer - v1.3.5" Height="620" Width="610"
+        MinHeight="620"
         MinWidth="610">
     <Grid>
         <Border Background="White"
