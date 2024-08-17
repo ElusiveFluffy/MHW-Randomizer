@@ -712,7 +712,7 @@ namespace MHW_Randomizer
 
                     //Pick a random size percent between range if both aren't 100
                     if (ViewModels.Settings.MonsterMinSize != 100 && ViewModels.Settings.MonsterMaxSize != 100)
-                        MonsterSize[m] = PickSize.Next(ViewModels.Settings.MonsterMinSize, ViewModels.Settings.MonsterMaxSize + 1);
+                        MonsterSize[m] = PickSize.Next((int)ViewModels.Settings.MonsterMinSize, (int)ViewModels.Settings.MonsterMaxSize + 1);
 
                     int RandomMonsterID = PickMonsterID(currentRankMonsterIDs!);
 

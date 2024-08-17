@@ -276,16 +276,7 @@ namespace MHW_Randomizer
             try
             {
                 //Save the settings here just incase the randomizer crashes during the randomization so then the settings will get saved instead of being blank or not being stored
-                using (StreamWriter file = File.CreateText(AppDomain.CurrentDomain.BaseDirectory + "Settings.json"))
-                {
-                    JsonSerializer serializer = new JsonSerializer
-                    {
-                        Formatting = Formatting.Indented,
-                        DefaultValueHandling = DefaultValueHandling.Ignore
-                    };
-                    //serialize objects directly into file stream
-                    serializer.Serialize(file, ViewModels.Settings);
-                }
+                ViewModels.Settings.SaveSettingString();
             }
             catch (Exception ex)
             {

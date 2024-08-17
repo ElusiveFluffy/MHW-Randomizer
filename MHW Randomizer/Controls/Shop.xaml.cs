@@ -39,13 +39,13 @@ namespace MHW_Randomizer
             {
                 tb.Text = "1";
                 tb.SelectionStart = tb.Text.Length;
-                ViewModels.Settings.AmountOfShopItems = uint.Parse(tb.Text);
+                ViewModels.Settings.AmountOfShopItems = ushort.Parse(tb.Text);
             }
             if (int.Parse(tb.Text) > 255)
             {
                 tb.Text = "255";
                 tb.SelectionStart = 4;
-                ViewModels.Settings.AmountOfShopItems = uint.Parse(tb.Text);
+                ViewModels.Settings.AmountOfShopItems = ushort.Parse(tb.Text);
             }
         }
 
@@ -69,13 +69,13 @@ namespace MHW_Randomizer
             {
                 tb.Text = "1";
                 tb.SelectionStart = tb.Text.Length;
-                ViewModels.Settings.AmountOfGearShopItems = uint.Parse(tb.Text);
+                ViewModels.Settings.AmountOfGearShopItems = ushort.Parse(tb.Text);
             }
             else if (uint.Parse(tb.Text) > 4259)
             {
                 tb.Text = "4259";
                 tb.SelectionStart = 4;
-                ViewModels.Settings.AmountOfGearShopItems = uint.Parse(tb.Text);
+                ViewModels.Settings.AmountOfGearShopItems = ushort.Parse(tb.Text);
             }
         }
     }

@@ -61,7 +61,7 @@
                         <TextBlock Text="Seed (Blank For Random Seed)" 
                                    FontSize="10"
                                    HorizontalAlignment="Center"/>
-                        <TextBox Text="{Binding UserSeed, Source={x:Static local:ViewModels.Settings}}"
+                        <TextBox Text="{Binding UserSeed, Source={x:Static local:ViewModels.Settings}, UpdateSourceTrigger=PropertyChanged}"
                                  Margin="3"/>
 
                         <Button Content="Credits"

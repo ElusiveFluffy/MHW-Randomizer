@@ -20,16 +20,8 @@ namespace MHW_Randomizer
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            using (StreamWriter file = File.CreateText(AppDomain.CurrentDomain.BaseDirectory + "Settings.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer
-                {
-                    Formatting = Formatting.Indented,
-                    DefaultValueHandling = DefaultValueHandling.Ignore
-                };
-                //serialize objects directly into file stream
-                serializer.Serialize(file, ViewModels.Settings);
-            }
+            //Save before closing
+            ViewModels.Settings.SaveSettingString();
             Application.Current.Shutdown();
         }
     }

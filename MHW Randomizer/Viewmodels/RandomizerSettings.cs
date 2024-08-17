@@ -1,4 +1,8 @@
-﻿using System.ComponentModel;
+﻿using Newtonsoft.Json;
+using System;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
 
 namespace MHW_Randomizer
 {
@@ -40,7 +44,7 @@ namespace MHW_Randomizer
         //Supply Box
         public bool RandomSupplyBox { get; set; } //Random supply box rem ID
         public bool RandomSupplyBoxItems { get; set; } //Random supply box items
-        public uint ExtraSupplyBoxes { get; set; } //Extra supply box files
+        public ushort ExtraSupplyBoxes { get; set; } //Extra supply box files
 
         //Monsters
         public bool IncludeSmallMonsterDebuffs { get; set; }
@@ -65,9 +69,9 @@ namespace MHW_Randomizer
         public bool IncludeFatalis { get; set; } //Fix fatalis
 
         [DefaultValue(100)]
-        public int MonsterMinSize { get; set; } = 100;
+        public ushort MonsterMinSize { get; set; } = 100;
         [DefaultValue(100)]
-        public int MonsterMaxSize { get; set; } = 100;
+        public ushort MonsterMaxSize { get; set; } = 100;
 
         //-------------------------
         //  Expedition Settings
@@ -140,7 +144,7 @@ namespace MHW_Randomizer
         public bool RandomShopWepArmour { get; set; }
         public bool RandomShopWepArmourType { get; set; }
         [DefaultValue(97)]
-        public uint AmountOfGearShopItems { get; set; } = 97;
+        public ushort AmountOfGearShopItems { get; set; } = 97;
 
         //Item Shop
         public bool RandomShopItems { get; set; }
@@ -149,7 +153,7 @@ namespace MHW_Randomizer
         public bool ShopIncludeSupplyItems { get; set; }
         public bool ShopIncludeHousingItems { get; set; }
         [DefaultValue(56)]
-        public uint AmountOfShopItems { get; set; } = 56;
+        public ushort AmountOfShopItems { get; set; } = 56;
 
         //-----------------
         //  Misc Settings
@@ -216,5 +220,291 @@ namespace MHW_Randomizer
 
         //Mantles that get given are shuffled around
 
+        //JsonIgnore so newtonsoft doesn't try making this blank when reading the old settings
+        [JsonIgnore]
+        private string[] BoolSaveOrder = new string[]
+        {
+            //--------------------
+            //  Quest Settings
+            //--------------------
+            
+            //General Quest Settings
+            "RandomizeQuests",
+            "DuplicateMonster",
+            "HighRankMonInLowRank",
+            "IncludeLeshen",
+            "IncludeXenojiiva",
+            "IncludeBehemoth",
+            "TwoMonsterQuests",
+            "RandomSobj",
+            "RandomMaps",
+            "IncludeArenaMap",
+            "IncludeXenoArena",
+            "IncludeIBArenaMaps",
+            "AllMonstersInArena",
+            "RandomIcons",
+            "RandomizeMusic",
+            "RandomizeMultiObj",
+            "RandomizeMultiMon",
+            "RandomizeDuplicate",
+            "DontRandomizeSlay",
+            "DontRandomizeCapture",
+            
+            //Supply Box
+            "RandomSupplyBox",
+            "RandomSupplyBoxItems",
+
+            //Monsters
+            "IncludeSmallMonsterDebuffs",
+            "RandomMonsterElement",
+            "OnlyChangeExistingElement",
+            "IncreaseElementPower",
+            "EachAttackDifferentElement",
+            "RandomMonsterAttackStatus",
+            "OnlyChangeExistingStatus",
+            "EachAttackDifferentStatus",
+            "MultipleStatusesPerAttack",
+
+            //Iceborne Specific Quest Settings
+            "RandomizeIBQuests",
+            "MonstersFoundInIB",
+            "IceborneOnlyMonsters",
+            "IncludeHighRankOnly",
+            "IncludeShara",
+            "IncludeFuriousRajang",
+            "IncludeAlatreon",
+            "IncludeFatalis", //Fix fatalis
+
+            
+            //-------------------------
+            //  Expedition Settings
+            //-------------------------
+
+            "RandomizeExpeditions",
+            "RandomizeIceborneExpeditions",
+            "ExpeditionRandomSobj",
+            "ExpeditionRandomIBSobj",
+            "ExpeditionHighRankInLow",
+            "ExpeditionHighRankOnlyInHigh",
+            "ExpeditionMasterRankOnlyInMaster",
+            "ExpeditionIncludeNonUsualMonsters",
+            "ExpeditionIncludeIBNonUsualMonsters",
+            "ExpeditionIncludeLeshen",
+            "ExpeditionIncludeBehemoth",
+            "ExpeditionIncludeFuriousRajang",
+            "ExpeditionIncludeAlatreon",
+            "ExpeditionIncludeShara",
+
+            //-------------------
+            //  Gear Settings
+            //-------------------
+
+            //Armour
+            "ShuffleArmourRecipes",
+            "ShuffleCharms",
+            "ShuffleIronOre",
+            "RandomArmourIconColour",
+            "RandomArmourSkill",
+            "RandomCharmSkill",
+            "RandomArmourSkillLevels",
+            "RandomCharmSkillLevels",
+            "ShuffleArmourSetBonus",
+            "NonRankSpecificSetBonusShuffle",
+            "RandomArmourEleResist", //
+            "RandomArmourDecoSlots",
+            "GiveCharmDecoSlot",
+            "RandomDecoSlotSize",
+
+            //Weapons
+            "ShuffleWeaponRecipes",
+            "ShuffleWeaponOrder",
+            "RandomWeaponIconColour",
+            "RandomWeaponDecoSlots",
+            "RandomWeaponDecoSlotSize",
+            "RandomWeaponElement",
+            "RandomBowgunElement",
+
+            //Palico
+            "ShufflePalicoArmour",
+            "ShufflePalicoWeapons",
+            "RandomPalicoWeaponElement",
+            "RandomPalicoWeaponType",
+            "RandomPalicoWeaponColour",
+
+            //Kinsect
+            "ShuffleKinsectRecipes",
+            "ShuffleKinsectOrder",
+            "RandomKinsectIconColour",
+            "RandomKinsectType",
+            "RandomKinsectDust",
+
+            //-----------------
+            //  Shop Settings
+            //-----------------
+
+            //Gear Shop
+            "RandomShopWepArmour",
+            "RandomShopWepArmourType",
+
+            //Item Shop
+            "RandomShopItems",
+            "ShopIncludeMaterials",
+            "ShopIncludeJewels",
+            "ShopIncludeSupplyItems",
+            "ShopIncludeHousingItems",
+
+            //-----------------
+            //  Misc Settings
+            //-----------------
+
+            //Scoutfly
+            "RandomScoutflyColour",
+            "CompletelyRandomScoutflyColour",
+            "DifferentTrackScoutflyColour",
+
+            //Tweaks
+            "OnePlayerQuests",
+            "MakePandorasArena30Minutes",
+            "FasterKinsects",
+
+            //Icons
+            "UnknownMonsterIcons",
+
+            //Experimental
+            "RandomizeZorahStoryQuests",
+            "IBMonstersInLowRank",
+            "IBMonstersInHighRank",
+            "ExpeditionIBMonstersInLowRank",
+            "ExpeditionIBMonstersInHighRank",
+            "IBMapsInBaseGame"
+        };
+
+        private string[] UShortSaveOrder = new string[]
+        {
+            "ExtraSupplyBoxes",
+            "MonsterMinSize",
+            "MonsterMaxSize",
+            "AmountOfGearShopItems",
+            "AmountOfShopItems"
+        };
+
+        public void SaveSettingString()
+        {
+            string settings = "";
+            //Use new line as a separator since base64 doesn't use new lines, and new lines won't be anywhere else
+            if (!string.IsNullOrEmpty(ChunkFolderPath))
+                settings += "Chunk Folder: " + ChunkFolderPath + "\n";
+            if (!string.IsNullOrEmpty(SaveFolderPath))
+                settings += "Randomized Folder: " + SaveFolderPath + "\n";
+            if (!string.IsNullOrEmpty(UserSeed))
+                settings += "Seed: " + UserSeed + "\n";
+
+            settings += "Settings: ";
+            byte bitIndex = 0;
+            //Calculate the amount of bytes needed to fit all the bools
+            byte[] bytes = new byte[(int)Math.Ceiling((double)BoolSaveOrder.Length / 8)];
+            foreach (string variable in BoolSaveOrder)
+            {
+                bool tempValue = (bool)typeof(RandomizerSettings).GetProperty(variable).GetValue(this);
+
+                int byteIndex = bitIndex / 8;
+                //The bit that will be set in the byte in the array
+                int bitInByteIndex = bitIndex % 8;
+                //Start from the left most bit
+                byte mask = (byte)(1 << (7 - bitInByteIndex));
+                //Only need to set it to 1 if its true, on false the bit would already be 0
+                if (tempValue)
+                    bytes[byteIndex] |= mask;
+
+                //Increment the current bit
+                bitIndex++;
+            }
+
+            //Convert the bytes to base64 as base64 is guaranteed to be printable text. Not converting the string for transparency for the first sections
+            settings += Convert.ToBase64String(bytes);
+
+            //Add a seprator
+            settings += ":";
+            bytes = new byte[0];
+            foreach (string variable in UShortSaveOrder)
+            {
+                ushort tempValue = (ushort)typeof(RandomizerSettings).GetProperty(variable).GetValue(this);
+
+                //settings += Convert.ToHexString(BitConverter.GetBytes(tempValue));
+                bytes = bytes.Concat(BitConverter.GetBytes(tempValue)).ToArray();
+            }
+            //Convert the bytes to base64 as base64 is guaranteed to be printable text.
+            settings += Convert.ToBase64String(bytes);
+
+            File.WriteAllText("Settings.txt", settings);
+        }
+
+        public void LoadSettingsString()
+        {
+            if (!File.Exists("Settings.txt"))
+                return;
+
+            string[] settingsLines = File.ReadAllLines("Settings.txt");
+
+            //Check if the game folder or seed is in the file
+            if (settingsLines.Length > 1)
+            {
+                foreach (string line in settingsLines)
+                {
+                    string[] splitLines = line.Split(": ");
+                    if (splitLines[0] == "Chunk Folder")
+                        ChunkFolderPath = splitLines[1];
+                    if (splitLines[0] == "Randomized Folder")
+                        SaveFolderPath = splitLines[1];
+                    else if (splitLines[0] == "Seed")
+                        UserSeed = splitLines[1];
+                }
+            }
+
+            //Split the bools, and the ushorts
+            string[] data = settingsLines[settingsLines.Length - 1].Split(": ");
+            data = data[1].Split(":");
+            //Convert the bools
+            byte[] bytes = Convert.FromBase64String(data[0]);
+
+            byte bitIndex = 0;
+            foreach (string variable in BoolSaveOrder)
+            {
+                //Break out early when made it to the end of the data
+                //(For when new variables have been added and loading a older settings file)
+                if (bytes.Length == bitIndex / 8)
+                    break;
+
+                //The bit that will be set in the byte in the array
+                int bitInByteIndex = bitIndex % 8;
+                //Start from the left most bit
+                byte mask = (byte)(1 << (7 - bitInByteIndex));
+                //Check if the bit is set
+                bool isSet = (bytes[bitIndex / 8] & mask) != 0;
+
+                typeof(RandomizerSettings).GetProperty(variable).SetValue(this, isSet);
+
+                //Increment the current bit
+                bitIndex++;
+            }
+
+            bytes = Convert.FromBase64String(data[1]);
+            byte varIndex = 0;
+
+            foreach (string variable in UShortSaveOrder)
+            {
+                //Return out early when made it to the end of the data
+                //(For when new variables have been added and loading a older settings file)
+                if (bytes.Length == varIndex)
+                    return;
+
+                //Get the value from the file
+                ushort ushortValue = BitConverter.ToUInt16(bytes, varIndex);
+                //Set it over the variable
+                typeof(RandomizerSettings).GetProperty(variable).SetValue(this, ushortValue);
+
+                varIndex += 2;
+            }
+        }
     }
 }
