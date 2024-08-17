@@ -6,7 +6,7 @@
         //Number of bytes
         public int PathLength;
         //The alnk the path is from
-        public string TargetAlnk;
+        public string? TargetAlnk;
 
         //For alnk paths that have a path that doesn't seem to work as the first one
         public bool TrimmedMapIdentifier;

@@ -14,7 +14,7 @@ namespace MHW_Randomizer
         public uint st108Chance;
         public uint st000Chance;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
-        public uint[] Transitions;
+        public uint[]? Transitions;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -321,7 +321,7 @@ namespace MHW_Randomizer
             public uint Unk_4;
             public float Element_Dmg;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
-            public float[] Statuses;
+            public float[]? Statuses;
             public byte Ele_Res_Down_Double;
             public byte Ele_Res_Down;
             public byte Def_Down_Double;
@@ -358,11 +358,11 @@ namespace MHW_Randomizer
     public class QuestRewards
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        public uint[] Items;
+        public uint[]? Items;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        public byte[] ItemCounts;
+        public byte[]? ItemCounts;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        public byte[] ItemWeights;
+        public byte[]? ItemWeights;
     }
 
     /// <summary>
@@ -372,13 +372,13 @@ namespace MHW_Randomizer
     public class MonsterDrops
     {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
-        public ushort[] Items;
+        public ushort[]? Items;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
-        public byte[] ItemCounts;
+        public byte[]? ItemCounts;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
-        public byte[] ItemWeights;
+        public byte[]? ItemWeights;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
-        public CarveAnimations[] CarveAnimation;
+        public CarveAnimations[]? CarveAnimation;
     }
 
     public enum CarveAnimations

@@ -63,7 +63,7 @@ namespace MHW_Randomizer
         {
             if (TBMax == null)
                 return;
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
             tb.Text = tb.Text.Truncate(5);
             if (string.IsNullOrWhiteSpace(tb.Text) || tb.Text.StartsWith("0"))
             {
@@ -86,7 +86,7 @@ namespace MHW_Randomizer
 
         private void TBMax_TextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
             tb.Text = tb.Text.Truncate(5);
             if (string.IsNullOrWhiteSpace(tb.Text) || tb.Text.StartsWith("0"))
             {
@@ -109,7 +109,7 @@ namespace MHW_Randomizer
 
         private void EnterKeyRemoveFocus(object sender, KeyEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
             if (e.Key == Key.Enter)
             {
                 // Kill logical focus
@@ -121,25 +121,25 @@ namespace MHW_Randomizer
 
         private void MonstersFoundInIB_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (!IoC.Settings.IceborneOnlyMonsters && !IoC.Settings.IncludeHighRankOnly)
+            if (!ViewModels.Settings.IceborneOnlyMonsters && !ViewModels.Settings.IncludeHighRankOnly)
                 MonstersFoundInIB.IsChecked = true;
         }
 
         private void OnlyIBMonsters_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (!IoC.Settings.MonstersFoundInIB && !IoC.Settings.IncludeHighRankOnly)
+            if (!ViewModels.Settings.MonstersFoundInIB && !ViewModels.Settings.IncludeHighRankOnly)
                 OnlyIBMonsters.IsChecked = true;
         }
 
         private void NonIBMonsters_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (!IoC.Settings.IceborneOnlyMonsters && !IoC.Settings.MonstersFoundInIB)
+            if (!ViewModels.Settings.IceborneOnlyMonsters && !ViewModels.Settings.MonstersFoundInIB)
                 NonIBMonsters.IsChecked = true;
         }
 
         private void TBSupply_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
             tb.Text = tb.Text.Truncate(5);
 
             if (int.Parse(tb.Text) > 2000)

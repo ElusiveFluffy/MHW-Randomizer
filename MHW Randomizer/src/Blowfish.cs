@@ -67,15 +67,15 @@ namespace MHW_Randomizer.Crypto
         RNGCryptoServiceProvider randomSource;
 
         //SBLOCKS
-        private uint[] bf_s0;
-        private uint[] bf_s1;
-        private uint[] bf_s2;
-        private uint[] bf_s3;
+        private uint[]? bf_s0;
+        private uint[]? bf_s1;
+        private uint[]? bf_s2;
+        private uint[]? bf_s3;
 
-        private uint[] bf_P;
+        private uint[]? bf_P;
 
         //KEY
-        private byte[] key;
+        private byte[]? key;
 
         //HALF-BLOCKS
         private uint xl_par;

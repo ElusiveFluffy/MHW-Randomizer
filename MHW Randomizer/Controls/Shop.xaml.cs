@@ -33,25 +33,25 @@ namespace MHW_Randomizer
 
         private void TBItems_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
             tb.Text = tb.Text.Truncate(4);
             if (string.IsNullOrWhiteSpace(tb.Text) || int.Parse(tb.Text) <= 0)
             {
                 tb.Text = "1";
                 tb.SelectionStart = tb.Text.Length;
-                IoC.Settings.AmountOfShopItems = uint.Parse(tb.Text);
+                ViewModels.Settings.AmountOfShopItems = uint.Parse(tb.Text);
             }
             if (int.Parse(tb.Text) > 255)
             {
                 tb.Text = "255";
                 tb.SelectionStart = 4;
-                IoC.Settings.AmountOfShopItems = uint.Parse(tb.Text);
+                ViewModels.Settings.AmountOfShopItems = uint.Parse(tb.Text);
             }
         }
 
         private void EnterKeyRemoveFocus(object sender, KeyEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
             if (e.Key == Key.Enter)
             {
                 // Kill logical focus
@@ -63,19 +63,19 @@ namespace MHW_Randomizer
 
         private void TBArmItems_IsKeyboardFocusedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
             tb.Text = tb.Text.Truncate(5);
             if (string.IsNullOrWhiteSpace(tb.Text) || uint.Parse(tb.Text) <= 0)
             {
                 tb.Text = "1";
                 tb.SelectionStart = tb.Text.Length;
-                IoC.Settings.AmountOfGearShopItems = uint.Parse(tb.Text);
+                ViewModels.Settings.AmountOfGearShopItems = uint.Parse(tb.Text);
             }
             else if (uint.Parse(tb.Text) > 4259)
             {
                 tb.Text = "4259";
                 tb.SelectionStart = 4;
-                IoC.Settings.AmountOfGearShopItems = uint.Parse(tb.Text);
+                ViewModels.Settings.AmountOfGearShopItems = uint.Parse(tb.Text);
             }
         }
     }

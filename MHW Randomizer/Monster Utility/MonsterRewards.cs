@@ -28,9 +28,9 @@ namespace MHW_Randomizer
 
         public static void test()
         {
-            File.WriteAllBytes(IoC.Settings.SaveFolderPath + "/em118.itlot", cipher.Decipher(ChunkOTF.files["em118.itlot"].Extract()));
-            File.WriteAllBytes(IoC.Settings.SaveFolderPath + "/em026.itlot", cipher.Decipher(ChunkOTF.files["em026.itlot"].Extract()));
-            File.WriteAllBytes(IoC.Settings.SaveFolderPath + "/em037.itlot", cipher.Decipher(ChunkOTF.files["em037.itlot"].Extract()));
+            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + "/em118.itlot", cipher.Decipher(ChunkOTF.files["em118.itlot"].Extract()));
+            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + "/em026.itlot", cipher.Decipher(ChunkOTF.files["em026.itlot"].Extract()));
+            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + "/em037.itlot", cipher.Decipher(ChunkOTF.files["em037.itlot"].Extract()));
         }
     }
 }

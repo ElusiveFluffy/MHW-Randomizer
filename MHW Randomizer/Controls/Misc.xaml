@@ -31,22 +31,22 @@
                                 Margin="0 5">
                         <StackPanel>
                             <CheckBox Content="Random Scoutfly Colour"
-                                      IsChecked="{Binding RandomScoutflyColour, Source={x:Static local:IoC.Settings}}"
+                                      IsChecked="{Binding RandomScoutflyColour, Source={x:Static local:ViewModels.Settings}}"
                                       Margin="5 4"
                                       ToolTip="Randomizes the scoutfly colour for when tracking a monster, and the monster trace colours with a colour from a list I made &#x0a;(Different colours for normal monster, elder dragon, and tempered)"
                                       ToolTipService.ShowDuration="10000"/>
                             <CheckBox Content="Completely Random Scoutfly Colour"
-                                      IsChecked="{Binding CompletelyRandomScoutflyColour, Source={x:Static local:IoC.Settings}}"
+                                      IsChecked="{Binding CompletelyRandomScoutflyColour, Source={x:Static local:ViewModels.Settings}}"
                                       Margin="12 4"
                                       ToolTip="Make it so the colours aren't picked from the colour list and are completely random"
                                       ToolTipService.ShowDuration="10000"
-                                      IsEnabled="{Binding RandomScoutflyColour, Source={x:Static local:IoC.Settings}}"/>
+                                      IsEnabled="{Binding RandomScoutflyColour, Source={x:Static local:ViewModels.Settings}}"/>
                             <CheckBox Content="Different Track Colour"
-                                      IsChecked="{Binding DifferentTrackScoutflyColour, Source={x:Static local:IoC.Settings}}"
+                                      IsChecked="{Binding DifferentTrackScoutflyColour, Source={x:Static local:ViewModels.Settings}}"
                                       Margin="12 4"
                                       ToolTip="Makes the track colour for monsters different from the scoutfly colour, instead of it being the same as the scoutfly's random colour"
                                       ToolTipService.ShowDuration="10000"
-                                      IsEnabled="{Binding RandomScoutflyColour, Source={x:Static local:IoC.Settings}}"/>
+                                      IsEnabled="{Binding RandomScoutflyColour, Source={x:Static local:ViewModels.Settings}}"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -68,17 +68,17 @@
                         Height="80">
                     <StackPanel Margin="0 5">
                         <CheckBox Content="Make &quot;Pandora's Arena&quot; Timer 30 Mins"
-                                  IsChecked="{Binding MakePandorasArena30Minutes, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding MakePandorasArena30Minutes, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="The timer is usually 15 minutes but you repel Lunastra, if its a different monster then you need to slay then because of how repeling works, &#x0a;and 15 minutes can be tight for the quest"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Make All Quests 1 Player"
-                                  IsChecked="{Binding OnePlayerQuests, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding OnePlayerQuests, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Makes it so if you're playing solo you don't need to change player count to 1 so the prep message doesn't appear"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Faster Starter Kinsects"
-                                  IsChecked="{Binding FasterKinsects, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding FasterKinsects, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Sets kinsects to have a speed of atleast 3 to make them a bit more bearable to start with"
                                   ToolTipService.ShowDuration="10000"/>
@@ -100,7 +100,7 @@
                             Margin="5">
                 <StackPanel Margin="0 5">
                     <CheckBox Content="Unknown Monster Icons"
-                              IsChecked="{Binding UnknownMonsterIcons, Source={x:Static local:IoC.Settings}}"
+                              IsChecked="{Binding UnknownMonsterIcons, Source={x:Static local:ViewModels.Settings}}"
                               Margin="5 4"
                               ToolTip="Makes it so the all monster icons are the ? monster icon, &#xA;and also changes the name of the monsters to ??? to add some more mystery to which monsters are in a quest or expedition &#xA;(This will replace any icon mod you have installed)"
                               ToolTipService.ShowDuration="10000"/>
@@ -133,11 +133,11 @@
                                    Margin="5 0 5 4"
                                    TextWrapping="Wrap"/>
                         <CheckBox Content="Randomize Zorah Story Quests (Changes Map and Zorah)"
-                                  IsChecked="{Binding RandomizeZorahStoryQuests, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomizeZorahStoryQuests, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Will pick a random map and randomize Zorah to be something else making it just like a regular hunt quest, instead of a slow autoscroller &#x0a;(Only changes the Zorah quests required for the story, so can still get Zorah materials from the optional quest version) &#x0a;(Your Palico will be frozen but just fast travel to a camp to fix them)"
                                   ToolTipService.ShowDuration="10000"
-                                  IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
+                                  IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -163,24 +163,24 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel>
                         <CheckBox Content="Iceborne Monsters in Low Rank Quests"
-                                  IsChecked="{Binding IBMonstersInLowRank, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding IBMonstersInLowRank, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Adds iceborne monsters to the pool of monsters for low rank quests, could be hard if include them &#x0a;They won't give any drops in the quest reward screen and some won't let you carve them"
                                   ToolTipService.ShowDuration="10000"
-                                  IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
+                                  IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}"/>
                         <CheckBox Content="Iceborne Monsters in High Rank Quests"
-                                  IsChecked="{Binding IBMonstersInHighRank, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding IBMonstersInHighRank, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Adds iceborne monsters to the pool of monsters for high rank quests &#x0a;They won't give any drops in the quest reward screen and some won't let you carve them"
                                   ToolTipService.ShowDuration="10000"
-                                  IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
+                                  IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}"/>
                         <TextBlock Text="Requires random maps enabled on the quests tab"
                                    TextWrapping="Wrap"
                                    FontWeight="SemiBold"
                                    Margin="5 4 5 0"/>
                         <CheckBox Content="Iceborne Maps in Base Game Map Pool"
-                                  IsChecked="{Binding IBMapsInBaseGame, Source={x:Static local:IoC.Settings}}"
-                                  IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding IBMapsInBaseGame, Source={x:Static local:ViewModels.Settings}}"
+                                  IsEnabled="{Binding RandomMaps, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Adds the iceborne maps to the low/high rank random map pool"
                                   ToolTipService.ShowDuration="10000"/>
@@ -188,17 +188,17 @@
                     <StackPanel Grid.Column="1"
                                 Margin="7 0 0 0">
                         <CheckBox Content="Iceborne Monsters in Low Rank Expeditions"
-                                  IsChecked="{Binding ExpeditionIBMonstersInLowRank, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding ExpeditionIBMonstersInLowRank, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Adds iceborne monsters to the pool of monsters for low rank expeditions, could make the pool too big &#x0a;They won't give any drops in the quest reward screen and some won't let you carve them"
                                   ToolTipService.ShowDuration="10000"
-                                  IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"/>
+                                  IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:ViewModels.Settings}}"/>
                         <CheckBox Content="Iceborne Monsters in High Rank Expeditions"
-                                  IsChecked="{Binding ExpeditionIBMonstersInHighRank, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding ExpeditionIBMonstersInHighRank, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Adds iceborne monsters to the pool of monsters for high rank expeditions, could make the pool too big &#x0a;They won't give any drops in the quest reward screen and some won't let you carve them"
                                   ToolTipService.ShowDuration="10000"
-                                  IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:IoC.Settings}}"/>
+                                  IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:ViewModels.Settings}}"/>
                     </StackPanel>
                 </Grid>
             </Border>

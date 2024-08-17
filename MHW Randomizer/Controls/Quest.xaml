@@ -32,34 +32,34 @@
                                         Margin="0 5">
                                 <StackPanel>
                                     <CheckBox Content="Randomize Quests"
-                                              IsChecked="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="5 4"
                                               ToolTip="Randomizes the monster in quests and changes the text to match the randomized monster"/>
                                     <CheckBox Content="Randomize Multi-Objective"
-                                              IsChecked="{Binding RandomizeMultiObj, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding RandomizeMultiObj, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="5 4"
                                               ToolTip="Randomizes quests that have 2 different monsters to hunt/slay (can have different objectives)"
-                                              IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
+                                              IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}"/>
                                     <CheckBox Content="Randomize Multi-Monster"
-                                              IsChecked="{Binding RandomizeMultiMon, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding RandomizeMultiMon, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="5, 4"
                                               ToolTip="Randomize quests with 2-5 monsters"
-                                              IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
+                                              IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}"/>
                                     <CheckBox Content="Randomize Same Monster"
-                                              IsChecked="{Binding RandomizeDuplicate, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding RandomizeDuplicate, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="5, 4"
                                               ToolTip="Randomize quests where you have to hunt 2 of the same monster (Will randomize there to be 2 of the same monster)"
-                                              IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}"/>
+                                              IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}"/>
                                 </StackPanel>
                                 <StackPanel Margin="40 0 0 0"
                                             VerticalAlignment="Center"
-                                            IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
+                                            IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}">
                                     <CheckBox Content="Don't Randomize Slay"
-                                              IsChecked="{Binding DontRandomizeSlay, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding DontRandomizeSlay, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="5, 4"
                                               ToolTip="Won't randomize big monster slay quests"/>
                                     <CheckBox Content="Don't Randomize Capture"
-                                              IsChecked="{Binding DontRandomizeCapture, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding DontRandomizeCapture, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="5, 4"
                                               ToolTip="Won't randomize big monster capture quests"/>
                                 </StackPanel>
@@ -80,32 +80,32 @@
                                 Margin="5">
 
                             <StackPanel VerticalAlignment="Center"
-                                        IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
+                                        IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}">
                                 <CheckBox Content="Randomize Maps"
-                                              IsChecked="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding RandomMaps, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="5, 4"
                                               ToolTip="Randomize the map the quest will happen on (needs to use random spawn files for the map)&#xA;(Some story quests don't randomize maps because it softlocks)&#xA;(The blockades in the rotten vale and elder recess get moved out of the way so you can access those areas early)"
                                               Checked="MapOption_Checked"
                                               Unchecked="MapOption_Unchecked"
                                               ToolTipService.ShowDuration="10000"/>
                                 <CheckBox Content="Include Arenas"
-                                              IsChecked="{Binding IncludeArenaMap, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding IncludeArenaMap, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="12, 4"
                                               ToolTip="Includes the arena maps in the pool of maps to randomly chose from &#xA;(only the required monsters will be in the arena)"
                                               ToolTipService.ShowDuration="10000"
-                                              IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"/>
+                                              IsEnabled="{Binding RandomMaps, Source={x:Static local:ViewModels.Settings}}"/>
                                 <CheckBox Content="Include Xeno Arena"
-                                              IsChecked="{Binding IncludeXenoArena, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding IncludeXenoArena, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="12, 4"
                                               ToolTip="Includes Xeno's Arena in the pool of maps, have to use a unique music track for the map since most monsters have no music"
                                               ToolTipService.ShowDuration="10000"
-                                              IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"/>
+                                              IsEnabled="{Binding RandomMaps, Source={x:Static local:ViewModels.Settings}}"/>
                                 <CheckBox Content="All Monster In Arenas"
-                                              IsChecked="{Binding AllMonstersInArena, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding AllMonstersInArena, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="12, 4"
                                               ToolTip="Includes the amount of monsters in the original quest instead of only the required monsters (can be chaotic)"
                                               ToolTipService.ShowDuration="10000"
-                                              IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"/>
+                                              IsEnabled="{Binding RandomMaps, Source={x:Static local:ViewModels.Settings}}"/>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -127,25 +127,25 @@
                                 Padding="0 0 100 0">
                             <StackPanel Orientation="Horizontal"
                                         Margin="0 5"
-                                        IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
+                                        IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}">
                                 <StackPanel VerticalAlignment="Center">
                                     <CheckBox Content="Random Supply Box"
-                                              IsChecked="{Binding RandomSupplyBox, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding RandomSupplyBox, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="5, 4"
                                               ToolTip="Picks a random supply box for each quest"/>
                                     <CheckBox Content="Random Supply Box Items"
-                                              IsChecked="{Binding RandomSupplyBoxItems, Source={x:Static local:IoC.Settings}}"
+                                              IsChecked="{Binding RandomSupplyBoxItems, Source={x:Static local:ViewModels.Settings}}"
                                               Margin="5, 4"
                                               ToolTip="Randomizes the items and the amount of each item in supply boxes (Only includes supply items, and each item has a limit to the amount)"/>
                                 </StackPanel>
                                 <StackPanel Margin="13 -4 0 0"
                                             VerticalAlignment="Center"
-                                            IsEnabled="{Binding RandomSupplyBoxItems, Source={x:Static local:IoC.Settings}}">
+                                            IsEnabled="{Binding RandomSupplyBoxItems, Source={x:Static local:ViewModels.Settings}}">
                                     <TextBlock Text="Extra Supply Boxes"
                                                FontSize="12"
                                                Margin="5 2"/>
                                     <TextBox Margin="5 2"
-                                             Text="{Binding ExtraSupplyBoxes, Source={x:Static local:IoC.Settings}}"
+                                             Text="{Binding ExtraSupplyBoxes, Source={x:Static local:ViewModels.Settings}}"
                                              Width="100"
                                              HorizontalAlignment="Left"
                                              PreviewTextInput="NumberValidationTextBox"
@@ -170,9 +170,9 @@
                         <Border BorderBrush="Gray" 
                                 BorderThickness="1"
                                 Margin="5">
-                            <StackPanel IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
+                            <StackPanel IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}">
                                 <CheckBox Content="Random Quest Icons"
-                                          IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding RandomIcons, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="6, 12, 5, 4"
                                           ToolTip="Makes it more of a surprise of what the monster will be before starting the quest &#xA;(Also changes the monster in the quest objective text to ???) (Hasn't been tested without iceborne)"
                                           ToolTipService.ShowDuration="10000"/>
@@ -195,23 +195,23 @@
                             Margin="5">
                         <StackPanel Orientation="Horizontal"
                                     Margin="0 5"
-                                    IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
+                                    IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}">
                             <StackPanel VerticalAlignment="Center">
                                 <CheckBox Content="Allow Duplicate Monsters"
-                                          IsChecked="{Binding DuplicateMonster, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding DuplicateMonster, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           ToolTip="Allow for there to be a chance to randomize multiple of the same monster in a quest (just through regular chance)"/>
 
                                 <CheckBox Content="Every Quest a 2 Monster Quest"
                                           Margin="5, 4"
-                                          IsChecked="{Binding TwoMonsterQuests, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding TwoMonsterQuests, Source={x:Static local:ViewModels.Settings}}"
                                           ToolTip="Makes it so every quest you need to hunt/slay/capture 2 monsters (same objective as the first monster)"/>
                                 <CheckBox Content="Use Random Spawn Files"
                                           Margin="5, 4"
                                           x:Name="Rsobj"
-                                          IsChecked="{Binding RandomSobj, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding RandomSobj, Source={x:Static local:ViewModels.Settings}}"
                                           ToolTip="The spawn file affects things like the monster spawn. &#xA;Random spawn files aren't used for monsters that have cutscenes to not break them"
-                                          IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}, Converter={local:InverseBooleanConverter}}"/>
+                                          IsEnabled="{Binding RandomMaps, Source={x:Static local:ViewModels.Settings}, Converter={local:InverseBooleanConverter}}"/>
                                 <!-- <CheckBox Content="Shuffle Quest Names"
                                                   Margin="5"
                                                   ToolTip="Shuffle the quest names between each other (won't use same name twice)"/> -->
@@ -219,20 +219,20 @@
                             <StackPanel Margin="19 0"
                                         VerticalAlignment="Center">
                                 <CheckBox Content="High Rank Monsters in Low Rank"
-                                          IsChecked="{Binding HighRankMonInLowRank, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding HighRankMonInLowRank, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           ToolTip="Includes monsters that don't appear in low rank quest, can be challenging &#xA;(they don't have any low rank drops so you will get high rank drops instead (some can't be carved though), and you won't get any rewards from them at the end of the quest)"
                                           ToolTipService.ShowDuration="10000"/>
                                 <CheckBox Content="Include Leshen"
-                                          IsChecked="{Binding IncludeLeshen, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding IncludeLeshen, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           ToolTip="Could be hard if included as a possible random monster"/>
                                 <!--<CheckBox Content="Include Xeno'jiiva"
-                                          IsChecked="{Binding IncludeXenojiiva, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding IncludeXenojiiva, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           ToolTip="Xeno'jiiva can get stuck in some spots due to their size and has a fair amount of health so could be a bit hard if included in possible random monster"/>
                                 --><CheckBox Content="Include Behemoth"
-                                          IsChecked="{Binding IncludeBehemoth, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding IncludeBehemoth, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           ToolTip="Behemoth could get stuck in some spots due to their size &#xA;(hasn't really been tested) and has alot of health so could be hard if included in possible random monster"
                                           ToolTipService.ShowDuration="10000"/>
@@ -243,7 +243,7 @@
                                            FontSize="12"
                                            Margin="5 2"/>
                                 <TextBox Margin="5 2"
-                                         Text="{Binding MonsterMinSize, Source={x:Static local:IoC.Settings}}"
+                                         Text="{Binding MonsterMinSize, Source={x:Static local:ViewModels.Settings}}"
                                          Width="100"
                                          HorizontalAlignment="Left"
                                          PreviewTextInput="NumberValidationTextBox"
@@ -256,7 +256,7 @@
                                            FontSize="12"
                                            Margin="5 2"/>
                                 <TextBox Margin="5 2"
-                                         Text="{Binding MonsterMaxSize, Source={x:Static local:IoC.Settings}}"
+                                         Text="{Binding MonsterMaxSize, Source={x:Static local:ViewModels.Settings}}"
                                          Width="100"
                                          HorizontalAlignment="Left"
                                          PreviewTextInput="NumberValidationTextBox"
@@ -271,11 +271,11 @@
                 </Grid>
                 <!--
                             <CheckBox Content="Every Monster Tempered"
-                                      IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
+                                      IsChecked="{Binding RandomIcons, Source={x:Static local:ViewModels.Settings}}"
                                       Margin="5"
                                       ToolTip="Every Monster Becomes Tempered Versions"/>
                             <CheckBox Content="Every Monster Arch-Tempered"
-                                      IsChecked="{Binding RandomIcons, Source={x:Static local:IoC.Settings}}"
+                                      IsChecked="{Binding RandomIcons, Source={x:Static local:ViewModels.Settings}}"
                                       Margin="5"
                                       ToolTip="Every Monster Becomes Arch-Tempered Versions"/>
                             -->
@@ -290,7 +290,7 @@
                         Margin="5"
                         Grid.Row="1">
                     <StackPanel Margin="0 0 0 5" 
-                                IsEnabled="{Binding RandomizeQuests, Source={x:Static local:IoC.Settings}}">
+                                IsEnabled="{Binding RandomizeQuests, Source={x:Static local:ViewModels.Settings}}">
                         <TextBlock Text="Iceborne (Need Iceborne Installed)"
                                    Padding="1.5 0"
                                    Margin="10 -10 0 0"
@@ -302,7 +302,7 @@
                                    FontWeight="SemiBold"
                                    Margin="5 0 5 4"/>
                         <CheckBox Content="Randomize Iceborne Quests"
-                                  IsChecked="{Binding RandomizeIBQuests, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomizeIBQuests, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes all Iceborne quests except for the shara rerun, safi, and fatalis quests"/>
                         
@@ -311,7 +311,7 @@
                     <!--<StackPanel VerticalAlignment="Center"
                                 Margin="0 31 0 0">
                         <CheckBox Content="Include Fatalis"
-                                      IsChecked="{Binding IncludeFatalis, Source={x:Static local:IoC.Settings}}"
+                                      IsChecked="{Binding IncludeFatalis, Source={x:Static local:ViewModels.Settings}}"
                                       Margin="5, 4"
                                       Foreground="Red"
                                       ToolTip="Good luck (WARNING: They are a bit buggy and the attack where meant to go behind a gate, that doesn't exist in any other stage, will one shot you)"
@@ -336,7 +336,7 @@
                         <StackPanel Orientation="Horizontal">
                             <StackPanel>
                                 <CheckBox Content="Monsters Found in Iceborne Quests"
-                                          IsChecked="{Binding MonstersFoundInIB, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding MonstersFoundInIB, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           x:Name="MonstersFoundInIB"
                                           Checked="MonstersFoundInIB_Checked"
@@ -344,7 +344,7 @@
                                           Style="{StaticResource Circle}"
                                           Unchecked="MonstersFoundInIB_Unchecked"/>
                                 <CheckBox Content="Only Monsters Added in Iceborne"
-                                          IsChecked="{Binding IceborneOnlyMonsters, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding IceborneOnlyMonsters, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           x:Name="OnlyIBMonsters"
                                           Checked="OnlyIBMonsters_Checked"
@@ -352,7 +352,7 @@
                                           ToolTip="Only randomizes monsters added in iceborne for iceborne quests"
                                           Style="{StaticResource Circle}"/>
                                 <CheckBox Content="Include Non-Iceborne Monsters"
-                                          IsChecked="{Binding IncludeHighRankOnly, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding IncludeHighRankOnly, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           x:Name="NonIBMonsters"
                                           Checked="NonIBMonsters_Checked"
@@ -363,17 +363,17 @@
                             </StackPanel>
                             <StackPanel Margin="10 0">
                                 <CheckBox Content="Include Shara Ishvalda"
-                                          IsChecked="{Binding IncludeShara, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding IncludeShara, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           ToolTip="May get stuck, has a custom think file that makes them transform to the second phase when they see you"
                                           ToolTipService.ShowDuration="10000"/>
                                 <CheckBox Content="Include Furious Rajang"
-                                          IsChecked="{Binding IncludeFuriousRajang, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding IncludeFuriousRajang, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           ToolTip="May get stuck, can be hard if include them"
                                           ToolTipService.ShowDuration="10000"/>
                                 <CheckBox Content="Include Alatreon"
-                                          IsChecked="{Binding IncludeAlatreon, Source={x:Static local:IoC.Settings}}"
+                                          IsChecked="{Binding IncludeAlatreon, Source={x:Static local:ViewModels.Settings}}"
                                           Margin="5, 4"
                                           ToolTip="May get stuck, can be hard if include them (Won't be in the pool of monsters for coral highlands because they make the screen completely white when in fire form on that map)"
                                           ToolTipService.ShowDuration="10000"/>
@@ -395,11 +395,11 @@
                         Margin="5 6 5 0"
                         Padding="2">
                         <CheckBox Content="Include Iceborne Arenas"
-                                  IsChecked="{Binding IncludeIBArenaMaps, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding IncludeIBArenaMaps, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 10 8 0"
                                   ToolTip="Includes the Iceborne arena maps in the pool of maps to randomly chose from &#xA;(includes arenas like Shara's and Alatreon's) &#xA;(The monsters will try to run but they don't have anywhere to go so will just go back to fighting, couldn't seem to fix this) &#xA;(only the required monsters will be in the arena unless the all monster in arenas option is checked) &#xA;(Will use a unique music track otherwise there will be no music unless the monster has their own theme)"
                                   ToolTipService.ShowDuration="10000"
-                                  IsEnabled="{Binding RandomMaps, Source={x:Static local:IoC.Settings}}"/>
+                                  IsEnabled="{Binding RandomMaps, Source={x:Static local:ViewModels.Settings}}"/>
                     </Border>
                 </Grid>
             </DockPanel>

@@ -27,22 +27,22 @@ namespace MHW_Randomizer
 
         private void RandomExpeditions_Checked(object sender, RoutedEventArgs e)
         {
-            IoC.Settings.ExpeditionRandomSobj = true;
+            ViewModels.Settings.ExpeditionRandomSobj = true;
         }
 
         private void RandomExpeditions_Unchecked(object sender, RoutedEventArgs e)
         {
-            IoC.Settings.ExpeditionRandomSobj = false;
+            ViewModels.Settings.ExpeditionRandomSobj = false;
         }
 
         private void RandomIBExpeditions_Checked(object sender, RoutedEventArgs e)
         {
-            IoC.Settings.ExpeditionRandomIBSobj = true;
+            ViewModels.Settings.ExpeditionRandomIBSobj = true;
         }
 
         private void RandomIBExpeditions_Unchecked(object sender, RoutedEventArgs e)
         {
-            IoC.Settings.ExpeditionRandomIBSobj = false;
+            ViewModels.Settings.ExpeditionRandomIBSobj = false;
         }
     }
 }

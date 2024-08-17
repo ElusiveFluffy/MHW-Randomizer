@@ -27,12 +27,12 @@
                         Margin="5">
                     <StackPanel Margin="0 5">
                         <CheckBox Content="Shuffle Weapon Recipes"
-                                  IsChecked="{Binding ShuffleWeaponRecipes, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding ShuffleWeaponRecipes, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Shuffles the materials for weapon recipes &#x0a;(low rank recipes shuffle with low rank, high with high, and master with master). Doesn't shuffle between different weapons"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Shuffle Weapon Recipe Tree Order"
-                                  IsChecked="{Binding ShuffleWeaponOrder, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding ShuffleWeaponOrder, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Shuffles the order of the weapon upgrade tree (low rank shuffle with low rank, high with high, and master with master)&#x0a;(The materials won't change spots only the output if shuffle weapon recpies is not ticked (no chance to shuffle to be the same recipe))"
                                   ToolTipService.ShowDuration="10000"/>
@@ -54,12 +54,12 @@
                         Margin="5">
                     <StackPanel Margin="0 5">
                         <CheckBox Content="Shuffle Kinsect Recipes"
-                                  IsChecked="{Binding ShuffleKinsectRecipes, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding ShuffleKinsectRecipes, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Shuffles the kinsect nurturing recipies and makes them all avaliable at the start of the game &#x0a;(low rank recipes shuffle with low rank, high with high, and master with master)"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Shuffle Kinsect Recipe Tree Order"
-                                  IsChecked="{Binding ShuffleKinsectOrder, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding ShuffleKinsectOrder, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Shuffles the order of the kinsect nurturing tree (low rank shuffle with low rank, high with high, and master with master)&#x0a;(The materials won't change spots only the output if shuffle kinsect recpies is not ticked (no chance to shuffle to be the same recipe))"
                                   ToolTipService.ShowDuration="10000"/>
@@ -82,7 +82,7 @@
                     Margin="5">
                 <StackPanel Margin="0 5">
                     <CheckBox Content="Shuffle Palico Weapon Recipes"
-                              IsChecked="{Binding ShufflePalicoWeapons, Source={x:Static local:IoC.Settings}}"
+                              IsChecked="{Binding ShufflePalicoWeapons, Source={x:Static local:ViewModels.Settings}}"
                               Margin="5 4"
                               ToolTip="Shuffles the materials for palico weapon recipes &#x0a;(low rank recipes shuffle with low rank, high with high, and master with master)"
                               ToolTipService.ShowDuration="10000"/>
@@ -109,28 +109,28 @@
                         Margin="5">
                     <StackPanel Margin="0 5">
                         <CheckBox Content="Random Weapon Element"
-                                  IsChecked="{Binding RandomWeaponElement, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomWeaponElement, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes elements and element power on weapons &#x0a;(element power scales with rarity)"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Random Bowgun Element"
-                                  IsChecked="{Binding RandomBowgunElement, Source={x:Static local:IoC.Settings}}"
-                                  IsEnabled="{Binding RandomWeaponElement, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomBowgunElement, Source={x:Static local:ViewModels.Settings}}"
+                                  IsEnabled="{Binding RandomWeaponElement, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="12, 4"
                                   ToolTip="Gives bowguns a random element which applies to all shots &#x0a;(Can be quite over powered, tried to nerf it a bit by giving them a much lower element power range for the randomization)"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Random Amount of Decoration Slots"
-                                  IsChecked="{Binding RandomWeaponDecoSlots, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomWeaponDecoSlots, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes weapons to have between 0-3 decoration slots &#x0a;(Chance of getting higher amount of slots increases as rarity increases eg. low rarity stuff will mostly be 0 and 1 slots while high rarity will mostly be 2 and 3 slots)&#x0a;(if don't check random slot size new slots will default to 1)"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Random Decoration Slot Size"
-                                  IsChecked="{Binding RandomWeaponDecoSlotSize, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomWeaponDecoSlotSize, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes all avaliable slot sizes between 1-4 on weapons &#x0a;(Chance of getting bigger slots increases as rarity increases)"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Random Weapon Icon Colour"
-                                  IsChecked="{Binding RandomWeaponIconColour, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomWeaponIconColour, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes the colour of the weapon icon &#x0a;(Done through randomizing rarity value, can cause some upgrade paths to be marked as you've reached the max upgrade path until you are a rank high enough for that rarity)&#x0a;(Rarity 1-4 for low rank, 5-9 for high, 10-12 for master)"
                                   ToolTipService.ShowDuration="10000"/>
@@ -152,15 +152,15 @@
                         Margin="5">
                     <StackPanel Margin="0 5">
                         <CheckBox Content="Random Kinsect Dust Effect"
-                                  IsChecked="{Binding RandomKinsectDust, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomKinsectDust, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes the kinsect's dust effect"/>
                         <CheckBox Content="Random Kinsect Type"
-                                  IsChecked="{Binding RandomKinsectType, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomKinsectType, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes if the kinsect is a sever or blunt type"/>
                         <CheckBox Content="Random Kinsect Icon Colour"
-                                  IsChecked="{Binding RandomKinsectIconColour, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomKinsectIconColour, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Randomizes the colour of the kinsect icon &#x0a;(Done through randomizing rarity value, can cause some upgrade paths to be marked as you've reached the max upgrade path until you are a rank high enough for that rarity)&#x0a;(Rarity 1-4 for low rank, 5-9 for high, 10-12 for master)"/>
                     </StackPanel>
@@ -182,15 +182,15 @@
                     Margin="5">
                 <StackPanel Margin="0 5">
                     <CheckBox Content="Random Palico Weapon Element"
-                                  IsChecked="{Binding RandomPalicoWeaponElement, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomPalicoWeaponElement, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Randomizes elements and element power on palico weapons &#x0a;(element power scales with rarity)"/>
                     <CheckBox Content="Random Palico Weapon Type"
-                                  IsChecked="{Binding RandomPalicoWeaponType, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomPalicoWeaponType, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Randomizes if the weapon is a severing or blunt type weapon"/>
                     <CheckBox Content="Random Palico Weapon Icon Colour"
-                                  IsChecked="{Binding RandomPalicoWeaponColour, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomPalicoWeaponColour, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Randomizes the colour of palico weapon icons &#x0a;(Done through randomizing rarity value, doesn't seem to have any negative effect, seems to just be a visual thing)"
                                   ToolTipService.ShowDuration="10000"/>

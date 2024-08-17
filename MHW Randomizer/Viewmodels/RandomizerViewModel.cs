@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Input;
-using System.Windows.Forms;
-using WK.Libraries.BetterFolderBrowserNS;
 using System.Windows.Interop;
 using System.Text;
+using System.Windows.Forms;
 using Troschuetz.Random;
 using Troschuetz.Random.Generators;
 using System.Collections.Generic;
@@ -26,10 +25,10 @@ namespace MHW_Randomizer
 
         public string MonsterIcon { get; set; }
 
-        public BetterFolderBrowser FolderBrowser = new BetterFolderBrowser();
+        public FolderBrowserDialog FolderBrowser = new FolderBrowserDialog();
         public bool OpenFolderIsEnabled { get; set; } = true;
         public bool SaveIsEnabled { get; set; }
-        public string RandomizeRootFolder { get; set; }
+        public string? RandomizeRootFolder { get; set; }
         public bool Randomizing { get; set; }
 
         public HashSet<string> RandomizedFiles = new HashSet<string>();
@@ -45,7 +44,7 @@ namespace MHW_Randomizer
 
             RemoveFilesCommand = new RelayCommand(RemoveOldRandomizedFiles);
 
-            FolderBrowser.RootFolder = AppDomain.CurrentDomain.BaseDirectory;
+            FolderBrowser.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
             NR3Generator r = new NR3Generator(TMath.Seed());
             string[] images = {
@@ -151,10 +150,10 @@ namespace MHW_Randomizer
                 return;
             }
 
-            if (string.IsNullOrEmpty(IoC.Settings.ChunkFolderPath))
+            if (string.IsNullOrEmpty(ViewModels.Settings.ChunkFolderPath))
                 return;
 
-            if (!Directory.Exists(IoC.Settings.ChunkFolderPath))
+            if (!Directory.Exists(ViewModels.Settings.ChunkFolderPath))
             {
                 await Task.Delay(1);
                 //Message Window
@@ -166,9 +165,9 @@ namespace MHW_Randomizer
                 return;
             }
 
-            if (Directory.GetFiles(IoC.Settings.ChunkFolderPath, "chunk*.bin", SearchOption.TopDirectoryOnly).ToArray().Length >= 10)
+            if (Directory.GetFiles(ViewModels.Settings.ChunkFolderPath, "chunk*.bin", SearchOption.TopDirectoryOnly).ToArray().Length >= 10)
             {
-                Analyze(IoC.Settings.ChunkFolderPath);
+                Analyze(ViewModels.Settings.ChunkFolderPath);
                 SaveIsEnabled = true;
             }
             else
@@ -181,7 +180,7 @@ namespace MHW_Randomizer
                 message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
                 message.ShowDialog();
             }
-            FolderBrowser.RootFolder = IoC.Settings.ChunkFolderPath;
+            FolderBrowser.InitialDirectory = ViewModels.Settings.ChunkFolderPath;
         }
 
         public void Credits()
@@ -202,13 +201,13 @@ namespace MHW_Randomizer
 
         public void OpenFolder()
         {
-            if (!string.IsNullOrWhiteSpace(IoC.Settings.ChunkFolderPath) && Directory.Exists(IoC.Settings.ChunkFolderPath))
-                FolderBrowser.RootFolder = IoC.Settings.ChunkFolderPath;
+            if (!string.IsNullOrWhiteSpace(ViewModels.Settings.ChunkFolderPath) && Directory.Exists(ViewModels.Settings.ChunkFolderPath))
+                FolderBrowser.InitialDirectory = ViewModels.Settings.ChunkFolderPath;
             else
-                FolderBrowser.RootFolder = AppDomain.CurrentDomain.BaseDirectory;
+                FolderBrowser.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            FolderBrowser.Title = "Select Chunks Folder";
-            FolderBrowser.Multiselect = false;
+            FolderBrowser.Description = "Select Chunks Folder";
+            FolderBrowser.UseDescriptionForTitle = true;
 
             NativeWindow win32Parent = new NativeWindow();
             win32Parent.AssignHandle(new WindowInteropHelper(MainWindow.window).Handle);
@@ -228,9 +227,9 @@ namespace MHW_Randomizer
                 return;
             }
             else
-                IoC.Settings.ChunkFolderPath = FolderBrowser.SelectedPath;
+                ViewModels.Settings.ChunkFolderPath = FolderBrowser.SelectedPath;
 
-            Analyze(IoC.Settings.ChunkFolderPath);
+            Analyze(ViewModels.Settings.ChunkFolderPath);
             SaveIsEnabled = true;
         }
 
@@ -285,7 +284,7 @@ namespace MHW_Randomizer
                         DefaultValueHandling = DefaultValueHandling.Ignore
                     };
                     //serialize objects directly into file stream
-                    serializer.Serialize(file, IoC.Settings);
+                    serializer.Serialize(file, ViewModels.Settings);
                 }
             }
             catch (Exception ex)
@@ -295,13 +294,13 @@ namespace MHW_Randomizer
 
             Seed = TMath.Seed();
 
-            if (!string.IsNullOrWhiteSpace(IoC.Settings.UserSeed))
+            if (!string.IsNullOrWhiteSpace(ViewModels.Settings.UserSeed))
             {
-                if (uint.TryParse(IoC.Settings.UserSeed, out _))
-                    Seed = Convert.ToUInt32(uint.Parse(IoC.Settings.UserSeed));
+                if (uint.TryParse(ViewModels.Settings.UserSeed, out _))
+                    Seed = Convert.ToUInt32(uint.Parse(ViewModels.Settings.UserSeed));
                 else
                 {
-                    byte[] bytes = Encoding.UTF8.GetBytes(IoC.Settings.UserSeed);
+                    byte[] bytes = Encoding.UTF8.GetBytes(ViewModels.Settings.UserSeed);
                     uint total = 1;
                     foreach (byte num in bytes)
                     {
@@ -314,7 +313,7 @@ namespace MHW_Randomizer
             }
             try
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Seed.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + RandomizeRootFolder + @"\Seed.txt"))
                 {
                     file.WriteLine("Seed: " + Seed.ToString());
                 }
@@ -324,7 +323,7 @@ namespace MHW_Randomizer
                 ErrorMessageWindow("Error occured while trying to write to seed file", ex.Message);
             }
             if (!string.IsNullOrWhiteSpace(RandomizeRootFolder))
-                File.WriteAllText(IoC.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt",
+                File.WriteAllText(ViewModels.Settings.SaveFolderPath + @"\randomized\Installation Instructions.txt",
                                   "Put the \"Randomized Files.json\" file (for when deleting the files with the randomizer), common, em, quest, and/or stage folders (some won't be there depending on what you randomized) into the nativePC folder in the root folder of MHW (if its not there create it and name it exactly like \"nativePC\" (without the quotation marks), its case sensitive)");
 
             //Clear out all the old randomized files
@@ -339,10 +338,10 @@ namespace MHW_Randomizer
             try
             {
                 QuestRandomizer questRandomizer = new QuestRandomizer();
-                if (IoC.Settings.RandomizeQuests)
+                if (ViewModels.Settings.RandomizeQuests)
                     questRandomizer.Randomize();
                 //Just so you can apply the tweak even without randomizing quests
-                if (IoC.Settings.OnePlayerQuests)
+                if (ViewModels.Settings.OnePlayerQuests)
                     questRandomizer.MakeNonRandomQuests1Player();
             }
             catch (Exception ex)
@@ -353,7 +352,7 @@ namespace MHW_Randomizer
 
             try
             {
-                if (IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions || IoC.Settings.ExpeditionRandomSobj || IoC.Settings.ExpeditionRandomIBSobj)
+                if (ViewModels.Settings.RandomizeExpeditions || ViewModels.Settings.RandomizeIceborneExpeditions || ViewModels.Settings.ExpeditionRandomSobj || ViewModels.Settings.ExpeditionRandomIBSobj)
                     ExpeditionRandomizer.Randomize();
             }
             catch (Exception ex)
@@ -365,7 +364,7 @@ namespace MHW_Randomizer
             try
             {
                 //If randomizing the quests or expeditions add in edited alnks for all maps and mosters
-                if (IoC.Settings.RandomizeQuests || IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
+                if (ViewModels.Settings.RandomizeQuests || ViewModels.Settings.RandomizeExpeditions || ViewModels.Settings.RandomizeIceborneExpeditions)
                     Alnk.CreateAlnks();
             }
             catch (Exception ex)
@@ -380,7 +379,7 @@ namespace MHW_Randomizer
                 Maps.RaiseLavaWall();
 
                 //Remove the blockades on the maps if using any random spawn files incase a monster spawns behind them
-                if (IoC.Settings.RandomSobj || IoC.Settings.RandomizeExpeditions || IoC.Settings.RandomizeIceborneExpeditions)
+                if (ViewModels.Settings.RandomSobj || ViewModels.Settings.RandomizeExpeditions || ViewModels.Settings.RandomizeIceborneExpeditions)
                     Maps.Edit();
             }
             catch (Exception ex)
@@ -435,7 +434,7 @@ namespace MHW_Randomizer
             try
             {
                 //Write all the randomized files to a json file after disposing the logger
-                using (StreamWriter file = File.CreateText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
+                using (StreamWriter file = File.CreateText(ViewModels.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
                 {
                     JsonSerializer serializer = new JsonSerializer
                     {
@@ -492,14 +491,14 @@ namespace MHW_Randomizer
         /// <returns>Returns true if successful</returns>
         private bool PickRandomizedFolder(string folderBrowserTitle, bool randomizeButton = false)
         {
-            FolderBrowser = new BetterFolderBrowser();
-            if (!string.IsNullOrWhiteSpace(IoC.Settings.SaveFolderPath) && Directory.Exists(IoC.Settings.SaveFolderPath))
-                FolderBrowser.RootFolder = IoC.Settings.SaveFolderPath;
+            FolderBrowser = new FolderBrowserDialog();
+            if (!string.IsNullOrWhiteSpace(ViewModels.Settings.SaveFolderPath) && Directory.Exists(ViewModels.Settings.SaveFolderPath))
+                FolderBrowser.InitialDirectory = ViewModels.Settings.SaveFolderPath;
             else
-                FolderBrowser.RootFolder = AppDomain.CurrentDomain.BaseDirectory;
+                FolderBrowser.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            FolderBrowser.Title = folderBrowserTitle;
-            FolderBrowser.Multiselect = false;
+            FolderBrowser.Description = folderBrowserTitle;
+            FolderBrowser.UseDescriptionForTitle = true;
 
             NativeWindow win32Parent = new NativeWindow();
             //Make it so you can't interact with the randomizer window while the file browser is open
@@ -521,7 +520,7 @@ namespace MHW_Randomizer
             }
             else if (!randomizeButton)
             {
-                IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
+                ViewModels.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
                 RandomizeRootFolder = "";
             }
             else if (new DirectoryInfo(FolderBrowser.SelectedPath).Name == "nativePC")
@@ -532,9 +531,9 @@ namespace MHW_Randomizer
                     WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner,
                     Width = 450
                 };
-                if ((bool)warning.ShowDialog())
+                if ((bool)warning.ShowDialog()!)
                 {
-                    IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
+                    ViewModels.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
                     RandomizeRootFolder = "";
                 }
                 else
@@ -542,8 +541,8 @@ namespace MHW_Randomizer
             }
             else
             {
-                IoC.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + @"\randomized");
+                ViewModels.Settings.SaveFolderPath = FolderBrowser.SelectedPath;
+                Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + @"\randomized");
                 RandomizeRootFolder = @"\randomized";
             }
 
@@ -562,7 +561,7 @@ namespace MHW_Randomizer
                 if (!PickRandomizedFolder("Pick the nativePC folder to remove the randomized files from"))
                     return;
 
-                if (!IoC.Settings.SaveFolderPath.Contains("nativePC"))
+                if (!ViewModels.Settings.SaveFolderPath.Contains("nativePC"))
                 {
                     MessageWindow message = new MessageWindow("Error, nativePC folder wasn't selected!")
                     {
@@ -575,7 +574,7 @@ namespace MHW_Randomizer
                 #region No Randomized File Json
 
                 //Check if the json file exists, if it does just continue out of this to the regular method
-                if (!File.Exists(IoC.Settings.SaveFolderPath + @"\Randomized Files.json"))
+                if (!File.Exists(ViewModels.Settings.SaveFolderPath + @"\Randomized Files.json"))
                 {
                     ChoiceWindow warning = new ChoiceWindow("Could not find the \"Randomized Files.json\" file in selected directory. Would you like to remove all possible randomized files? (Could include other mods files)")
                     {
@@ -583,7 +582,7 @@ namespace MHW_Randomizer
                         WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner,
                         Width = 450
                     };
-                    if ((bool)warning.ShowDialog())
+                    if ((bool)warning.ShowDialog()!)
                     {
                         try
                         {
@@ -593,37 +592,37 @@ namespace MHW_Randomizer
                                 string fileQuestNumber = quest.ToString("D5");
 
                                 //Delete the quest file
-                                if (File.Exists(IoC.Settings.SaveFolderPath + @"\quest\questData_" + fileQuestNumber + ".mib"))
-                                    File.Delete(IoC.Settings.SaveFolderPath + @"\quest\questData_" + fileQuestNumber + ".mib");
+                                if (File.Exists(ViewModels.Settings.SaveFolderPath + @"\quest\questData_" + fileQuestNumber + ".mib"))
+                                    File.Delete(ViewModels.Settings.SaveFolderPath + @"\quest\questData_" + fileQuestNumber + ".mib");
 
                                 //Delete the folder containing all the fsm files
-                                if (Directory.Exists(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em"))
-                                    Directory.Delete(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em", true);
+                                if (Directory.Exists(ViewModels.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em"))
+                                    Directory.Delete(ViewModels.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\fsm\em", true);
 
                                 //Delete the Xeno map hitching post file or the blank Zorah one
-                                if (Directory.Exists(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\set\"))
-                                    File.Delete(IoC.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\set\" + fileQuestNumber + ".sobjl");
+                                if (Directory.Exists(ViewModels.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\set\"))
+                                    File.Delete(ViewModels.Settings.SaveFolderPath + @"\quest\q" + fileQuestNumber + @"\set\" + fileQuestNumber + ".sobjl");
 
                                 //Delete the gmd text files
-                                if (File.Exists(IoC.Settings.SaveFolderPath + @"\common\text\quest\q" + fileQuestNumber + "_eng.gmd"))
-                                    File.Delete(IoC.Settings.SaveFolderPath + @"\common\text\quest\q" + fileQuestNumber + "_eng.gmd");
+                                if (File.Exists(ViewModels.Settings.SaveFolderPath + @"\common\text\quest\q" + fileQuestNumber + "_eng.gmd"))
+                                    File.Delete(ViewModels.Settings.SaveFolderPath + @"\common\text\quest\q" + fileQuestNumber + "_eng.gmd");
                             }
 
-                            HashSet<string> filesToRemove = JsonConvert.DeserializeObject<HashSet<string>>(Encoding.UTF8.GetString(Properties.Resources.FilesToRemove));
-                            HashSet<string> foldersToRemove = JsonConvert.DeserializeObject<HashSet<string>>(Encoding.UTF8.GetString(Properties.Resources.FoldersToRemove));
+                            HashSet<string> filesToRemove = JsonConvert.DeserializeObject<HashSet<string>>(Encoding.UTF8.GetString(Properties.Resources.FilesToRemove))!;
+                            HashSet<string> foldersToRemove = JsonConvert.DeserializeObject<HashSet<string>>(Encoding.UTF8.GetString(Properties.Resources.FoldersToRemove))!;
 
                             //Remove all the potential files
                             foreach (string file in filesToRemove)
                             {
-                                if (File.Exists(IoC.Settings.SaveFolderPath + file))
-                                    File.Delete(IoC.Settings.SaveFolderPath + file);
+                                if (File.Exists(ViewModels.Settings.SaveFolderPath + file))
+                                    File.Delete(ViewModels.Settings.SaveFolderPath + file);
                             }
 
                             //Remove all the potential folders
                             foreach (string folder in foldersToRemove)
                             {
-                                if (Directory.Exists(IoC.Settings.SaveFolderPath + folder))
-                                    Directory.Delete(IoC.Settings.SaveFolderPath + folder, true);
+                                if (Directory.Exists(ViewModels.Settings.SaveFolderPath + folder))
+                                    Directory.Delete(ViewModels.Settings.SaveFolderPath + folder, true);
                             }
 
                         }
@@ -632,7 +631,7 @@ namespace MHW_Randomizer
                             ErrorMessageWindow("Error Deleting Old Files", ex.Message);
                         }
 
-                        DeleteEmptyFolders(IoC.Settings.SaveFolderPath);
+                        DeleteEmptyFolders(ViewModels.Settings.SaveFolderPath);
 
                         MessageWindow message = new MessageWindow("Successfully removed previous randomized files")
                         {
@@ -649,24 +648,24 @@ namespace MHW_Randomizer
             }
             #endregion
             //If only the file doesn't exist than return
-            else if (!File.Exists(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
+            else if (!File.Exists(ViewModels.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json"))
                 return;
 
-            string randomFilesJson = File.ReadAllText(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json");
+            string randomFilesJson = File.ReadAllText(ViewModels.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json");
             //Check if its a incomplete json due to something like a crash
             if (!randomFilesJson.EndsWith("]"))
                 randomFilesJson += "\r\n]";
 
             //Read in all the files
-            RandomizedFiles = JsonConvert.DeserializeObject<HashSet<string>>(randomFilesJson);
+            RandomizedFiles = JsonConvert.DeserializeObject<HashSet<string>>(randomFilesJson)!;
 
             try
             {
                 //Loop through and delete all the files
                 foreach (string relativeFilePath in RandomizedFiles)
                 {
-                    if (File.Exists(IoC.Settings.SaveFolderPath + RandomizeRootFolder + relativeFilePath))
-                        File.Delete(IoC.Settings.SaveFolderPath + RandomizeRootFolder + relativeFilePath);
+                    if (File.Exists(ViewModels.Settings.SaveFolderPath + RandomizeRootFolder + relativeFilePath))
+                        File.Delete(ViewModels.Settings.SaveFolderPath + RandomizeRootFolder + relativeFilePath);
                 }
             }
             catch (Exception ex)
@@ -675,12 +674,12 @@ namespace MHW_Randomizer
             }
 
             //Delete the old randomized files json file
-            File.Delete(IoC.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json");
+            File.Delete(ViewModels.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json");
 
             //Clear the hash set
             RandomizedFiles = new HashSet<string>();
 
-            DeleteEmptyFolders(IoC.Settings.SaveFolderPath);
+            DeleteEmptyFolders(ViewModels.Settings.SaveFolderPath!);
             if (!Randomizing)
             {
                 MessageWindow message = new MessageWindow("Successfully removed previous randomized files")

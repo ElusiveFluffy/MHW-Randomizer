@@ -10,15 +10,15 @@ namespace MHW_Randomizer
     // Largely based on https://github.com/zhangtaoxinzi/MHWNoChunk/
     public class ChunkOTF
     {
-        Dictionary<long, long> MetaChunk;
-        Dictionary<int, long> ChunkOffsetDict;
-        BinaryReader Reader;
-        byte[] ChunkDecompressed, NextChunkDecompressed;
+        Dictionary<long, long>? MetaChunk;
+        Dictionary<int, long>? ChunkOffsetDict;
+        BinaryReader? Reader;
+        byte[]? ChunkDecompressed, NextChunkDecompressed;
         int cur_pointer = 0;
         int cur_index = 0;
         int DictCount = 0;
-        string ChunkFile;
-        Dictionary<int, byte[]> ChunkCache;
+        string? ChunkFile;
+        Dictionary<int, byte[]>? ChunkCache;
         public static Dictionary<string, Files> files = new Dictionary<string, Files>();
 
         public void AnalyzeChunks(String fileInput)
@@ -86,7 +86,7 @@ namespace MHW_Randomizer
             cur_pointer += 4;
             int TotalChildrenCount = BitConverter.ToInt32(ChunkDecompressed, cur_pointer);
             cur_pointer = 0x100;
-            FileNode root_node = null;
+            FileNode? root_node = null;
             for (int i = 0; i < TotalParentCount; i++)
             {
                 string StringNameParent = getName(0x3C, false);
@@ -182,12 +182,12 @@ namespace MHW_Randomizer
             //}
         }
 
-        public byte[] ExtractItem(Files file)
+        public byte[]? ExtractItem(Files file)
         {
             int failed = 0;
             try
             {
-                Reader = new BinaryReader(File.Open(ChunkFile, FileMode.Open));
+                Reader = new BinaryReader(File.Open(ChunkFile!, FileMode.Open));
 
                 // Read header
                 Reader.BaseStream.Seek(4, SeekOrigin.Begin);
@@ -273,18 +273,18 @@ namespace MHW_Randomizer
         {
             if (cur_pointer + targetlength < 0x40000)
             {
-                Array.Copy(ChunkDecompressed, cur_pointer, tmp, startAddr, targetlength);
+                Array.Copy(ChunkDecompressed!, cur_pointer, tmp, startAddr, targetlength);
                 cur_pointer += (int)targetlength;
             }
             else
             {
                 int tmp_can_read_length = 0x40000 - cur_pointer;
                 long tmp_remain_length = targetlength - tmp_can_read_length;
-                Array.Copy(ChunkDecompressed, cur_pointer, tmp, startAddr, tmp_can_read_length);
+                Array.Copy(ChunkDecompressed!, cur_pointer, tmp, startAddr, tmp_can_read_length);
                 cur_pointer = 0;
                 ChunkDecompressed = NextChunkDecompressed;
                 cur_index += 1;
-                if (cur_index + 1 < DictCount) { NextChunkDecompressed = getDecompressedChunk(ChunkOffsetDict[cur_index + 1], MetaChunk[ChunkOffsetDict[cur_index + 1]], Reader, false, cur_index + 1); }
+                if (cur_index + 1 < DictCount) { NextChunkDecompressed = getDecompressedChunk(ChunkOffsetDict[cur_index + 1], MetaChunk[ChunkOffsetDict[cur_index + 1]], Reader!, false, cur_index + 1); }
                 else
                 {
                     NextChunkDecompressed = new byte[0];
@@ -297,29 +297,29 @@ namespace MHW_Randomizer
 
     public class Files
     {
-        public string Name { get; set; }
-        public string EntireName { get; set; }
+        public string? Name { get; set; }
+        public string? EntireName { get; set; }
         public long Offset { get; set; }
         public long Size { get; set; }
         public int ChunkIndex { get; set; }
         public int ChunkPointer { get; set; }
-        public string NameWithSize { get; set; }
-        public ChunkOTF ChunkState { get; set; }
-        public string FromChunk { get; set; }
-        public string FromChunkName { get; set; }
+        public string? NameWithSize { get; set; }
+        public ChunkOTF? ChunkState { get; set; }
+        public string? FromChunk { get; set; }
+        public string? FromChunkName { get; set; }
 
         public byte[] Extract()
         {
-            return ChunkState.ExtractItem(this);
+            return ChunkState.ExtractItem(this)!;
         }
     }
 
-    public class FileNode : INotifyPropertyChanged
+    public class FileNode
     {
         public string Name { get; set; }
         public List<FileNode> Childern { get; set; }
         public string Icon { get; set; }
-        public string EntireName { get; set; }
+        public string? EntireName { get; set; }
         public long Offset { get; set; }
         public long Size { get; set; }
         public int ChunkIndex { get; set; }
@@ -337,11 +337,6 @@ namespace MHW_Randomizer
             set
             {
                 isSelected = value;
-                setChilrenSelected(value);
-                if (this.PropertyChanged != null)
-                {
-                    this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("IsSelected"));
-                }
             }
         }
 
@@ -409,8 +404,6 @@ namespace MHW_Randomizer
             }
             return sizestr;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public FileNode(string name, bool isFile, string fromChunk)
         {

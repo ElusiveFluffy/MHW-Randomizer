@@ -8,7 +8,7 @@ namespace MHW_Randomizer
         private static FileSystemWatcher Watcher;
         public static void SetupWatcher()
         {
-            Watcher = new FileSystemWatcher(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder);
+            Watcher = new FileSystemWatcher(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder);
 
             Watcher.NotifyFilter = NotifyFilters.CreationTime
                                  | NotifyFilters.FileName
@@ -23,7 +23,7 @@ namespace MHW_Randomizer
             Watcher.EnableRaisingEvents = true;
 
             //Create a temporary json just incase the randomizer crashes
-            using (StreamWriter file = File.CreateText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Randomized Files.json"))
+            using (StreamWriter file = File.CreateText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Randomized Files.json"))
             {
                 file.WriteLine("[");
             }
@@ -40,12 +40,12 @@ namespace MHW_Randomizer
             if (e.ChangeType == WatcherChangeTypes.Changed && File.Exists(e.FullPath) && Path.GetExtension(e.FullPath) != ".txt" && Path.GetExtension(e.FullPath) != ".csv" && Path.GetExtension(e.FullPath) != ".json")
             {
                 //Add it to the file list
-                if (IoC.Randomizer.RandomizedFiles.Add(e.FullPath.Replace(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder, "")))
+                if (ViewModels.Randomizer.RandomizedFiles.Add(e.FullPath.Replace(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder, "")))
                 {
                     //Add it to the temporary json just incase the randomizer crashes
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Randomized Files.json"))
+                    using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Randomized Files.json"))
                     {
-                        file.WriteLine("\"" + e.FullPath.Replace(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder, "").Replace(@"\", @"\\") + "\",");
+                        file.WriteLine("\"" + e.FullPath.Replace(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder, "").Replace(@"\", @"\\") + "\",");
                     }
                 }
             }
@@ -55,12 +55,12 @@ namespace MHW_Randomizer
         {
             //Add it to the file list only if its a file and isn't one of the log text files
             if (!File.GetAttributes(e.FullPath).HasFlag(FileAttributes.Directory) && Path.GetExtension(e.FullPath) != ".txt" && Path.GetExtension(e.FullPath) != ".csv" && Path.GetExtension(e.FullPath) != ".json")
-                if (IoC.Randomizer.RandomizedFiles.Add(e.FullPath.Replace(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder, "")))
+                if (ViewModels.Randomizer.RandomizedFiles.Add(e.FullPath.Replace(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder, "")))
                 {
                     //Add it to the temporary json just incase the randomizer crashes
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Randomized Files.json"))
+                    using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Randomized Files.json"))
                     {
-                        file.WriteLine("\"" + e.FullPath.Replace(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder, "").Replace(@"\", @"\\") + "\",");
+                        file.WriteLine("\"" + e.FullPath.Replace(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder, "").Replace(@"\", @"\\") + "\",");
                     }
                 }
         }

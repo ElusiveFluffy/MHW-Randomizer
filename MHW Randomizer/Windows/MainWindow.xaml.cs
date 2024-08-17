@@ -10,7 +10,7 @@ namespace MHW_Randomizer
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Window window;
+        public static Window? window;
 
         public MainWindow()
         {
@@ -28,7 +28,7 @@ namespace MHW_Randomizer
                     DefaultValueHandling = DefaultValueHandling.Ignore
                 };
                 //serialize objects directly into file stream
-                serializer.Serialize(file, IoC.Settings);
+                serializer.Serialize(file, ViewModels.Settings);
             }
             Application.Current.Shutdown();
         }

@@ -22,10 +22,10 @@ namespace MHW_Randomizer
         {
             #region Armour
 
-            if (IoC.Settings.ShuffleArmourRecipes || IoC.Settings.ShuffleCharms)
+            if (ViewModels.Settings.ShuffleArmourRecipes || ViewModels.Settings.ShuffleCharms)
             {
-                File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Armour Log.txt").Dispose();
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Armour Log.txt"))
+                File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Armour Log.txt").Dispose();
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Armour Log.txt"))
                 {
                     file.WriteLine("---------------------------------------------------------------------------");
                     file.WriteLine("                              Armour Recipes                               ");
@@ -37,12 +37,12 @@ namespace MHW_Randomizer
                 Array.Copy(recipeBytes, header, 10);
                 List<RecipeStructs.Armour> recipeList = StructTools.RawDeserialize<RecipeStructs.Armour>(recipeBytes, 10);
 
-                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
 
 
                 List<int> validIDs = new List<int>();
 
-                if (IoC.Settings.ShuffleCharms)
+                if (ViewModels.Settings.ShuffleCharms)
                 {
                     //0-103 charms
                     validIDs.AddRange(Enumerable.Range(0, 104));
@@ -50,7 +50,7 @@ namespace MHW_Randomizer
                     ShuffleArmourRecipes(recipeList, r, validIDs);
                 }
 
-                if (IoC.Settings.ShuffleArmourRecipes)
+                if (ViewModels.Settings.ShuffleArmourRecipes)
                 {
                     for (int loop = 1; loop < 6; loop++)
                     {
@@ -70,7 +70,7 @@ namespace MHW_Randomizer
                                         {
                                             case 0:
                                                 {
-                                                    if (IoC.Settings.ShuffleIronOre)
+                                                    if (ViewModels.Settings.ShuffleIronOre)
                                                         validIDs.AddRange(Enumerable.Range(104, 31));
                                                     else
                                                         validIDs.AddRange(Enumerable.Range(106, 29));
@@ -118,7 +118,7 @@ namespace MHW_Randomizer
                                         {
                                             case 0:
                                                 {
-                                                    if (IoC.Settings.ShuffleIronOre)
+                                                    if (ViewModels.Settings.ShuffleIronOre)
                                                         validIDs.AddRange(Enumerable.Range(725, 30));
                                                     else
                                                         validIDs.AddRange(Enumerable.Range(727, 28));
@@ -162,7 +162,7 @@ namespace MHW_Randomizer
                                         {
                                             case 0:
                                                 {
-                                                    if (IoC.Settings.ShuffleIronOre)
+                                                    if (ViewModels.Settings.ShuffleIronOre)
                                                         validIDs.AddRange(Enumerable.Range(1304, 31));
                                                     else
                                                         validIDs.AddRange(Enumerable.Range(1306, 29));
@@ -206,7 +206,7 @@ namespace MHW_Randomizer
                                         {
                                             case 0:
                                                 {
-                                                    if (IoC.Settings.ShuffleIronOre)
+                                                    if (ViewModels.Settings.ShuffleIronOre)
                                                         validIDs.AddRange(Enumerable.Range(1881, 30));
                                                     else
                                                         validIDs.AddRange(Enumerable.Range(1883, 28));
@@ -250,7 +250,7 @@ namespace MHW_Randomizer
                                         {
                                             case 0:
                                                 {
-                                                    if (IoC.Settings.ShuffleIronOre)
+                                                    if (ViewModels.Settings.ShuffleIronOre)
                                                         validIDs.AddRange(Enumerable.Range(2452, 31));
                                                     else
                                                         validIDs.AddRange(Enumerable.Range(2454, 29));
@@ -294,12 +294,12 @@ namespace MHW_Randomizer
 
                 byte[] randomizedBytes = StructTools.RawSerialize(recipeList);
                 randomizedBytes = header.Concat(randomizedBytes).ToArray();
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\armor.eq_crt", randomizedBytes);
+                Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\armor.eq_crt", randomizedBytes);
             }
 
-            if (IoC.Settings.RandomArmourSkill || IoC.Settings.RandomArmourSkillLevels || IoC.Settings.ShuffleArmourSetBonus || IoC.Settings.RandomArmourDecoSlots || IoC.Settings.RandomDecoSlotSize || IoC.Settings.GiveCharmDecoSlot 
-                || IoC.Settings.RandomArmourIconColour || IoC.Settings.RandomCharmSkill || IoC.Settings.RandomCharmSkillLevels)
+            if (ViewModels.Settings.RandomArmourSkill || ViewModels.Settings.RandomArmourSkillLevels || ViewModels.Settings.ShuffleArmourSetBonus || ViewModels.Settings.RandomArmourDecoSlots || ViewModels.Settings.RandomDecoSlotSize || ViewModels.Settings.GiveCharmDecoSlot 
+                || ViewModels.Settings.RandomArmourIconColour || ViewModels.Settings.RandomCharmSkill || ViewModels.Settings.RandomCharmSkillLevels)
             {
                 byte[] datBytes = ChunkOTF.files["armor.am_dat"].Extract();
                 List<RecipeStructs.ArmourDat> datList = StructTools.RawDeserialize<RecipeStructs.ArmourDat>(datBytes, 10);
@@ -308,18 +308,18 @@ namespace MHW_Randomizer
 
                 byte[] randomizedDatBytes = StructTools.RawSerialize(datList);
                 Array.Copy(randomizedDatBytes, 0, datBytes, 10, randomizedDatBytes.Length);
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\armor.am_dat", datBytes);
+                Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\armor.am_dat", datBytes);
             }
 
             #endregion
 
             #region Weapons
 
-            if (IoC.Settings.ShuffleWeaponRecipes || IoC.Settings.ShuffleWeaponOrder || IoC.Settings.RandomWeaponElement || IoC.Settings.RandomWeaponIconColour || IoC.Settings.RandomWeaponDecoSlots || IoC.Settings.RandomWeaponDecoSlotSize)
+            if (ViewModels.Settings.ShuffleWeaponRecipes || ViewModels.Settings.ShuffleWeaponOrder || ViewModels.Settings.RandomWeaponElement || ViewModels.Settings.RandomWeaponIconColour || ViewModels.Settings.RandomWeaponDecoSlots || ViewModels.Settings.RandomWeaponDecoSlotSize)
             {
-                File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt").Dispose();
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt").Dispose();
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                 {
                     file.Write("---------------------------------------------------------------------------");
                     file.Write("\n                              Weapon Recipes                               ");
@@ -337,18 +337,18 @@ namespace MHW_Randomizer
                 List<RecipeStructs.RangedWeaponTree> rangedWeaponTree = new List<RecipeStructs.RangedWeaponTree>();
                 List<RecipeStructs.RangedWeaponTree> rangedWeaponNonRandomTree = new List<RecipeStructs.RangedWeaponTree>();
                 List<RecipeStructs.Armour> weaponCraft = StructTools.RawDeserialize<RecipeStructs.Armour>(weaponCraftBytes, 10);
-                Dictionary<int, string> weaponNames;
-                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+                Dictionary<int, string>? weaponNames;
+                NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
 
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                bool exportWp_dat = IoC.Settings.ShuffleWeaponOrder || IoC.Settings.RandomWeaponElement || IoC.Settings.RandomWeaponIconColour || IoC.Settings.RandomWeaponDecoSlots || IoC.Settings.RandomWeaponDecoSlotSize;
+                Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                bool exportWp_dat = ViewModels.Settings.ShuffleWeaponOrder || ViewModels.Settings.RandomWeaponElement || ViewModels.Settings.RandomWeaponIconColour || ViewModels.Settings.RandomWeaponDecoSlots || ViewModels.Settings.RandomWeaponDecoSlotSize;
                 for (int weapons = 0; weapons < 11; weapons++)
                 {
                     switch (weapons)
                     {
                         case 0:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                          Charge Blade Changes                             ");
@@ -367,13 +367,13 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\c_axe.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\c_axe.wp_dat", treeBytes);
 
                                 break;
                             }
                         case 1:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                           Dual Blades Changes                             ");
@@ -392,12 +392,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\w_sword.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\w_sword.wp_dat", treeBytes);
                                 break;
                             }
                         case 2:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                           Great Sword Changes                             ");
@@ -416,12 +416,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\l_sword.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\l_sword.wp_dat", treeBytes);
                                 break;
                             }
                         case 3:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                             GunLance Changes                              ");
@@ -440,12 +440,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\g_lance.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\g_lance.wp_dat", treeBytes);
                                 break;
                             }
                         case 4:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                             Hammer Changes                                ");
@@ -464,12 +464,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\hammer.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\hammer.wp_dat", treeBytes);
                                 break;
                             }
                         case 5:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                          Hunting Horn Changes                             ");
@@ -488,12 +488,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\whistle.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\whistle.wp_dat", treeBytes);
                                 break;
                             }
                         case 6:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                          Insect Glaive Changes                            ");
@@ -512,12 +512,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\rod.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\rod.wp_dat", treeBytes);
                                 break;
                             }
                         case 7:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                              Lance Changes                                ");
@@ -536,12 +536,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\lance.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\lance.wp_dat", treeBytes);
                                 break;
                             }
                         case 8:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                            Longsword Changes                              ");
@@ -560,12 +560,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\tachi.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\tachi.wp_dat", treeBytes);
                                 break;
                             }
                         case 9:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                            Switch Axe Changes                             ");
@@ -584,12 +584,12 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\s_axe.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\s_axe.wp_dat", treeBytes);
                                 break;
                             }
                         case 10:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                        Sword and Shield Changes                           ");
@@ -608,7 +608,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\sword.wp_dat", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\sword.wp_dat", treeBytes);
                                 break;
                             }
                     }
@@ -622,7 +622,7 @@ namespace MHW_Randomizer
                         //Bow
                         case 0:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                               Bow Changes                                 ");
@@ -641,13 +641,13 @@ namespace MHW_Randomizer
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\bow.wp_dat_g", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\bow.wp_dat_g", treeBytes);
                                 }
                                 break;
                             }
                         case 1:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                           Heavy Bowgun Changes                            ");
@@ -666,13 +666,13 @@ namespace MHW_Randomizer
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\hbg.wp_dat_g", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\hbg.wp_dat_g", treeBytes);
                                 }
                                 break;
                             }
                         case 2:
                             {
-                                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                                 {
                                     file.WriteLine("\n---------------------------------------------------------------------------");
                                     file.WriteLine("                           Light Bowgun Changes                            ");
@@ -691,7 +691,7 @@ namespace MHW_Randomizer
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
-                                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\lbg.wp_dat_g", treeBytes);
+                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\lbg.wp_dat_g", treeBytes);
                                 }
                                 break;
                             }
@@ -703,10 +703,10 @@ namespace MHW_Randomizer
                 byte[] randomizedCraftBytes = StructTools.RawSerialize(weaponCraft);
                 Array.Copy(randomizedCraftBytes, 0, weaponCraftBytes, 10, randomizedCraftBytes.Length);
 
-                if (IoC.Settings.ShuffleWeaponRecipes || IoC.Settings.ShuffleWeaponOrder)
+                if (ViewModels.Settings.ShuffleWeaponRecipes || ViewModels.Settings.ShuffleWeaponOrder)
                 {
-                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_cus", recipeBytes);
-                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_crt", weaponCraftBytes);
+                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_cus", recipeBytes);
+                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_crt", weaponCraftBytes);
                 }
 
             }
@@ -715,10 +715,10 @@ namespace MHW_Randomizer
 
             #region Shuffle Kinsects
 
-            if (IoC.Settings.ShuffleKinsectRecipes || IoC.Settings.ShuffleKinsectOrder || IoC.Settings.RandomKinsectType || IoC.Settings.RandomKinsectDust)
+            if (ViewModels.Settings.ShuffleKinsectRecipes || ViewModels.Settings.ShuffleKinsectOrder || ViewModels.Settings.RandomKinsectType || ViewModels.Settings.RandomKinsectDust)
             {
-                File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Kinsect Log.txt").Dispose();
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Kinsect Log.txt"))
+                File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Kinsect Log.txt").Dispose();
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Kinsect Log.txt"))
                 {
                     file.Write("---------------------------------------------------------------------------");
                     file.Write("\n                              Kinsect Recipes                              ");
@@ -742,31 +742,31 @@ namespace MHW_Randomizer
                 List<RecipeStructs.KinsectTree> weaponTree = StructTools.RawDeserialize<RecipeStructs.KinsectTree>(treeBytes, 10);
                 List<RecipeStructs.KinsectTree> weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.KinsectTree>(treeBytes, 10);
 
-                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
 
-                bool changeKinsectStats = IoC.Settings.RandomKinsectType || IoC.Settings.RandomKinsectDust || IoC.Settings.RandomKinsectIconColour;
+                bool changeKinsectStats = ViewModels.Settings.RandomKinsectType || ViewModels.Settings.RandomKinsectDust || ViewModels.Settings.RandomKinsectIconColour;
                 if (changeKinsectStats)
                 {
-                    NR3Generator ir = new NR3Generator(IoC.Randomizer.Seed);
+                    NR3Generator ir = new NR3Generator(ViewModels.Randomizer.Seed);
                     for (int i = 0; i < weaponTree.Count; i++)
                     {
-                        if (IoC.Settings.RandomKinsectType)
+                        if (ViewModels.Settings.RandomKinsectType)
                         {
                             int type = ir.Next(0, 2);
                             weaponTree[i].Attack_Type = (byte)type;
                         }
-                        if (IoC.Settings.RandomKinsectDust)
+                        if (ViewModels.Settings.RandomKinsectDust)
                         {
                             int dust = ir.Next(0, 4);
                             weaponTree[i].Dust_Effect = (ushort)dust;
                         }
-                        if (IoC.Settings.RandomKinsectIconColour)
+                        if (ViewModels.Settings.RandomKinsectIconColour)
                         {
                             weaponTree[i].Rarity = (byte)ir.Next(12);
                         }
                     }
                 }
-                if (IoC.Settings.ShuffleKinsectRecipes || IoC.Settings.ShuffleKinsectOrder)
+                if (ViewModels.Settings.ShuffleKinsectRecipes || ViewModels.Settings.ShuffleKinsectOrder)
                 {
                     List<int> validIndexs = new List<int>();
                     for (int rank = 0; rank < 3; rank++)
@@ -822,11 +822,11 @@ namespace MHW_Randomizer
                                 }
                         }
 
-                        ShuffleWeaponRecipes(recipeList, r, validIndexs, IoC.Settings.ShuffleKinsectOrder, IoC.Settings.ShuffleKinsectRecipes);
+                        ShuffleWeaponRecipes(recipeList, r, validIndexs, ViewModels.Settings.ShuffleKinsectOrder, ViewModels.Settings.ShuffleKinsectRecipes);
                     }
                 }
 
-                Dictionary<int, string> insectNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_insectData));
+                Dictionary<int, string>? insectNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_insectData));
                 LogKinsectShuffle(recipeList, recipeNonRandomList, weaponTree, weaponNonRandomTree, insectNames);
 
                 byte[] randomizedBytes = StructTools.RawSerialize(recipeList);
@@ -836,32 +836,32 @@ namespace MHW_Randomizer
 
                 randomizedTreeBytes = cipher.Encipher(randomizedTreeBytes);
 
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\insect.eq_cus", randomizedBytes);
-                if (IoC.Settings.ShuffleKinsectOrder || changeKinsectStats)
-                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse", randomizedTreeBytes);
+                Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\insect.eq_cus", randomizedBytes);
+                if (ViewModels.Settings.ShuffleKinsectOrder || changeKinsectStats)
+                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse", randomizedTreeBytes);
             }
             #endregion
 
             #region Palicos
 
-            Dictionary<int, string> palicoWeaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.otomo_weaponData));
-            if (IoC.Settings.ShufflePalicoArmour || IoC.Settings.ShufflePalicoWeapons)
+            Dictionary<int, string>? palicoWeaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.otomo_weaponData));
+            if (ViewModels.Settings.ShufflePalicoArmour || ViewModels.Settings.ShufflePalicoWeapons)
             {
-                File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Palico Log.txt").Dispose();
+                File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Palico Log.txt").Dispose();
                 byte[] recipeBytes = ChunkOTF.files["ot_equip.eq_crt"].Extract();
                 List<RecipeStructs.Armour> recipeList = StructTools.RawDeserialize<RecipeStructs.Armour>(recipeBytes, 10);
-                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
                 List<RecipeStructs.Armour> validLowRank = new List<RecipeStructs.Armour>();
                 List<RecipeStructs.Armour> validHighRank = new List<RecipeStructs.Armour>();
                 List<RecipeStructs.Armour> validMasterRank = new List<RecipeStructs.Armour>();
 
 
-                if (IoC.Settings.ShufflePalicoArmour)
+                if (ViewModels.Settings.ShufflePalicoArmour)
                 {
                     int[] badIDs = { 51, 61, 126, 145, 146, 147, 149, 151, 154, 156, 158, 159, 160, 212, 213, 223, 288, 307, 308, 309, 311, 313, 316, 320, 321, 322 };
-                    Dictionary<int, string> armourNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.otomo_armourData));
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
+                    Dictionary<int, string>? armourNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.otomo_armourData));
+                    using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
                     {
                         file.WriteLine("---------------------------------------------------------------------------");
                         file.WriteLine("                          Palico Armour Recipes                            ");
@@ -896,13 +896,13 @@ namespace MHW_Randomizer
                     PalicoShuffle(r, armourNames, validMasterRank);
                 }
 
-                if (IoC.Settings.ShufflePalicoWeapons)
+                if (ViewModels.Settings.ShufflePalicoWeapons)
                 {
                     validLowRank = new List<RecipeStructs.Armour>();
                     validHighRank = new List<RecipeStructs.Armour>();
                     validMasterRank = new List<RecipeStructs.Armour>();
                     int[] badIDs = { 50, 54, 55, 60, 130, 149, 150, 151, 153, 155, 158, 162, 163, 164 };
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
+                    using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
                     {
                         file.WriteLine("---------------------------------------------------------------------------");
                         file.WriteLine("                          Palico Weapon Recipes                            ");
@@ -940,16 +940,16 @@ namespace MHW_Randomizer
                 byte[] randomizedBytes = StructTools.RawSerialize(recipeList);
                 Array.Copy(randomizedBytes, 0, recipeBytes, 10, randomizedBytes.Length);
 
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\ot_equip.eq_crt", recipeBytes);
+                Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\ot_equip.eq_crt", recipeBytes);
             }
 
-            if (IoC.Settings.RandomPalicoWeaponElement || IoC.Settings.RandomPalicoWeaponType || IoC.Settings.RandomPalicoWeaponColour)
+            if (ViewModels.Settings.RandomPalicoWeaponElement || ViewModels.Settings.RandomPalicoWeaponType || ViewModels.Settings.RandomPalicoWeaponColour)
             {
-                if (!(IoC.Settings.ShufflePalicoArmour || IoC.Settings.ShufflePalicoWeapons))
-                    File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Palico Log.txt").Dispose();
+                if (!(ViewModels.Settings.ShufflePalicoArmour || ViewModels.Settings.ShufflePalicoWeapons))
+                    File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Palico Log.txt").Dispose();
 
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
                 {
                     file.WriteLine("---------------------------------------------------------------------------");
                     file.WriteLine("                          Palico Weapon Element                            ");
@@ -963,8 +963,8 @@ namespace MHW_Randomizer
 
                 List<PalicoWeapon> palicoWeapons = StructTools.RawDeserialize<PalicoWeapon>(weaponBytes, 10);
 
-                NR3Generator re = new NR3Generator(IoC.Randomizer.Seed);
-                NR3Generator dice = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator re = new NR3Generator(ViewModels.Randomizer.Seed);
+                NR3Generator dice = new NR3Generator(ViewModels.Randomizer.Seed);
 
                 //Elements multiplied by 10
                 //Fire = 1
@@ -978,14 +978,14 @@ namespace MHW_Randomizer
                 //Paralysis = 7
                 //Sleep = 8
                 //Blast = 9
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
                 {
                     foreach (var weapon in palicoWeapons)
                     {
                         if (badIDs.Contains((int)weapon.Index))
                             continue;
                         string logText = "Weapon: " + palicoWeaponNames[(int)weapon.Index];
-                        if (IoC.Settings.RandomPalicoWeaponElement)
+                        if (ViewModels.Settings.RandomPalicoWeaponElement)
                         {
                             weapon.Element = (byte)re.Next(10);
                             if (weapon.Element == 0)
@@ -1009,12 +1009,12 @@ namespace MHW_Randomizer
                                 logText += "\n\tElement Power: " + weapon.Elemental_Damage;
                             }
                         }
-                        if (IoC.Settings.RandomPalicoWeaponType)
+                        if (ViewModels.Settings.RandomPalicoWeaponType)
                         {
                             weapon.Attack_Type = (ushort)re.Next(2);
                             logText += "\n\tAttack Type: " + (weapon.Attack_Type == 0 ? "Severing" : "Blunt");
                         }
-                        if (IoC.Settings.RandomPalicoWeaponColour)
+                        if (ViewModels.Settings.RandomPalicoWeaponColour)
                         {
                             weapon.Rarity = (byte)re.Next(12);
                             logText += "\n\tRarity (Colour): " + weapon.Rarity;
@@ -1027,17 +1027,17 @@ namespace MHW_Randomizer
                 Array.Copy(randomizedBytes, 0, weaponBytes, 10, randomizedBytes.Length);
                 weaponBytes = cipher.Encipher(weaponBytes);
 
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\otomoWeapon.owp_dat", weaponBytes);
+                Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\otomoWeapon.owp_dat", weaponBytes);
 
             }
 
             #endregion
         }
 
-        private static void PalicoShuffle(NR3Generator r, Dictionary<int, string> armourNames, List<RecipeStructs.Armour> armourList)
+        private static void PalicoShuffle(NR3Generator r, Dictionary<int, string>? armourNames, List<RecipeStructs.Armour> armourList)
         {
-            Dictionary<int, string> itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
+            Dictionary<int, string>? itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
             for (int c = armourList.Count - 1; c >= 0; c--)
             {
                 armourList[c].Needed_Item_Id_to_Unlock = 1;
@@ -1056,7 +1056,7 @@ namespace MHW_Randomizer
                 armourList[j].Equipment_Index_Raw = temp;
 
 
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Palico Log.txt"))
                 {
                     //Log
                     string recipe = armourNames[armourList[c].Equipment_Index_Raw] + " recipe:\t"
@@ -1079,7 +1079,7 @@ namespace MHW_Randomizer
         #region Randomize Weapon and Armour Functions
 
         private static void RandomizeWeapon(int firstIndex, int lastIndex, int[] badIndex, WeaponCategory equipCategory, List<RecipeStructs.Armour> weaponCraft, List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList,
-            List<RecipeStructs.WeaponTree> weaponTree, List<RecipeStructs.WeaponTree> weaponNonRandomTree, Dictionary<int, string> weaponNames, NR3Generator r)
+            List<RecipeStructs.WeaponTree> weaponTree, List<RecipeStructs.WeaponTree> weaponNonRandomTree, Dictionary<int, string>? weaponNames, NR3Generator r)
         {
             List<int> validLowRankIndexs = new List<int>();
             List<int> validHighRankIndexs = new List<int>();
@@ -1108,15 +1108,15 @@ namespace MHW_Randomizer
                 }
             }
 
-            ShuffleWeaponRecipes(recipeList, r, validLowRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
-            ShuffleWeaponRecipes(recipeList, r, validHighRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
-            ShuffleWeaponRecipes(recipeList, r, validMasterRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
+            ShuffleWeaponRecipes(recipeList, r, validLowRankIndexs, ViewModels.Settings.ShuffleWeaponOrder, ViewModels.Settings.ShuffleWeaponRecipes);
+            ShuffleWeaponRecipes(recipeList, r, validHighRankIndexs, ViewModels.Settings.ShuffleWeaponOrder, ViewModels.Settings.ShuffleWeaponRecipes);
+            ShuffleWeaponRecipes(recipeList, r, validMasterRankIndexs, ViewModels.Settings.ShuffleWeaponOrder, ViewModels.Settings.ShuffleWeaponRecipes);
 
             ShuffleWeapons(firstIndex, lastIndex, (int)equipCategory, badIndex, weaponCraft, recipeList, recipeNonRandomList, weaponTree, weaponNonRandomTree, weaponNames);
         }
 
         private static void RandomizeRangedWeapon(int firstIndex, int lastIndex, int[] badIndex, WeaponCategory equipCategory, List<RecipeStructs.Armour> weaponCraft, List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList,
-            List<RecipeStructs.RangedWeaponTree> weaponTree, List<RecipeStructs.RangedWeaponTree> weaponNonRandomTree, Dictionary<int, string> weaponNames, NR3Generator r)
+            List<RecipeStructs.RangedWeaponTree> weaponTree, List<RecipeStructs.RangedWeaponTree> weaponNonRandomTree, Dictionary<int, string>? weaponNames, NR3Generator r)
         {
             List<int> validLowRankIndexs = new List<int>();
             List<int> validHighRankIndexs = new List<int>();
@@ -1145,9 +1145,9 @@ namespace MHW_Randomizer
                 }
             }
 
-            ShuffleWeaponRecipes(recipeList, r, validLowRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
-            ShuffleWeaponRecipes(recipeList, r, validHighRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
-            ShuffleWeaponRecipes(recipeList, r, validMasterRankIndexs, IoC.Settings.ShuffleWeaponOrder, IoC.Settings.ShuffleWeaponRecipes);
+            ShuffleWeaponRecipes(recipeList, r, validLowRankIndexs, ViewModels.Settings.ShuffleWeaponOrder, ViewModels.Settings.ShuffleWeaponRecipes);
+            ShuffleWeaponRecipes(recipeList, r, validHighRankIndexs, ViewModels.Settings.ShuffleWeaponOrder, ViewModels.Settings.ShuffleWeaponRecipes);
+            ShuffleWeaponRecipes(recipeList, r, validMasterRankIndexs, ViewModels.Settings.ShuffleWeaponOrder, ViewModels.Settings.ShuffleWeaponRecipes);
 
             ShuffleRangedWeapon(firstIndex, lastIndex, (int)equipCategory, badIndex, weaponCraft, recipeList, recipeNonRandomList, weaponTree, weaponNonRandomTree, weaponNames);
         }
@@ -1224,17 +1224,17 @@ namespace MHW_Randomizer
 
 
         private static void ShuffleWeapons(int firstIndex, int lastIndex, int equipCategory, int[] badIndex, List<RecipeStructs.Armour> weaponCraft, List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList, List<RecipeStructs.WeaponTree> weaponTree, List<RecipeStructs.WeaponTree> weaponNonRandomTree,
-                                      Dictionary<int, string> weaponNames)
+                                      Dictionary<int, string>? weaponNames)
         {
-            Dictionary<int, string> itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
+            Dictionary<int, string>? itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
 
-            if (IoC.Settings.ShuffleWeaponRecipes)
+            if (ViewModels.Settings.ShuffleWeaponRecipes)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                 {
                     file.WriteLine("\n");
 
-                    List<RecipeStructs.Weapon> sortedList = recipeList.OrderBy(o => recipeNonRandomList.IndexOf(recipeNonRandomList.FirstOrDefault(p => p.Equipment_Index_Raw == o.Equipment_Index_Raw && o.Equipment_Category_Raw == equipCategory))).ToList();
+                    List<RecipeStructs.Weapon> sortedList = recipeList.OrderBy(o => recipeNonRandomList.IndexOf(recipeNonRandomList.FirstOrDefault(p => p.Equipment_Index_Raw == o.Equipment_Index_Raw && o.Equipment_Category_Raw == equipCategory)!)).ToList();
 
                     for (int p = firstIndex; p < lastIndex + 1; p++)
                     {
@@ -1255,17 +1255,17 @@ namespace MHW_Randomizer
                 }
             }
 
-            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+            using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
             {
                 file.WriteLine("\n");
-                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
-                NR3Generator re = new NR3Generator(IoC.Randomizer.Seed);
-                NR3Generator dice = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
+                NR3Generator re = new NR3Generator(ViewModels.Randomizer.Seed);
+                NR3Generator dice = new NR3Generator(ViewModels.Randomizer.Seed);
                 for (int p = firstIndex; p < lastIndex + 1; p++)
                 {
                     var weaponTreePos = weaponTree.FirstOrDefault(o => o.Index == recipeList[p].Equipment_Index_Raw);
                     string log = "";
-                    if (IoC.Settings.ShuffleWeaponOrder)
+                    if (ViewModels.Settings.ShuffleWeaponOrder)
                     {
                         var wep = weaponCraft.FirstOrDefault(o => o.Equipment_Index_Raw == recipeNonRandomList[p].Equipment_Index_Raw && o.Equipment_Category_Raw == recipeList[p].Equipment_Category_Raw);
                         if (wep != null && !badIndex.Contains(p))
@@ -1286,7 +1286,7 @@ namespace MHW_Randomizer
                             original = original + "\t";
                         log += original + "\tShuffled Weapon: " + weaponNames[recipeList[p].Equipment_Index_Raw];
                     }
-                    if (IoC.Settings.RandomWeaponElement)
+                    if (ViewModels.Settings.RandomWeaponElement)
                     {
                         weaponTreePos.Element = (byte)re.Next(10);
                         if (weaponTreePos.Element == 0)
@@ -1318,7 +1318,7 @@ namespace MHW_Randomizer
                     #region Weapon Slot Count
 
                     //Armour Decoration Slot Count
-                    if (IoC.Settings.RandomWeaponDecoSlots)
+                    if (ViewModels.Settings.RandomWeaponDecoSlots)
                     {
                         int[] weightTable = { 50 - weaponTreePos.Rarity * 4, 40 - weaponTreePos.Rarity * 3, 10 + (weaponTreePos.Rarity - 1) * 2, 10 + (int)Math.Round(((double)weaponTreePos.Rarity - 1) * 1.5) };
 
@@ -1356,7 +1356,7 @@ namespace MHW_Randomizer
                                     weaponTreePos.Slot_2_Size = 0;
                                     weaponTreePos.Slot_3_Size = 0;
 
-                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    if (!ViewModels.Settings.RandomWeaponDecoSlotSize)
                                         log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
                                     break;
                                 }
@@ -1370,7 +1370,7 @@ namespace MHW_Randomizer
 
                                     weaponTreePos.Slot_3_Size = 0;
 
-                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    if (!ViewModels.Settings.RandomWeaponDecoSlotSize)
                                     {
                                         log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
                                         log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
@@ -1388,7 +1388,7 @@ namespace MHW_Randomizer
                                     if (weaponTreePos.Slot_3_Size == 0)
                                         weaponTreePos.Slot_3_Size = 1;
 
-                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    if (!ViewModels.Settings.RandomWeaponDecoSlotSize)
                                     {
                                         log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
                                         log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
@@ -1404,7 +1404,7 @@ namespace MHW_Randomizer
                     #region Weapon Slot Size
 
                     //Weapon Decoration Slot Size
-                    if (IoC.Settings.RandomWeaponDecoSlotSize)
+                    if (ViewModels.Settings.RandomWeaponDecoSlotSize)
                     {
                         int[] weightTable = { 50 - weaponTreePos.Rarity * 4, 40 - weaponTreePos.Rarity * 3, 10 + (weaponTreePos.Rarity - 1) * 2, 10 + (int)Math.Round(((double)weaponTreePos.Rarity - 1) * 1.5) };
 
@@ -1508,7 +1508,7 @@ namespace MHW_Randomizer
                     #endregion
 
                     //Change icon colour
-                    if (IoC.Settings.RandomWeaponIconColour)
+                    if (ViewModels.Settings.RandomWeaponIconColour)
                     {
                         weaponTreePos.Rarity = (byte)r.Next(12);
                         log += "\n\tRarity (Colour): " + weaponTreePos.Rarity;
@@ -1521,17 +1521,17 @@ namespace MHW_Randomizer
         }
 
         private static void ShuffleRangedWeapon(int firstIndex, int lastIndex, int equipCategory, int[] badIndex, List<RecipeStructs.Armour> weaponCraft, List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList, List<RecipeStructs.RangedWeaponTree> weaponTree, List<RecipeStructs.RangedWeaponTree> weaponNonRandomTree,
-                                      Dictionary<int, string> weaponNames)
+                                      Dictionary<int, string>? weaponNames)
         {
-            Dictionary<int, string> itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
+            Dictionary<int, string>? itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
 
-            if (IoC.Settings.ShuffleWeaponRecipes)
+            if (ViewModels.Settings.ShuffleWeaponRecipes)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
                 {
                     file.WriteLine("\n");
 
-                    List<RecipeStructs.Weapon> sortedList = recipeList.OrderBy(o => recipeNonRandomList.IndexOf(recipeNonRandomList.FirstOrDefault(p => p.Equipment_Index_Raw == o.Equipment_Index_Raw && o.Equipment_Category_Raw == equipCategory))).ToList();
+                    List<RecipeStructs.Weapon> sortedList = recipeList.OrderBy(o => recipeNonRandomList.IndexOf(recipeNonRandomList.FirstOrDefault(p => p.Equipment_Index_Raw == o.Equipment_Index_Raw && o.Equipment_Category_Raw == equipCategory)!)).ToList();
 
                     for (int p = firstIndex; p < lastIndex + 1; p++)
                     {
@@ -1552,17 +1552,17 @@ namespace MHW_Randomizer
                 }
             }
 
-            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
+            using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Weapon Log.txt"))
             {
                 file.WriteLine("\n");
-                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
-                NR3Generator re = new NR3Generator(IoC.Randomizer.Seed);
-                NR3Generator dice = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
+                NR3Generator re = new NR3Generator(ViewModels.Randomizer.Seed);
+                NR3Generator dice = new NR3Generator(ViewModels.Randomizer.Seed);
                 for (int p = firstIndex; p < lastIndex + 1; p++)
                 {
                     var weaponTreePos = weaponTree.FirstOrDefault(o => o.Index == recipeList[p].Equipment_Index_Raw);
                     string log = "";
-                    if (IoC.Settings.ShuffleWeaponOrder)
+                    if (ViewModels.Settings.ShuffleWeaponOrder)
                     {
                         var wep = weaponCraft.FirstOrDefault(o => o.Equipment_Index_Raw == recipeNonRandomList[p].Equipment_Index_Raw && o.Equipment_Category_Raw == recipeList[p].Equipment_Category_Raw);
                         if (wep != null && !badIndex.Contains(p))
@@ -1585,7 +1585,7 @@ namespace MHW_Randomizer
                     }
                     bool isBowgun = equipCategory == (int)WeaponCategory.Light_Bowgun || equipCategory == (int)WeaponCategory.Heavy_Bowgun;
                     //Don't add a random element to bowguns as its OP, unless a setting is checked
-                    if (IoC.Settings.RandomWeaponElement && (!isBowgun || IoC.Settings.RandomBowgunElement))
+                    if (ViewModels.Settings.RandomWeaponElement && (!isBowgun || ViewModels.Settings.RandomBowgunElement))
                     {
                         weaponTreePos.Element = (byte)re.Next(10);
                         if (weaponTreePos.Element == 0)
@@ -1618,7 +1618,7 @@ namespace MHW_Randomizer
                     #region Weapon Slot Count
 
                     //Armour Decoration Slot Count
-                    if (IoC.Settings.RandomWeaponDecoSlots)
+                    if (ViewModels.Settings.RandomWeaponDecoSlots)
                     {
                         int[] weightTable = { 50 - weaponTreePos.Rarity * 4, 40 - weaponTreePos.Rarity * 3, 10 + (weaponTreePos.Rarity - 1) * 2, 10 + (int)Math.Round(((double)weaponTreePos.Rarity - 1) * 1.5) };
 
@@ -1656,7 +1656,7 @@ namespace MHW_Randomizer
                                     weaponTreePos.Slot_2_Size = 0;
                                     weaponTreePos.Slot_3_Size = 0;
 
-                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    if (!ViewModels.Settings.RandomWeaponDecoSlotSize)
                                         log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
                                     break;
                                 }
@@ -1670,7 +1670,7 @@ namespace MHW_Randomizer
 
                                     weaponTreePos.Slot_3_Size = 0;
 
-                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    if (!ViewModels.Settings.RandomWeaponDecoSlotSize)
                                     {
                                         log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
                                         log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
@@ -1688,7 +1688,7 @@ namespace MHW_Randomizer
                                     if (weaponTreePos.Slot_3_Size == 0)
                                         weaponTreePos.Slot_3_Size = 1;
 
-                                    if (!IoC.Settings.RandomWeaponDecoSlotSize)
+                                    if (!ViewModels.Settings.RandomWeaponDecoSlotSize)
                                     {
                                         log += "\n\tSlot 1 Size: " + weaponTreePos.Slot_1_Size;
                                         log += "\n\tSlot 2 Size: " + weaponTreePos.Slot_2_Size;
@@ -1704,7 +1704,7 @@ namespace MHW_Randomizer
                     #region Weapon Slot Size
 
                     //Weapon Decoration Slot Size
-                    if (IoC.Settings.RandomWeaponDecoSlotSize)
+                    if (ViewModels.Settings.RandomWeaponDecoSlotSize)
                     {
                         int[] weightTable = { 50 - weaponTreePos.Rarity * 4, 40 - weaponTreePos.Rarity * 3, 10 + (weaponTreePos.Rarity - 1) * 2, 10 + (int)Math.Round(((double)weaponTreePos.Rarity - 1) * 1.5) };
 
@@ -1808,7 +1808,7 @@ namespace MHW_Randomizer
                     #endregion
 
                     //Change icon colour
-                    if (IoC.Settings.RandomWeaponIconColour)
+                    if (ViewModels.Settings.RandomWeaponIconColour)
                     {
                         weaponTreePos.Rarity = (byte)r.Next(12);
                         log += "\n\tRarity (Colour): " + weaponTreePos.Rarity;
@@ -1822,17 +1822,17 @@ namespace MHW_Randomizer
         }
 
         private static void LogKinsectShuffle(List<RecipeStructs.Weapon> recipeList, List<RecipeStructs.Weapon> recipeNonRandomList, List<RecipeStructs.KinsectTree> weaponTree, List<RecipeStructs.KinsectTree> weaponNonRandomTree,
-                                      Dictionary<int, string> weaponNames)
+                                      Dictionary<int, string>? weaponNames)
         {
-            Dictionary<int, string> itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
+            Dictionary<int, string>? itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
 
-            if (IoC.Settings.ShuffleKinsectRecipes)
+            if (ViewModels.Settings.ShuffleKinsectRecipes)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Kinsect Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Kinsect Log.txt"))
                 {
                     file.WriteLine("\n");
 
-                    List<RecipeStructs.Weapon> sortedList = recipeList.OrderBy(o => recipeNonRandomList.IndexOf(recipeNonRandomList.FirstOrDefault(p => p.Equipment_Index_Raw == o.Equipment_Index_Raw))).ToList();
+                    List<RecipeStructs.Weapon> sortedList = recipeList.OrderBy(o => recipeNonRandomList.IndexOf(recipeNonRandomList.FirstOrDefault(p => p.Equipment_Index_Raw == o.Equipment_Index_Raw)!)).ToList();
 
                     for (int p = 2; p < sortedList.Count; p++)
                     {
@@ -1853,9 +1853,9 @@ namespace MHW_Randomizer
                 }
             }
 
-            if (IoC.Settings.ShuffleKinsectOrder)
+            if (ViewModels.Settings.ShuffleKinsectOrder)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Kinsect Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Kinsect Log.txt"))
                 {
                     file.WriteLine("\n");
                     for (int p = 2; p < recipeList.Count; p++)
@@ -1881,8 +1881,8 @@ namespace MHW_Randomizer
         //Recipe shuffle function
         private static void ShuffleArmourRecipes(List<RecipeStructs.Armour> recipeList, NR3Generator r, List<int> validIDs)
         {
-            Dictionary<int, string> itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData));
-            Dictionary<int, string> armourNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_armorData));
+            Dictionary<int, string> itemNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_itemData))!;
+            Dictionary<int, string> armourNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_armorData))!;
 
             for (int c = validIDs.Count - 1; c >= 0; c--)
             {
@@ -1902,7 +1902,7 @@ namespace MHW_Randomizer
                 recipeList[validIDs[j]].Equipment_Index_Raw = temp;
 
 
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Armour Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Armour Log.txt"))
                 {
                     //Log
                     string recipe = armourNames[recipeList[validIDs[c]].Equipment_Index_Raw] + " recipe:\t"
@@ -1930,23 +1930,23 @@ namespace MHW_Randomizer
                               2494, 2495, 2496, 2497, 2498, 2499, 2500, 2501, 2502, 2503, 2504, 2505, 2506, 2507, 2915, 3089, 3093, 3100, 3101, 3102, 3103, 3104, 3105, 3106, 3107, 3108, 3109, 3110, 3111, 3112, 3113, 3114, 3115, 3116, 3117, 3118, 3119, 3120, 3121, 3122, 3463, 3464, 3465, 3466, 3467, 3468, 3469, 3470, 
                               3471, 3472, 3473, 3474, 3475, 3476, 3477, 3478, 3479};
 
-            NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+            NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
 
-            Dictionary<uint, string> skillNames = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_skillData));
-            Dictionary<uint, string> fullArmourList = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_armorData));
+            Dictionary<uint, string> skillNames = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_skillData))!;
+            Dictionary<uint, string> fullArmourList = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_armorData))!;
 
-            File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Armour Data Log.txt").Dispose();
-            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Armour Data Log.txt"))
+            File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Armour Data Log.txt").Dispose();
+            using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Armour Data Log.txt"))
             {
                 file.Write("---------------------------------------------------------------------------");
                 file.Write("\n                              Armour Data                                 ");
                 file.Write("\n---------------------------------------------------------------------------\n");
             }
             //Armour Set Bonus
-            if (IoC.Settings.ShuffleArmourSetBonus)
+            if (ViewModels.Settings.ShuffleArmourSetBonus)
             {
                 //Broken (Freezes after being in the armour crafting menu for too long)
-                //if (IoC.Settings.RandomArmourSetBonus)
+                //if (ViewModels.Settings.RandomArmourSetBonus)
                 //{
                 //    for (int s = 0; s < armourDats.Count; s++)
                 //    {
@@ -1960,7 +1960,7 @@ namespace MHW_Randomizer
                 //        }
                 //    }
                 //}
-                //else if (IoC.Settings.CompletelyRandomArmourSetBonus)
+                //else if (ViewModels.Settings.CompletelyRandomArmourSetBonus)
                 //{
                 //    for (int s = 0; s < armourDats.Count; s++)
                 //    {
@@ -1991,7 +1991,7 @@ namespace MHW_Randomizer
                 //    }
 
                 //}
-                if (IoC.Settings.NonRankSpecificSetBonusShuffle)
+                if (ViewModels.Settings.NonRankSpecificSetBonusShuffle)
                 {
                     var dats = armourDats.Where(o => !badIndex.Contains((int)o.Index) && o.Set_Skill_1 > 0).ToList();
                     ShuffleSetBonus(r, dats);
@@ -2006,12 +2006,12 @@ namespace MHW_Randomizer
                     //ShuffleDat(r, datsMaster);
                 }
             }
-            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Armour Data Log.txt"))
+            using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Armour Data Log.txt"))
             {
-                NR3Generator skillR = new NR3Generator(IoC.Randomizer.Seed);
-                NR3Generator skillLevelR = new NR3Generator(IoC.Randomizer.Seed);
-                NR3Generator decoR = new NR3Generator(IoC.Randomizer.Seed);
-                NR3Generator decoSizeR = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator skillR = new NR3Generator(ViewModels.Randomizer.Seed);
+                NR3Generator skillLevelR = new NR3Generator(ViewModels.Randomizer.Seed);
+                NR3Generator decoR = new NR3Generator(ViewModels.Randomizer.Seed);
+                NR3Generator decoSizeR = new NR3Generator(ViewModels.Randomizer.Seed);
 
                 float[] skillWeightTable = { 45, 43.5f, 9.1f, 1.4f, 1 };
                 for (int c = 0; c < armourDats.Count; c++)
@@ -2026,7 +2026,7 @@ namespace MHW_Randomizer
                     #region Armour Skills
 
                     //Armour Skill
-                    if ((IoC.Settings.RandomArmourSkill && armourDats[c].Equip_Slot != 5) || (IoC.Settings.RandomCharmSkill && armourDats[c].Equip_Slot == 5))
+                    if ((ViewModels.Settings.RandomArmourSkill && armourDats[c].Equip_Slot != 5) || (ViewModels.Settings.RandomCharmSkill && armourDats[c].Equip_Slot == 5))
                     {
                         bool guardianArmour = c == 442 || c == 1061 || c == 1678 || c == 2287 || c == 2902;
                         if (armourDats[c].Skill_1 != 0)
@@ -2049,7 +2049,7 @@ namespace MHW_Randomizer
                         }
                     }
 
-                    if ((IoC.Settings.RandomArmourSkillLevels && armourDats[c].Equip_Slot != 5) || (IoC.Settings.RandomCharmSkillLevels && armourDats[c].Equip_Slot == 5))
+                    if ((ViewModels.Settings.RandomArmourSkillLevels && armourDats[c].Equip_Slot != 5) || (ViewModels.Settings.RandomCharmSkillLevels && armourDats[c].Equip_Slot == 5))
                     {
                         if (armourDats[c].Skill_1 != 0)
                         {
@@ -2089,7 +2089,7 @@ namespace MHW_Randomizer
                         }
                     }
 
-                    if (IoC.Settings.ShuffleArmourSetBonus || IoC.Settings.NonRankSpecificSetBonusShuffle)
+                    if (ViewModels.Settings.ShuffleArmourSetBonus || ViewModels.Settings.NonRankSpecificSetBonusShuffle)
                     {
                         if (armourDats[c].Set_Skill_1 != 0)
                             logText += "\n\tSet Bonus: " + skillNames[(uint)armourDats[c].Set_Skill_1 * 3];
@@ -2100,7 +2100,7 @@ namespace MHW_Randomizer
                     #region Decoration Slot Count
 
                     //Armour Decoration Slot Count
-                    if (IoC.Settings.RandomArmourDecoSlots && armourDats[c].Equip_Slot != 5)
+                    if (ViewModels.Settings.RandomArmourDecoSlots && armourDats[c].Equip_Slot != 5)
                     {
                         int[] weightTable = { 50 - armourDats[c].Rarity * 4, 40 - armourDats[c].Rarity * 3, 10 + (armourDats[c].Rarity - 1) * 2, 10 + (int)Math.Round(((double)armourDats[c].Rarity - 1) * 1.5) };
 
@@ -2138,7 +2138,7 @@ namespace MHW_Randomizer
                                     armourDats[c].Slot_2_Size = 0;
                                     armourDats[c].Slot_3_Size = 0;
 
-                                    if (!IoC.Settings.RandomDecoSlotSize)
+                                    if (!ViewModels.Settings.RandomDecoSlotSize)
                                         logText += "\n\tSlot 1 Size: " + armourDats[c].Slot_1_Size;
                                     break;
                                 }
@@ -2152,7 +2152,7 @@ namespace MHW_Randomizer
 
                                     armourDats[c].Slot_3_Size = 0;
 
-                                    if (!IoC.Settings.RandomDecoSlotSize)
+                                    if (!ViewModels.Settings.RandomDecoSlotSize)
                                     {
                                         logText += "\n\tSlot 1 Size: " + armourDats[c].Slot_1_Size;
                                         logText += "\n\tSlot 2 Size: " + armourDats[c].Slot_2_Size;
@@ -2170,7 +2170,7 @@ namespace MHW_Randomizer
                                     if (armourDats[c].Slot_3_Size == 0)
                                         armourDats[c].Slot_3_Size = 1;
 
-                                    if (!IoC.Settings.RandomDecoSlotSize)
+                                    if (!ViewModels.Settings.RandomDecoSlotSize)
                                     {
                                         logText += "\n\tSlot 1 Size: " + armourDats[c].Slot_1_Size;
                                         logText += "\n\tSlot 2 Size: " + armourDats[c].Slot_2_Size;
@@ -2181,12 +2181,12 @@ namespace MHW_Randomizer
                         }
                     }
 
-                    if (IoC.Settings.GiveCharmDecoSlot && armourDats[c].Equip_Slot == 5)
+                    if (ViewModels.Settings.GiveCharmDecoSlot && armourDats[c].Equip_Slot == 5)
                     {
                         armourDats[c].Slot_Count = 1;
                         logText += "\n\tDeco Slot Count: 1";
                         armourDats[c].Slot_1_Size = 1;
-                        if (!IoC.Settings.RandomDecoSlotSize)
+                        if (!ViewModels.Settings.RandomDecoSlotSize)
                             logText += "\n\tSlot 1 Size: " + armourDats[c].Slot_1_Size;
                     }
 
@@ -2195,7 +2195,7 @@ namespace MHW_Randomizer
                     #region Decoration Slot Size
 
                     //Armour Decoration Slot Size
-                    if (IoC.Settings.RandomDecoSlotSize)
+                    if (ViewModels.Settings.RandomDecoSlotSize)
                     {
                         int[] weightTable = { 50 - armourDats[c].Rarity * 4, 40 - armourDats[c].Rarity * 3, 10 + (armourDats[c].Rarity - 1) * 2, 10 + (int)Math.Round(((double)armourDats[c].Rarity - 1) * 1.5) };
 
@@ -2299,7 +2299,7 @@ namespace MHW_Randomizer
                     #endregion
 
                     //Armour Icon Colour
-                    if (IoC.Settings.RandomArmourIconColour)
+                    if (ViewModels.Settings.RandomArmourIconColour)
                     {
                         armourDats[c].Rarity = (byte)r.Next(12);
                         logText += "\n\tRarity(Colour): " + armourDats[c].Rarity;

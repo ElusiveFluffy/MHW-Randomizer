@@ -12,14 +12,14 @@ namespace MHW_Randomizer
     {
         public static void Randomize()
         {
-            if (!(IoC.Settings.RandomShopItems || IoC.Settings.RandomShopWepArmour))
+            if (!(ViewModels.Settings.RandomShopItems || ViewModels.Settings.RandomShopWepArmour))
                 return;
 
-            File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt").Dispose();
+            File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Shop Log.txt").Dispose();
 
-            if (IoC.Settings.RandomShopItems)
+            if (ViewModels.Settings.RandomShopItems)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
                 {
                     file.WriteLine("---------------------------------------------------------------------------");
                     file.WriteLine("                                 Shop Items                                ");
@@ -30,17 +30,17 @@ namespace MHW_Randomizer
                 List<ShopStructs.ItemShop> shopItemList = new List<ShopStructs.ItemShop>();
                 Dictionary<uint, string> itemList = GetItemData();
 
-                int maxItems = (int)IoC.Settings.AmountOfShopItems;
-                if (IoC.Settings.AmountOfShopItems > itemList.Count)
+                int maxItems = (int)ViewModels.Settings.AmountOfShopItems;
+                if (ViewModels.Settings.AmountOfShopItems > itemList.Count)
                 {
                     maxItems = itemList.Count;
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
+                    using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
                     {
                         file.WriteLine("[Amount of Shop Items Changed to " + maxItems + " as the Amount Entered is More Than the Amount of Items Avaliable]");
                     }
                 }
 
-                NR3Generator r = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
 
                 for (int i = 0; i < maxItems; i++)
                 {
@@ -64,7 +64,7 @@ namespace MHW_Randomizer
                 {
                     ShopStructs.ItemShop item = shopItemList[i];
                     item.Sort_Order = (ushort)i;
-                    using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
+                    using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
                     {
                         string text = "Item " + (item.Sort_Order + 1) + ": " + itemList[item.Item_Id];
                         file.WriteLine(text);
@@ -80,13 +80,13 @@ namespace MHW_Randomizer
                 Array.Copy(BitConverter.GetBytes(entryCount), 0, header, 6, 4);
                 shopBytes = header.Concat(randomizedBytes).ToArray();
 
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\facility\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\facility\shopList.slt", shopBytes);
+                Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\facility\");
+                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\facility\shopList.slt", shopBytes);
             }
 
-            if (IoC.Settings.RandomShopWepArmour)
+            if (ViewModels.Settings.RandomShopWepArmour)
             {
-                using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
+                using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
                 {
                     file.WriteLine("---------------------------------------------------------------------------");
                     file.WriteLine("                       Weapon and Armour Shop Items                        ");
@@ -96,7 +96,7 @@ namespace MHW_Randomizer
                 byte[] shopBytes = ChunkOTF.files["shop.sed"].Extract();
                 List<ShopStructs.ArmourShop> shopItemList = StructTools.RawDeserialize<ShopStructs.ArmourShop>(shopBytes, 10);
 
-                NR3Generator itemIndex = new NR3Generator(IoC.Randomizer.Seed);
+                NR3Generator itemIndex = new NR3Generator(ViewModels.Randomizer.Seed);
                 int index;
                 Dictionary<uint, string> currentGear = new Dictionary<uint, string>();
 
@@ -108,9 +108,9 @@ namespace MHW_Randomizer
 
                 //Get all the Equipment Data
                 GearData gearDatas = new GearData();
-                Dictionary<uint, string> fullArmourList = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_armorData));
+                Dictionary<uint, string>? fullArmourList = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.eng_armorData));
 
-                if (!IoC.Settings.RandomShopWepArmourType)
+                if (!ViewModels.Settings.RandomShopWepArmourType)
                 {
                     for (int i = 0; i < shopItemList.Count; i++)
                     {
@@ -143,8 +143,8 @@ namespace MHW_Randomizer
                         currentGear.Remove(currentGear.ElementAt(index).Key);
                     }
 
-                    NR3Generator wepType = new NR3Generator(IoC.Randomizer.Seed);
-                    for (int i = 19; i < IoC.Settings.AmountOfGearShopItems; i++)
+                    NR3Generator wepType = new NR3Generator(ViewModels.Randomizer.Seed);
+                    for (int i = 19; i < ViewModels.Settings.AmountOfGearShopItems; i++)
                     {
                         shopItemList.Add(new ShopStructs.ArmourShop { Equip_Id = 0, Equip_Type = 0, Story_Unlock = 0 });
                         shopItemList[i].Equip_Type = (uint)wepType.Next(19);
@@ -184,31 +184,31 @@ namespace MHW_Randomizer
                 Array.Copy(BitConverter.GetBytes(entryCount), 0, header, 6, 4);
                 shopBytes = header.Concat(randomizedBytes).ToArray();
 
-                Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\common\equip\shop.sed", shopBytes);
+                Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
+                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\shop.sed", shopBytes);
             }
         }
 
         private static Dictionary<uint, string> GetItemData()
         {
-            Dictionary<uint, string> itemList = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ItemsForShopData));
+            Dictionary<uint, string> itemList = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ItemsForShopData))!;
 
             //Add relevent extra shop items
-            if (IoC.Settings.ShopIncludeMaterials)
-                itemList = itemList.Concat(JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.MaterialsForShopData))).ToDictionary(x => x.Key, x => x.Value);
-            if (IoC.Settings.ShopIncludeJewels)
-                itemList = itemList.Concat(JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.JewelsForShop))).ToDictionary(x => x.Key, x => x.Value);
-            if (IoC.Settings.ShopIncludeSupplyItems)
-                itemList = itemList.Concat(JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.SupplyItems))).ToDictionary(x => x.Key, x => x.Value);
-            if (IoC.Settings.ShopIncludeHousingItems)
-                itemList = itemList.Concat(JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Furnature))).ToDictionary(x => x.Key, x => x.Value);
+            if (ViewModels.Settings.ShopIncludeMaterials)
+                itemList = itemList.Concat(JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.MaterialsForShopData))!).ToDictionary(x => x.Key, x => x.Value);
+            if (ViewModels.Settings.ShopIncludeJewels)
+                itemList = itemList.Concat(JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.JewelsForShop))!).ToDictionary(x => x.Key, x => x.Value);
+            if (ViewModels.Settings.ShopIncludeSupplyItems)
+                itemList = itemList.Concat(JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.SupplyItems))!).ToDictionary(x => x.Key, x => x.Value);
+            if (ViewModels.Settings.ShopIncludeHousingItems)
+                itemList = itemList.Concat(JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Furnature))!).ToDictionary(x => x.Key, x => x.Value);
 
             return itemList;
         }
 
         private static Dictionary<uint, string> SetCurrentGear(uint equipType, GearData gearDatas)
         {
-            Dictionary<uint, string> currentGear = null;
+            Dictionary<uint, string>? currentGear = null;
             switch (equipType)
             {
                 case 0:
@@ -312,7 +312,7 @@ namespace MHW_Randomizer
 
         private static void LogGearShop(List<ShopStructs.ArmourShop> shopItemList, string currentGear, int i)
         {
-            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
+            using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Shop Log.txt"))
             {
                 string text = "";
                 switch (shopItemList[i].Equip_Type)
@@ -418,14 +418,14 @@ namespace MHW_Randomizer
             }
         }
 
-        private static uint SetShopStoryUnlock(uint equipType, string EquipName, int index, List<RecipeStructs.Armour> armourList, Dictionary<uint, string> fullArmourList, List<RecipeStructs.Weapon> weaponList)
+        private static uint SetShopStoryUnlock(uint equipType, string EquipName, int index, List<RecipeStructs.Armour> armourList, Dictionary<uint, string>? fullArmourList, List<RecipeStructs.Weapon> weaponList)
         {
             //Set story unlock
             //Armour
             if (equipType > 13)
             {
                 //Find armour item (indexes restart for each armour type so need to check the name too)
-                RecipeStructs.Armour armour = armourList.FirstOrDefault(o => o.Equipment_Index_Raw == index && !string.IsNullOrEmpty(fullArmourList.Values.FirstOrDefault(p => p == EquipName)));
+                RecipeStructs.Armour? armour = armourList.FirstOrDefault(o => o.Equipment_Index_Raw == index && !string.IsNullOrEmpty(fullArmourList.Values.FirstOrDefault(p => p == EquipName)));
 
                 if (armour == null)
                     return 50000;
@@ -449,7 +449,7 @@ namespace MHW_Randomizer
             //Weapons
             else
             {
-                RecipeStructs.Weapon weaponData = weaponList.FirstOrDefault(o => o.Equipment_Index_Raw == index && o.Equipment_Category_Raw == equipType);
+                RecipeStructs.Weapon weaponData = weaponList.FirstOrDefault(o => o.Equipment_Index_Raw == index && o.Equipment_Category_Raw == equipType)!;
                 if (weaponData == null)
                     return 50000;
                 else
@@ -477,25 +477,25 @@ namespace MHW_Randomizer
 
     class GearData
     {
-        public Dictionary<uint, string> GreatSwords = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopGreatsword));
-        public Dictionary<uint, string> SwordandShields = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopSword_and_Shield));
-        public Dictionary<uint, string> DualBlades = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopDual_Blades));
-        public Dictionary<uint, string> Longswords = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopLongsword));
-        public Dictionary<uint, string> Hammers = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopHammer));
-        public Dictionary<uint, string> HuntingHorns = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopHunting_Horn));
-        public Dictionary<uint, string> Lances = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopLance));
-        public Dictionary<uint, string> Gunlances = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopGunlance));
-        public Dictionary<uint, string> SwitchAxes = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopSwitch_Axe));
-        public Dictionary<uint, string> ChargeBlades = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopCharge_Blade));
-        public Dictionary<uint, string> InsectGlaives = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopInsect_Glaive));
-        public Dictionary<uint, string> Bows = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopBow));
-        public Dictionary<uint, string> HeavyBowguns = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopHeavy_Bowgun));
-        public Dictionary<uint, string> LightBowguns = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopLight_Bowgun));
-        public Dictionary<uint, string> Heads = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Head)).Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") &&
+        public Dictionary<uint, string> GreatSwords = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopGreatsword))!;
+        public Dictionary<uint, string> SwordandShields = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopSword_and_Shield))!;
+        public Dictionary<uint, string> DualBlades = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopDual_Blades))!;
+        public Dictionary<uint, string> Longswords = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopLongsword))!;
+        public Dictionary<uint, string> Hammers = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopHammer))!;
+        public Dictionary<uint, string> HuntingHorns = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopHunting_Horn))!;
+        public Dictionary<uint, string> Lances = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopLance))!;
+        public Dictionary<uint, string> Gunlances = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopGunlance))!;
+        public Dictionary<uint, string> SwitchAxes = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopSwitch_Axe))!;
+        public Dictionary<uint, string> ChargeBlades = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopCharge_Blade))!;
+        public Dictionary<uint, string> InsectGlaives = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopInsect_Glaive))!;
+        public Dictionary<uint, string> Bows = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopBow))!;
+        public Dictionary<uint, string> HeavyBowguns = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopHeavy_Bowgun))!;
+        public Dictionary<uint, string> LightBowguns = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.ShopLight_Bowgun))!;
+        public Dictionary<uint, string> Heads = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Head))!.Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") &&
                                                                                                                                              !(o.Value == "Leather Headgear" && o.Key > 100)).ToDictionary(x => x.Key, x => x.Value);
-        public Dictionary<uint, string> Chest = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Chest)).Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") && o.Value != "Leather Headgear").ToDictionary(x => x.Key, x => x.Value);
-        public Dictionary<uint, string> Arms = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Arms)).Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") && o.Value != "Leather Headgear").ToDictionary(x => x.Key, x => x.Value);
-        public Dictionary<uint, string> Waist = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Waist)).Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") && o.Value != "Leather Headgear").ToDictionary(x => x.Key, x => x.Value);
-        public Dictionary<uint, string> Legs = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Legs)).Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") && o.Value != "Leather Headgear").ToDictionary(x => x.Key, x => x.Value);
+        public Dictionary<uint, string> Chest = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Chest))!.Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") && o.Value != "Leather Headgear").ToDictionary(x => x.Key, x => x.Value);
+        public Dictionary<uint, string> Arms = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Arms))!.Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") && o.Value != "Leather Headgear").ToDictionary(x => x.Key, x => x.Value);
+        public Dictionary<uint, string> Waist = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Waist))!.Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") && o.Value != "Leather Headgear").ToDictionary(x => x.Key, x => x.Value);
+        public Dictionary<uint, string> Legs = JsonConvert.DeserializeObject<Dictionary<uint, string>>(Encoding.UTF8.GetString(Properties.Resources.Legs))!.Where(o => o.Value != "Unavailable" && o.Value != "HARDUMMY" && !o.Value.Contains("Layered") && o.Value != "Leather Headgear").ToDictionary(x => x.Key, x => x.Value);
     }
 }

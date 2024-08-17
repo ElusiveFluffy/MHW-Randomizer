@@ -18,8 +18,10 @@ namespace MHW_Randomizer
             // Let the base application do what it needs
             base.OnStartup(e);
 
-            // Setup IoC
-            IoC.Setup();
+            ViewModels.Settings = new();
+            //Load the settings if the file exists
+            //ViewModels.Settings.LoadSettingsString();
+            ViewModels.Randomizer = new();
 
             // Show the main window
             Current.MainWindow = new MainWindow();

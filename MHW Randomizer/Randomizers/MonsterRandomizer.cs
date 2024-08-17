@@ -9,7 +9,7 @@ namespace MHW_Randomizer
     {
         public static void Randomize()
         {
-            if (IoC.Settings.RandomMonsterAttackStatus || IoC.Settings.RandomMonsterElement)
+            if (ViewModels.Settings.RandomMonsterAttackStatus || ViewModels.Settings.RandomMonsterElement)
                 RandomAttackDebuffs();
         }
 
@@ -22,14 +22,14 @@ namespace MHW_Randomizer
             string[] statusNames = new string[] { "Poison", "Deadly Poison", "Paralysis", "Sleep", "Blast", "Slime", "Stun", "Miasma", "Bleed" };
             string[] elementNames = new string[] { "None", "Thunder", "Water", "Ice", "Fire", "Dragon" };
 
-            NR3Generator statusRandom = new NR3Generator(IoC.Randomizer.Seed);
-            NR3Generator elementRandom = new NR3Generator(IoC.Randomizer.Seed);
-            File.Create(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Monster Attack Log.txt").Dispose();
-            using (StreamWriter file = File.AppendText(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + @"\Monster Attack Log.txt"))
+            NR3Generator statusRandom = new NR3Generator(ViewModels.Randomizer.Seed);
+            NR3Generator elementRandom = new NR3Generator(ViewModels.Randomizer.Seed);
+            File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Monster Attack Log.txt").Dispose();
+            using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Monster Attack Log.txt"))
             {
                 foreach (Files col in colFiles)
                 {
-                    if (!IoC.Settings.IncludeSmallMonsterDebuffs && col.Name.Contains("ems") || col.Name == "ems062.col")
+                    if (!ViewModels.Settings.IncludeSmallMonsterDebuffs && col.Name.Contains("ems") || col.Name == "ems062.col")
                         continue;
                     string[] fathernodes = col.EntireName.Split('\\');
                     file.WriteLine("Monster: " + QuestData.MonsterNames[Array.IndexOf(QuestData.MonsterEmNumber, fathernodes[2] + "_" + fathernodes[3]) + 1]);
@@ -49,15 +49,15 @@ namespace MHW_Randomizer
                         #region Element
 
                         bool loggedAttackIndex = false;
-                        bool giveRandomElement = !IoC.Settings.OnlyChangeExistingElement && 30 >= elementRandom.Next(101);
-                        bool changeExistingElement = IoC.Settings.OnlyChangeExistingElement && attack.Element_Id != 0;
-                        if (IoC.Settings.RandomMonsterElement && (giveRandomElement || changeExistingElement))
+                        bool giveRandomElement = !ViewModels.Settings.OnlyChangeExistingElement && 30 >= elementRandom.Next(101);
+                        bool changeExistingElement = ViewModels.Settings.OnlyChangeExistingElement && attack.Element_Id != 0;
+                        if (ViewModels.Settings.RandomMonsterElement && (giveRandomElement || changeExistingElement))
                         {
                             attack.Element_Id = elementIndex;
                             if (attack.Element_Id != 0)
                             {
                                 file.WriteLine("\tAttack Index: " + attack.Index);
-                                if (IoC.Settings.IncreaseElementPower)
+                                if (ViewModels.Settings.IncreaseElementPower)
                                     attack.Element_Dmg = elementRandom.Next(20, 50);
                                 else
                                     attack.Element_Dmg = elementRandom.Next(10, 30);
@@ -68,14 +68,14 @@ namespace MHW_Randomizer
                                 attack.Element_Dmg = 0;
 
                             //Chose a new element if having a different one per attack
-                            if (IoC.Settings.EachAttackDifferentElement)
+                            if (ViewModels.Settings.EachAttackDifferentElement)
                                 elementIndex = elementRandom.NextUInt(1, 6);
                         }
 
                         #endregion
                         #region Status
 
-                        if (!IoC.Settings.RandomMonsterAttackStatus)
+                        if (!ViewModels.Settings.RandomMonsterAttackStatus)
                             continue;
                         //30% chance to give a random status/change the status
                         if (30 <= statusRandom.Next(101))
@@ -94,9 +94,9 @@ namespace MHW_Randomizer
                         for (int s = 0; s < 9; s++)
                         {
                             //Only check whole array if randomizing multiple statuses
-                            bool giveRandomStatus = !IoC.Settings.OnlyChangeExistingStatus && (status[0] == s || (IoC.Settings.MultipleStatusesPerAttack && status.Contains(s)));
+                            bool giveRandomStatus = !ViewModels.Settings.OnlyChangeExistingStatus && (status[0] == s || (ViewModels.Settings.MultipleStatusesPerAttack && status.Contains(s)));
                             //attack.Statuses.All(o => o == 0) checks if the array is all 0s
-                            bool changeExistingStatus = (IoC.Settings.OnlyChangeExistingStatus && !attack.Statuses.All(o => o == 0) && status[0] == s) || (IoC.Settings.MultipleStatusesPerAttack && !attack.Statuses.All(o => o == 0) && status.Contains(s));
+                            bool changeExistingStatus = (ViewModels.Settings.OnlyChangeExistingStatus && !attack.Statuses!.All(o => o == 0) && status[0] == s) || (ViewModels.Settings.MultipleStatusesPerAttack && !attack.Statuses!.All(o => o == 0) && status.Contains(s));
                             //Don't let kestodons have blast or slime as it can break the first quest
                             bool kestodonBlast = col.Name == "ems051.col" && (s == 4 || s == 5);
                             if ((giveRandomStatus || changeExistingStatus) && !kestodonBlast)
@@ -121,7 +121,7 @@ namespace MHW_Randomizer
                             else if (s != 6)
                                 attack.Statuses[s] = 0;
                         }
-                        if (IoC.Settings.EachAttackDifferentStatus)
+                        if (ViewModels.Settings.EachAttackDifferentStatus)
                             for (int n = 0; n < status.Length; n++)
                             {
                                 status[n] = statusRandom.Next(9);
@@ -133,8 +133,8 @@ namespace MHW_Randomizer
 
                     byte[] randomizedBytes = StructTools.RawSerialize(atk2List);
                     Array.Copy(randomizedBytes, 0, colBytes, attackIndex + 16, randomizedBytes.Length);
-                    Directory.CreateDirectory(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + col.EntireName.Truncate(col.EntireName.Length - 10));
-                    File.WriteAllBytes(IoC.Settings.SaveFolderPath + IoC.Randomizer.RandomizeRootFolder + col.EntireName, colBytes);
+                    Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + col.EntireName.Truncate(col.EntireName.Length - 10));
+                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + col.EntireName, colBytes);
                 }
             }
         }

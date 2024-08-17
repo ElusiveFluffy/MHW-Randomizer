@@ -4,9 +4,9 @@ namespace MHW_Randomizer
 {
     public class RandomizerSettings : BaseViewModel
     {
-        public string ChunkFolderPath;
-        public string SaveFolderPath;
-        public string UserSeed { get; set; }
+        public string? ChunkFolderPath;
+        public string? SaveFolderPath;
+        public string? UserSeed { get; set; }
         //To do
         //Fix traces to match the monster
 

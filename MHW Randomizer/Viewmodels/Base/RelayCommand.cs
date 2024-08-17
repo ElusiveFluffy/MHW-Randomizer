@@ -22,7 +22,7 @@ namespace MHW_Randomizer
         /// <summary>
         /// The event thats fired when the <see cref="CanExecute(object)"/> value has changed
         /// </summary>
-        public event EventHandler CanExecuteChanged = (sender, e) => { };
+        public event EventHandler? CanExecuteChanged = (sender, e) => { };
 
         #endregion
 

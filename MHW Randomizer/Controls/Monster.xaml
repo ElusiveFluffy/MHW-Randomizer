@@ -26,7 +26,7 @@
                                Margin="5"
                                TextWrapping="Wrap"/>
                     <CheckBox Content="Include Small Monsters"
-                              IsChecked="{Binding IncludeSmallMonsterDebuffs, Source={x:Static local:IoC.Settings}}"
+                              IsChecked="{Binding IncludeSmallMonsterDebuffs, Source={x:Static local:ViewModels.Settings}}"
                               Margin="5, 4"
                               ToolTip="Includes small monster with getting the random attack status and element &#xA;(Still need to check those below)"
                               ToolTipService.ShowDuration="10000"/>
@@ -54,27 +54,27 @@
                         Margin="5">
                     <StackPanel Margin="0 5">
                         <CheckBox Content="Random Monster Status Effect"
-                                  IsChecked="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomMonsterAttackStatus, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5 4"
                                   ToolTip="Gives the monsters a random status and chance to inflict the player with on some attacks (30% chance to add it to an attack) &#xA;(Doesn't affect projectile attacks) &#xA;(eg. bleed, paralysis, stun, etc (Some monster don't get a status))(Will keep stun value)"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Only Change Existing Statuses"
-                                  IsChecked="{Binding OnlyChangeExistingStatus, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding OnlyChangeExistingStatus, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="12, 4"
                                   ToolTip="Less buggy and chaotic and doesn't have the phantom status attacks"
-                                  IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:ViewModels.Settings}}"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Different Status Effect Per Attack"
-                                  IsChecked="{Binding EachAttackDifferentStatus, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding EachAttackDifferentStatus, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="12, 4"
                                   ToolTip="Each attack that gets chosen to have a status inflicted will have the status randomly selected again"
-                                  IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:ViewModels.Settings}}"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Multiple Statuses"
-                                  IsChecked="{Binding MultipleStatusesPerAttack, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding MultipleStatusesPerAttack, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="12, 4"
                                   ToolTip="Makes is so there is a chance to get between 1-5 statuses on a attack"
-                                  IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomMonsterAttackStatus, Source={x:Static local:ViewModels.Settings}}"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
                 </Border>
@@ -94,27 +94,27 @@
                         Margin="5">
                     <StackPanel Margin="0 5">
                         <CheckBox Content="Random Monster Attack Element"
-                                  IsChecked="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding RandomMonsterElement, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="5, 4"
                                   ToolTip="Gives the monsters a random attack element for some of their attacks (30% chance to add it to an attack) &#xA;(Doesn't affect projectile attacks) &#xA;(Inflicts stuff like frostblight, and burn)(Also increases the monster's attack a bit)"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Only Change Existing Elements"
-                                  IsChecked="{Binding OnlyChangeExistingElement, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding OnlyChangeExistingElement, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="12, 4"
                                   ToolTip="Less buggy and chaotic and doesn't have the phantom element attacks"
-                                  IsEnabled="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomMonsterElement, Source={x:Static local:ViewModels.Settings}}"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Different Element Per Attack"
-                                  IsChecked="{Binding EachAttackDifferentElement, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding EachAttackDifferentElement, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="12, 4"
                                   ToolTip="Each attack that gets chosen to have a element will have the element randomly selected again"
-                                  IsEnabled="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomMonsterElement, Source={x:Static local:ViewModels.Settings}}"
                                   ToolTipService.ShowDuration="10000"/>
                         <CheckBox Content="Increase Element Damage"
-                                  IsChecked="{Binding IncreaseElementPower, Source={x:Static local:IoC.Settings}}"
+                                  IsChecked="{Binding IncreaseElementPower, Source={x:Static local:ViewModels.Settings}}"
                                   Margin="12, 4"
                                   ToolTip="Increases the random power from 10-30 to 20-50"
-                                  IsEnabled="{Binding RandomMonsterElement, Source={x:Static local:IoC.Settings}}"
+                                  IsEnabled="{Binding RandomMonsterElement, Source={x:Static local:ViewModels.Settings}}"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
                 </Border>
