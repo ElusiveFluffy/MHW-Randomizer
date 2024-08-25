@@ -8,7 +8,7 @@ namespace MHW_Randomizer
         {
             #region Rotten Vale Blockade
 
-            byte[] levelObjects = ChunkOTF.files["st104_gm.sobj"].Extract();
+            byte[] levelObjects = GameFiles.GetFile("\\stage\\st104\\common\\set\\st104_gm.sobj");
 
             //Raise blockade in lowest part of the rotten vale
             levelObjects[4487] = 0x00;
@@ -23,13 +23,13 @@ namespace MHW_Randomizer
             levelObjects[26694] = 0xC5;
 
             Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st104\common\set");
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st104\common\set\st104_gm.sobj", levelObjects);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st104\common\set\st104_gm.sobj", levelObjects);
 
             #endregion
 
             #region Elder Recess Blockade
 
-            levelObjects = ChunkOTF.files["st105_gm.sobj"].Extract();
+            levelObjects = GameFiles.GetFile("\\stage\\st105\\common\\set\\st105_gm.sobj");
 
             //Raise the lava wall blockade
             levelObjects[0x9AAA] = 0x00;
@@ -50,7 +50,7 @@ namespace MHW_Randomizer
             levelObjects[0x9FEA] = 0x44;
 
             Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set");
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set\st105_gm.sobj", levelObjects);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set\st105_gm.sobj", levelObjects);
 
             #endregion
 
@@ -58,7 +58,7 @@ namespace MHW_Randomizer
 
             if (ViewModels.Settings.RandomizeIBQuests || ViewModels.Settings.RandomizeIceborneExpeditions)
             {
-                levelObjects = ChunkOTF.files["st108_gm.sobj"].Extract();
+                levelObjects = GameFiles.GetFile("\\stage\\st108\\common\\set\\st108_gm.sobj");
 
                 //Rocks to the left area
                 levelObjects[0xF2A9] = 0x00;
@@ -122,7 +122,7 @@ namespace MHW_Randomizer
                 levelObjects[0x10034] = 0xC5;
 
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st108\common\set");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st108\common\set\st108_gm.sobj", levelObjects);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st108\common\set\st108_gm.sobj", levelObjects);
             }
 
             #endregion
@@ -133,41 +133,41 @@ namespace MHW_Randomizer
             if (ViewModels.Settings.RandomizeIBQuests)
             {
                 //Unlock the blocked off areas
-                byte[] unblockBytes = ChunkOTF.files["st109_v03.sdl"].Extract();
+                byte[] unblockBytes = GameFiles.GetFile(@"\stage\st109\common\sdl\st109_v03.sdl");
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v01.sdl", unblockBytes);
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v02.sdl", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v01.sdl", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v02.sdl", unblockBytes);
                 //Do the same for bake files
-                unblockBytes = ChunkOTF.files["st109_v03_bake.sdl"].Extract();
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v01_bake.sdl", unblockBytes);
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v02_bake.sdl", unblockBytes);
+                unblockBytes = GameFiles.GetFile(@"\stage\st109\common\sdl\st109_v03_bake.sdl");
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v01_bake.sdl", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\sdl\st109_v02_bake.sdl", unblockBytes);
 
                 //Light
-                unblockBytes = ChunkOTF.files["LL_st109_area_v03.llsd"].Extract();
+                unblockBytes = GameFiles.GetFile(@"\stage\st109\common\light\LL_st109_area_v03.llsd");
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_area_v01.llsd", unblockBytes);
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_area_v02.llsd", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_area_v01.llsd", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_area_v02.llsd", unblockBytes);
 
-                unblockBytes = ChunkOTF.files["LL_st109_v03.llk"].Extract();
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_v01.llk", unblockBytes);
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_v02.llk", unblockBytes);
+                unblockBytes = GameFiles.GetFile(@"\stage\st109\common\light\LL_st109_v03.llk");
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_v01.llk", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\light\LL_st109_v02.llk", unblockBytes);
 
                 //etc
-                unblockBytes = ChunkOTF.files["st109_v03.bkipr"].Extract();
+                unblockBytes = GameFiles.GetFile(@"\stage\st109\common\etc\st109_v03.bkipr");
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v01.bkipr", unblockBytes);
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v02.bkipr", unblockBytes);
-                unblockBytes = ChunkOTF.files["st109_v03.umbra"].Extract();
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v01.umbra", unblockBytes);
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v02.umbra", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v01.bkipr", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v02.bkipr", unblockBytes);
+                unblockBytes = GameFiles.GetFile(@"\stage\st109\common\etc\st109_v03.umbra");
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v01.umbra", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\common\etc\st109_v02.umbra", unblockBytes);
 
 
                 //Remove blocked off area collision by replacing it with a different one
-                unblockBytes = ChunkOTF.files["st109_F_col_add.sbc"].Extract();
+                unblockBytes = GameFiles.GetFile(@"\stage\st109\st109_F\col\st109_F_col_add.sbc");
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_V\col");
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_W\col");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_V\col\st109_V_col.sbc", unblockBytes);
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_W\col\st109_W_col.sbc", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_V\col\st109_V_col.sbc", unblockBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st109\st109_W\col\st109_W_col.sbc", unblockBytes);
             }
 
             #endregion
@@ -179,7 +179,7 @@ namespace MHW_Randomizer
         /// </summary>
         public static void RaiseLavaWall()
         {
-            byte[] levelObjects = ChunkOTF.files["st105_gm.sobj"].Extract();
+            byte[] levelObjects = GameFiles.GetFile(@"\stage\st105\common\set\st105_gm.sobj");
 
             //Raise the lava wall blockade
             levelObjects[0x9AAA] = 0x00;
@@ -188,7 +188,7 @@ namespace MHW_Randomizer
             levelObjects[0x9AAD] = 0x00;
 
             Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set");
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set\st105_gm.sobj", levelObjects);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\stage\st105\common\set\st105_gm.sobj", levelObjects);
         }
     }
 }

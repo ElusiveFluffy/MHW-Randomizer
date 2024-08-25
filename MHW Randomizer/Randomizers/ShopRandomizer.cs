@@ -26,7 +26,7 @@ namespace MHW_Randomizer
                     file.WriteLine("---------------------------------------------------------------------------");
                 }
 
-                byte[] shopBytes = ChunkOTF.files["shopList.slt"].Extract();
+                byte[] shopBytes = GameFiles.GetFile(@"\common\facility\shopList.slt");
                 List<ShopStructs.ItemShop> shopItemList = new List<ShopStructs.ItemShop>();
                 Dictionary<uint, string> itemList = GetItemData();
 
@@ -52,7 +52,7 @@ namespace MHW_Randomizer
                     itemList.Remove(itemList.ElementAt(index).Key);
                 }
                 //Deserialize itemData file for game defined item sorting order
-                byte[] itemDataBytes = ChunkOTF.files["itemData.itm"].Extract();
+                byte[] itemDataBytes = GameFiles.GetFile(@"\common\item\itemData.itm");
                 List<ItemDataFile> itemDatas = StructTools.RawDeserialize<ItemDataFile>(itemDataBytes, 10);
                 //Change Survival Jewel 1 sort order from 0 to 7000 (Just before Defence Jewel 1 (The first jewel)
                 itemDatas[2270].Sort_Order = 7000;
@@ -81,7 +81,7 @@ namespace MHW_Randomizer
                 shopBytes = header.Concat(randomizedBytes).ToArray();
 
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\facility\");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\facility\shopList.slt", shopBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\facility\shopList.slt", shopBytes);
             }
 
             if (ViewModels.Settings.RandomShopWepArmour)
@@ -93,17 +93,17 @@ namespace MHW_Randomizer
                     file.WriteLine("---------------------------------------------------------------------------");
                 }
 
-                byte[] shopBytes = ChunkOTF.files["shop.sed"].Extract();
+                byte[] shopBytes = GameFiles.GetFile(@"\common\equip\shop.sed");
                 List<ShopStructs.ArmourShop> shopItemList = StructTools.RawDeserialize<ShopStructs.ArmourShop>(shopBytes, 10);
 
                 NR3Generator itemIndex = new NR3Generator(ViewModels.Randomizer.Seed);
                 int index;
                 Dictionary<uint, string> currentGear = new Dictionary<uint, string>();
 
-                byte[] armourBytes = ChunkOTF.files["armor.eq_crt"].Extract();
+                byte[] armourBytes = GameFiles.GetFile(@"\common\equip\armor.eq_crt");
                 List<RecipeStructs.Armour> armourList = StructTools.RawDeserialize<RecipeStructs.Armour>(armourBytes, 10);
 
-                byte[] weaponBytes = ChunkOTF.files["weapon.eq_cus"].Extract();
+                byte[] weaponBytes = GameFiles.GetFile(@"\common\equip\weapon.eq_cus");
                 List<RecipeStructs.Weapon> weaponList = StructTools.RawDeserialize<RecipeStructs.Weapon>(weaponBytes, 10);
 
                 //Get all the Equipment Data
@@ -185,7 +185,7 @@ namespace MHW_Randomizer
                 shopBytes = header.Concat(randomizedBytes).ToArray();
 
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\shop.sed", shopBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\shop.sed", shopBytes);
             }
         }
 

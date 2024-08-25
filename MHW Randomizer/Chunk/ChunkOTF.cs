@@ -144,36 +144,18 @@ namespace MHW_Randomizer
                     if (fathernodes[fathernodes.Length - 2] == "trace" || (fathernodes[fathernodes.Length - 2] == "text" && fathernodes[fathernodes.Length - 1] == "q51613_eng.gmd"))
                         continue;
 
-                    if (fathernodes[fathernodes.Length - 1].Contains(".fsm") || fathernodes[1] == "em")
+                    files[StringNameChild] = new Files
                     {
-                        files[StringNameChild] = new Files
-                        {
-                            Size = FileSize,
-                            Offset = FileOffset,
-                            ChunkIndex = (int)(FileOffset / 0x40000),
-                            ChunkPointer = (int)(FileOffset % 0x40000),
-                            EntireName = StringNameChild,
-                            Name = fathernodes[fathernodes.Length - 1],
-                            FromChunk = child_node.FromChunk,
-                            FromChunkName = child_node.FromChunkName,
-                        };
+                        Size = FileSize,
+                        Offset = FileOffset,
+                        ChunkIndex = (int)(FileOffset / 0x40000),
+                        ChunkPointer = (int)(FileOffset % 0x40000),
+                        EntireName = StringNameChild,
+                        Name = fathernodes[fathernodes.Length - 1],
+                        FromChunk = child_node.FromChunk,
+                        FromChunkName = child_node.FromChunkName,
+                    };
                     files[StringNameChild].ChunkState = this;
-                    }
-                    else
-                    {
-                        files[fathernodes[fathernodes.Length - 1]] = new Files
-                        {
-                            Size = FileSize,
-                            Offset = FileOffset,
-                            ChunkIndex = (int)(FileOffset / 0x40000),
-                            ChunkPointer = (int)(FileOffset % 0x40000),
-                            EntireName = StringNameChild,
-                            Name = fathernodes[fathernodes.Length - 1],
-                            FromChunk = child_node.FromChunk,
-                            FromChunkName = child_node.FromChunkName,
-                        };
-                    files[fathernodes[fathernodes.Length - 1]].ChunkState = this;
-                    }
 
                 }
             }

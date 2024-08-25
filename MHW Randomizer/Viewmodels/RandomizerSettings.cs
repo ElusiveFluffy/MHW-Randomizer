@@ -405,7 +405,7 @@ namespace MHW_Randomizer
             byte[] bytes = new byte[(int)Math.Ceiling((double)BoolSaveOrder.Length / 8)];
             foreach (string variable in BoolSaveOrder)
             {
-                bool tempValue = (bool)typeof(RandomizerSettings).GetProperty(variable).GetValue(this);
+                bool tempValue = (bool)typeof(RandomizerSettings).GetProperty(variable).GetValue(this)!;
 
                 int byteIndex = bitIndex / 8;
                 //The bit that will be set in the byte in the array
@@ -428,7 +428,7 @@ namespace MHW_Randomizer
             bytes = new byte[0];
             foreach (string variable in UShortSaveOrder)
             {
-                ushort tempValue = (ushort)typeof(RandomizerSettings).GetProperty(variable).GetValue(this);
+                ushort tempValue = (ushort)typeof(RandomizerSettings).GetProperty(variable).GetValue(this)!;
 
                 //settings += Convert.ToHexString(BitConverter.GetBytes(tempValue));
                 bytes = bytes.Concat(BitConverter.GetBytes(tempValue)).ToArray();

@@ -15,8 +15,9 @@ namespace MHW_Randomizer
 
         private static void RandomAttackDebuffs()
         {
-            Files[] colFiles = ChunkOTF.files.Values.Where(o => o.Name.Contains(".col") && o.EntireName.Contains("collision\\em") && !o.Name.Contains("_") && !o.EntireName.Contains("shell")).ToArray();
-            colFiles = colFiles.OrderBy(x => x.Name).ToArray();
+            string[] colFiles = GameFiles.GetAllFilesOfType("col", @"\em", "collision\\em");
+            colFiles = colFiles.Where(o => !o.Contains('_') && !o.Contains("shell")).ToArray();
+            colFiles = colFiles.OrderBy(x => x).ToArray();
             //"atk" string represented in bytes
             byte[] atkBytes = new byte[] { 65, 84, 75, 0 };
             string[] statusNames = new string[] { "Poison", "Deadly Poison", "Paralysis", "Sleep", "Blast", "Slime", "Stun", "Miasma", "Bleed" };
@@ -27,13 +28,13 @@ namespace MHW_Randomizer
             File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Monster Attack Log.txt").Dispose();
             using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Monster Attack Log.txt"))
             {
-                foreach (Files col in colFiles)
+                foreach (string col in colFiles)
                 {
-                    if (!ViewModels.Settings.IncludeSmallMonsterDebuffs && col.Name.Contains("ems") || col.Name == "ems062.col")
+                    if (!ViewModels.Settings.IncludeSmallMonsterDebuffs && col.Contains("ems") || col.Contains("ems062.col"))
                         continue;
-                    string[] fathernodes = col.EntireName.Split('\\');
+                    string[] fathernodes = col.Split('\\');
                     file.WriteLine("Monster: " + QuestData.MonsterNames[Array.IndexOf(QuestData.MonsterEmNumber, fathernodes[2] + "_" + fathernodes[3]) + 1]);
-                    var colBytes = col.Extract();
+                    var colBytes = GameFiles.GetFile(col);
                     //Find where the attack stats are
                     int attackIndex = colBytes.BMHIndexOf(atkBytes);
                     var atk2List = StructTools.RawDeserialize<MonsterAtkStructs.Atk2>(colBytes, attackIndex + 16);
@@ -98,7 +99,7 @@ namespace MHW_Randomizer
                             //attack.Statuses.All(o => o == 0) checks if the array is all 0s
                             bool changeExistingStatus = (ViewModels.Settings.OnlyChangeExistingStatus && !attack.Statuses!.All(o => o == 0) && status[0] == s) || (ViewModels.Settings.MultipleStatusesPerAttack && !attack.Statuses!.All(o => o == 0) && status.Contains(s));
                             //Don't let kestodons have blast or slime as it can break the first quest
-                            bool kestodonBlast = col.Name == "ems051.col" && (s == 4 || s == 5);
+                            bool kestodonBlast = fathernodes[fathernodes.Length - 1] == "ems051.col" && (s == 4 || s == 5);
                             if ((giveRandomStatus || changeExistingStatus) && !kestodonBlast)
                             {
                                 if (!loggedAttackIndex)
@@ -133,8 +134,8 @@ namespace MHW_Randomizer
 
                     byte[] randomizedBytes = StructTools.RawSerialize(atk2List);
                     Array.Copy(randomizedBytes, 0, colBytes, attackIndex + 16, randomizedBytes.Length);
-                    Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + col.EntireName.Truncate(col.EntireName.Length - 10));
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + col.EntireName, colBytes);
+                    Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + Path.GetDirectoryName(col.Replace(GameFiles.GameFilesPath, "")));
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + col.Replace(GameFiles.GameFilesPath, ""), colBytes);
                 }
             }
         }

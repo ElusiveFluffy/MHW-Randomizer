@@ -32,7 +32,7 @@ namespace MHW_Randomizer
                     file.WriteLine("---------------------------------------------------------------------------");
                 }
 
-                byte[] recipeBytes = ChunkOTF.files["armor.eq_crt"].Extract();
+                byte[] recipeBytes = GameFiles.GetFile(@"\common\equip\armor.eq_crt");
                 byte[] header = new byte[10];
                 Array.Copy(recipeBytes, header, 10);
                 List<RecipeStructs.Armour> recipeList = StructTools.RawDeserialize<RecipeStructs.Armour>(recipeBytes, 10);
@@ -295,13 +295,13 @@ namespace MHW_Randomizer
                 byte[] randomizedBytes = StructTools.RawSerialize(recipeList);
                 randomizedBytes = header.Concat(randomizedBytes).ToArray();
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\armor.eq_crt", randomizedBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\armor.eq_crt", randomizedBytes);
             }
 
             if (ViewModels.Settings.RandomArmourSkill || ViewModels.Settings.RandomArmourSkillLevels || ViewModels.Settings.ShuffleArmourSetBonus || ViewModels.Settings.RandomArmourDecoSlots || ViewModels.Settings.RandomDecoSlotSize || ViewModels.Settings.GiveCharmDecoSlot 
                 || ViewModels.Settings.RandomArmourIconColour || ViewModels.Settings.RandomCharmSkill || ViewModels.Settings.RandomCharmSkillLevels)
             {
-                byte[] datBytes = ChunkOTF.files["armor.am_dat"].Extract();
+                byte[] datBytes = GameFiles.GetFile(@"\common\equip\armor.am_dat");
                 List<RecipeStructs.ArmourDat> datList = StructTools.RawDeserialize<RecipeStructs.ArmourDat>(datBytes, 10);
 
                 RandomizeArmourDat(datList);
@@ -309,7 +309,7 @@ namespace MHW_Randomizer
                 byte[] randomizedDatBytes = StructTools.RawSerialize(datList);
                 Array.Copy(randomizedDatBytes, 0, datBytes, 10, randomizedDatBytes.Length);
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\armor.am_dat", datBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\armor.am_dat", datBytes);
             }
 
             #endregion
@@ -327,8 +327,8 @@ namespace MHW_Randomizer
                 }
 
 
-                byte[] recipeBytes = ChunkOTF.files["weapon.eq_cus"].Extract();
-                byte[] weaponCraftBytes = ChunkOTF.files["weapon.eq_crt"].Extract();
+                byte[] recipeBytes = GameFiles.GetFile(@"\common\equip\weapon.eq_cus");
+                byte[] weaponCraftBytes = GameFiles.GetFile(@"\common\equip\weapon.eq_crt");
                 List<RecipeStructs.Weapon> recipeList = StructTools.RawDeserialize<RecipeStructs.Weapon>(recipeBytes, 10);
                 List<RecipeStructs.Weapon> recipeNonRandomList = StructTools.RawDeserialize<RecipeStructs.Weapon>(recipeBytes, 10);
                 byte[] treeBytes;
@@ -355,7 +355,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["c_axe.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\c_axe.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Charge_Blade));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -367,7 +367,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\c_axe.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\c_axe.wp_dat", treeBytes);
 
                                 break;
                             }
@@ -380,7 +380,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["w_sword.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\w_sword.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Dual_Blades));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -392,7 +392,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\w_sword.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\w_sword.wp_dat", treeBytes);
                                 break;
                             }
                         case 2:
@@ -404,7 +404,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["l_sword.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\l_sword.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Greatsword));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -416,7 +416,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\l_sword.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\l_sword.wp_dat", treeBytes);
                                 break;
                             }
                         case 3:
@@ -428,7 +428,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["g_lance.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\g_lance.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Gunlance));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -440,7 +440,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\g_lance.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\g_lance.wp_dat", treeBytes);
                                 break;
                             }
                         case 4:
@@ -452,7 +452,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["hammer.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\hammer.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Hammer));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -464,7 +464,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\hammer.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\hammer.wp_dat", treeBytes);
                                 break;
                             }
                         case 5:
@@ -476,7 +476,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["whistle.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\whistle.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Hunting_Horn));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -488,7 +488,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\whistle.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\whistle.wp_dat", treeBytes);
                                 break;
                             }
                         case 6:
@@ -500,7 +500,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["rod.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\rod.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Insect_Glaive));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -512,7 +512,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\rod.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\rod.wp_dat", treeBytes);
                                 break;
                             }
                         case 7:
@@ -524,7 +524,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["lance.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\lance.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Lance));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -536,7 +536,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\lance.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\lance.wp_dat", treeBytes);
                                 break;
                             }
                         case 8:
@@ -548,7 +548,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["tachi.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\tachi.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Longsword));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -560,7 +560,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\tachi.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\tachi.wp_dat", treeBytes);
                                 break;
                             }
                         case 9:
@@ -572,7 +572,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["s_axe.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\s_axe.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Switch_Axe));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -584,7 +584,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\s_axe.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\s_axe.wp_dat", treeBytes);
                                 break;
                             }
                         case 10:
@@ -596,7 +596,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["sword.wp_dat"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\sword.wp_dat");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Sword_and_Shield));
                                 weaponTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
                                 weaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.WeaponTree>(treeBytes, 10);
@@ -608,7 +608,7 @@ namespace MHW_Randomizer
                                 Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
 
                                 if (exportWp_dat)
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\sword.wp_dat", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\sword.wp_dat", treeBytes);
                                 break;
                             }
                     }
@@ -629,7 +629,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["bow.wp_dat_g"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\bow.wp_dat_g");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Bow));
                                 rangedWeaponTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
                                 rangedWeaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
@@ -641,7 +641,7 @@ namespace MHW_Randomizer
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\bow.wp_dat_g", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\bow.wp_dat_g", treeBytes);
                                 }
                                 break;
                             }
@@ -654,7 +654,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["hbg.wp_dat_g"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\hbg.wp_dat_g");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Heavy_Bowgun));
                                 rangedWeaponTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
                                 rangedWeaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
@@ -666,7 +666,7 @@ namespace MHW_Randomizer
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\hbg.wp_dat_g", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\hbg.wp_dat_g", treeBytes);
                                 }
                                 break;
                             }
@@ -679,7 +679,7 @@ namespace MHW_Randomizer
                                     file.WriteLine("---------------------------------------------------------------------------");
                                 }
 
-                                treeBytes = ChunkOTF.files["lbg.wp_dat_g"].Extract();
+                                treeBytes = GameFiles.GetFile(@"\common\equip\lbg.wp_dat_g");
                                 weaponNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(Encoding.UTF8.GetString(Properties.Resources.Light_Bowgun));
                                 rangedWeaponTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
                                 rangedWeaponNonRandomTree = StructTools.RawDeserialize<RecipeStructs.RangedWeaponTree>(treeBytes, 10);
@@ -691,7 +691,7 @@ namespace MHW_Randomizer
                                 {
                                     byte[] randomizedTreeBytes = StructTools.RawSerialize(rangedWeaponTree);
                                     Array.Copy(randomizedTreeBytes, 0, treeBytes, 10, randomizedTreeBytes.Length);
-                                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\lbg.wp_dat_g", treeBytes);
+                                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\lbg.wp_dat_g", treeBytes);
                                 }
                                 break;
                             }
@@ -705,8 +705,8 @@ namespace MHW_Randomizer
 
                 if (ViewModels.Settings.ShuffleWeaponRecipes || ViewModels.Settings.ShuffleWeaponOrder)
                 {
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_cus", recipeBytes);
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_crt", weaponCraftBytes);
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_cus", recipeBytes);
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\weapon.eq_crt", weaponCraftBytes);
                 }
 
             }
@@ -725,8 +725,8 @@ namespace MHW_Randomizer
                     file.Write("\n---------------------------------------------------------------------------");
                 }
 
-                byte[] recipeBytes = ChunkOTF.files["insect.eq_cus"].Extract();
-                byte[] treeBytes = ChunkOTF.files["rod_insect.rod_inse"].Extract();
+                byte[] recipeBytes = GameFiles.GetFile(@"\common\equip\insect.eq_cus");
+                byte[] treeBytes = GameFiles.GetFile(@"\common\equip\rod_insect.rod_inse");
 
                 Cipher cipher = new Cipher("SFghFQVFJycHnypExurPwut98ZZq1cwvm7lpDpASeP4biRhstQgULzlb");
                 treeBytes = cipher.Decipher(treeBytes);
@@ -837,9 +837,9 @@ namespace MHW_Randomizer
                 randomizedTreeBytes = cipher.Encipher(randomizedTreeBytes);
 
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\insect.eq_cus", randomizedBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\insect.eq_cus", randomizedBytes);
                 if (ViewModels.Settings.ShuffleKinsectOrder || changeKinsectStats)
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse", randomizedTreeBytes);
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse", randomizedTreeBytes);
             }
             #endregion
 
@@ -849,7 +849,7 @@ namespace MHW_Randomizer
             if (ViewModels.Settings.ShufflePalicoArmour || ViewModels.Settings.ShufflePalicoWeapons)
             {
                 File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Palico Log.txt").Dispose();
-                byte[] recipeBytes = ChunkOTF.files["ot_equip.eq_crt"].Extract();
+                byte[] recipeBytes = GameFiles.GetFile(@"\common\equip\ot_equip.eq_crt");
                 List<RecipeStructs.Armour> recipeList = StructTools.RawDeserialize<RecipeStructs.Armour>(recipeBytes, 10);
                 NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
                 List<RecipeStructs.Armour> validLowRank = new List<RecipeStructs.Armour>();
@@ -941,7 +941,7 @@ namespace MHW_Randomizer
                 Array.Copy(randomizedBytes, 0, recipeBytes, 10, randomizedBytes.Length);
 
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\ot_equip.eq_crt", recipeBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\ot_equip.eq_crt", recipeBytes);
             }
 
             if (ViewModels.Settings.RandomPalicoWeaponElement || ViewModels.Settings.RandomPalicoWeaponType || ViewModels.Settings.RandomPalicoWeaponColour)
@@ -957,7 +957,7 @@ namespace MHW_Randomizer
                 }
 
                 int[] badIDs = { 50, 54, 55, 60, 130, 149, 150, 151, 153, 155, 158, 162, 163, 164 };
-                byte[] weaponBytes = ChunkOTF.files["otomoWeapon.owp_dat"].Extract();
+                byte[] weaponBytes = GameFiles.GetFile(@"\common\equip\otomoWeapon.owp_dat");
                 Cipher cipher = new Cipher("FZoS8QLyOyeFmkdrz73P9Fh2N4NcTwy3QQPjc1YRII5KWovK6yFuU8SL");
                 weaponBytes = cipher.Decipher(weaponBytes);
 
@@ -1019,7 +1019,7 @@ namespace MHW_Randomizer
                             weapon.Rarity = (byte)re.Next(12);
                             logText += "\n\tRarity (Colour): " + weapon.Rarity;
                         }
-                        if (logText.Contains("\n"))
+                        if (logText.Contains('\n'))
                             file.WriteLine(logText);
                     }
                 }
@@ -1028,7 +1028,7 @@ namespace MHW_Randomizer
                 weaponBytes = cipher.Encipher(weaponBytes);
 
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\otomoWeapon.owp_dat", weaponBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\otomoWeapon.owp_dat", weaponBytes);
 
             }
 

@@ -182,8 +182,8 @@ namespace MHW_Randomizer
         public int TotalMibFiles { get; set; }
         public int TotalSobjFiles { get; set; }
 
-        private Files[]? SobjFilesCache;
-        private Files[]? SobjFilesBigMCache;
+        private string[]? SobjFilesCache;
+        private string[]? SobjFilesBigMCache;
 
         private static List<string> SupplyBoxIDs = new List<string>();
 
@@ -204,7 +204,7 @@ namespace MHW_Randomizer
 
         private GMD? StoryTargetText;
 
-        private byte[] XenoMapWarpBytes = ChunkOTF.files["00991.sobjl"].Extract();
+        private byte[] XenoMapWarpBytes = GameFiles.GetFile(@"\quest\q00991\set\00991.sobjl");
         private List<int> ValidMapIndexes = new List<int>();
 
         public void OpenMIBFIle(byte[] mibFile)
@@ -329,8 +329,9 @@ namespace MHW_Randomizer
 
         public void Randomize()
         {
-            SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !QuestData.BadSobjs.Contains(o.Name) && !Regex.IsMatch(o.Name!, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(o.Name)).ToArray();
-            SobjFilesBigMCache = SobjFilesCache.Where(o => !o.Name.Contains("em101_00_st101")).ToArray();
+            SobjFilesCache = GameFiles.GetAllFilesOfType("sobj", @"\quest\enemy\boss\", @"\enemy\boss\em");
+            SobjFilesCache = SobjFilesCache.Where(o => !QuestData.BadSobjs.Contains(o) && !Regex.IsMatch(o, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(o)).ToArray();
+            SobjFilesBigMCache = SobjFilesCache.Where(o => !o.Contains("em101_00_st101")).ToArray();
             File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Quest Log.txt").Dispose();
 
             r = new XorShift128Generator(ViewModels.Randomizer.Seed);
@@ -346,7 +347,7 @@ namespace MHW_Randomizer
 
             ViewModels.Randomizer.MissingMIBFiles = new List<string>();
 
-            StoryTargetText = new GMD(ChunkOTF.files["storyTarget_eng.gmd"].Extract());
+            StoryTargetText = new GMD(GameFiles.GetFile(@"\common\text\storyTarget_eng.gmd"));
 
             if (ViewModels.Settings.RandomSupplyBox || ViewModels.Settings.RandomSupplyBoxItems)
                 GetSupplyIDs();
@@ -594,18 +595,18 @@ namespace MHW_Randomizer
                 List<int> previousQuestMonsters = new List<int>();
 
                 //Quest number changed later on
-                if (!ChunkOTF.files.ContainsKey("questData_" + questNumber + ".mib"))
+                if (!GameFiles.ContainsFile(@"\quest\questData_" + questNumber + ".mib"))
                 {
-                    if (questNumber == "64802" && ChunkOTF.files.ContainsKey("questData_66859.mib"))
+                    if (questNumber == "64802" && GameFiles.ContainsFile(@"\quest\questData_66859.mib"))
                         continue;
-                    else if (questNumber == "66835" && ChunkOTF.files.ContainsKey("questData_66860.mib"))
+                    else if (questNumber == "66835" && GameFiles.ContainsFile(@"\quest\questData_66860.mib"))
                         continue;
 
                     ViewModels.Randomizer.MissingMIBFiles.Add("questData_" + questNumber + ".mib");
                     continue;
                 }
 
-                OpenMIBFIle(ChunkOTF.files["questData_" + questNumber + ".mib"].Extract());
+                OpenMIBFIle(GameFiles.GetFile(@"\quest\questData_" + questNumber + ".mib"));
 
                 //If Zorah Magdaros quest set the objective
                 if (questNumber == "00401" || questNumber == "00504")
@@ -619,14 +620,14 @@ namespace MHW_Randomizer
                     MObjC1Text = "1";
 
                     //Remove all the NPCs
-                    byte[] zorahSobjl = ChunkOTF.files["00401.sobjl"].Extract();
+                    byte[] zorahSobjl = GameFiles.GetFile(@"\quest\q00401\set\00401.sobjl");
                     zorahSobjl[8] = 0;
                     Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q00401\set\");
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q00401\set\00401.sobjl", zorahSobjl);
-                    zorahSobjl = ChunkOTF.files["00504.sobjl"].Extract();
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q00401\set\00401.sobjl", zorahSobjl);
+                    zorahSobjl = GameFiles.GetFile(@"\quest\q00504\set\00504.sobjl");
                     zorahSobjl[8] = 0;
                     Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q00504\set\");
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q00504\set\00504.sobjl", zorahSobjl);
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q00504\set\00504.sobjl", zorahSobjl);
 
                     //If not randomizing maps then pick a random one here
                     //Pick a random map after creating the zorah sobjl just incase it gets overwritten with the xeno one
@@ -703,12 +704,12 @@ namespace MHW_Randomizer
                         //Check if its a variant, if so need to add _00
                         isVariant = int.Parse(QuestData.MonsterVariantNumber[MID[m] - 1]) != 0;
 
-                    if (isStoryQuest && StoryQuests[questNumber].CreateFSM && MID[m] != 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm"))
-                        fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm"].Extract();
-                    else if (isStoryQuest && StoryQuests[questNumber].CreateFSM && m == 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm"))
-                        fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm"].Extract();
-                    else if (isStoryQuest && m == 0 && ChunkOTF.files.ContainsKey(@"\quest\q" + questNumber + @"\fsm\em\50910_em127_00.fsm"))
-                        fsm = ChunkOTF.files[@"\quest\q" + questNumber + @"\fsm\em\50910_em127_00.fsm"].Extract();
+                    if (isStoryQuest && StoryQuests[questNumber].CreateFSM && MID[m] != 0 && GameFiles.ContainsFile(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm"))
+                        fsm = GameFiles.GetFile(@"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm");
+                    else if (isStoryQuest && StoryQuests[questNumber].CreateFSM && m == 0 && GameFiles.ContainsFile(@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm"))
+                        fsm = GameFiles.GetFile(@"\quest\q" + questNumber + @"\fsm\em\emXXX_00.fsm");
+                    else if (isStoryQuest && m == 0 && GameFiles.ContainsFile(@"\quest\q" + questNumber + @"\fsm\em\50910_em127_00.fsm"))
+                        fsm = GameFiles.GetFile(@"\quest\q" + questNumber + @"\fsm\em\50910_em127_00.fsm");
 
                     //Pick a random size percent between range if both aren't 100
                     if (ViewModels.Settings.MonsterMinSize != 100 && ViewModels.Settings.MonsterMaxSize != 100)
@@ -773,9 +774,9 @@ namespace MHW_Randomizer
                         //Create a copy of the fsm file but with the name for the randomized monster
                         Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\");
                         if (questNumber != "50910")
-                            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm", fsm);
+                            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm", fsm);
                         else
-                            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\50910_" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm", fsm);
+                            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\fsm\em\50910_" + QuestData.MonsterEmNumber[MID[m] - 1] + (isVariant ? "_00" : "") + ".fsm", fsm);
                     }
 
                     #region sobj Randomization
@@ -786,33 +787,33 @@ namespace MHW_Randomizer
                     //Pick random sobj (always give the zorah quests a random one)
                     if ((m == 1 && ViewModels.Settings.TwoMonsterQuests && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap || oldMonsterID == -1)) || ((ViewModels.Settings.RandomSobj || questNumber == "00401" || questNumber == "00504") && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap)))
                     {
-                        Files[] SobjFiles;
+                        string[] SobjFiles;
                         //Make it so xeno isn't in great jagras' den
                         if (RandomMonsterID == 26)
-                            SobjFiles = SobjFilesBigMCache!.Where(o => o.Name.Contains("st" + QuestData.MapIDs[MapIDIndex])).ToArray();
+                            SobjFiles = SobjFilesBigMCache!.Where(o => o.Contains("st" + QuestData.MapIDs[MapIDIndex])).ToArray();
                         else
-                            SobjFiles = SobjFilesCache!.Where(o => o.Name.Contains("st" + QuestData.MapIDs[MapIDIndex])).ToArray();
+                            SobjFiles = SobjFilesCache!.Where(o => o.Contains("st" + QuestData.MapIDs[MapIDIndex])).ToArray();
                         int sobjIndex = PickSobj.Next(SobjFiles.Length);
 
-                        sobj = SobjFiles[sobjIndex].Extract();
-                        oldMSobj = SobjFiles[sobjIndex].Name!;
+                        sobj = GameFiles.GetFile(SobjFiles[sobjIndex]);
+                        oldMSobj = SobjFiles[sobjIndex];
 
                     }
                     //Else use old monsters one
                     else
                     {
-                        oldMSobj = QuestData.MonsterStageEmNumber[oldMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj";
+                        oldMSobj = @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[oldMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj";
                         if (RandomMonsterID == 26 && oldMSobj.Contains("em101_00_st101"))
                         {
-                            Files[]? SobjFiles;
+                            string[]? SobjFiles;
                             SobjFiles = SobjFilesBigMCache;
                             int sobjIndex = PickSobj.Next(SobjFiles.Length);
 
-                            sobj = ChunkOTF.files[SobjFiles[sobjIndex].Name!].Extract();
-                            oldMSobj = SobjFiles[sobjIndex].Name!;
+                            sobj = GameFiles.GetFile(SobjFiles[sobjIndex]);
+                            oldMSobj = SobjFiles[sobjIndex];
                         }
                         else
-                            sobj = ChunkOTF.files[oldMSobj].Extract();
+                            sobj = GameFiles.GetFile(oldMSobj);
                     }
                     //Add 1 so the expedition randomizer creates ones for 0, and makes it so the bad sobjs don't get potentially used if they're one used for a story
                     MSobj[m] = QuestData.MonsterMapSobjCount[RandomMonsterID, MapIDIndex] + 1;
@@ -834,7 +835,7 @@ namespace MHW_Randomizer
                         else
                             CDCount = 0;
                     }
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[RandomMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj", sobj);
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[RandomMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj", sobj);
 
                     QuestData.MonsterMapSobjCount[RandomMonsterID, MapIDIndex]++;
 
@@ -855,7 +856,7 @@ namespace MHW_Randomizer
                         MonIcons[m] = Array.IndexOf(QuestData.IconList, QuestData.MonsterNames[RandomMonsterID + 1]);
 
                     //Write monster info to the log
-                    file.WriteLine("Monster " + (m + 1).ToString() + ": " + QuestData.MonsterNames[RandomMonsterID + 1] + "\tSobj File Name: " + QuestData.MonsterStageEmNumber[RandomMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj" + "\tOld sobj File Name: " + oldMSobj
+                    file.WriteLine("Monster " + (m + 1).ToString() + ": " + QuestData.MonsterNames[RandomMonsterID + 1] + "\tSobj File Name: " + QuestData.MonsterStageEmNumber[RandomMonsterID] + QuestData.MapIDs[MapIDIndex] + "_" + MSobj[m].ToString("00") + ".sobj" + "\tOld sobj File Name: " + Path.GetFileName(oldMSobj)
                        + (ViewModels.Settings.RandomIcons && m < 5 && MonIcons[m] != 127 ? "\tIcon: " + QuestData.IconList[MonIcons[m]] : ""));
 
                 }
@@ -984,7 +985,7 @@ namespace MHW_Randomizer
                 if (!(QuestData.HuntMultiMonster.Contains(questNumber) || QuestData.HuntMultiObjective.Contains(questNumber) || QuestData.IBHuntMultiMonster.Contains(questNumber) || QuestData.IBHuntMultiObjective.Contains(questNumber) ||
                     QuestData.SlayMultiMonster.Contains(questNumber) || QuestData.SlayMultiObjective.Contains(questNumber) || QuestData.IBSlayMultiMonster.Contains(questNumber)) && changeText)
                 {
-                    GMDFile = new GMD(ChunkOTF.files["q" + questNumber + "_eng.gmd"].Extract());
+                    GMDFile = new GMD(GameFiles.GetFile(@"\common\text\quest\q" + questNumber + "_eng.gmd"));
                     if (ViewModels.Settings.TwoMonsterQuests)
                         GMDFile.Entries[1].Value = "Hunt all target monsters";
                     else if (questNumber == "66801" || questNumber == "66803")
@@ -999,7 +1000,7 @@ namespace MHW_Randomizer
                 }
                 else if (questNumber == "67103" || questNumber == "66864")
                 {
-                    GMDFile = new GMD(ChunkOTF.files["q" + questNumber + "_eng.gmd"].Extract());
+                    GMDFile = new GMD(GameFiles.GetFile(@"\common\text\quest\q" + questNumber + "_eng.gmd"));
                     GMDFile.Entries[1].Value = "Hunt all target monsters";
                     GMDFile.Save(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\text\quest\" + GMDFile.Filename + "_eng.gmd");
                 }
@@ -1012,7 +1013,7 @@ namespace MHW_Randomizer
             if (iceborne && isStoryQuest)
             {
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone\01601_qtev.zon", ChunkOTF.files["01602_qtev.zon"].Extract());
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q01601\zone\01601_qtev.zon", GameFiles.GetFile(@"\quest\q01602\zone\01602_qtev.zon"));
             }
         }
 
@@ -1023,7 +1024,7 @@ namespace MHW_Randomizer
             data4 = null;
             cipher = new Cipher(key);
             int MapID = MapIDIndex;
-            data = ChunkOTF.files["questData_" + questNumber + ".mib"].Extract();
+            data = GameFiles.GetFile(@"\quest\questData_" + questNumber + ".mib");
             WriteData = cipher.Decipher(data);
             data3 = new byte[WriteData.Length - 4];
             Array.Copy(WriteData, 4, data3, 0, WriteData.Length - 4);
@@ -1341,7 +1342,7 @@ namespace MHW_Randomizer
             Array.Copy(data3, 0, WriteData, 4, WriteData.Length - 4);
             data4 = cipher.Encipher(WriteData);
 
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\questData_" + questNumber + ".mib", data4);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\questData_" + questNumber + ".mib", data4);
         }
 
         private void PickRandomMap(string questNumber, bool duplicateMonQuest, bool captureQuest = false, bool iceborne = false)
@@ -1376,7 +1377,7 @@ namespace MHW_Randomizer
                 else if (MapIDIndex == 24)
                 {
                     Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\set\");
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\set\" + questNumber + ".sobjl", XenoMapWarpBytes);
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q" + questNumber + @"\set\" + questNumber + ".sobjl", XenoMapWarpBytes);
                 }
                 //If its Xeno or a iceborne arena then change the bgm to 22 since its the only one with nice music for them
                 if (MapIDIndex > 23)
@@ -1456,10 +1457,10 @@ namespace MHW_Randomizer
                     continue;
 
                 //Continue if the quest doesn't exist
-                if (!ChunkOTF.files.ContainsKey("questData_" + fileQuestNumber + ".mib"))
+                if (!GameFiles.ContainsFile(@"\quest\questData_" + fileQuestNumber + ".mib"))
                     continue;
 
-                OpenMIBFIle(ChunkOTF.files["questData_" + fileQuestNumber + ".mib"].Extract());
+                OpenMIBFIle(GameFiles.GetFile(@"\quest\questData_" + fileQuestNumber + ".mib"));
 
                 NumberOfPlayers = 1;
 
@@ -1488,7 +1489,7 @@ namespace MHW_Randomizer
                     if (int.Parse(supp) > 11999)
                         suppBytes = File.ReadAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\supp\" + "suppData_" + supp + ".supp");
                     else
-                        suppBytes = ChunkOTF.files["suppData_" + supp + ".supp"].Extract();
+                        suppBytes = GameFiles.GetFile(@"\quest\supp\suppData_" + supp + ".supp");
 
                     //Extract the bytes for the items
                     byte[] suppItemBytes = new byte[96];
@@ -1514,7 +1515,7 @@ namespace MHW_Randomizer
 
                     suppItemBytes = StructTools.RawSerialize(items);
                     Array.Copy(suppItemBytes, 0, suppBytes, 14, 96);
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\supp\" + "suppData_" + supp + ".supp", suppBytes);
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\supp\" + "suppData_" + supp + ".supp", suppBytes);
 
                     file.Write("\n\n");
                 }
@@ -1532,7 +1533,7 @@ namespace MHW_Randomizer
 
             for (int id = 0; id < ViewModels.Settings.ExtraSupplyBoxes; id++)
             {
-                byte[] suppBytes = ChunkOTF.files["suppData_" + localSuppIDs[IDr.Next(localSuppIDs.Length)] +".supp"].Extract();
+                byte[] suppBytes = GameFiles.GetFile(@"\quest\supp\suppData_" + localSuppIDs[IDr.Next(localSuppIDs.Length)] +".supp");
                 List<SuppItems> items = new List<SuppItems>();
 
                 int singlePlayAmount = amountr.Next(3, 6);
@@ -1550,7 +1551,7 @@ namespace MHW_Randomizer
 
                 Array.Copy(StructTools.RawSerialize(items), 0, suppBytes, 14, 96);
                 //Temporarily store the file in unfinished state on disk, rest will be done on picking random item
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\supp\" + "suppData_" + (12000 + id) + ".supp", suppBytes);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\supp\" + "suppData_" + (12000 + id) + ".supp", suppBytes);
                 SupplyBoxIDs.Add((12000 + id).ToString());
             }
         }
@@ -1558,7 +1559,7 @@ namespace MHW_Randomizer
         //Supply item randomization step 1
         private static void GetSupplyIDs()
         {
-            string[] suppFiles = ChunkOTF.files.Keys.Where(o => o.Contains(".supp")).ToArray();
+            string[] suppFiles = GameFiles.GetAllFilesOfType("supp");
             SupplyBoxIDs = new List<string>();
             foreach (string supp in suppFiles)
                 SupplyBoxIDs.Add(supp.Split('_', '.')[1]);

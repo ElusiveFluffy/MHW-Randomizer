@@ -27,7 +27,7 @@ namespace MHW_Randomizer
 
         public FolderBrowserDialog FolderBrowser = new FolderBrowserDialog();
         public bool OpenFolderIsEnabled { get; set; } = true;
-        public bool SaveIsEnabled { get; set; }
+        public bool SaveIsEnabled { get; set; } = true;
         public string? RandomizeRootFolder { get; set; }
         public bool Randomizing { get; set; }
 
@@ -168,6 +168,7 @@ namespace MHW_Randomizer
             if (Directory.GetFiles(ViewModels.Settings.ChunkFolderPath, "chunk*.bin", SearchOption.TopDirectoryOnly).ToArray().Length >= 10)
             {
                 Analyze(ViewModels.Settings.ChunkFolderPath);
+                GameFiles.ChunkFilesLoaded = true;
                 SaveIsEnabled = true;
             }
             else
@@ -230,6 +231,7 @@ namespace MHW_Randomizer
                 ViewModels.Settings.ChunkFolderPath = FolderBrowser.SelectedPath;
 
             Analyze(ViewModels.Settings.ChunkFolderPath);
+            GameFiles.ChunkFilesLoaded = true;
             SaveIsEnabled = true;
         }
 
@@ -271,7 +273,7 @@ namespace MHW_Randomizer
             bool FailedToRandomizeSomething = false;
             Randomizing = true;
             //Allow the UI to update instead of freezing
-            await Task.Delay(20);
+            await Task.Delay(30);
 
             try
             {
@@ -320,8 +322,11 @@ namespace MHW_Randomizer
             //Clear out all the old randomized files
             RemoveOldRandomizedFiles();
 
-            //Setup the file logger
-            RandomizedFileLogger.SetupWatcher();
+            //Create a temporary json just incase the randomizer crashes
+            using (StreamWriter file = File.CreateText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Randomized Files.json"))
+            {
+                file.WriteLine("[");
+            }
 
             //Reset the sobj index list
             QuestData.MonsterMapSobjCount = new int[102, 43];
@@ -420,8 +425,6 @@ namespace MHW_Randomizer
                 FailedToRandomizeSomething = true;
             }
 
-            //Dispose the watcher so it no longer gets fired
-            RandomizedFileLogger.DisposeWatcher();
             try
             {
                 //Write all the randomized files to a json file after disposing the logger

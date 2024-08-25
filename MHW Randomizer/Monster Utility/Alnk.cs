@@ -10,26 +10,27 @@ namespace MHW_Randomizer
         public static void CreateAlnks()
         {
             XorShift128Generator r = new XorShift128Generator(ViewModels.Randomizer.Seed);
-            Files[] alnkFiles = ChunkOTF.files.Values.Where(o => o.Name.Contains("alnk")).ToArray();
-            alnkFiles = alnkFiles.OrderBy(x => x.Name).ToArray();
+            string[] alnkFiles = GameFiles.GetAllFilesOfType("dtt_alnk");
+            alnkFiles = alnkFiles.OrderBy(x => x).ToArray();
 
             File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Alnk Log.txt").Dispose();
             using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Alnk Log.txt"))
             {
                 for (int a = 0; a < alnkFiles.Length; a++)
                 {
-                    Files alnk = alnkFiles[a];
+                    //(Remove the root folder in the path)
+                    string alnk = alnkFiles[a].Replace(GameFiles.GameFilesPath, "");
                     //Don't change small monsters, safi, xeno, fatalis, or zorah
-                    if (alnk.Name.Contains("ems") || alnk.Name.Contains("em104") || alnk.Name.Contains("em105") || alnk.Name.Contains("em013") || alnk.Name.Contains("em106"))
+                    if (alnk.Contains("ems") || alnk.Contains("em104") || alnk.Contains("em105") || alnk.Contains("em013") || alnk.Contains("em106"))
                         continue;
 
-                    string[] folderNames = alnk.EntireName.Split('\\');
+                    string[] folderNames = alnk.Split('\\');
                     file.WriteLine(QuestData.MonsterNames[Array.IndexOf(QuestData.MonsterEmNumber, folderNames[2] + "_" + folderNames[3]) + 1] + ": " + folderNames[2] + "_" + folderNames[3]);
                     file.WriteLine(Alnks.IsGroundMonster[a]);
                     file.WriteLine("Chosen Paths:");
 
 
-                    byte[] alnkBytes = alnk.Extract();
+                    byte[] alnkBytes = GameFiles.GetFile(alnk);
                     byte[] newAlnk = new byte[44];
                     //Copy the Header
                     Array.Copy(alnkBytes, newAlnk, 44);
@@ -43,7 +44,7 @@ namespace MHW_Randomizer
                         {
                             //Chose a alnk and extract it
                             chosenAlnk = Alnks.GroundOffsets[map][r.Next(Alnks.GroundOffsets[map].Length)];
-                            byte[] chosenAlnkData = ChunkOTF.files[chosenAlnk.TargetAlnk!].Extract();
+                            byte[] chosenAlnkData = GameFiles.GetFile(chosenAlnk.TargetAlnk!);
                             file.WriteLine(chosenAlnk.TargetAlnk);
                             chosenIndexes[map] = Array.IndexOf(Alnks.GroundOffsets[map], chosenAlnk);
 
@@ -70,7 +71,7 @@ namespace MHW_Randomizer
                         {
                             //Chose a alnk and extract it
                             chosenAlnk = Alnks.FlyingOffsets[map][r.Next(Alnks.FlyingOffsets[map].Length)];
-                            byte[] chosenAlnkData = ChunkOTF.files[chosenAlnk.TargetAlnk!].Extract();
+                            byte[] chosenAlnkData = GameFiles.GetFile(chosenAlnk.TargetAlnk!);
                             file.WriteLine(chosenAlnk.TargetAlnk);
                             chosenIndexes[map] = Array.IndexOf(Alnks.FlyingOffsets[map], chosenAlnk);
 
@@ -105,23 +106,23 @@ namespace MHW_Randomizer
                     file.WriteLine("Path Count: " + pathCount);
                     file.WriteLine("\n--------------------------");
 
-                    Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + alnk.EntireName.Truncate(alnk.EntireName.Length - 14));
-                    File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + alnk.EntireName, newAlnk);
+                    Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + Path.GetDirectoryName(alnk));
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + alnk, newAlnk);
                     //Add alnks for variant monsters
-                    if (alnk.Name.Contains("em018"))
+                    if (alnk.Contains("em018"))
                     {
                         //Edit the monster ID
                         newAlnk[8] = 99;
                         Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em018/05/data");
-                        File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em018/05/data/em018.dtt_alnk", newAlnk);
+                        GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em018/05/data/em018.dtt_alnk", newAlnk);
                     }
 
-                    if (alnk.Name.Contains("em023"))
+                    if (alnk.Contains("em023"))
                     {
                         //Edit the monster ID
                         newAlnk[8] = 92;
                         Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em023/05/data");
-                        File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em023/05/data/em023.dtt_alnk", newAlnk);
+                        GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em023/05/data/em023.dtt_alnk", newAlnk);
                     }
                 }
             }
@@ -130,11 +131,11 @@ namespace MHW_Randomizer
             {
                 //Add custom think file
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em126/00/data");
-                File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em126/00/data/em126_00.thk", Properties.Resources.em126_00thk);
+                GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em126/00/data/em126_00.thk", Properties.Resources.em126_00thk);
             }
             //Write custom think file for Raging Brachydios otherwise they will get stuck at 30% HP
             //Credit to Fandirus for finding a way to make Raging Brachydios work
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em063/05/data/em063_55.thk", Properties.Resources.em063_55thk);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"/em/em063/05/data/em063_55.thk", Properties.Resources.em063_55thk);
         }
 
         private static byte[] AddIdentifier(AlnkPaths chosenAlnk, byte[] copyBuffer)

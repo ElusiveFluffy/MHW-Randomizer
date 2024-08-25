@@ -10,12 +10,13 @@ namespace MHW_Randomizer
     public class ExpeditionRandomizer
     {
         private static int[] MonsterIDs = new int[] { };
-        private static Files[]? SobjFilesCache;
+        private static string[]? SobjFilesCache;
         private static NR3Generator? PickSobj;
 
         public static void Randomize()
         {
-            SobjFilesCache = ChunkOTF.files.Values.Where(o => o.EntireName.Contains(@"\enemy\boss\em") && !QuestData.BadSobjs.Contains(o.Name) && !Regex.IsMatch(o.Name!, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(o.Name)).ToArray();
+            SobjFilesCache = GameFiles.GetAllFilesOfType("sobj", @"\quest\enemy\boss\", @"\enemy\boss\em");
+            SobjFilesCache = SobjFilesCache.Where(o => !QuestData.BadSobjs.Contains(o) && !Regex.IsMatch(o, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(o)).ToArray();
             PickSobj = new NR3Generator(ViewModels.Randomizer.Seed);
             //Create Sobj folder
             Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\");
@@ -23,7 +24,7 @@ namespace MHW_Randomizer
             File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt").Dispose();
 
             //Read in the bytes from the file for the header and transition bytes
-            byte[] expeditionSpawnBytes = ChunkOTF.files["discoverEmSet.dems"].Extract();
+            byte[] expeditionSpawnBytes = GameFiles.GetFile(@"\quest\enemy\discoverEmSet.dems");
             List<ExpeditionSpawn> expeditionSpawn = StructTools.RawDeserialize<ExpeditionSpawn>(expeditionSpawnBytes, 10);
 
             //Create a new list for all the new chances
@@ -612,7 +613,7 @@ namespace MHW_Randomizer
             header[6] = 101;
 
             //Write the file
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\enemy\discoverEmSet.dems", header);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\enemy\discoverEmSet.dems", header);
 
             //CSV to more easily go through the values
             File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Expedition Log.csv").Dispose();
@@ -643,12 +644,12 @@ namespace MHW_Randomizer
             byte[] sobj;
 
             //Pick random sobj
-            Files[] SobjFiles;
-            SobjFiles = SobjFilesCache!.Where(o => o.Name.Contains("st" + QuestData.MapIDs[mapIDIndex])).ToArray();
+            string[] SobjFiles;
+            SobjFiles = SobjFilesCache!.Where(o => o.Contains("st" + QuestData.MapIDs[mapIDIndex])).ToArray();
             int sobjIndex = PickSobj.Next(SobjFiles.Length);
 
-            sobj = SobjFiles[sobjIndex].Extract();
-            oldMSobj = SobjFiles[sobjIndex].Name!;
+            sobj = GameFiles.GetFile(SobjFiles[sobjIndex]);
+            oldMSobj = SobjFiles[sobjIndex];
 
             //The count of hex byte CD
             int CDCount = 0;
@@ -667,7 +668,7 @@ namespace MHW_Randomizer
                 else
                     CDCount = 0;
             }
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[monsterID] + QuestData.MapIDs[mapIDIndex] + "_00.sobj", sobj);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\" + QuestData.MonsterStageEmNumber[monsterID] + QuestData.MapIDs[mapIDIndex] + "_00.sobj", sobj);
 
 
             using (StreamWriter file = File.AppendText(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Expedition Sobj Log.txt"))

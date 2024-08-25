@@ -26,7 +26,7 @@ namespace MHW_Randomizer
 
         private static void HideMonsters()
         {
-            GMD monsterNames = new GMD(ChunkOTF.files["em_names_eng.gmd"].Extract());
+            GMD monsterNames = new GMD(GameFiles.GetFile(@"\common\text\em_names_eng.gmd"));
             for (int entry = 0; entry < monsterNames.Entries.Count; entry++)
             {
                 monsterNames.Entries[entry].Value = "???";
@@ -35,9 +35,9 @@ namespace MHW_Randomizer
             monsterNames.Save(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\text\em_names_eng.gmd");
 
             Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\ui\common\tex\");
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\ui\common\tex\cmn_micon00_ID.tex", Properties.Resources.cmn_micon00_ID);
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\ui\common\tex\cmn_micon01_ID.tex", Properties.Resources.cmn_micon01_ID);
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\ui\common\tex\cmn_micon00M_ID.tex", Properties.Resources.cmn_micon00M_ID);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\ui\common\tex\cmn_micon00_ID.tex", Properties.Resources.cmn_micon00_ID);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\ui\common\tex\cmn_micon01_ID.tex", Properties.Resources.cmn_micon01_ID);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\ui\common\tex\cmn_micon00M_ID.tex", Properties.Resources.cmn_micon00M_ID);
         }
 
         private static void RandomizeScoutFlies()
@@ -61,7 +61,7 @@ namespace MHW_Randomizer
                                                 new byte[] { 169, 0, 33 }, //Dark Red
                                                 new byte[] { 254, 231, 21 }, //Yellow
                                             };
-            byte[] scoutflyBytes = ChunkOTF.files["gi_param.gip"].Extract();
+            byte[] scoutflyBytes = GameFiles.GetFile(@"\common\guide_insect\gi_param.gip");
 
             NR3Generator r = new NR3Generator(ViewModels.Randomizer.Seed);
             //Scoutfly Colour
@@ -84,7 +84,7 @@ namespace MHW_Randomizer
             }
 
             Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\guide_insect\");
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\guide_insect\gi_param.gip", scoutflyBytes);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\guide_insect\gi_param.gip", scoutflyBytes);
         }
 
         public static void AddKinsectSpeed()
@@ -96,7 +96,7 @@ namespace MHW_Randomizer
             else
             {
                 Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\");
-                insectBytes = ChunkOTF.files["rod_insect.rod_inse"].Extract();
+                insectBytes = GameFiles.GetFile(@"\common\equip\rod_insect.rod_inse");
             }
 
             Cipher cipher = new Cipher("SFghFQVFJycHnypExurPwut98ZZq1cwvm7lpDpASeP4biRhstQgULzlb");
@@ -115,7 +115,7 @@ namespace MHW_Randomizer
             Array.Copy(StructTools.RawSerialize(insects), 0, insectBytes, 10, insectBytes.Length - 20);
             insectBytes = cipher.Encipher(insectBytes);
 
-            File.WriteAllBytes(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse", insectBytes);
+            GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\common\equip\rod_insect.rod_inse", insectBytes);
         }
 
         private static byte[] RandomColourPicker(this byte[] fileBytes, uint offset, NR3Generator r, uint traceOffset = 0)
