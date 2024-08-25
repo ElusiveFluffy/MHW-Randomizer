@@ -59,10 +59,17 @@ namespace MHW_Randomizer
 
         public static bool ContainsFile(string relativePath)
         {
-            if (!relativePath.Contains(GameFilesPath))
-                relativePath = GameFilesPath + relativePath;
+            if (ChunkFilesLoaded)
+            {
+                return ChunkOTF.files.ContainsKey(relativePath);
+            }
+            else
+            {
+                if (!relativePath.Contains(GameFilesPath))
+                    relativePath = GameFilesPath + relativePath;
 
-            return File.Exists(relativePath);
+                return File.Exists(relativePath);
+            }
         }
 
         /// <summary>
