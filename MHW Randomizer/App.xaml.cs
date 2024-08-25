@@ -39,6 +39,9 @@ namespace MHW_Randomizer
                 }
                 //Delete the old settings
                 File.Delete("Settings.json");
+
+                //Save it in the new format
+                ViewModels.Settings.SaveSettingString();
             }
             ViewModels.Randomizer = new();
 
