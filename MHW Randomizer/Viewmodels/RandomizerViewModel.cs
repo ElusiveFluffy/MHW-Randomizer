@@ -30,6 +30,9 @@ namespace MHW_Randomizer
         public string ChunkFolderButtonText { get; set; } = "Use Chunk Folder";
         public bool SaveIsEnabled { get; set; } = true;
         public string? RandomizeRootFolder { get; set; }
+        public string RandomizeButtonTooltip { get; set; } = "Randomize Using Unrandomized Files Folder";
+        private readonly string UsingFolderFilesToolTip = "Randomize Using Unrandomized Files Folder";
+        private readonly string UsingChunkToolTip = "Randomize Using Chunk Files";
         public bool Randomizing { get; set; }
 
         public HashSet<string> RandomizedFiles = new HashSet<string>();
@@ -138,16 +141,39 @@ namespace MHW_Randomizer
 
         public async void StartUp()
         {
-            if (!File.Exists($"{AppDomain.CurrentDomain.BaseDirectory}\\oo2core_8_win64.dll"))
+            if (!Directory.Exists(GameFiles.GameFilesPath))
+            {
+                SaveIsEnabled = false;
+                if (!File.Exists("oo2core_8_win64.dll"))
+                {
+                    //Both the unrandomized files folder and oo2core is missing
+                    OpenFolderIsEnabled = false;
+                    ChunkFolderButtonText = "Use Chunk Files Unavailable";
+                    await Task.Delay(1);
+                    //Message Window
+                    MessageWindow message = new MessageWindow("ERROR: Unrandomized Files folder and oo2core_8_win64.dll is missing. Can't randomize the game");
+                    message.Owner = MainWindow.window;
+                    message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+                    message.ShowDialog();
+                    return;
+                }
+                else
+                {
+                    //Only the unrandomized files folder is missing
+                    await Task.Delay(1);
+                    //Message Window
+                    MessageWindow message = new MessageWindow("Unrandomized Files folder is missing. Only using chunk files is avaliable");
+                    message.Owner = MainWindow.window;
+                    message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+                    message.ShowDialog();
+                    return;
+                }
+            }
+
+            if (!File.Exists("oo2core_8_win64.dll"))
             {
                 OpenFolderIsEnabled = false;
-                await Task.Delay(1);
-                //Message Window
-                MessageWindow message = new MessageWindow("ERROR: oo2core_8_win64.dll is missing. Can't decompress chunk file.");
-                message.Owner = MainWindow.window;
-                message.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
-                message.ShowDialog();
-
+                ChunkFolderButtonText = "Use Chunk Files Unavailable";
                 return;
             }
 
@@ -171,6 +197,7 @@ namespace MHW_Randomizer
                 Analyze(ViewModels.Settings.ChunkFolderPath);
                 GameFiles.ChunkFilesLoaded = true;
                 ChunkFolderButtonText = "Close Chunk Folder";
+                RandomizeButtonTooltip = UsingChunkToolTip;
                 SaveIsEnabled = true;
             }
             else
@@ -206,12 +233,21 @@ namespace MHW_Randomizer
         {
             if (GameFiles.ChunkFilesLoaded)
             {
-                ChunkOTF.files.Clear();
+                //Switch back to using the unrandomized files folder
                 GameFiles.ChunkFilesLoaded = false;
-                ChunkFolderButtonText = "Use Chunk Folder";
-                ViewModels.Settings.ChunkFolderPath = "";
+                ChunkFolderButtonText = "Use Previous Chunk Folder";
+                RandomizeButtonTooltip = UsingFolderFilesToolTip;
                 if (!Directory.Exists(GameFiles.GameFilesPath))
                     SaveIsEnabled = false;
+                return;
+            }
+            else if (ChunkOTF.files.Count > 0)
+            {
+                //Reuse chunk files from before
+                GameFiles.ChunkFilesLoaded = true;
+                ChunkFolderButtonText = "Close Chunk Folder";
+                RandomizeButtonTooltip = UsingChunkToolTip;
+                SaveIsEnabled = true;
                 return;
             }
 
@@ -246,6 +282,7 @@ namespace MHW_Randomizer
             Analyze(ViewModels.Settings.ChunkFolderPath);
             GameFiles.ChunkFilesLoaded = true;
             ChunkFolderButtonText = "Close Chunk Folder";
+            RandomizeButtonTooltip = UsingChunkToolTip;
             SaveIsEnabled = true;
         }
 

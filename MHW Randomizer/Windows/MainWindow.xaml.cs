@@ -20,6 +20,10 @@ namespace MHW_Randomizer
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            //Clear the chunk files path here if not using chunk files
+            if (!GameFiles.ChunkFilesLoaded)
+                ViewModels.Settings.ChunkFolderPath = "";
+
             //Save before closing
             ViewModels.Settings.SaveSettingString();
             Application.Current.Shutdown();

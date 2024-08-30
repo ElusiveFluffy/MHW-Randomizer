@@ -52,11 +52,15 @@
                         <Button Content="{Binding ChunkFolderButtonText, Source={x:Static local:ViewModels.Randomizer}}" 
                                 Margin="3"
                                 IsEnabled="{Binding OpenFolderIsEnabled, Source={x:Static local:ViewModels.Randomizer}}"
-                                Command="{Binding OpenCommand, Source={x:Static local:ViewModels.Randomizer}}"/>
+                                Command="{Binding OpenCommand, Source={x:Static local:ViewModels.Randomizer}}"
+                                ToolTipService.InitialShowDelay="300"
+                                ToolTipService.ShowOnDisabled="True"
+                                ToolTip="Extracting the Files From the Chunk Files Requires oo2core_8_win64.dll"/>
                         <Button Content="Randomize"
                                 Margin="3"
                                 IsEnabled="{Binding SaveIsEnabled, Source={x:Static local:ViewModels.Randomizer}}"
-                                Command="{Binding RandomizeCommand, Source={x:Static local:ViewModels.Randomizer}}"/>
+                                Command="{Binding RandomizeCommand, Source={x:Static local:ViewModels.Randomizer}}"
+                                ToolTip="{Binding RandomizeButtonTooltip, Source={x:Static local:ViewModels.Randomizer}}"/>
 
                         <TextBlock Text="Seed (Blank For Random Seed)" 
                                    FontSize="10"
