@@ -330,7 +330,7 @@ namespace MHW_Randomizer
         public void Randomize()
         {
             SobjFilesCache = GameFiles.GetAllFilesOfType("sobj", @"\quest\enemy\boss\", @"\enemy\boss\em");
-            SobjFilesCache = SobjFilesCache.Where(o => !QuestData.BadSobjs.Contains(o) && !Regex.IsMatch(o, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(o)).ToArray();
+            SobjFilesCache = SobjFilesCache.Where(o => !QuestData.BadSobjs.Contains(Path.GetFileName(o)) && !Regex.IsMatch(o, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(Path.GetFileName(o))).ToArray();
             SobjFilesBigMCache = SobjFilesCache.Where(o => !o.Contains("em101_00_st101")).ToArray();
             File.Create(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\Quest Log.txt").Dispose();
 

@@ -16,7 +16,7 @@ namespace MHW_Randomizer
         public static void Randomize()
         {
             SobjFilesCache = GameFiles.GetAllFilesOfType("sobj", @"\quest\enemy\boss\", @"\enemy\boss\em");
-            SobjFilesCache = SobjFilesCache.Where(o => !QuestData.BadSobjs.Contains(o) && !Regex.IsMatch(o, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(o)).ToArray();
+            SobjFilesCache = SobjFilesCache.Where(o => !QuestData.BadSobjs.Contains(Path.GetFileName(o)) && !Regex.IsMatch(o, @"em\d{3}_\d{2}_st109_(5|6)0.sobj") && !QuestData.BadGuidingSobjs.Contains(Path.GetFileName(o))).ToArray();
             PickSobj = new NR3Generator(ViewModels.Randomizer.Seed);
             //Create Sobj folder
             Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\enemy\boss\");
