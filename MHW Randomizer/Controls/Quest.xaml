@@ -210,6 +210,7 @@
                                           Margin="5, 4"
                                           x:Name="Rsobj"
                                           IsChecked="{Binding RandomSobj, Source={x:Static local:ViewModels.Settings}}"
+                                          ToolTipService.ShowOnDisabled="True"
                                           ToolTip="The spawn file affects things like the monster spawn. &#xA;Random spawn files aren't used for monsters that have cutscenes to not break them"
                                           IsEnabled="{Binding RandomMaps, Source={x:Static local:ViewModels.Settings}, Converter={local:InverseBooleanConverter}}"/>
                                 <!-- <CheckBox Content="Shuffle Quest Names"

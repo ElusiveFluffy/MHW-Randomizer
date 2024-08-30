@@ -39,6 +39,7 @@
                                   IsChecked="{Binding ExpeditionRandomSobj, Source={x:Static local:ViewModels.Settings}}"
                                   IsEnabled="{Binding RandomizeExpeditions, Source={x:Static local:ViewModels.Settings}, Converter={local:InverseBooleanConverter}}"
                                   Margin="30, 4"
+                                  ToolTipService.ShowOnDisabled="True"
                                   ToolTip="Will give the monsters random spawn files for expedtions (Don't need to check random spawn chances if you only want this)"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
@@ -125,6 +126,7 @@
                                   IsChecked="{Binding ExpeditionRandomIBSobj, Source={x:Static local:ViewModels.Settings}}"
                                   IsEnabled="{Binding RandomizeIceborneExpeditions, Source={x:Static local:ViewModels.Settings}, Converter={local:InverseBooleanConverter}}"
                                   Margin="30, 4"
+                                  ToolTipService.ShowOnDisabled="True"
                                   ToolTip="Will give the monsters random spawn files for expedtions (Don't need to check random spawn chances if you only want this)"
                                   ToolTipService.ShowDuration="10000"/>
                     </StackPanel>
