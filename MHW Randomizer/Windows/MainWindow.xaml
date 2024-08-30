@@ -49,7 +49,7 @@
                         Width="180"
                         Margin="5 0 5 -25">
                     <StackPanel Margin="0 4 4 4">
-                        <Button Content="Open Chunk Folder" 
+                        <Button Content="{Binding ChunkFolderButtonText, Source={x:Static local:ViewModels.Randomizer}}" 
                                 Margin="3"
                                 IsEnabled="{Binding OpenFolderIsEnabled, Source={x:Static local:ViewModels.Randomizer}}"
                                 Command="{Binding OpenCommand, Source={x:Static local:ViewModels.Randomizer}}"/>

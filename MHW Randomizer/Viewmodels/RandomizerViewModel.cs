@@ -27,6 +27,7 @@ namespace MHW_Randomizer
 
         public FolderBrowserDialog FolderBrowser = new FolderBrowserDialog();
         public bool OpenFolderIsEnabled { get; set; } = true;
+        public string ChunkFolderButtonText { get; set; } = "Use Chunk Folder";
         public bool SaveIsEnabled { get; set; } = true;
         public string? RandomizeRootFolder { get; set; }
         public bool Randomizing { get; set; }
@@ -169,6 +170,7 @@ namespace MHW_Randomizer
             {
                 Analyze(ViewModels.Settings.ChunkFolderPath);
                 GameFiles.ChunkFilesLoaded = true;
+                ChunkFolderButtonText = "Close Chunk Folder";
                 SaveIsEnabled = true;
             }
             else
@@ -202,6 +204,17 @@ namespace MHW_Randomizer
 
         public void OpenFolder()
         {
+            if (GameFiles.ChunkFilesLoaded)
+            {
+                ChunkOTF.files.Clear();
+                GameFiles.ChunkFilesLoaded = false;
+                ChunkFolderButtonText = "Use Chunk Folder";
+                ViewModels.Settings.ChunkFolderPath = "";
+                if (!Directory.Exists(GameFiles.GameFilesPath))
+                    SaveIsEnabled = false;
+                return;
+            }
+
             if (!string.IsNullOrWhiteSpace(ViewModels.Settings.ChunkFolderPath) && Directory.Exists(ViewModels.Settings.ChunkFolderPath))
                 FolderBrowser.InitialDirectory = ViewModels.Settings.ChunkFolderPath;
             else
@@ -232,6 +245,7 @@ namespace MHW_Randomizer
 
             Analyze(ViewModels.Settings.ChunkFolderPath);
             GameFiles.ChunkFilesLoaded = true;
+            ChunkFolderButtonText = "Close Chunk Folder";
             SaveIsEnabled = true;
         }
 
