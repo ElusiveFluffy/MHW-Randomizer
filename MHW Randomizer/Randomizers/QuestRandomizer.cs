@@ -645,10 +645,12 @@ namespace MHW_Randomizer
                     currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs!.Where(o => !QuestData.UncaptureableMonsterIDs.Contains(o)).ToArray() : MonsterIDs!.Where(o => !QuestData.UncaptureableMonsterIDs.Contains(o)).ToArray();
                 else
                     currentRankMonsterIDs = isLowRank ? LowRankMonsterIDs : MonsterIDs;
+                //Remove problem monsters from "The Best Kind of Quest"
                 //Great giros spawns dead in this quest making it unbeatable
                 //Nergigante is unkillable (gets stuck at 1 HP)
+                //Rathian could potentially make the one in the forest area not spawn 
                 if (questNumber == "00301")
-                    currentRankMonsterIDs = currentRankMonsterIDs!.Where(o => o != 33 && o != 25).ToArray();
+                    currentRankMonsterIDs = currentRankMonsterIDs!.Where(o => o != 33 && o != 25 && o != 9).ToArray();
 
                 //Pick Random Map
                 if (ViewModels.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
