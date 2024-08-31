@@ -33,7 +33,7 @@ namespace MHW_Randomizer
         //Possible one em043_05_st109_60.sobj
 
         //Sobjs that spawn monsters in the snow or lava area in the guiding lands, can't find a way to unlock them early and have the pathing work properly (the monsters just get stuck running into the wall trying to go to another area, as they think they can't go through the open entrance/exit)
-        public static string[] BadGuidingSobjs = { "em023_05_st109_00.sobj" };
+        public static string[] BadGuidingSobjs = { "em023_05_st109_00.sobj", "em057_01_st109_00.sobj" };
 
         public static string[] IconList = { "Anjanath", "Great Jagras", "Pukei-Pukei", "Nergigante", "Xeno'jiiva", "Xeno'jiiva", "Zorah Magdaros", "Kulu-Ya-Ku", "Tzitzi-Ya-Ku", "Jyuratodus", "Tobi-Kadachi", "Paolumu", "Legiana", "Great Girros", "Odogaron", "Radobaan", 
             "Vaal Hazak", "Dodogama", "Kulve Tarroth", "Bazelgeuse", "Behemoth", "Leshen", "Ancient Leshen", "17 EMPTY", "Rathian", "Pink Rathian", "Rathalos", "Azure Rathalos", "Diablos", "Black Diablos", "Kirin", "1F EMPTY", "Kushala Daora", "Lunastra", "Teostra", 
