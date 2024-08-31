@@ -56,7 +56,7 @@ namespace MHW_Randomizer
 
             #region Hoarfrost Reach Blockade
 
-            if (ViewModels.Settings.RandomizeIBQuests || ViewModels.Settings.RandomizeIceborneExpeditions)
+            if (ViewModels.Settings.RandomizeIBQuests || ViewModels.Settings.RandomizeIceborneExpeditions || ViewModels.Settings.IBMapsInBaseGame)
             {
                 levelObjects = GameFiles.GetFile("\\stage\\st108\\common\\set\\st108_gm.sobj");
 
@@ -130,7 +130,7 @@ namespace MHW_Randomizer
             #region Guiding Lands Blockade
 
             //Unlock the blocked off areas in the guiding lands
-            if (ViewModels.Settings.RandomizeIBQuests)
+            if (ViewModels.Settings.RandomizeIBQuests || ViewModels.Settings.IBMapsInBaseGame)
             {
                 //Unlock the blocked off areas
                 byte[] unblockBytes = GameFiles.GetFile(@"\stage\st109\common\sdl\st109_v03.sdl");
