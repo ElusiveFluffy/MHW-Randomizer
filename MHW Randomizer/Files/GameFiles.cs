@@ -41,10 +41,11 @@ namespace MHW_Randomizer
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="data"></param>
-        public static void WriteAndLogFile(string filePath, byte[] data)
+        public static void WriteAndLogFile(string filePath, byte[]? data)
         {
-            //Write the file to the harddrive
-            File.WriteAllBytes(filePath, data);
+            if (data != null)
+                //Write the file to the harddrive
+                File.WriteAllBytes(filePath, data);
 
             //Add it to the file list
             if (ViewModels.Randomizer.RandomizedFiles.Add(filePath.Replace(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder, "")))

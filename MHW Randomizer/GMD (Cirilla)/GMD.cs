@@ -119,7 +119,8 @@ namespace MHW_Randomizer
         /// </summary>
         public void Save(string path)
         {
-            //log.Info($"Saving {Filename} to '{path}'");
+            //Just to log the file
+            GameFiles.WriteAndLogFile(path, null);
 
             Update();
 
