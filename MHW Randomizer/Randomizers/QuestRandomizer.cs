@@ -628,11 +628,22 @@ namespace MHW_Randomizer
                     zorahSobjl[8] = 0;
                     Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q00504\set\");
                     GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\quest\q00504\set\00504.sobjl", zorahSobjl);
+                    //Remove the first cutscene from the second zora quest to fix a issue where the screen will be black and the ui will be missing
+                    Directory.CreateDirectory(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\event\evc0023");
+                    GameFiles.WriteAndLogFile(ViewModels.Settings.SaveFolderPath + ViewModels.Randomizer.RandomizeRootFolder + @"\event\evc0023\evc0023.sdl", new byte[] { 0x53, 0x44, 0x4C, 0x00 });
 
                     //If not randomizing maps then pick a random one here
                     //Pick a random map after creating the zorah sobjl just incase it gets overwritten with the xeno one
-                    if (!ViewModels.Settings.RandomMaps)
+                    if (!ViewModels.Settings.RandomMaps && questNumber == "00401")
                         PickRandomMap(questNumber, duplicateMonQuest);
+                    else if (questNumber == "00504")
+                    {
+                        //Chose from a limited set of maps as abandoning the quest on the second one makes the cutscene play again, unlike the first one
+                        int[] zoraMapIndexes = QuestData.GoodZoraMapIndexes;
+                        if (ViewModels.Settings.IBMapsInBaseGame)
+                            zoraMapIndexes = zoraMapIndexes.Concat(QuestData.GoodIBZoraMapIndexes).ToArray();
+                        MapIDIndex = zoraMapIndexes[PickMap.Next(zoraMapIndexes.Count())];
+                    }
                 }
 
                 if (questNumber == "50802" && ViewModels.Settings.MakePandorasArena30Minutes)
@@ -651,9 +662,13 @@ namespace MHW_Randomizer
                 //Rathian could potentially make the one in the forest area not spawn 
                 if (questNumber == "00301")
                     currentRankMonsterIDs = currentRankMonsterIDs!.Where(o => o != 33 && o != 25 && o != 9).ToArray();
+                //Remove problem monsters from "Into the Bowels of the Vale"
+                //Jyuratodus and Radobaan get stuck in the Odogaron spawn
+                if (questNumber == "00501")
+                    currentRankMonsterIDs = currentRankMonsterIDs!.Where(o => o != 29 && o != 35).ToArray();
 
                 //Pick Random Map
-                if (ViewModels.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap))
+                if (ViewModels.Settings.RandomMaps && (!isStoryQuest || StoryQuests[questNumber].CanRandomizeMap) && questNumber != "00504")
                 {
                     PickRandomMap(questNumber, duplicateMonQuest, captureQuest, iceborne);
                 }

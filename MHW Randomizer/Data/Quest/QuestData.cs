@@ -13,6 +13,10 @@ namespace MHW_Randomizer
         // 415,
         public static int[] ArenaMaps = { 201, 202, 405, 409, 412, 413, 415, 416, 417 };
 
+        //Maps that don't spawn you out of bounds on the zora quest
+        public static int[] GoodZoraMapIndexes = { 1, 2, 3, 5 };
+        public static int[] GoodIBZoraMapIndexes = { 8, 9 };
+
         public static int[] ValidMapIndexes = { 1, 2, 3, 4, 5 };
         public static int[] ValidIBMapIndexes = { 8, 9 };
 
