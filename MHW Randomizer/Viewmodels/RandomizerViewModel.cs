@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace MHW_Randomizer
 {
@@ -314,8 +316,22 @@ namespace MHW_Randomizer
             }
         }
 
+        private static void AllowUIToUpdate()
+        {
+            DispatcherFrame frame = new();
+            // DispatcherPriority set to Input, the highest priority
+            Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object parameter)
+            {
+                frame.Continue = false;
+                Thread.Sleep(20); // Stop all processes to make sure the UI update is performed
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
+            // DispatcherPriority set to Input, the highest priority
+            Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Input, new Action(delegate { }));
+        }
 
-        public async void Randomize()
+        public void Randomize()
         {
             //Return if cannot pick a randomized folder
             if (!PickRandomizedFolder("Select Folder to Output Randomized Files (Will Also Add a Randomized Folder For the Files)", true))
@@ -324,7 +340,7 @@ namespace MHW_Randomizer
             bool FailedToRandomizeSomething = false;
             Randomizing = true;
             //Allow the UI to update instead of freezing
-            await Task.Delay(30);
+            AllowUIToUpdate();
 
             try
             {
@@ -490,7 +506,7 @@ namespace MHW_Randomizer
                     serializer.Serialize(file, RandomizedFiles);
                 }
                 //Clear out the randomized file set to free up some memory
-                RandomizedFiles = new HashSet<string>();
+                RandomizedFiles.Clear();
             }
             catch (Exception ex)
             {
@@ -722,7 +738,7 @@ namespace MHW_Randomizer
             File.Delete(ViewModels.Settings.SaveFolderPath + RandomizeRootFolder + @"\Randomized Files.json");
 
             //Clear the hash set
-            RandomizedFiles = new HashSet<string>();
+            RandomizedFiles.Clear();
 
             DeleteEmptyFolders(ViewModels.Settings.SaveFolderPath!);
             if (!Randomizing)
